@@ -1,0 +1,6 @@
+ID: P1-E1
+Pattern: Trajectory Shift
+Report: Patent Landscape Report - Generative Artificial Intelligence
+Source: reports/text versions/genAI.txt, line 3276
+
+Although patent publications in GANs dominated up to 2020, it has slowed down since and patent publications in diffusion models have grown tremendously since 2021.

@@ -1,0 +1,12 @@
+ID: P2-E6
+Pattern: Comparative Growth
+Report: Patent Landscape Report: Ilmenite
+Primary source: reports/text versions/ilmenite.txt, lines 4174-4178
+Contrast source: reports/text versions/ilmenite.txt, lines 4186-4189
+Comparison window used for E.tab: 2002-2019
+
+Primary excerpt:
+Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite has grown strongly. Key contributors to patents on the production of titanium dioxide are companies from China, Australia and the United States, reflecting the major contribution of these countries to the industrial production of titanium dioxide.
+
+Contrast excerpt:
+In contrast, patent activity related to the process for the production of titanium metal has remained steady since 2002. Key players in this field are mainly Japanese companies. All industrial key players describe the industrially exploited Kroll process, which is based on the reduction of titanium dioxide or titanium tetrachloride with magnesium.

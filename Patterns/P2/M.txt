@@ -1,0 +1,17 @@
+Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.
+
+For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:
+
+CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1
+
+A comparative growth pattern holds when there exist two entities ei and ej such that:
+
+CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon
+
+where epsilon >= 0 is a threshold for a meaningful growth-rate difference.
+
+An entity ei is a growth leader within E when:
+
+CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).
+
+All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.

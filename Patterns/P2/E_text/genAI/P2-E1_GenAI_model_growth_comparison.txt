@@ -1,0 +1,7 @@
+ID: P2-E1
+Pattern: Comparative Growth
+Report: Patent Landscape Report - Generative Artificial Intelligence
+Source: reports/text versions/genAI.txt, lines 3258-3266
+Comparison window used for E.tab: 2020-2023
+
+In terms of patent growth, patent families assigned to GANs show the strongest increase over the past decade. However, patent growth of GAN patent families has slowed down and GAN patent families have increased only moderately over the last three years. A similar slowdown in patent growth can be seen for patent families for VAE models and autoregressive models. In contrast, diffusion models and LLMs show much higher growth rates over the last three years, with the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881 in 2023. The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased research interest in LLMs.

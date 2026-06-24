@@ -1,0 +1,6 @@
+ID: P1-E4
+Pattern: Trajectory Shift
+Report: Patent Landscape Report - Generative Artificial Intelligence
+Source: reports/text versions/genAI.txt, lines 2277-2281
+
+The significant advances in GenAI are reflected in the sharp increase in patent activity in the field. Over the last 10 years, the number of published patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000 in 2023. There has been a big surge in patent activity beginning in 2017, with an average annual growth of around 45% since then. This coincides with the introduction of transformers in 2017.

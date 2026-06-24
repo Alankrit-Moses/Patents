@@ -1,0 +1,4 @@
+{"id":"P1-neg-monotonic","pattern_id":"P1","category":"ordinary_monotonic_growth_without_turning_point","status":"scaffold","E.text":"","E.tab":"","notes":"Add an exact report span and optional compact CSV showing steady monotonic growth with no recoverable change point."}
+{"id":"P1-neg-vague-tau","pattern_id":"P1","category":"vague_recent_years_without_recoverable_tau","status":"scaffold","E.text":"","E.tab":"","notes":"Add a span that says recent years or similar but supplies no concrete time/event and no recoverable tau."}
+{"id":"P1-neg-top-k","pattern_id":"P1","category":"top_k_dominance_statement","status":"scaffold","E.text":"","E.tab":"","notes":"Add a ranking or dominance claim without a before/after trajectory shift."}
+{"id":"P1-neg-spike","pattern_id":"P1","category":"one_year_spike_without_pre_post_trend","status":"scaffold","E.text":"","E.tab":"","notes":"Add a one-year spike that lacks sufficient pre/post behavior."}

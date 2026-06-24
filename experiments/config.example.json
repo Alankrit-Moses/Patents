@@ -1,0 +1,29 @@
+{
+  "project_root": "..",
+  "generator": {
+    "base_url": "http://localhost:8000/v1",
+    "model": "your-vllm-model-name",
+    "api_key_env": "OPENAI_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "timeout_seconds": 180
+  },
+  "judge": {
+    "base_url": "http://localhost:8000/v1",
+    "model": "your-judge-model-name",
+    "api_key_env": "OPENAI_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "timeout_seconds": 180
+  },
+  "context_limit_tokens": 131072,
+  "chars_per_token_estimate": 3.5,
+  "chunk_chars": 16000,
+  "chunk_overlap_chars": 2000,
+  "max_workers": 4,
+  "max_steps": 8,
+  "repair_once": true,
+  "induction_pairs": 4,
+  "fold_count": 3,
+  "seed": 17
+}

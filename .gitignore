@@ -1,0 +1,5 @@
+.agents/
+.claude/
+tmp/
+_pf_clean.txt
+_pf_dump.txt

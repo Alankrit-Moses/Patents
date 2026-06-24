@@ -1,0 +1,13 @@
+ID: P1-E5
+Pattern: Trajectory Shift
+Report: Patent Landscape Report - Generative Artificial Intelligence
+Primary source: reports/text versions/genAI.txt, lines 3262-3265
+Turning-point source: reports/text versions/genAI.txt, lines 3276-3277
+
+Primary excerpt:
+In contrast, diffusion models and LLMs show much higher growth rates over the last three years, with the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881 in 2023.
+
+Turning-point excerpt:
+Although patent publications in GANs dominated up to 2020, it has slowed down since and patent publications in diffusion models have grown tremendously since 2021.
+
+Note: P1-E1 and P1-E5 are entity-specific projections of the same turning-point source passage.

@@ -1,0 +1,6 @@
+entity,start_year,end_year,cagr_percent
+"GAN, Generative Adversarial Networks",2020,2023,14.4
+"Variational Autoencoder,VAE",2020,2023,33.4
+Autoregressiv Models,2020,2023,42.0
+Diffusion Models,2020,2023,190.4
+"Large Language Models,LLM",2020,2023,155.2

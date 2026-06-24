@@ -1,0 +1,6 @@
+ID: P1-E6
+Pattern: Trajectory Shift
+Report: Patent Landscape Report: Ilmenite
+Source: reports/text versions/ilmenite.txt, lines 2274-2277
+
+Between 2012 and 2022, there were 2,027 active patent families describing the use of titanium dioxide and titanium in ceramics (Figure 24). Patent activity shows a growing interest in ceramics as an industrial application of titanium since 2016, with a CAGR of +15 percent between 2014 and 2019.

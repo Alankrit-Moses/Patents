@@ -1,0 +1,13 @@
+Let e be an entity and let m be an attribute defined over time. Let v(e, m, t) denote the value or state of entity e with respect to attribute m at time t.
+
+A trajectory shift pattern holds when there exists a time or event τ such that the behavior of v(e, m, t) differs before and after τ.
+
+Let g_pre denote the trend of v(e, m, t) before τ, and let g_post denote the trend of v(e, m, t) after τ. A trajectory shift holds when:
+
+g_pre ≠ g_post
+
+or more strongly,
+
+|g_post - g_pre| > ε,
+
+where ε is a threshold for meaningful change.
