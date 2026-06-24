@@ -65,7 +65,7 @@ The current corpus produces:
 - Experiment 2: one task per matched compact CSV and saved text example;
 - Experiment 3: deterministic small folds, using four induction pairs where available and the remainder as held-out positives.
 
-Experiment 1 gold examples are non-exhaustive and are not used for recall. Experiment 3 held-out pairs are not shown to the synthesis generator; Setup C may use them only through the independent definition verifier.
+Experiment 1 gold examples are non-exhaustive and are not used for recall. Experiment 3 held-out pairs remain task metadata for possible future experiments, but are not exposed to Setup A, B, C, or the current alignment judge.
 
 ## Setup C action library
 
@@ -83,12 +83,12 @@ Experiment 1 gold examples are non-exhaustive and are not used for recall. Exper
 
 The reducer is deterministic. Candidate excerpts that cannot be recovered verbatim from their source chunk are discarded before verification.
 
-## Hard negatives
-
-`hard_negatives/P1.jsonl` and `hard_negatives/P2.jsonl` contain the requested category scaffold. Each record starts with `"status":"scaffold"` and is ignored by evaluation. Add an exact negative example and any compact evidence, review it manually, then change its status to `ready`.
+Setup C workers and verifiers receive only the inputs materialized for the corresponding A/B task. For Experiment 3, the internal definition verifier may inspect the same induction pairs as the synthesizer, but never held-out pairs or hard negatives.
 
 ## Result and evaluation records
 
 Every generation record contains the experiment, setup, pattern, framework query, safe input references, selected chunks, full Setup C trace, raw output, parsed output, and errors. Judges receive no setup label in their prompt. Evaluation JSONL retains the setup only for later aggregation.
+
+Evaluation uses alignment scores only. Experiment 1 assigns an independent score to each requested E.text output against M. Experiment 2 scores E.text against its paired compact E.tab and diagnostic gold E.text. Experiment 3 independently scores generated M and T against their canonical components. Alignment scores are 1-5; an E.text output receives 0 without an LLM judge call when it is missing or cannot be recovered verbatim from the report.
 
 Single-shot prompts are never silently truncated. If the configured context limit is too small for a full report, the run logs an error so that comparisons are not distorted by different report slices.

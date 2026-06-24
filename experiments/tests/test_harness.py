@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from tempfile import TemporaryDirectory
 from pathlib import Path
 
 from experiments.agent import FrameworkQueryParser, setup_c_plan_preview
@@ -13,6 +14,8 @@ from experiments.reports import chunk_report
 from experiments.reports import recover_exact_span
 from experiments.manifest import extract_saved_excerpt, extract_saved_excerpts
 from experiments.io_utils import read_text
+from experiments.judge import _evaluate_exp1, _evaluate_exp2, _evaluate_exp3
+from experiments.prompts import build_prompt
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -30,6 +33,33 @@ class FakeClient:
             )
         elif "TextPatternVerifier" in system:
             text = '{"score":5,"matched_conditions":["before/after"],"failed_conditions":[],"rationale":"clear"}'
+        else:
+            text = "{}"
+        return LLMResponse(text=text, raw={}, usage={})
+
+
+class RecordingScoreClient:
+    def __init__(self, scores):
+        self.scores = iter(scores)
+        self.messages = []
+
+    def complete(self, messages, **_kwargs):
+        self.messages.append(messages)
+        score = next(self.scores)
+        return LLMResponse(text=f'{{"score":{score}}}', raw={}, usage={})
+
+
+class SynthesisRecordingClient:
+    def __init__(self):
+        self.messages = []
+
+    def complete(self, messages, **_kwargs):
+        self.messages.append(messages)
+        system = messages[0]["content"]
+        if "PatternSynthesisAgent" in system:
+            text = '{"M":"shared rule","T":"shared description"}'
+        elif "DefinitionVerifier" in system:
+            text = '{"score":5,"M_score":5,"T_score":5,"operationalizability":5,"matched_conditions":[],"failed_conditions":[],"rationale":""}'
         else:
             text = "{}"
         return LLMResponse(text=text, raw={}, usage={})
@@ -76,6 +106,107 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn("E_tab_code", str(refs))
         self.assertNotIn(".xlsx", str(refs))
 
+    def test_setup_a_is_minimal_prose_and_setup_b_is_tagged_framework_prompt(self):
+        task = {
+            "experiment": "1",
+            "framework_query": "D:(D.text,_)\nP:(M,_,{(?,_)[3]})",
+        }
+        inputs = {"M": "PATTERN_SENTINEL", "D.text": "REPORT_SENTINEL"}
+        prompt_a = build_prompt("A", task, inputs)[-1]["content"]
+        self.assertNotIn("D:(D.text,_)", prompt_a)
+        self.assertNotIn("<known_components>", prompt_a)
+        self.assertNotIn("E.text", prompt_a)
+        self.assertNotIn('"M"', prompt_a)
+        self.assertNotIn('"T"', prompt_a)
+        self.assertIn("criterion itself is not an eligible passage", prompt_a)
+        prompt_b = build_prompt("B", task, inputs)[-1]["content"]
+        self.assertIn("<framework_guide>", prompt_b)
+        self.assertIn("<framework_query>", prompt_b)
+        self.assertIn("<known_components>", prompt_b)
+        self.assertIn("<M>\nPATTERN_SENTINEL\n</M>", prompt_b)
+        self.assertIn("<D_text>\nREPORT_SENTINEL\n</D_text>", prompt_b)
+        self.assertIn("summarize the provided E.tab internally", prompt_b)
+        self.assertIn("vague description", prompt_b)
+        exp3_a = build_prompt(
+            "A",
+            {
+                "experiment": "3",
+                "framework_query": "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),...})",
+            },
+            {
+                "paired_examples": [
+                    {
+                        "example_id": "P1-E1",
+                        "E.text": "Example passage.",
+                        "E.tab": "year,value\n2020,1",
+                    }
+                ]
+            },
+        )[-1]["content"]
+        self.assertNotIn('"M"', exp3_a)
+        self.assertNotIn('"T"', exp3_a)
+        self.assertIn('"mathematical_definition"', exp3_a)
+
+    def test_exp1_scores_each_requested_excerpt_and_hard_zeros_non_excerpts(self):
+        with TemporaryDirectory(dir=ROOT) as temp_dir:
+            base = Path(temp_dir)
+            report_path = base / "report.txt"
+            m_path = base / "M.txt"
+            valid = "Activity rose before 2020 and declined after 2020."
+            report_path.write_text(valid, encoding="utf-8")
+            m_path.write_text("A before/after trajectory shift.", encoding="utf-8")
+            task = {
+                "report_path": report_path.relative_to(ROOT).as_posix(),
+                "m_path": m_path.relative_to(ROOT).as_posix(),
+                "target_count": 3,
+            }
+            result = {
+                "parsed_output": {
+                    "examples": [
+                        {"excerpt": valid},
+                        {"excerpt": "A before/after trajectory shift."},
+                    ]
+                }
+            }
+            client = RecordingScoreClient([4])
+            metrics = _evaluate_exp1(client, self.config, task, result)
+            self.assertEqual(metrics, {"E_text_alignment_scores": [4, 0, 0]})
+        self.assertEqual(len(client.messages), 1)
+        self.assertNotIn('{"score":1}', client.messages[0][-1]["content"])
+
+    def test_exp2_uses_gold_pair_only_in_judge_and_returns_one_score(self):
+        task = next(task for task in self.tasks if task["experiment"] == "2")
+        inputs = materialize_generator_inputs(ROOT, task)
+        gold = extract_saved_excerpt(ROOT / task["gold_e_text_path"])
+        client = RecordingScoreClient([5])
+        metrics = _evaluate_exp2(
+            client,
+            self.config,
+            task,
+            {"parsed_output": {"excerpt": gold}},
+        )
+        self.assertEqual(metrics, {"E_text_alignment_score": 5})
+        judge_prompt = client.messages[0][-1]["content"]
+        self.assertIn(inputs["E.tab"], judge_prompt)
+        self.assertIn(gold, judge_prompt)
+        self.assertNotIn("Comparison window used for E.tab", judge_prompt)
+        self.assertIn("Do not return a rationale", judge_prompt)
+
+    def test_exp3_scores_m_and_t_independently_without_heldouts(self):
+        task = next(task for task in self.tasks if task["experiment"] == "3")
+        client = RecordingScoreClient([4, 3])
+        metrics = _evaluate_exp3(
+            client,
+            self.config,
+            task,
+            {"parsed_output": {"M": "generated math", "T": "generated text"}},
+        )
+        self.assertEqual(metrics, {"M_alignment_score": 4, "T_alignment_score": 3})
+        self.assertEqual(len(client.messages), 2)
+        prompts = "\n".join(call[-1]["content"] for call in client.messages)
+        self.assertNotIn("Held-out", prompts)
+        self.assertNotIn("Hard negative", prompts)
+
     def test_setup_c_is_action_compiled(self):
         plans = {task["experiment"]: setup_c_plan_preview(task) for task in self.tasks}
         self.assertIn("TextEvidenceAgent(map-reduce)", plans["1"])
@@ -102,6 +233,42 @@ class HarnessTests(unittest.TestCase):
         self.assertIn("TextEvidenceAgent", actions)
         self.assertIn("TextPatternVerifier", actions)
         self.assertIn("ReducerRanker", actions)
+
+    def test_setup_c_definition_verifier_uses_only_visible_induction_pairs(self):
+        client = SynthesisRecordingClient()
+        task = {
+            "task_id": "synthetic-exp3",
+            "experiment": "3",
+            "framework_query": "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),...})",
+            "heldout_examples": [
+                {
+                    "example_id": "LEAK_SENTINEL",
+                    "e_text_path": "does/not/exist.txt",
+                    "e_tab_path": "does/not/exist.csv",
+                }
+            ],
+        }
+        inputs = {
+            "paired_examples": [
+                {
+                    "example_id": "VISIBLE_SENTINEL",
+                    "E.text": "Visible report evidence.",
+                    "E.tab": "year,value\n2020,1",
+                }
+            ]
+        }
+        result = FrameworkAgent(self.config, client).run(task, inputs)
+        self.assertEqual(result["parsed_output"]["M"], "shared rule")
+        all_prompts = "\n".join(
+            message["content"] for call in client.messages for message in call
+        )
+        self.assertIn("VISIBLE_SENTINEL", all_prompts)
+        self.assertNotIn("LEAK_SENTINEL", all_prompts)
+        self.assertNotIn("Held-out positive", all_prompts)
+        verifier = next(
+            step for step in result["agent_trace"] if step["action"] == "DefinitionVerifier"
+        )
+        self.assertEqual(verifier["input_refs"], ["M", "T", "paired_examples"])
 
     def test_chunks_overlap(self):
         chunks = chunk_report("a" * 100, chunk_chars=40, overlap_chars=10)

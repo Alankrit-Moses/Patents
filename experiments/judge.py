@@ -1,35 +1,15 @@
 from __future__ import annotations
 
-import json
-import re
 from collections import defaultdict
-from difflib import SequenceMatcher
 from pathlib import Path
 from statistics import mean
 from typing import Any
 
 from .client import OpenAICompatibleClient
 from .config import HarnessConfig
-from .io_utils import append_jsonl, extract_json, load_jsonl, normalized_text, read_text, resolve_safe_input
-from .manifest import extract_saved_excerpt, extract_saved_excerpts
+from .io_utils import append_jsonl, extract_json, load_jsonl, read_text, resolve_safe_input
+from .manifest import extract_saved_excerpt
 from .reports import recover_exact_span
-
-
-def _token_f1(left: str, right: str) -> float:
-    left_tokens = re.findall(r"\w+", left.casefold())
-    right_tokens = re.findall(r"\w+", right.casefold())
-    if not left_tokens or not right_tokens:
-        return 0.0
-    left_counts: dict[str, int] = defaultdict(int)
-    right_counts: dict[str, int] = defaultdict(int)
-    for token in left_tokens:
-        left_counts[token] += 1
-    for token in right_tokens:
-        right_counts[token] += 1
-    overlap = sum(min(count, right_counts[token]) for token, count in left_counts.items())
-    precision = overlap / len(left_tokens)
-    recall = overlap / len(right_tokens)
-    return 2 * precision * recall / (precision + recall) if precision + recall else 0.0
 
 
 def _judge_call(client: OpenAICompatibleClient, user: str) -> dict[str, Any]:
@@ -37,7 +17,7 @@ def _judge_call(client: OpenAICompatibleClient, user: str) -> dict[str, Any]:
         [
             {
                 "role": "system",
-                "content": "You are an evaluation judge. You are blind to the generation setup. Apply the rubric strictly and return JSON only.",
+                "content": "You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.",
             },
             {"role": "user", "content": user},
         ],
@@ -46,9 +26,17 @@ def _judge_call(client: OpenAICompatibleClient, user: str) -> dict[str, Any]:
     parsed = extract_json(response.text)
     if not isinstance(parsed, dict):
         raise ValueError("Judge did not return a JSON object")
-    parsed["judge_raw_output"] = response.text
-    parsed["judge_usage"] = response.usage
     return parsed
+
+
+def _alignment_score(client: OpenAICompatibleClient, prompt: str) -> int:
+    judged = _judge_call(
+        client,
+        prompt
+        + '\n\nReturn only a JSON object with exactly one key named "score", whose value '
+        "is the integer from 1 to 5 that you selected. Do not return a rationale.",
+    )
+    return max(1, min(5, int(judged.get("score", 1))))
 
 
 def _find_task(tasks: dict[str, dict[str, Any]], result: dict[str, Any]) -> dict[str, Any]:
@@ -79,33 +67,29 @@ def _evaluate_exp1(
     report = read_text(resolve_safe_input(config.project_root, task["report_path"], {".txt"}))
     m_text = read_text(resolve_safe_input(config.project_root, task["m_path"], {".txt"}))
     excerpts = _excerpts(result.get("parsed_output", {}))
-    exact_flags = [recover_exact_span(excerpt, report) is not None for excerpt in excerpts]
-    judged = _judge_call(
-        client,
-        f"""Mathematical pattern definition:
+    target_count = int(task.get("target_count", 3))
+    scores: list[int] = []
+    for index in range(max(target_count, len(excerpts))):
+        excerpt = excerpts[index] if index < len(excerpts) else ""
+        recovered = recover_exact_span(excerpt, report)
+        if recovered is None:
+            scores.append(0)
+            continue
+        scores.append(
+            _alignment_score(
+                client,
+                f"""Score how well this exact report excerpt instantiates the supplied mathematical pattern definition.
+
+Mathematical pattern definition:
 {m_text}
 
-Candidate exact excerpts:
-{json.dumps(excerpts, ensure_ascii=False, indent=2)}
+Candidate report excerpt:
+{recovered}
 
-Score each candidate from 1 to 5 for satisfying the definition. A 5 is a clear, specific instance; a 4 is valid with minor ambiguity; 1-3 are invalid or weak. Do not assess recall because gold is non-exhaustive.
-
-Return {{"candidate_scores":[{{"score":1,"rationale":""}}],"mean_judge_score":0.0}}.""",
-    )
-    scores = [
-        max(1, min(5, int(item.get("score", 1))))
-        for item in judged.get("candidate_scores", [])
-        if isinstance(item, dict)
-    ]
-    return {
-        "mean_judge_score": mean(scores) if scores else 0.0,
-        "valid_at_3": sum(score >= 4 for score in scores[:3]) / 3,
-        "strong_at_3": sum(score == 5 for score in scores[:3]) / 3,
-        "exact_quote_compliance": sum(exact_flags[:3]) / 3,
-        "count_compliance": int(len(excerpts) == 3),
-        "candidate_scores": scores,
-        "judge_details": judged,
-    }
+Use this alignment scale: 5 = clear and complete instantiation; 4 = valid instantiation with minor ambiguity or omitted context; 3 = partial or uncertain instantiation; 2 = weakly related but missing central conditions; 1 = not an instantiation. Judge semantic pattern alignment, not wording similarity. The saved example collection is non-exhaustive and must not be considered.""",
+            )
+        )
+    return {"E_text_alignment_scores": scores}
 
 
 def _evaluate_exp2(
@@ -118,70 +102,28 @@ def _evaluate_exp2(
     gold_path = resolve_safe_input(config.project_root, task["gold_e_text_path"], {".txt"})
     tab_path = resolve_safe_input(config.project_root, task["e_tab_path"], {".csv"})
     report_path = resolve_safe_input(config.project_root, task["report_path"], {".txt"})
-    gold_references = extract_saved_excerpts(gold_path)
+    gold_text = extract_saved_excerpt(gold_path)
     csv_text = read_text(tab_path)
     report = read_text(report_path)
-    judged = _judge_call(
+    recovered = recover_exact_span(predicted, report)
+    if recovered is None:
+        return {"E_text_alignment_score": 0}
+    score = _alignment_score(
         client,
-        f"""Provided compact E.tab:
+        f"""Score how well the candidate exact report excerpt describes the same evidence as the provided compact table. The paired reference excerpt is diagnostic evidence showing the intended table-text correspondence, not a wording template. A different exact report passage can receive full credit if it expresses the same entities, metric, interval, values or trend, and pattern behavior.
+
+Provided compact E.tab:
 {csv_text}
 
-Saved reference E.text span(s):
-{json.dumps(gold_references, ensure_ascii=False, indent=2)}
+Paired reference E.text:
+{gold_text}
 
-Candidate E.text:
-{predicted}
+Candidate exact report excerpt:
+{recovered}
 
-Judge whether the candidate describes the same table evidence. Return integer 0 or 1 for entity_correctness, metric_correctness, interval_correctness, and pattern_behavior_correctness, plus alignment_score from 1 to 5 and a short rationale.
-
-Return {{"entity_correctness":0,"metric_correctness":0,"interval_correctness":0,"pattern_behavior_correctness":0,"alignment_score":1,"rationale":""}}.""",
+Use this alignment scale: 5 = describes the same evidence clearly and completely; 4 = same evidence with a minor omission or ambiguity; 3 = partially aligned evidence; 2 = only weakly related evidence; 1 = unrelated to the table evidence. Judge semantic evidence alignment, not lexical overlap with the reference excerpt.""",
     )
-    return {
-        "sequence_overlap": max(
-            (
-                SequenceMatcher(
-                    None, normalized_text(predicted), normalized_text(reference)
-                ).ratio()
-                for reference in gold_references
-            ),
-            default=0.0,
-        ),
-        "token_f1": max(
-            (_token_f1(predicted, reference) for reference in gold_references),
-            default=0.0,
-        ),
-        "exact_quote_compliance": int(recover_exact_span(predicted, report) is not None),
-        "entity_correctness": int(judged.get("entity_correctness", 0)),
-        "metric_correctness": int(judged.get("metric_correctness", 0)),
-        "interval_correctness": int(judged.get("interval_correctness", 0)),
-        "pattern_behavior_correctness": int(
-            judged.get("pattern_behavior_correctness", 0)
-        ),
-        "judge_alignment_score": max(
-            1, min(5, int(judged.get("alignment_score", 1)))
-        ),
-        "judge_details": judged,
-    }
-
-
-def _load_pairs(config: HarnessConfig, examples: list[dict[str, Any]]) -> list[dict[str, str]]:
-    pairs: list[dict[str, str]] = []
-    for example in examples:
-        text_path = resolve_safe_input(config.project_root, example["e_text_path"], {".txt"})
-        tab_path = resolve_safe_input(config.project_root, example["e_tab_path"], {".csv"})
-        pairs.append(
-            {
-                "example_id": example["example_id"],
-                "E.text": extract_saved_excerpt(text_path),
-                "E.tab": read_text(tab_path),
-            }
-        )
-    return pairs
-
-
-def _ready_negatives(pattern_id: str) -> list[dict[str, Any]]:
-    path = Path(__file__).parent / "hard_negatives" / f"{pattern_id}.jsonl"
-    return [record for record in load_jsonl(path) if record.get("status") == "ready"]
+    return {"E_text_alignment_score": score}
 
 
 def _evaluate_exp3(
@@ -193,42 +135,33 @@ def _evaluate_exp3(
     generated = result.get("parsed_output", {})
     canonical_m = read_text(resolve_safe_input(config.project_root, task["m_path"], {".txt"}))
     canonical_t = read_text(resolve_safe_input(config.project_root, task["t_path"], {".txt"}))
-    heldout = _load_pairs(config, task.get("heldout_examples", []))
-    negatives = _ready_negatives(task["pattern_id"])
-    judged = _judge_call(
+    generated_m = str(generated.get("M", ""))
+    generated_t = str(generated.get("T", ""))
+    m_score = _alignment_score(
         client,
-        f"""Canonical pattern card (reference, not a required wording template):
-M:
+        f"""Score the semantic and operational alignment of a generated mathematical pattern definition with the canonical mathematical definition. Equivalent notation and wording are acceptable; a specific example, CSV/table, or non-general rule is not a valid replacement.
+
+Canonical M:
 {canonical_m}
 
-T:
+Generated M:
+{generated_m}
+
+Use this alignment scale: 5 = equivalent operational rule; 4 = substantially aligned with a minor omission or ambiguity; 3 = captures part of the rule; 2 = weakly related; 1 = not aligned.""",
+    )
+    t_score = _alignment_score(
+        client,
+        f"""Score the semantic alignment of a generated natural-language pattern description with the canonical description. Equivalent wording is acceptable; a specific example or vague topical description is not a valid replacement.
+
+Canonical T:
 {canonical_t}
 
-Generated pattern card:
-{json.dumps(generated, ensure_ascii=False, indent=2)}
+Generated T:
+{generated_t}
 
-Held-out positive pairs:
-{json.dumps(heldout, ensure_ascii=False, indent=2)}
-
-Hard negatives (may be empty):
-{json.dumps(negatives, ensure_ascii=False, indent=2)}
-
-Evaluate semantic fidelity rather than wording similarity. Return 1-5 scores for M, T, and operationalizability; held_out_positive_acceptance as a 0-1 rate; hard_negative_rejection as a 0-1 rate or null when there are no ready negatives; and a rationale.
-
-Return {{"M_score":1,"T_score":1,"operationalizability":1,"held_out_positive_acceptance":0.0,"hard_negative_rejection":null,"rationale":""}}.""",
+Use this alignment scale: 5 = equivalent clear description; 4 = substantially aligned with a minor omission or ambiguity; 3 = captures part of the pattern; 2 = weakly related; 1 = not aligned.""",
     )
-    return {
-        "M_judge_score": max(1, min(5, int(judged.get("M_score", 1)))),
-        "T_judge_score": max(1, min(5, int(judged.get("T_score", 1)))),
-        "operationalizability": max(
-            1, min(5, int(judged.get("operationalizability", 1)))
-        ),
-        "held_out_positive_acceptance": float(
-            judged.get("held_out_positive_acceptance", 0.0)
-        ),
-        "hard_negative_rejection": judged.get("hard_negative_rejection"),
-        "judge_details": judged,
-    }
+    return {"M_alignment_score": m_score, "T_alignment_score": t_score}
 
 
 def evaluate_results(
@@ -281,6 +214,11 @@ def summarize_evaluations(path: Path) -> dict[str, Any]:
             for key, value in metrics.items():
                 if isinstance(value, (int, float)) and not isinstance(value, bool):
                     numeric[key].append(float(value))
+                elif isinstance(value, list) and all(
+                    isinstance(item, (int, float)) and not isinstance(item, bool)
+                    for item in value
+                ):
+                    numeric[key].extend(float(item) for item in value)
         summary[f"experiment_{experiment}/setup_{setup}"] = {
             "runs": len(metrics_list),
             "means": {key: mean(values) for key, values in sorted(numeric.items()) if values},

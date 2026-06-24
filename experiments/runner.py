@@ -59,6 +59,11 @@ def run_task(
             parsed = extract_json(response.text)
             if not isinstance(parsed, dict):
                 raise ValueError("Expected a JSON object")
+            if setup == "A" and task["experiment"] == "3":
+                parsed = {
+                    "M": parsed.get("mathematical_definition", ""),
+                    "T": parsed.get("natural_language_description", ""),
+                }
             record["parsed_output"] = parsed
             if "D.text" in inputs:
                 record["selected_chunks"] = ["full-report"]

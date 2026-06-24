@@ -4,13 +4,11 @@ import json
 import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
-from pathlib import Path
 from typing import Any
 
 from .client import OpenAICompatibleClient
 from .config import HarnessConfig
-from .io_utils import extract_json, load_jsonl, read_text, resolve_safe_input
-from .manifest import extract_saved_excerpt
+from .io_utils import extract_json
 from .reports import ReportChunk, chunk_report, recover_exact_span
 
 
@@ -378,24 +376,6 @@ Check entity, metric, year/interval, trend, and pattern behavior. Return {{"scor
         self._trace("ReducerRanker", ["Candidate_E_text", "verification_scores"], output)
         return output
 
-    def _load_pairs(self, examples: list[dict[str, Any]]) -> list[dict[str, str]]:
-        pairs: list[dict[str, str]] = []
-        for example in examples:
-            text_path = resolve_safe_input(
-                self.config.project_root, example["e_text_path"], {".txt"}
-            )
-            tab_path = resolve_safe_input(
-                self.config.project_root, example["e_tab_path"], {".csv"}
-            )
-            pairs.append(
-                {
-                    "example_id": example["example_id"],
-                    "E.text": extract_saved_excerpt(text_path),
-                    "E.tab": read_text(tab_path),
-                }
-            )
-        return pairs
-
     def _pattern_synthesis(self, pairs: list[dict[str, str]]) -> dict[str, str]:
         parsed, raw, usage = self._call_json(
             "You are PatternSynthesisAgent. Infer one recurring structural behavior from paired textual and compact tabular examples. Return a precise operational mathematical definition and a concise description as JSON only.",
@@ -415,28 +395,20 @@ Produce a definition that is neither broader nor narrower than the shared behavi
         )
         return output
 
-    def _hard_negatives(self, pattern_id: str) -> list[dict[str, Any]]:
-        path = Path(__file__).parent / "hard_negatives" / f"{pattern_id}.jsonl"
-        return [record for record in load_jsonl(path) if record.get("status") == "ready"]
-
     def _definition_verifier(
         self,
         definition: dict[str, str],
-        heldout_pairs: list[dict[str, str]],
-        hard_negatives: list[dict[str, Any]],
+        evidence_pairs: list[dict[str, str]],
     ) -> dict[str, Any]:
         parsed, raw, usage = self._call_json(
             "You are DefinitionVerifier, independent of the pattern generator. Evaluate fidelity and operationalizability. Return JSON only.",
             f"""Generated definition:
 {json.dumps(definition, ensure_ascii=False, indent=2)}
 
-Held-out positive pairs:
-{json.dumps(heldout_pairs, ensure_ascii=False, indent=2)}
+Provided paired examples:
+{json.dumps(evidence_pairs, ensure_ascii=False, indent=2)}
 
-Hard negatives (may be empty):
-{json.dumps(hard_negatives, ensure_ascii=False, indent=2)}
-
-Return {{"score":1,"M_score":1,"T_score":1,"operationalizability":1,"heldout_positive_acceptance":0.0,"hard_negative_rejection":null,"matched_conditions":[],"failed_conditions":[],"rationale":""}}. Scores are 1-5 and rates are 0-1. Do not reward polished wording that lacks a discriminative rule.""",
+Return {{"score":1,"M_score":1,"T_score":1,"operationalizability":1,"matched_conditions":[],"failed_conditions":[],"rationale":""}}. Scores are 1-5. Judge only against the supplied pairs and do not reward polished wording that lacks a shared operational rule.""",
         )
         verdict = parsed if isinstance(parsed, dict) else {}
         for key in ("score", "M_score", "T_score", "operationalizability"):
@@ -444,7 +416,7 @@ Return {{"score":1,"M_score":1,"T_score":1,"operationalizability":1,"heldout_pos
         verdict.update({"raw_output": raw, "usage": usage})
         self._trace(
             "DefinitionVerifier",
-            ["M", "T", "heldout_examples", "hard_negatives"],
+            ["M", "T", "paired_examples"],
             verdict,
         )
         return verdict
@@ -560,9 +532,7 @@ Return {{"M":"...","T":"..."}}.""",
             if not pairs:
                 raise ValueError("M/T synthesis requires paired examples in this prototype")
             definition = self._pattern_synthesis(pairs)
-            heldout = self._load_pairs(task.get("heldout_examples", []))
-            hard_negatives = self._hard_negatives(task["pattern_id"])
-            verdict = self._definition_verifier(definition, heldout, hard_negatives)
+            verdict = self._definition_verifier(definition, pairs)
             if self.config.repair_once and verdict["score"] < 4:
                 definition = self._repair(definition, verdict)
             requested = {

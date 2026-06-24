@@ -47,11 +47,11 @@ def chunk_report(text: str, chunk_chars: int, overlap_chars: int) -> list[Report
 
 def recover_exact_span(candidate: str, source: str) -> str | None:
     candidate = candidate.strip()
+    if not candidate:
+        return None
     if candidate in source:
         return candidate
     tokens = candidate.split()
-    if not tokens:
-        return None
     pattern = r"\s+".join(re.escape(token) for token in tokens)
     match = re.search(pattern, source, flags=re.DOTALL)
     return match.group(0) if match else None
