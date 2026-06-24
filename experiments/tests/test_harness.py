@@ -16,6 +16,7 @@ from experiments.manifest import extract_saved_excerpt, extract_saved_excerpts
 from experiments.io_utils import read_text
 from experiments.judge import _evaluate_exp1, _evaluate_exp2, _evaluate_exp3
 from experiments.prompts import build_prompt
+from experiments.robustness import build_parser as build_robustness_parser
 from experiments.robustness import summarize_robustness
 from experiments.io_utils import write_jsonl
 
@@ -339,6 +340,10 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(metrics["best_of_k_mean"], 4.0)
         self.assertEqual(metrics["success_at_k"], 1.0)
         self.assertEqual(metrics["exact_excerpt_retention_rate"], 0.5)
+
+    def test_robustness_defaults_to_three_total_attempts_per_sample(self):
+        args = build_robustness_parser().parse_args(["run"])
+        self.assertEqual(args.max_attempts, 3)
 
 
 if __name__ == "__main__":

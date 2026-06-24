@@ -192,6 +192,9 @@ def evaluate_results(
             "samples_per_condition",
             "sample_index",
             "sample_id",
+            "max_attempts",
+            "attempt_count",
+            "failed_attempts",
         ):
             if name in result:
                 base[name] = result[name]

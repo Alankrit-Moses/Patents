@@ -102,7 +102,7 @@ runner and its result files unchanged:
 
 ```bash
 python -m experiments.robustness --config experiments/config.local.json run \
-  --temperature 0.2 --samples 3 --setup all
+  --temperature 0.2 --samples 3 --max-attempts 3 --setup all
 ```
 
 The command uses the one generator model and endpoint named in the configuration,
@@ -110,6 +110,11 @@ so run it once for each model served by vLLM. Every record includes the model,
 temperature, `sample_index`, and a unique `sample_id`. The ordinary blind judge
 command can judge the resulting JSONL; sampling metadata is carried into the
 evaluation JSONL:
+
+Each requested sample is retried up to three total attempts by default. Only the
+first successful attempt supplies that logical sample's output. Failed-attempt
+errors and the attempt count remain attached to the record for auditability; if
+all attempts fail, the logical sample is recorded as an error.
 
 ```bash
 python -m experiments.cli --config experiments/config.judge-openai.json judge \

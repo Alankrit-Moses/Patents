@@ -44,6 +44,8 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
         raise ValueError("Robustness runs require --samples >= 2")
     if args.temperature <= 0:
         raise ValueError("Robustness runs require --temperature > 0")
+    if args.max_attempts < 1:
+        raise ValueError("--max-attempts must be at least 1")
 
     manifest = build_manifest(config)
     tasks = _filter_tasks(build_tasks(manifest, config), args)
@@ -71,7 +73,27 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
     for task in tasks:
         for setup in setups:
             for sample_index in range(args.samples):
-                record = run_task(task, setup, sampled_config, client)
+                failed_attempts: list[dict[str, Any]] = []
+                record: dict[str, Any] | None = None
+                for attempt_index in range(args.max_attempts):
+                    attempted = run_task(task, setup, sampled_config, client)
+                    if not attempted["errors"]:
+                        record = attempted
+                        break
+                    failed_attempts.append(
+                        {
+                            "attempt": attempt_index + 1,
+                            "errors": attempted["errors"],
+                        }
+                    )
+                    record = attempted
+                    if attempt_index + 1 < args.max_attempts:
+                        print(
+                            f"{task['task_id']} setup={setup} "
+                            f"sample={sample_index + 1}/{args.samples} "
+                            f"attempt={attempt_index + 1}/{args.max_attempts} retry"
+                        )
+                assert record is not None
                 record.update(
                     {
                         "run_type": "stochastic_robustness",
@@ -82,6 +104,9 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
                         "samples_per_condition": args.samples,
                         "sample_index": sample_index,
                         "sample_id": f"{task['task_id']}:{setup}:sample-{sample_index + 1}",
+                        "max_attempts": args.max_attempts,
+                        "attempt_count": len(failed_attempts) + (0 if record["errors"] else 1),
+                        "failed_attempts": failed_attempts,
                     }
                 )
                 append_jsonl(output_path, record)
@@ -173,6 +198,12 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser = subparsers.add_parser("run", help="Generate repeated stochastic samples")
     run_parser.add_argument("--temperature", type=float, default=0.2)
     run_parser.add_argument("--samples", type=int, default=3)
+    run_parser.add_argument(
+        "--max-attempts",
+        type=int,
+        default=3,
+        help="Maximum total attempts for each logical sample (default: 3)",
+    )
     run_parser.add_argument("--setup", choices=["A", "B", "C", "all"], default="all")
     run_parser.add_argument("--experiment", choices=["1", "2", "3", "all"], default="all")
     run_parser.add_argument("--pattern", help="Filter by pattern ID, e.g. P1")
