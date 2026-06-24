@@ -92,3 +92,38 @@ Every generation record contains the experiment, setup, pattern, framework query
 Evaluation uses alignment scores only. Experiment 1 assigns an independent score to each requested E.text output against M. Experiment 2 scores E.text against its paired compact E.tab and diagnostic gold E.text. Experiment 3 independently scores generated M and T against their canonical components. Alignment scores are 1-5; an E.text output receives 0 without an LLM judge call when it is missing or cannot be recovered verbatim from the report.
 
 Single-shot prompts are never silently truncated. If the configured context limit is too small for a full report, the run logs an error so that comparisons are not distorted by different report slices.
+
+## Supplementary stochastic robustness runs
+
+Keep the main reported experiment deterministic (`generator.temperature: 0.0`). The
+separate robustness entry point repeats each selected task/setup at a non-zero
+temperature and writes to `experiments/artifacts/robustness/`, leaving the main
+runner and its result files unchanged:
+
+```bash
+python -m experiments.robustness --config experiments/config.local.json run \
+  --temperature 0.2 --samples 3 --setup all
+```
+
+The command uses the one generator model and endpoint named in the configuration,
+so run it once for each model served by vLLM. Every record includes the model,
+temperature, `sample_index`, and a unique `sample_id`. The ordinary blind judge
+command can judge the resulting JSONL; sampling metadata is carried into the
+evaluation JSONL:
+
+```bash
+python -m experiments.cli --config experiments/config.judge-openai.json judge \
+  --results experiments/artifacts/robustness/results-MODEL-TIMESTAMP.jsonl
+```
+
+Summarize that judged file with:
+
+```bash
+python -m experiments.robustness summarize \
+  --evaluations experiments/artifacts/evaluations/evaluations-TIMESTAMP.jsonl
+```
+
+The robustness summary reports mean alignment, population standard deviation,
+best-of-k mean, success@k at score 4 by default, and exact-excerpt retention for
+Experiments 1 and 2. Filters such as `--experiment`, `--pattern`, `--task-id`, and
+`--setup` are available on the robustness `run` command.

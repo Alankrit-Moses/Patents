@@ -182,6 +182,19 @@ def evaluate_results(
             "metrics": {},
             "errors": [],
         }
+        # Preserve optional sampling metadata so robustness evaluations can be
+        # grouped without changing deterministic result records.
+        for name in (
+            "run_type",
+            "robustness_run_id",
+            "generator_model",
+            "temperature",
+            "samples_per_condition",
+            "sample_index",
+            "sample_id",
+        ):
+            if name in result:
+                base[name] = result[name]
         try:
             task = _find_task(tasks, result)
             experiment = str(result["experiment"])

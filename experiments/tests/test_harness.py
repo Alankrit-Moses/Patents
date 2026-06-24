@@ -16,6 +16,8 @@ from experiments.manifest import extract_saved_excerpt, extract_saved_excerpts
 from experiments.io_utils import read_text
 from experiments.judge import _evaluate_exp1, _evaluate_exp2, _evaluate_exp3
 from experiments.prompts import build_prompt
+from experiments.robustness import summarize_robustness
+from experiments.io_utils import write_jsonl
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -302,6 +304,41 @@ class HarnessTests(unittest.TestCase):
                             recover_exact_span(excerpt, reports[example.report_id.casefold()]),
                             example.example_id,
                         )
+
+    def test_robustness_summary_reports_variance_best_of_k_and_retention(self):
+        with TemporaryDirectory(dir=ROOT) as temp_dir:
+            path = Path(temp_dir) / "evaluations.jsonl"
+            write_jsonl(
+                path,
+                [
+                    {
+                        "task_id": "task-1",
+                        "experiment": "2",
+                        "setup": "A",
+                        "pattern_id": "P1",
+                        "sample_index": 0,
+                        "metrics": {"E_text_alignment_score": 0},
+                        "errors": [],
+                    },
+                    {
+                        "task_id": "task-1",
+                        "experiment": "2",
+                        "setup": "A",
+                        "pattern_id": "P1",
+                        "sample_index": 1,
+                        "metrics": {"E_text_alignment_score": 4},
+                        "errors": [],
+                    },
+                ],
+            )
+            summary = summarize_robustness(path)
+        metrics = summary["groups"][
+            "experiment_2/setup_A/pattern_P1/E_text_alignment_score"
+        ]
+        self.assertEqual(metrics["mean"], 2.0)
+        self.assertEqual(metrics["best_of_k_mean"], 4.0)
+        self.assertEqual(metrics["success_at_k"], 1.0)
+        self.assertEqual(metrics["exact_excerpt_retention_rate"], 0.5)
 
 
 if __name__ == "__main__":
