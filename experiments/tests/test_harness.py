@@ -118,7 +118,9 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn("E.text", prompt_a)
         self.assertNotIn('"M"', prompt_a)
         self.assertNotIn('"T"', prompt_a)
-        self.assertIn("criterion itself is not an eligible passage", prompt_a)
+        self.assertIn("Do not paraphrase or return the criterion itself", prompt_a)
+        self.assertNotIn("boundary conditions", prompt_a.casefold())
+        self.assertNotIn("operational", prompt_a.casefold())
         prompt_b = build_prompt("B", task, inputs)[-1]["content"]
         self.assertIn("<framework_guide>", prompt_b)
         self.assertIn("<framework_query>", prompt_b)
@@ -146,6 +148,16 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn('"M"', exp3_a)
         self.assertNotIn('"T"', exp3_a)
         self.assertIn('"mathematical_definition"', exp3_a)
+        self.assertNotIn("excluding superficially", exp3_a)
+        self.assertNotIn("accept the examples", exp3_a)
+        exp2_a = build_prompt(
+            "A",
+            {"experiment": "2", "framework_query": "unused"},
+            {"E.tab": "year,value\n2020,1", "D.text": "Example report passage."},
+        )[-1]["content"]
+        self.assertNotIn("entities, metric", exp2_a)
+        self.assertNotIn("E.tab", exp2_a)
+        self.assertIn("describes the same evidence as the table", exp2_a)
 
     def test_exp1_scores_each_requested_excerpt_and_hard_zeros_non_excerpts(self):
         with TemporaryDirectory(dir=ROOT) as temp_dir:

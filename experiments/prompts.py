@@ -17,7 +17,7 @@ FRAMEWORK_GUIDE = """The modular framework represents data as D=(D.text,D.tab) a
 - Never use an unavailable or irrelevant component. Return only target components.
 
 Read and decompose queries internally as follows:
-1. D:(D.text,_), P:(M,_,{(?,_)[2]}) means use known M to find two exact E.text excerpts in D.text. D.tab, T, and E.tab are not used.
+1. D:(D.text,_), P:(M,_,{(?,_)[2]}) means use known M to find two exact E.text excerpts in D.text, while D.tab, T, and E.tab are not used.
 2. D:(D.text,_), P:(_,_,{(?,E.tab)}) means summarize the provided E.tab internally, search D.text for matching evidence, and return one exact E.text. Do not create E.tab.
 3. D:(_,_), P:(?,?,{(E1.text,E1.tab),...}) means compare the provided paired examples, infer their shared rule, and return M and T.
 These decompositions are reasoning guidance inside one model call, not additional tools or data."""
@@ -101,27 +101,23 @@ def _strict_json_instruction(experiment: str, setup: str = "B") -> str:
 def build_setup_a_prompt(task: dict[str, Any], inputs: dict[str, Any]) -> list[dict[str, str]]:
     experiment = task["experiment"]
     if experiment == "1":
-        user = f"""Find three passages in a report that satisfy a mathematical criterion. The criterion is given first:
+        user = f"""Below are a mathematical criterion and a report. Return three passages from the report that match the criterion.
 
 {inputs['M']}
 
-The report follows:
-
 {inputs['D.text']}
 
-{EXACT_EXCERPT_RULE} The mathematical criterion itself is not an eligible passage.
+Copy the passages exactly from the report. Do not paraphrase or return the criterion itself.
 
 {_strict_json_instruction(experiment, 'A')}"""
     elif experiment == "2":
-        user = f"""A compact table is given first. Find the single passage in the following report that best describes the same entities, metric, years or interval, and behavior.
+        user = f"""Below are a compact table and a report. Return the passage from the report that describes the same evidence as the table.
 
 {inputs['E.tab']}
 
-The report follows:
-
 {inputs['D.text']}
 
-{EXACT_EXCERPT_RULE}
+Copy the passage exactly from the report. Do not paraphrase.
 
 {_strict_json_instruction(experiment, 'A')}"""
     elif experiment == "3":
@@ -132,7 +128,7 @@ The report follows:
                 f"Its compact table is:\n{pair['E.tab']}"
             )
         rendered = "\n\n".join(rendered_pairs)
-        user = f"""Infer the recurring analytical pattern illustrated by the following paired report passages and compact tables. Produce a precise mathematical definition and a concise natural-language description. The rule should accept the examples while excluding superficially similar but structurally different cases.
+        user = f"""Below are paired report passages and compact tables. Return a mathematical definition and a natural-language description of the recurring behavior in the pairs.
 
 {rendered}
 
