@@ -1,0 +1,72 @@
+{"task_id": "exp1-P1-decarbonizing", "experiment": "1", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-decarbonizing", "experiment": "1", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-decarbonizing", "experiment": "1", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-genAI", "experiment": "1", "setup": "A", "pattern_id": "P1", "metrics": {"E_text_alignment_scores": [0, 0, 0]}, "errors": []}
+{"task_id": "exp1-P1-genAI", "experiment": "1", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-genAI", "experiment": "1", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-ilmenite", "experiment": "1", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-ilmenite", "experiment": "1", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P1-ilmenite", "experiment": "1", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E1", "experiment": "2", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E1", "experiment": "2", "setup": "B", "pattern_id": "P1", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P1-E1", "experiment": "2", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E2", "experiment": "2", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E2", "experiment": "2", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E2", "experiment": "2", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E3", "experiment": "2", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E3", "experiment": "2", "setup": "B", "pattern_id": "P1", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P1-E3", "experiment": "2", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E4", "experiment": "2", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E4", "experiment": "2", "setup": "B", "pattern_id": "P1", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P1-E4", "experiment": "2", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E5", "experiment": "2", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E5", "experiment": "2", "setup": "B", "pattern_id": "P1", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P1-E5", "experiment": "2", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E6", "experiment": "2", "setup": "A", "pattern_id": "P1", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P1-E6", "experiment": "2", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P1-E6", "experiment": "2", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold1", "experiment": "3", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold1", "experiment": "3", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold1", "experiment": "3", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold2", "experiment": "3", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold2", "experiment": "3", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold2", "experiment": "3", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold3", "experiment": "3", "setup": "A", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold3", "experiment": "3", "setup": "B", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P1-fold3", "experiment": "3", "setup": "C", "pattern_id": "P1", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-decarbonizing", "experiment": "1", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-decarbonizing", "experiment": "1", "setup": "B", "pattern_id": "P2", "metrics": {"E_text_alignment_scores": [0, 0, 0]}, "errors": []}
+{"task_id": "exp1-P2-decarbonizing", "experiment": "1", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-genAI", "experiment": "1", "setup": "A", "pattern_id": "P2", "metrics": {"E_text_alignment_scores": [0, 0, 0]}, "errors": []}
+{"task_id": "exp1-P2-genAI", "experiment": "1", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-genAI", "experiment": "1", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-ilmenite", "experiment": "1", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-ilmenite", "experiment": "1", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp1-P2-ilmenite", "experiment": "1", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E1", "experiment": "2", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E1", "experiment": "2", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E1", "experiment": "2", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E2", "experiment": "2", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E2", "experiment": "2", "setup": "B", "pattern_id": "P2", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P2-E2", "experiment": "2", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E3", "experiment": "2", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E3", "experiment": "2", "setup": "B", "pattern_id": "P2", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P2-E3", "experiment": "2", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E4", "experiment": "2", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E4", "experiment": "2", "setup": "B", "pattern_id": "P2", "metrics": {"E_text_alignment_score": 0}, "errors": []}
+{"task_id": "exp2-P2-E4", "experiment": "2", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E5", "experiment": "2", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E5", "experiment": "2", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E5", "experiment": "2", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E6", "experiment": "2", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E6", "experiment": "2", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp2-P2-E6", "experiment": "2", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold1", "experiment": "3", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold1", "experiment": "3", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold1", "experiment": "3", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold2", "experiment": "3", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold2", "experiment": "3", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold2", "experiment": "3", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold3", "experiment": "3", "setup": "A", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold3", "experiment": "3", "setup": "B", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
+{"task_id": "exp3-P2-fold3", "experiment": "3", "setup": "C", "pattern_id": "P2", "metrics": {}, "errors": ["<urlopen error [Errno 11001] getaddrinfo failed>"]}
