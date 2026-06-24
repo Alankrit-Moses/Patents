@@ -39,6 +39,7 @@ class OpenAICompatibleClient:
             "messages": messages,
             "temperature": self.config.temperature if temperature is None else temperature,
             "max_tokens": self.config.max_output_tokens if max_tokens is None else max_tokens,
+            "response_format": {"type": "json_object"},
         }
         body = json.dumps(payload).encode("utf-8")
         request = urllib.request.Request(
