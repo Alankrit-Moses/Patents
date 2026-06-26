@@ -1,32 +1,25 @@
-"""Extract CAGR comparison for selected GenAI modes, 2021-2023."""
+"""Extract growth divergence for Korea and Japan in GenAI, 2014-2023."""
 
 import argparse
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _common import emit_result, extract_cagr_comparison, find_repository_root
+from _common import build_divergence_pair, emit_result
 
 
 def extract() -> dict:
-    root = find_repository_root(Path(__file__))
-    workbook = root / "tables" / "genAI" / "wipo-pub-2007-tech1.xlsx"
-    names = ["Molecules, Genes, Proteins", "Speech, Voice, Music"]
-    rows = extract_cagr_comparison(
-        workbook_path=workbook,
-        start_year=2021,
+    rows = build_divergence_pair(
+        first_entity="Republic of Korea",
+        second_entity="Japan",
+        start_year=2014,
+        first_start_count=57,
+        second_start_count=147,
         end_year=2023,
-        sheet_specs=[{
-            "sheet_name": "GenAI total, models and modes",
-            "header_row": 1,
-            "family_column": "PATENT_FAMILY_ID",
-            "year_column": "PUBLICATION_YEAR",
-            "entities": [
-                {"entity": name, "filters": {"TECHNOLOGY_NAME": name}} for name in names
-            ],
-        }],
+        first_end_count=1054,
+        second_end_count=399,
     )
-    return {"instance_id": "P2-E3", "metric": "CAGR", "tabular_example": rows}
+    return {"instance_id": "P2-E3", "metric": "gap_delta", "tabular_example": rows}
 
 
 if __name__ == "__main__":

@@ -1,12 +1,17 @@
-# Pattern 2 CAGR extractors
+# Pattern 2 growth-divergence extractors
 
-Each Python script reconstructs a comparative-growth `E.tab` table from the corresponding workbook. The comparison metric is CAGR calculated from distinct patent-family counts over one shared interval.
+Each Python script reconstructs a growth-divergence `E.tab` table for one example pair. The comparison metric is `gap_delta`, calculated as:
+
+```text
+gap_delta = |end_count(entity_a) - end_count(entity_b)| - |start_count(entity_a) - start_count(entity_b)|
+```
+
+A positive `gap_delta` confirms that the two time series moved farther apart over the shared interval.
 
 Requirements:
 
 ```text
 Python 3.10+
-openpyxl
 ```
 
 Run without `--output` to print JSON. Supply a `.csv` output path to save the readable comparison table.

@@ -1,7 +1,8 @@
 ID: P2-E4
-Pattern: Comparative Growth
+Pattern: Growth Divergence
 Report: Patent Landscape Report - Generative Artificial Intelligence
 Source: reports/text versions/genAI.txt, lines 5317-5321
 Comparison window used for E.tab: 2021-2023
+Pair: Republic of Korea vs Japan
 
 In both Japan and the Republic of Korea, speech/voice/music is a very important GenAI mode in terms of patent families. However, patent growth rates differ significantly between the two Asian countries. While the growth of GenAI patent families in the Republic of Korea has been very dynamic across all modes in recent years, Japan's GenAI patent families peaked in 2020/2021 and have been declining since then.

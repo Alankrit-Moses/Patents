@@ -114,7 +114,8 @@
   "reports": {
     "decarbonizing": "reports/text versions/decarbonizing.txt",
     "genAI": "reports/text versions/genAI.txt",
-    "ilmenite": "reports/text versions/ilmenite.txt"
+    "ilmenite": "reports/text versions/ilmenite.txt",
+    "OHS": "reports/text versions/OHS.txt"
   },
   "warnings": []
 }

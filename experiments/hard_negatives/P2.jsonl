@@ -1,5 +1,5 @@
-{"id":"P2-neg-ranking","pattern_id":"P2","category":"absolute_ranking","status":"scaffold","E.text":"","E.tab":"","notes":"Add an absolute-size ranking that does not compare CAGR over a shared interval."}
+{"id":"P2-neg-ranking","pattern_id":"P2","category":"absolute_ranking","status":"scaffold","E.text":"","E.tab":"","notes":"Add an absolute-size ranking that does not show a widening gap over a shared interval."}
 {"id":"P2-neg-intervals","pattern_id":"P2","category":"different_comparison_intervals","status":"scaffold","E.text":"","E.tab":"","notes":"Add entities compared over different start/end intervals."}
-{"id":"P2-neg-zero-start","pattern_id":"P2","category":"zero_start_cagr","status":"scaffold","E.text":"","E.tab":"","notes":"Add a case with a zero starting value, making CAGR undefined."}
+{"id":"P2-neg-equal-gap","pattern_id":"P2","category":"no_gap_widening","status":"scaffold","E.text":"","E.tab":"","notes":"Add a case where two entities change over time but the pairwise gap stays equal or narrows."}
 {"id":"P2-neg-wrong-metric","pattern_id":"P2","category":"same_entity_wrong_metric","status":"scaffold","E.text":"","E.tab":"","notes":"Add a comparison that changes the metric or aggregation between entities."}
-{"id":"P2-neg-final-count","pattern_id":"P2","category":"larger_final_count_not_higher_growth","status":"scaffold","E.text":"","E.tab":"","notes":"Add a larger final count whose CAGR is not the higher CAGR."}
+{"id":"P2-neg-final-count","pattern_id":"P2","category":"larger_final_count_without_divergence","status":"scaffold","E.text":"","E.tab":"","notes":"Add a larger final count that does not correspond to a widened pairwise gap."}

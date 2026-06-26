@@ -1,6 +1,3 @@
-entity,start_year,end_year,cagr_percent
-China,2014,2023,49.8
-India,2014,2023,55.8
-Republic of Korea,2014,2023,38.3
-Japan,2014,2023,11.7
-United Kingdom,2014,2023,13.2
+entity,pair_entity,start_year,start_count,end_year,end_count,start_gap,end_gap,gap_delta
+China,United Kingdom,2014,278,2023,10591,243,10484,10241
+United Kingdom,China,2014,35,2023,107,243,10484,10241

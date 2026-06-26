@@ -1,5 +1,5 @@
 ID: P2-E6
-Pattern: Comparative Growth
+Pattern: Growth Divergence
 Report: Patent Landscape Report: Ilmenite
 Primary source: reports/text versions/ilmenite.txt, lines 4174-4178
 Contrast source: reports/text versions/ilmenite.txt, lines 4186-4189

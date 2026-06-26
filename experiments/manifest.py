@@ -11,6 +11,11 @@ from .io_utils import read_text, relative_path, write_jsonl
 
 EXAMPLE_ID_RE = re.compile(r"^(P\d+-E\d+)", re.IGNORECASE)
 
+EXP1_REPORTS_BY_PATTERN = {
+    "P1": ("decarbonizing", "genAI", "ilmenite"),
+    "P2": ("decarbonizing", "genAI", "OHS"),
+}
+
 
 @dataclass
 class ExampleRecord:
@@ -179,7 +184,11 @@ def build_tasks(manifest: Manifest, config: HarnessConfig) -> list[dict[str, Any
     report_lookup = {name.casefold(): path for name, path in manifest.reports.items()}
 
     for pattern in manifest.patterns:
-        for report_id in sorted(manifest.reports, key=str.casefold):
+        exp1_reports = EXP1_REPORTS_BY_PATTERN.get(
+            pattern.pattern_id,
+            tuple(sorted(manifest.reports, key=str.casefold)),
+        )
+        for report_id in exp1_reports:
             report_path = report_lookup.get(report_id.casefold())
             if not report_path:
                 continue

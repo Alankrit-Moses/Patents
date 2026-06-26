@@ -1,3 +1,3 @@
-entity,start_year,end_year,cagr_percent
-Titanium dioxide production,2002,2019,9.2
-Titanium metal production,2002,2019,0.9
+entity,pair_entity,start_year,start_count,end_year,end_count,start_gap,end_gap,gap_delta
+Titanium dioxide production,Titanium metal production,2002,9,2019,40,3,33,30
+Titanium metal production,Titanium dioxide production,2002,6,2019,7,3,33,30

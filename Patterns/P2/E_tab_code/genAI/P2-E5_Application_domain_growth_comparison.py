@@ -1,46 +1,25 @@
-"""Extract CAGR comparison for selected GenAI application domains, 2021-2023."""
+"""Extract growth divergence for Korea and the United Kingdom in GenAI, 2014-2023."""
 
 import argparse
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from _common import emit_result, extract_cagr_comparison, find_repository_root
+from _common import build_divergence_pair, emit_result
 
 
 def extract() -> dict:
-    root = find_repository_root(Path(__file__))
-    workbook = root / "tables" / "genAI" / "wipo-pub-2007-tech1.xlsx"
-    applications = [
-        ("Energy management", "EnergyManagement_2010-2023"),
-        ("Agriculture", "Agriculture_2010-2024"),
-        ("Life sciences", "Life and medical sciences"),
-        ("Security", "Security"),
-        ("Physical sciences and engineering", "Physical sciences and engineering"),
-        ("Telecommunications", "Telecommunications_2010-2023"),
-        ("Military", "Military"),
-        ("Arts and humanities", "Arts and humanities"),
-        (
-            "Industrial property, law, social and behavioral sciences",
-            "Industrial Property, Law, social and behavioral sciences",
-        ),
-    ]
-    rows = extract_cagr_comparison(
-        workbook_path=workbook,
-        start_year=2021,
+    rows = build_divergence_pair(
+        first_entity="Republic of Korea",
+        second_entity="United Kingdom",
+        start_year=2014,
+        first_start_count=57,
+        second_start_count=35,
         end_year=2023,
-        sheet_specs=[{
-            "sheet_name": "GenAI applications",
-            "header_row": 1,
-            "family_column": "PATENT_FAMILY_ID",
-            "year_column": "PUBLICATION_YEAR",
-            "entities": [
-                {"entity": label, "filters": {"TECHNOLOGY_NAME": workbook_label}}
-                for label, workbook_label in applications
-            ],
-        }],
+        first_end_count=1054,
+        second_end_count=107,
     )
-    return {"instance_id": "P2-E5", "metric": "CAGR", "tabular_example": rows}
+    return {"instance_id": "P2-E5", "metric": "gap_delta", "tabular_example": rows}
 
 
 if __name__ == "__main__":

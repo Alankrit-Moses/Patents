@@ -1,7 +1,8 @@
 ID: P2-E5
-Pattern: Comparative Growth
+Pattern: Growth Divergence
 Report: Patent Landscape Report - Generative Artificial Intelligence
-Source: reports/text versions/genAI.txt, lines 5680-5686
-Comparison window used for E.tab: 2021-2023
+Source: reports/text versions/genAI.txt, lines 2885-2893
+Comparison window used for E.tab: 2014-2023
+Pair: Republic of Korea vs United Kingdom
 
-In general, patent growth has been high in all applications since 2014. However, over the last three years there have been diverging growth trends with very high growth rates in both smaller application areas such as agriculture and energy management and large fields such as life sciences, security and physical sciences/engineering. In contrast, the number of patent families has stagnated or even declined in certain application areas such as telecommunications, military, arts and humanities or industrial property/law/social and behavioral sciences (Figure 27).
+Figure 17 gives an overview of the current Chinese leadership in GenAI research activities. Between 2014 and 2023, China achieved a world share of almost 70% of all patent family publications in GenAI globally (Y-axis). Even more impressive is that China has also reached very high average growth rates of patent family publications (50% per year, X-axis) in that period among the top inventor locations despite its already large GenAI patent portfolio. Only India had even higher growth rates in GenAI patent family publications (56% per year). The Republic of Korea has also achieved high growth rates in their GenAI patent families since 2014. By contrast, patent families from Japan and the UK have only risen by a little more than 10% per year on average.

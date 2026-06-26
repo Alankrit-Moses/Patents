@@ -1,17 +1,17 @@
 Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.
 
-For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:
+For a shared interval [t_start, t_end], a growth divergence pattern holds when there exist two entities ei and ej such that both entities are measured using the same attribute, aggregation method, start time, and end time, and their absolute gap increases meaningfully over the interval:
 
-CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1
+|v(ei, m, t_end) - v(ej, m, t_end)| > |v(ei, m, t_start) - v(ej, m, t_start)| + epsilon
 
-A comparative growth pattern holds when there exist two entities ei and ej such that:
+where epsilon >= 0 is a threshold for a meaningful increase in separation.
 
-CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon
+Equivalently, define the pairwise gap between ei and ej at time t as:
 
-where epsilon >= 0 is a threshold for a meaningful growth-rate difference.
+gap(ei, ej, m, t) = |v(ei, m, t) - v(ej, m, t)|
 
-An entity ei is a growth leader within E when:
+Then growth divergence holds when:
 
-CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).
+gap(ei, ej, m, t_end) - gap(ei, ej, m, t_start) > epsilon
 
-All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.
+All compared entities must use the same attribute, aggregation method, start time, and end time. Entities with missing start or end values cannot be used to establish the pattern.
