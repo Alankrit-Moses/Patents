@@ -15,6 +15,7 @@ from .config import HarnessConfig, load_config
 from .io_utils import append_jsonl, load_jsonl
 from .manifest import build_manifest, build_tasks, save_manifest_and_tasks
 from .runner import run_task
+from .runner_v2 import run_task_v2
 
 
 def _timestamp() -> str:
@@ -55,9 +56,18 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
     save_manifest_and_tasks(manifest, build_tasks(manifest, config), config.output_dir)
 
     sampled_generator = replace(config.generator, temperature=args.temperature)
-    sampled_config = replace(config, generator=sampled_generator)
+    sampled_config = replace(
+        config,
+        generator=sampled_generator,
+        context_limit_tokens=args.context_limit_tokens or config.context_limit_tokens,
+    )
     client = OpenAICompatibleClient(sampled_generator)
-    setups = ["A", "B", "C"] if args.setup == "all" else [args.setup.upper()]
+    if args.prompt_version == "v2":
+        if args.setup == "C":
+            raise ValueError("V2 robustness supports only setup A or B")
+        setups = ["A", "B"] if args.setup == "all" else [args.setup.upper()]
+    else:
+        setups = ["A", "B", "C"] if args.setup == "all" else [args.setup.upper()]
     output_path = (
         Path(args.output).resolve()
         if args.output
@@ -76,7 +86,16 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
                 failed_attempts: list[dict[str, Any]] = []
                 record: dict[str, Any] | None = None
                 for attempt_index in range(args.max_attempts):
-                    attempted = run_task(task, setup, sampled_config, client)
+                    if args.prompt_version == "v2":
+                        attempted = run_task_v2(
+                            task,
+                            setup,
+                            sampled_config,
+                            client,
+                            args.b_variant,
+                        )
+                    else:
+                        attempted = run_task(task, setup, sampled_config, client)
                     if not attempted["errors"]:
                         record = attempted
                         break
@@ -98,6 +117,9 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
                     {
                         "run_type": "stochastic_robustness",
                         "robustness_run_id": run_id,
+                        "robustness_prompt_version": args.prompt_version,
+                        "b_variant": args.b_variant if args.prompt_version == "v2" else None,
+                        "context_limit_tokens": sampled_config.context_limit_tokens,
                         "generator_model": sampled_generator.model,
                         "generator_base_url": sampled_generator.base_url,
                         "temperature": args.temperature,
@@ -199,12 +221,29 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--temperature", type=float, default=0.2)
     run_parser.add_argument("--samples", type=int, default=3)
     run_parser.add_argument(
+        "--context-limit-tokens",
+        type=int,
+        help="Override context_limit_tokens for prompt-size checks",
+    )
+    run_parser.add_argument(
         "--max-attempts",
         type=int,
         default=3,
         help="Maximum total attempts for each logical sample (default: 3)",
     )
     run_parser.add_argument("--setup", choices=["A", "B", "C", "all"], default="all")
+    run_parser.add_argument(
+        "--prompt-version",
+        choices=["v1", "v2"],
+        default="v1",
+        help="Prompt runner to use for A/B robustness samples",
+    )
+    run_parser.add_argument(
+        "--b-variant",
+        choices=["query-only", "resolved"],
+        default="query-only",
+        help="Setup B v2 prompt variant; ignored for v1 and setup A",
+    )
     run_parser.add_argument("--experiment", choices=["1", "2", "3", "all"], default="all")
     run_parser.add_argument("--pattern", help="Filter by pattern ID, e.g. P1")
     run_parser.add_argument("--task-id", help="Run one task ID")

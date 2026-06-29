@@ -39,20 +39,26 @@ class OpenAICompatibleClient:
             "messages": messages,
             "temperature": self.config.temperature if temperature is None else temperature,
             "max_tokens": self.config.max_output_tokens if max_tokens is None else max_tokens,
-            "response_format": {"type": "json_object"},
         }
+        if self.config.response_format is not None:
+            payload["response_format"] = self.config.response_format
+        payload.update(self.config.extra_body)
         body = json.dumps(payload).encode("utf-8")
+        headers = {
+            "Authorization": f"Bearer {self.config.resolved_api_key()}",
+            "Content-Type": "application/json",
+        }
+        headers.update(self.config.extra_headers)
         request = urllib.request.Request(
             self.url,
             data=body,
-            headers={
-                "Authorization": f"Bearer {self.config.resolved_api_key()}",
-                "Content-Type": "application/json",
-            },
+            headers=headers,
             method="POST",
         )
         last_error: Exception | None = None
-        for attempt in range(2):
+        sleep_seconds = self.config.retry_initial_sleep_seconds
+        retry_attempts = max(1, self.config.retry_attempts)
+        for attempt in range(retry_attempts):
             try:
                 with urllib.request.urlopen(request, timeout=self.config.timeout_seconds) as response:
                     raw = json.loads(response.read().decode("utf-8"))
@@ -61,12 +67,13 @@ class OpenAICompatibleClient:
             except urllib.error.HTTPError as error:
                 detail = error.read().decode("utf-8", errors="replace")
                 last_error = RuntimeError(f"LLM API HTTP {error.code}: {detail}")
-                if error.code not in {429, 500, 502, 503, 504} or attempt == 1:
+                if error.code not in {429, 500, 502, 503, 504} or attempt == retry_attempts - 1:
                     raise last_error
             except (urllib.error.URLError, TimeoutError) as error:
                 last_error = error
-                if attempt == 1:
+                if attempt == retry_attempts - 1:
                     raise
-            time.sleep(1.0)
+            time.sleep(sleep_seconds)
+            sleep_seconds *= self.config.retry_backoff_factor
         assert last_error is not None
         raise last_error

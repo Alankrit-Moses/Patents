@@ -187,6 +187,9 @@ def evaluate_results(
         for name in (
             "run_type",
             "robustness_run_id",
+            "robustness_prompt_version",
+            "b_variant",
+            "context_limit_tokens",
             "generator_model",
             "temperature",
             "samples_per_condition",

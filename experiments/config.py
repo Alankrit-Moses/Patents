@@ -16,6 +16,12 @@ class EndpointConfig:
     temperature: float = 0.0
     max_output_tokens: int = 2048
     timeout_seconds: int = 180
+    response_format: dict[str, Any] | None = field(default_factory=lambda: {"type": "json_object"})
+    extra_headers: dict[str, str] = field(default_factory=dict)
+    extra_body: dict[str, Any] = field(default_factory=dict)
+    retry_attempts: int = 2
+    retry_initial_sleep_seconds: float = 1.0
+    retry_backoff_factor: float = 2.0
 
     def resolved_api_key(self) -> str:
         return self.api_key or os.getenv(self.api_key_env, "local")
