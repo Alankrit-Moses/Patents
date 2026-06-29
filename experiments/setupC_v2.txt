@@ -1,0 +1,121 @@
+Setup C v2: Agentic Framework Pipeline
+
+Setup C v2 is not a single prompt. It is an agentic execution loop driven by a
+top-level Framework Agent and a small set of specialist agents.
+
+Goal
+----
+Setup C v2 tests whether the framework can act as an executable coordination
+language. The query is written in framework notation, and the Framework Agent
+uses that notation to decide which specialist to invoke next.
+
+Core framework semantics
+------------------------
+D = (D.text, D.tab)
+P = (M, T, E)
+E = {(E.text_i, E.tab_i)}
+
+M is the mathematical definition of the pattern.
+T is the textual description of the pattern.
+E is the set of example pairs.
+E.text is a textual instance found in D.text.
+E.tab is a tabular instance found in D.tab or supplied compact tabular evidence.
+
+Operators:
+- _ marks a component or data source as irrelevant or unavailable.
+- ? marks the exact variable slot to solve.
+- [n] marks a fixed number of results. If omitted, the count defaults to 1.
+
+The ? marker stays inside the query slot being solved. For example:
+
+D:(D.text,_)
+P1:(_,_,{(?,E.tab_1),(?,E.tab_2),(?,E.tab_3)})
+
+This means there are three E.text variables to solve, each paired with one
+provided E.tab instance. It is not represented as a detached target block.
+
+Framework Agent
+---------------
+The Framework Agent receives:
+- the full framework specification,
+- the exact framework query,
+- a parsed view of variable, concrete, and irrelevant slots,
+- an inventory of available materials,
+- the current blackboard,
+- and a catalog of available specialist agents.
+
+The Framework Agent does not receive the full report or full tables by default.
+It sees metadata such as report length, chunk count, table shape, examples, and
+short previews. It is a planner and coordinator rather than the main evidence
+consumer.
+
+At each turn, the Framework Agent returns one JSON action:
+
+1. invoke_agent
+   Ask one specialist to perform the next subtask.
+
+2. return_final
+   Return final assignments only after the query variables are resolved and
+   verified.
+
+Specialist agents
+-----------------
+M-Inducer:
+Infers M or M_hat from examples, E.tab, E.text, T, or T_hat.
+
+T-Inducer:
+Infers T or T_hat from M, M_hat, examples, or material summaries.
+
+E.text-Finder:
+Finds exact contiguous spans from D.text for requested E.text variables. In the
+implementation, this specialist is run over overlapping report chunks and only
+verbatim recoverable spans are kept.
+
+Verifier:
+Checks framework compliance and evidence support before final assignments are
+accepted.
+
+Blackboard
+----------
+The blackboard stores:
+- working_memory.M_hat,
+- working_memory.T_hat,
+- working_memory.candidate_assignments,
+- resolved_variables,
+- verification_results,
+- trace.
+
+M_hat and T_hat are internal helper hypotheses. They are not final outputs
+unless the original query has ? in M or T and the values are accepted as final
+assignments.
+
+Runtime loop
+------------
+1. Parse the framework query.
+2. Build the material inventory.
+3. Ask the Framework Agent for the next action.
+4. If it invokes a specialist, load only the requested materials and run that
+   specialist prompt.
+5. Parse the specialist JSON and update the blackboard.
+6. Repeat until the Framework Agent returns final assignments.
+7. Convert final slot assignments into the experiment output schema.
+
+External output schemas
+-----------------------
+Setup C v2 returns the same parsed_output shape as v2 Setups A and B:
+
+Experiment 1:
+{"examples":[{"excerpt":"..."},{"excerpt":"..."},{"excerpt":"..."}]}
+
+Experiment 2:
+{"excerpt":"..."}
+
+Experiment 3:
+{"M":"...","T":"..."}
+
+Important design choice
+-----------------------
+Plans are not hardcoded by the harness. The harness only provides the protocol:
+JSON action packets, specialist prompts, material loading, and blackboard
+updates. The Framework Agent decides which specialist to invoke and in what
+sequence.

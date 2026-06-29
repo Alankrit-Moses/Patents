@@ -6,6 +6,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
+from .agent_v2 import FrameworkAgentV2
 from .client import OpenAICompatibleClient
 from .config import HarnessConfig, load_config
 from .io_utils import append_jsonl, extract_json
@@ -55,7 +56,7 @@ def _build_prompt_v2(
         if b_variant == "resolved":
             return build_setup_b_prompt_v2(task, inputs)
         return build_setup_b_prompt_v2_query_only(task, inputs)
-    raise ValueError(f"V2 runner supports only setup A or B, not {setup}")
+    raise ValueError(f"V2 runner builds single prompts only for setup A or B, not {setup}")
 
 
 def _validate_output_v2(experiment: str, parsed: dict[str, Any]) -> None:
@@ -86,33 +87,47 @@ def run_task_v2(
     b_variant: str = "query-only",
 ) -> dict[str, Any]:
     setup = setup.upper()
-    prompt_version = "v2" if setup == "A" else f"v2-{b_variant}"
+    if setup == "A":
+        prompt_version = "v2"
+    elif setup == "B":
+        prompt_version = f"v2-{b_variant}"
+    elif setup == "C":
+        prompt_version = "v2-agentic"
+    else:
+        prompt_version = "v2"
     record = _base_record(task, setup, prompt_version)
     try:
         inputs = materialize_generator_inputs(config.project_root, task)
-        messages = _build_prompt_v2(setup, task, inputs, b_variant)
-        estimated = _estimated_tokens(messages, config.chars_per_token_estimate)
-        reserve = config.generator.max_output_tokens
-        if estimated + reserve > config.context_limit_tokens:
-            raise ValueError(
-                f"Estimated prompt ({estimated} tokens) plus output reserve ({reserve}) "
-                f"exceeds context_limit_tokens={config.context_limit_tokens}; inputs were not truncated"
-            )
-        response = client.complete(messages)
-        record["raw_output"] = response.text
-        parsed = extract_json(response.text)
-        if not isinstance(parsed, dict):
-            raise ValueError("Expected a JSON object")
-        if setup == "A" and task["experiment"] == "3":
-            parsed = {
-                "M": parsed.get("mathematical_definition", ""),
-                "T": parsed.get("natural_language_description", ""),
-            }
+        if setup == "C":
+            result = FrameworkAgentV2(config, client).run(task, inputs)
+            record.update(result)
+            parsed = record["parsed_output"]
+        elif setup in {"A", "B"}:
+            messages = _build_prompt_v2(setup, task, inputs, b_variant)
+            estimated = _estimated_tokens(messages, config.chars_per_token_estimate)
+            reserve = config.generator.max_output_tokens
+            if estimated + reserve > config.context_limit_tokens:
+                raise ValueError(
+                    f"Estimated prompt ({estimated} tokens) plus output reserve ({reserve}) "
+                    f"exceeds context_limit_tokens={config.context_limit_tokens}; inputs were not truncated"
+                )
+            response = client.complete(messages)
+            record["raw_output"] = response.text
+            parsed = extract_json(response.text)
+            if not isinstance(parsed, dict):
+                raise ValueError("Expected a JSON object")
+            if setup == "A" and task["experiment"] == "3":
+                parsed = {
+                    "M": parsed.get("mathematical_definition", ""),
+                    "T": parsed.get("natural_language_description", ""),
+                }
+            record["parsed_output"] = parsed
+            if "D.text" in inputs:
+                record["selected_chunks"] = ["full-report"]
+            record["usage"] = response.usage
+        else:
+            raise ValueError(f"Unknown setup: {setup}")
         _validate_output_v2(str(task["experiment"]), parsed)
-        record["parsed_output"] = parsed
-        if "D.text" in inputs:
-            record["selected_chunks"] = ["full-report"]
-        record["usage"] = response.usage
     except Exception as error:
         record["errors"].append(str(error))
     return record
@@ -207,7 +222,7 @@ def command_run(args: argparse.Namespace, config: HarnessConfig) -> int:
     if not tasks:
         print("No matching tasks.")
         return 1
-    setups = ["A", "B"] if args.setup == "all" else [args.setup.upper()]
+    setups = ["A", "B", "C"] if args.setup == "all" else [args.setup.upper()]
     output_path = (
         Path(args.output).resolve()
         if args.output
@@ -219,11 +234,11 @@ def command_run(args: argparse.Namespace, config: HarnessConfig) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Run v2 A/B prompts without changing the default harness")
+    parser = argparse.ArgumentParser(description="Run v2 A/B prompts and v2 agentic Setup C")
     parser.add_argument("--config", help="Path to JSON configuration")
     subparsers = parser.add_subparsers(dest="command", required=True)
-    run_parser = subparsers.add_parser("run", help="Run v2 Setup A/B generator experiments")
-    run_parser.add_argument("--setup", choices=["A", "B", "all"], default="all")
+    run_parser = subparsers.add_parser("run", help="Run v2 Setup A/B/C generator experiments")
+    run_parser.add_argument("--setup", choices=["A", "B", "C", "all"], default="all")
     run_parser.add_argument(
         "--b-variant",
         choices=["query-only", "resolved"],

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from experiments.agent import FrameworkQueryParser, setup_c_plan_preview
 from experiments.agent import FrameworkAgent
+from experiments.agent_v2 import FrameworkAgentV2, FrameworkQueryParserV2
 from experiments.client import LLMResponse
 from experiments.config import HarnessConfig
 from experiments.manifest import build_manifest, build_tasks, manifest_counts
@@ -68,6 +69,67 @@ class SynthesisRecordingClient:
         return LLMResponse(text=text, raw={}, usage={})
 
 
+class AgenticV2Client:
+    def __init__(self):
+        self.framework_calls = 0
+        self.messages = []
+
+    def complete(self, messages, **_kwargs):
+        self.messages.append(messages)
+        system = messages[0]["content"]
+        if "Framework Agent" in system:
+            self.framework_calls += 1
+            if self.framework_calls == 1:
+                text = (
+                    '{"action":"invoke_agent","agent":"E.text-Finder","reason":"find exact spans",'
+                    '"task_packet":{"goal":"locate E.text","query_context":{'
+                    '"framework_query":"D:(D.text,_) P:(M,_,{(?,_)[3]})",'
+                    '"active_pattern_ids":["P"],'
+                    '"variable_slots":["P.E[1].E.text","P.E[2].E.text","P.E[3].E.text"],'
+                    '"concrete_slots":["P.M","D.text"],"irrelevant_slots":["D.tab","P.T","P.E[1].E.tab"]},'
+                    '"materials_needed":["D.text","M"],"working_memory_inputs":[],"constraints":[]}}'
+                )
+            elif self.framework_calls == 2:
+                text = (
+                    '{"action":"invoke_agent","agent":"Verifier","reason":"verify candidates",'
+                    '"task_packet":{"goal":"verify E.text","query_context":{'
+                    '"framework_query":"D:(D.text,_) P:(M,_,{(?,_)[3]})",'
+                    '"active_pattern_ids":["P"],'
+                    '"variable_slots":["P.E[1].E.text","P.E[2].E.text","P.E[3].E.text"],'
+                    '"concrete_slots":["P.M","D.text"],"irrelevant_slots":["D.tab","P.T","P.E[1].E.tab"]},'
+                    '"materials_needed":["D.text","M"],"working_memory_inputs":["candidate_assignments"],"constraints":[]}}'
+                )
+            else:
+                text = (
+                    '{"action":"return_final","final_assignments":{'
+                    '"P.E[1].E.text":"Activity rose slowly before 2020 and declined after 2020.",'
+                    '"P.E[2].E.text":"Activity rose slowly before 2020 and declined after 2020.",'
+                    '"P.E[3].E.text":"Activity rose slowly before 2020 and declined after 2020."},'
+                    '"reason":"verified"}'
+                )
+        elif "E.text-Finder agent" in system:
+            text = (
+                '{"agent":"E.text-Finder","status":"success","candidates":{'
+                '"P.E[1].E.text":[{"excerpt":"Activity rose slowly before 2020 and declined after 2020.",'
+                '"confidence":0.9,"match_basis":["pattern_behavior"],"notes":""}],'
+                '"P.E[2].E.text":[{"excerpt":"Activity rose slowly before 2020 and declined after 2020.",'
+                '"confidence":0.9,"match_basis":["pattern_behavior"],"notes":""}],'
+                '"P.E[3].E.text":[{"excerpt":"Activity rose slowly before 2020 and declined after 2020.",'
+                '"confidence":0.9,"match_basis":["pattern_behavior"],"notes":""}]}}'
+            )
+        elif "Verifier agent" in system:
+            text = (
+                '{"agent":"Verifier","status":"complete","overall_verdict":"accept","slot_verdicts":{'
+                '"P.E[1].E.text":{"verdict":"accept","compliance":"pass","support":"strong","score":1.0,"issues":[],"suggested_next_step":"accept"},'
+                '"P.E[2].E.text":{"verdict":"accept","compliance":"pass","support":"strong","score":1.0,"issues":[],"suggested_next_step":"accept"},'
+                '"P.E[3].E.text":{"verdict":"accept","compliance":"pass","support":"strong","score":1.0,"issues":[],"suggested_next_step":"accept"}},'
+                '"global_issues":[],"notes":"ok"}'
+            )
+        else:
+            text = "{}"
+        return LLMResponse(text=text, raw={}, usage={})
+
+
 class HarnessTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -98,6 +160,17 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(set(exp3["targets"]), {"M", "T"})
         self.assertIn("E.text", exp3["known"])
         self.assertIn("E.tab", exp3["known"])
+
+    def test_query_parser_v2_preserves_variable_pair_slots(self):
+        parsed = FrameworkQueryParserV2().parse(
+            "D:(D.text,_)\nP1:(_,_,{(?,E.tab_1),(?,E.tab_2),(?,E.tab_3)})"
+        )
+        self.assertEqual(
+            parsed.variable_slots,
+            ["P1.E[1].E.text", "P1.E[2].E.text", "P1.E[3].E.text"],
+        )
+        self.assertIn("P1.E[1].E.tab", parsed.concrete_slots)
+        self.assertIn("P1.M", parsed.irrelevant_slots)
 
     def test_experiment_two_materializer_has_no_explicit_gold_input(self):
         task = next(task for task in self.tasks if task["experiment"] == "2")
@@ -248,6 +321,26 @@ class HarnessTests(unittest.TestCase):
         self.assertIn("TextEvidenceAgent", actions)
         self.assertIn("TextPatternVerifier", actions)
         self.assertIn("ReducerRanker", actions)
+
+    def test_setup_c_v2_executes_framework_agent_control_loop(self):
+        config = HarnessConfig(project_root=ROOT, chunk_chars=1000, chunk_overlap_chars=50)
+        task = {
+            "task_id": "synthetic-v2",
+            "experiment": "1",
+            "pattern_id": "P1",
+            "framework_query": "D:(D.text,_)\nP:(M,_,{(?,_)[3]})",
+            "target_count": 3,
+        }
+        inputs = {
+            "M": "A trajectory differs before and after a concrete tau.",
+            "D.text": "Activity rose slowly before 2020 and declined after 2020.",
+        }
+        result = FrameworkAgentV2(config, AgenticV2Client()).run(task, inputs)
+        self.assertEqual(len(result["parsed_output"]["examples"]), 3)
+        actions = [step["action"] for step in result["agent_trace"]]
+        self.assertIn("FrameworkAgent", actions)
+        self.assertIn("E.text-Finder", actions)
+        self.assertIn("Verifier", actions)
 
     def test_setup_c_definition_verifier_uses_only_visible_induction_pairs(self):
         client = SynthesisRecordingClient()
