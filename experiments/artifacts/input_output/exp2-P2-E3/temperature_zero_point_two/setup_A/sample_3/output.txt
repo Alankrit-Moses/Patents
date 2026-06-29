@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P2-E3",
+  "experiment": "2",
+  "setup": "A",
+  "pattern_id": "P2",
+  "example_id": "P2-E3",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"The release of ChatGPT in November 2022 was an iPhone moment for GenAI. In November 2022, OpenAI released ChatGPT (Chat Generative Pre-trained Transformer) to the public, which greatly increased public enthusiasm for GenAI. More than one million people signed up to use ChatGPT in just five days. A 2023 survey by auditing and consulting firm Deloitte found that nearly 61% of respondents in Switzerland who work with a computer already use ChatGPT or other GenAI programs in their daily work (Deloitte 2023). The ChatGPT release has been described by many, including Nvidia CEO Jen-Hsun Huang, as an “iPhone moment” for GenAI (VentureBeat 2023). This is because the OpenAI platform has made it easier for users to access advanced GenAI models, specifically decoder-based large language models. These models have demonstrated the potential for many real-world applications and have sparked a wave of research and development. Many companies are heavily investing in GenAI, with these newer models reaching a new dimension of capabilities.\"}",
+  "parsed_output": {
+    "excerpt": "The release of ChatGPT in November 2022 was an iPhone moment for GenAI. In November 2022, OpenAI released ChatGPT (Chat Generative Pre-trained Transformer) to the public, which greatly increased public enthusiasm for GenAI. More than one million people signed up to use ChatGPT in just five days. A 2023 survey by auditing and consulting firm Deloitte found that nearly 61% of respondents in Switzerland who work with a computer already use ChatGPT or other GenAI programs in their daily work (Deloitte 2023). The ChatGPT release has been described by many, including Nvidia CEO Jen-Hsun Huang, as an “iPhone moment” for GenAI (VentureBeat 2023). This is because the OpenAI platform has made it easier for users to access advanced GenAI models, specifically decoder-based large language models. These models have demonstrated the potential for many real-world applications and have sparked a wave of research and development. Many companies are heavily investing in GenAI, with these newer models reaching a new dimension of capabilities."
+  }
+}

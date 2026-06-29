@@ -57,6 +57,51 @@ vllm serve YOUR_MODEL --api-key local
 
 Set the exact served model name and endpoint in `config.local.json`. Generator and judge endpoints/models may differ. The default API key fallback is `local`; `api_key_env` can instead point to an environment variable.
 
+## OpenRouter
+
+OpenRouter can be used as a generator without changing the original vLLM/OpenAI
+configs. The repository includes additive OpenRouter configs for dense JSON-mode
+models:
+
+- `experiments/config.openrouter-dense-qwen32b.json`
+- `experiments/config.openrouter-dense-llama70b.json`
+- `experiments/config.openrouter-dense-qwen72b.json`
+
+Set your key once:
+
+```powershell
+$env:OPENROUTER_API_KEY = "sk-or-..."
+```
+
+Then smoke-test one task:
+
+```powershell
+python -m experiments.cli --config experiments/config.openrouter-dense-llama70b.json run --setup A --task-id exp1-P1-genAI
+python -m experiments.cli --config experiments/config.openrouter-dense-llama70b.json run --setup C --task-id exp1-P1-genAI
+```
+
+To run the same filtered experiment across several dense OpenRouter models, use
+the helper:
+
+```powershell
+python -m experiments.openrouter list-models
+python -m experiments.openrouter run --model qwen32b --model llama70b --model qwen72b --setup all --experiment 1
+```
+
+Curated aliases currently map to OpenRouter model ids as follows:
+
+- `qwen32b`: `qwen/qwen3-32b`
+- `llama70b`: `meta-llama/llama-3.3-70b-instruct`
+- `qwen72b`: `qwen/qwen-2.5-72b-instruct`
+- `hermes70b`: `nousresearch/hermes-4-70b`
+
+The OpenRouter configs keep `response_format: {"type": "json_object"}` enabled
+and use longer retry backoff for transient 429/5xx responses. They leave the
+judge endpoint local by default; edit only the `judge` block if you want a paid
+judge. Results from these configs are written under
+`experiments/artifacts/openrouter/` so they stay separate from the vLLM/OpenAI
+result files.
+
 ## Task construction
 
 The current corpus produces:

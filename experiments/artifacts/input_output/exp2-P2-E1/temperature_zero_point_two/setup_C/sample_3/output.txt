@@ -1,0 +1,1348 @@
+{
+  "task_id": "exp2-P2-E1",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "P2-E1",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"variational autoencoders (VAEs)\"}",
+  "parsed_output": {
+    "excerpt": "variational autoencoders (VAEs)"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "GAN, Generative Adversarial Networks",
+            "Variational Autoencoder,VAE",
+            "Autoregressiv Models",
+            "Diffusion Models",
+            "Large Language Models,LLM"
+          ],
+          "metric": "cagr_percent",
+          "years_or_interval": "2020-2023",
+          "trend": "growth",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": "increasing"
+        },
+        "raw_output": "{\n  \"entities\": [\n    \"GAN, Generative Adversarial Networks\",\n    \"Variational Autoencoder,VAE\",\n    \"Autoregressiv Models\",\n    \"Diffusion Models\",\n    \"Large Language Models,LLM\"\n  ],\n  \"metric\": \"cagr_percent\",\n  \"years_or_interval\": \"2020-2023\",\n  \"trend\": \"growth\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"increasing\"\n}",
+        "usage": {
+          "prompt_tokens": 212,
+          "total_tokens": 326,
+          "completion_tokens": 114,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "The entities GAN, VAE, Autoregressiv Models, Diffusion Models, and LLM have shown a growth trend in CAGR percent from 2020 to 2023, with an increasing likely pattern behavior.",
+        "raw_output": "{\n  \"T_hat\": \"The entities GAN, VAE, Autoregressiv Models, Diffusion Models, and LLM have shown a growth trend in CAGR percent from 2020 to 2023, with an increasing likely pattern behavior.\"\n}",
+        "usage": {
+          "prompt_tokens": 183,
+          "total_tokens": 243,
+          "completion_tokens": 60,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "generative adversarial networks (GANs)",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "variational autoencoders (VAEs)",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"generative adversarial networks (GANs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"variational autoencoders (VAEs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"decoder-based large language models (LLMs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"for LLMs increasing from 53 in 2020 to 881 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased research interest in LLMs.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4278,
+              "total_tokens": 4636,
+              "completion_tokens": 358,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "GANs",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "VAEs",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GANs\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"VAEs\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"LLMs\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth rates\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4181,
+              "total_tokens": 4414,
+              "completion_tokens": 233,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "Generative\nAdversarial Networks\n(GANs)",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Variational\nAutoencoder",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Generative Adversarial Networks (GANs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressive Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models (LLMs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3808,
+              "total_tokens": 4087,
+              "completion_tokens": 279,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "variational autoencoders (VAEs)",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Autoregressive models",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"variational autoencoders (VAEs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressive models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion model\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models,LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3795,
+              "total_tokens": 4042,
+              "completion_tokens": 247,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "GAN models",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4639,
+              "total_tokens": 4721,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "average\nannual growth of around 45%",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN, VAE, Autoregressiv Models, Diffusion Models, and LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"average annual growth of around 45%\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2014 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"sharp increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing likely pattern behavior\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4449,
+              "total_tokens": 4645,
+              "completion_tokens": 196,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [],
+            "raw_output": "",
+            "usage": {},
+            "error": "No complete JSON value: line 1 column 1 (char 0)"
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "GAN",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "VAE",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"VAE\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressive models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5503,
+              "total_tokens": 5765,
+              "completion_tokens": 262,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "GAN and VAE models",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "GAN models",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN and VAE models\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"GAN models\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Autoregressive Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Large Language Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"annual growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"growth rates\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4817,
+              "total_tokens": 5127,
+              "completion_tokens": 310,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "GAN models",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "VAEs",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"VAEs\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"LLM models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressive models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4493,
+              "total_tokens": 4698,
+              "completion_tokens": 205,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN, Generative Adversarial Networks\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder,VAE\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressiv Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models,LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3714,
+              "total_tokens": 4027,
+              "completion_tokens": 313,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "Generative Adversarial\nNetworks (GAN), Autoregressive Models, Diffusion Models, LLMs and Variational\nAutoencoders",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Generative Adversarial Networks (GAN), Autoregressive Models, Diffusion Models, LLMs and Variational Autoencoders\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"GAN, LLMs, VAE, Diffusion models, Autoregressive models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4528,
+              "total_tokens": 4674,
+              "completion_tokens": 146,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN, Generative Adversarial Networks\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder,VAE\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressiv Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models,LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9798,
+              "total_tokens": 10111,
+              "completion_tokens": 313,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN, Generative Adversarial Networks\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder,VAE\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressiv Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models,LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5357,
+              "total_tokens": 5666,
+              "completion_tokens": 309,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "diffusion models",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "variational\nautoencoder (VAE)",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"variational autoencoder (VAE)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"autoregressive models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"large language models (LLMs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2010-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3980,
+              "total_tokens": 4162,
+              "completion_tokens": 182,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "2023",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Generative Adversarial Networks (GANs)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3553,
+              "total_tokens": 3635,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [
+              {
+                "excerpt": "GAN",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3649,
+              "total_tokens": 3729,
+              "completion_tokens": 80,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "GAN",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Generative Adversarial Networks\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"VAE\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressiv Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4443,
+              "total_tokens": 4806,
+              "completion_tokens": 363,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN, Generative Adversarial Networks\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Variational Autoencoder,VAE\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Autoregressiv Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Large Language Models,LLM\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2020-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5971,
+              "total_tokens": 6284,
+              "completion_tokens": 313,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "generative adversarial networks (GANs)",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "variational autoencoders (VAEs)",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "GANs",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "VAEs",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Variational\nAutoencoder",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Autoregressive models",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "GAN models",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "average\nannual growth of around 45%",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "GAN",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "VAE",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "GAN and VAE models",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Generative Adversarial\nNetworks (GAN), Autoregressive Models, Diffusion Models, LLMs and Variational\nAutoencoders",
+            "chunk_id": "chunk-0011",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0011",
+            "local_score": 1,
+            "matched_constraints": [
+              "years"
+            ]
+          },
+          {
+            "excerpt": "diffusion models",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "variational\nautoencoder (VAE)",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "2023",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions the entity 'variational autoencoders (VAEs)', which matches one of the entities in the table. However, it does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).",
+            "candidate": {
+              "excerpt": "variational autoencoders (VAEs)",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions the entity 'variational autoencoders (VAEs)', which matches one of the entities in the table. However, it does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).\"\n}",
+            "usage": {
+              "prompt_tokens": 340,
+              "total_tokens": 471,
+              "completion_tokens": 131,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity from the table, but does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).",
+            "candidate": {
+              "excerpt": "Variational\nAutoencoder",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity from the table, but does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).\"\n}",
+            "usage": {
+              "prompt_tokens": 336,
+              "total_tokens": 448,
+              "completion_tokens": 112,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions the entity 'Autoregressive models' without providing any information about the metric, year/interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "Autoregressive models",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions the entity 'Autoregressive models' without providing any information about the metric, year/interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 335,
+              "total_tokens": 424,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions the entity 'VAE' without providing any information about the metric, year/interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "VAE",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entity\"],\n  \"failed_conditions\": [\"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate text only mentions the entity 'VAE' without providing any information about the metric, year/interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 333,
+              "total_tokens": 409,
+              "completion_tokens": 76,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions the entities but does not provide any information about the metric (cagr_percent), the years or interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).",
+            "candidate": {
+              "excerpt": "Generative Adversarial\nNetworks (GAN), Autoregressive Models, Diffusion Models, LLMs and Variational\nAutoencoders",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entity\"],\n  \"failed_conditions\": [\"metric\", \"years_or_interval\", \"trend\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text mentions the entities but does not provide any information about the metric (cagr_percent), the years or interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).\"\n}",
+            "usage": {
+              "prompt_tokens": 360,
+              "total_tokens": 459,
+              "completion_tokens": 99,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions the entity 'diffusion models' without providing any information about the metric, year/interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "diffusion models",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions the entity 'diffusion models' without providing any information about the metric, year/interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 334,
+              "total_tokens": 422,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one entity from the table, 'Variational Autoencoder,VAE', but does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).",
+            "candidate": {
+              "excerpt": "variational\nautoencoder (VAE)",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions one entity from the table, 'Variational Autoencoder,VAE', but does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).\"\n}",
+            "usage": {
+              "prompt_tokens": 339,
+              "total_tokens": 460,
+              "completion_tokens": 121,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one entity (VAE) without any reference to the metric (cagr_percent), year interval (2020-2023), trend (growth), or pattern behavior (increasing).",
+            "candidate": {
+              "excerpt": "VAEs",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions one entity (VAE) without any reference to the metric (cagr_percent), year interval (2020-2023), trend (growth), or pattern behavior (increasing).\"\n}",
+            "usage": {
+              "prompt_tokens": 333,
+              "total_tokens": 438,
+              "completion_tokens": 105,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity from the table without any reference to the metric, time interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "GAN models",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity from the table without any reference to the metric, time interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 334,
+              "total_tokens": 418,
+              "completion_tokens": 84,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "trend: growth",
+              "likely_pattern_behavior: increasing"
+            ],
+            "failed_conditions": [
+              "entity: does not specify any entity",
+              "metric: does not specify CAGR percent",
+              "years_or_interval: does not specify 2020-2023",
+              "value: 45% does not match any CAGR percent in the table"
+            ],
+            "rationale": "The candidate text mentions a growth trend and increasing pattern, but it does not specify any entity, the exact metric (CAGR percent), the years or interval (2020-2023), or an accurate value that matches the table.",
+            "candidate": {
+              "excerpt": "average\nannual growth of around 45%",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"trend: growth\",\n    \"likely_pattern_behavior: increasing\"\n  ],\n  \"failed_conditions\": [\n    \"entity: does not specify any entity\",\n    \"metric: does not specify CAGR percent\",\n    \"years_or_interval: does not specify 2020-2023\",\n    \"value: 45% does not match any CAGR percent in the table\"\n  ],\n  \"rationale\": \"The candidate text mentions a growth trend and increasing pattern, but it does not specify any entity, the exact metric (CAGR percent), the years or interval (2020-2023), or an accurate value that matches the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 341,
+              "total_tokens": 505,
+              "completion_tokens": 164,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions two of the five entities from the table. It does not mention the metric (cagr_percent), the years or interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).",
+            "candidate": {
+              "excerpt": "GAN and VAE models",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions two of the five entities from the table. It does not mention the metric (cagr_percent), the years or interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing).\"\n}",
+            "usage": {
+              "prompt_tokens": 337,
+              "total_tokens": 452,
+              "completion_tokens": 115,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text '2023' does not describe any of the entities, metrics, years/intervals, trends, or pattern behaviors present in the table.",
+            "candidate": {
+              "excerpt": "2023",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text '2023' does not describe any of the entities, metrics, years/intervals, trends, or pattern behaviors present in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 335,
+              "total_tokens": 425,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one entity from the table and does not provide any information about the metric, years or interval, trend, or likely pattern behavior.",
+            "candidate": {
+              "excerpt": "generative adversarial networks (GANs)",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions one entity from the table and does not provide any information about the metric, years or interval, trend, or likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 340,
+              "total_tokens": 429,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate excerpt 'GANs' does not match any of the conditions specified in the Internal TabSignal. It does not mention the entity 'GAN, Generative Adversarial Networks' in full, nor does it provide any information about the metric, years or interval, trend, or likely pattern behavior.",
+            "candidate": {
+              "excerpt": "GANs",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt 'GANs' does not match any of the conditions specified in the Internal TabSignal. It does not mention the entity 'GAN, Generative Adversarial Networks' in full, nor does it provide any information about the metric, years or interval, trend, or likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 334,
+              "total_tokens": 454,
+              "completion_tokens": 120,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions 'GAN', which does not provide any information about the metric, year/interval, trend, or pattern behavior. Therefore, none of the conditions are matched.",
+            "candidate": {
+              "excerpt": "GAN",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions 'GAN', which does not provide any information about the metric, year/interval, trend, or pattern behavior. Therefore, none of the conditions are matched.\"\n}",
+            "usage": {
+              "prompt_tokens": 333,
+              "total_tokens": 427,
+              "completion_tokens": 94,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text '2014–2023' does not describe any of the entities, metrics, years or intervals, trends, or likely pattern behaviors present in the table.",
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text '2014–2023' does not describe any of the entities, metrics, years or intervals, trends, or likely pattern behaviors present in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 340,
+              "total_tokens": 437,
+              "completion_tokens": 97,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "variational autoencoders (VAEs)",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Variational\nAutoencoder",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions one entity from the table, but does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing)."
+          },
+          {
+            "candidate": {
+              "excerpt": "Autoregressive models",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions the entity 'Autoregressive models' without providing any information about the metric, year/interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "VAE",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions the entity 'VAE' without providing any information about the metric, year/interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "Generative Adversarial\nNetworks (GAN), Autoregressive Models, Diffusion Models, LLMs and Variational\nAutoencoders",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text mentions the entities but does not provide any information about the metric (cagr_percent), the years or interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing)."
+          },
+          {
+            "candidate": {
+              "excerpt": "diffusion models",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate excerpt only mentions the entity 'diffusion models' without providing any information about the metric, year/interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "variational\nautoencoder (VAE)",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate excerpt only mentions one entity from the table, 'Variational Autoencoder,VAE', but does not provide any information about the metric (cagr_percent), the year interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing)."
+          },
+          {
+            "candidate": {
+              "excerpt": "VAEs",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate excerpt only mentions one entity (VAE) without any reference to the metric (cagr_percent), year interval (2020-2023), trend (growth), or pattern behavior (increasing)."
+          },
+          {
+            "candidate": {
+              "excerpt": "GAN models",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text only mentions one entity from the table without any reference to the metric, time interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "average\nannual growth of around 45%",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text mentions a growth trend and increasing pattern, but it does not specify any entity, the exact metric (CAGR percent), the years or interval (2020-2023), or an accurate value that matches the table."
+          },
+          {
+            "candidate": {
+              "excerpt": "GAN and VAE models",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 2,
+            "reason": "The candidate text only mentions two of the five entities from the table. It does not mention the metric (cagr_percent), the years or interval (2020-2023), the trend (growth), or the likely pattern behavior (increasing)."
+          },
+          {
+            "candidate": {
+              "excerpt": "2023",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text '2023' does not describe any of the entities, metrics, years/intervals, trends, or pattern behaviors present in the table."
+          },
+          {
+            "candidate": {
+              "excerpt": "generative adversarial networks (GANs)",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate excerpt only mentions one entity from the table and does not provide any information about the metric, years or interval, trend, or likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "GANs",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate excerpt 'GANs' does not match any of the conditions specified in the Internal TabSignal. It does not mention the entity 'GAN, Generative Adversarial Networks' in full, nor does it provide any information about the metric, years or interval, trend, or likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "GAN",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text only mentions 'GAN', which does not provide any information about the metric, year/interval, trend, or pattern behavior. Therefore, none of the conditions are matched."
+          },
+          {
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text '2014–2023' does not describe any of the entities, metrics, years or intervals, trends, or likely pattern behaviors present in the table."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0000"
+  ]
+}

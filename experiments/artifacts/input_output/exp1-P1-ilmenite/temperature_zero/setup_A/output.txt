@@ -1,0 +1,22 @@
+{
+  "task_id": "exp1-P1-ilmenite",
+  "experiment": "1",
+  "setup": "A",
+  "pattern_id": "P1",
+  "example_id": "exp1-P1-ilmenite",
+  "errors": [],
+  "raw_output": "{\n  \"examples\": [\n    {\n      \"excerpt\": \"Between 2002 and 2022, there have been 459 patent families that describe the production of titanium dioxide from ilmenite, and this number is growing rapidly. The majority of these patents describe pre-treatment processes, such as using smelting and magnetic separation to increase titanium concentration in low-grade ores, leading to titanium concentrates or slags. Other patents describe processes to obtain titanium dioxide, either by a direct hydrometallurgical process or through two industrially exploited processes, the sulfate process and the chloride process.\"\n    },\n    {\n      \"excerpt\": \"The sulfate process represents 40 percent of the world’s titanium dioxide production and is protected in 23 percent of patent families. The chloride process is only mentioned in 8 percent of patent families, although it provides 60 percent of the worldwide industrial production of titanium dioxide. Given the findings from this patent landscape report, we can expect to see industrial chloride process use progressively decrease within the next few years and an increasing use of direct hydrometallurgical processes, which require fewer steps and are more convenient.\"\n    },\n    {\n      \"excerpt\": \"Between 2002 and 2022, there have been 92 patent families that describe the production of titanium metal from ilmenite, and this number has remained quite steady. These patents describe the production of titanium metal starting from mineral ores, such as ilmenite, and from titanium dioxide (TiO2) and titanium tetrachloride (TiCl4), a chemical obtained as an intermediate in the chloride process. The starting materials are purified if needed, and then converted to titanium metal by a chemical reduction process using a reducing agent.\"\n    }\n  ]\n}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "Between 2002 and 2022, there have been 459 patent families that describe the production of titanium dioxide from ilmenite, and this number is growing rapidly. The majority of these patents describe pre-treatment processes, such as using smelting and magnetic separation to increase titanium concentration in low-grade ores, leading to titanium concentrates or slags. Other patents describe processes to obtain titanium dioxide, either by a direct hydrometallurgical process or through two industrially exploited processes, the sulfate process and the chloride process."
+      },
+      {
+        "excerpt": "The sulfate process represents 40 percent of the world’s titanium dioxide production and is protected in 23 percent of patent families. The chloride process is only mentioned in 8 percent of patent families, although it provides 60 percent of the worldwide industrial production of titanium dioxide. Given the findings from this patent landscape report, we can expect to see industrial chloride process use progressively decrease within the next few years and an increasing use of direct hydrometallurgical processes, which require fewer steps and are more convenient."
+      },
+      {
+        "excerpt": "Between 2002 and 2022, there have been 92 patent families that describe the production of titanium metal from ilmenite, and this number has remained quite steady. These patents describe the production of titanium metal starting from mineral ores, such as ilmenite, and from titanium dioxide (TiO2) and titanium tetrachloride (TiCl4), a chemical obtained as an intermediate in the chloride process. The starting materials are purified if needed, and then converted to titanium metal by a chemical reduction process using a reducing agent."
+      }
+    ]
+  }
+}

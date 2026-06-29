@@ -1,0 +1,22 @@
+{
+  "task_id": "exp1-P1-genAI",
+  "experiment": "1",
+  "setup": "A",
+  "pattern_id": "P1",
+  "example_id": "exp1-P1-genAI",
+  "errors": [],
+  "raw_output": "{\"examples\":[{\"excerpt\":\"The release of OpenAI’s ChatGPT in November 2022 has greatly increased public enthusiasm for generative AI (GenAI). It has been described by many, including Nvidia CEO JenHsun Huang, as an “iPhone moment” for GenAI. This is because the OpenAI platform has made it easier for all users to access advanced GenAI programs, particularly large language models (LLMs). These models have reached new levels of performance, demonstrating the potential for various real-world applications, triggering a wave of research and development, and large corporate investments in GenAI.\"},{\"excerpt\":\"The technological advances in GenAI are reflected by the sharp increase in patenting activity. Over the past 10 years, the number of patent families in GenAI has grown from just only 733 in 2014 to more than 14,000 in 2023. Since the introduction of the transformer in 2017, the deep neural network architecture behind the Large Language Models that have become synonymous with GenAI, the number of GenAI patents has increased by over 800%. The number of scientific publications has increased even more over the same period, from just 116 in 2014 to more than 34,000 in 2023. Over 25% of all GenAI patents and over 45% of all GenAI scientific papers were published in 2023 alone.\"},{\"excerpt\":\"The Chinese companies Tencent, Ping An Insurance Group and Baidu own the most GenAI patents. Tencent plans to add GenAI capabilities to its products such as WeChat to improve the user experience. Ping An focuses on GenAI models for underwriting and risk assessment. Baidu was one of the early players in GenAI and recently unveiled its latest LLM-based AI chatbot, ERNIE 4.0. The Chinese Academy of Sciences (fourth) is the only research organization in the top 10 ranking. Alibaba (sixth) and Bytedance (ninth) are other Chinese companies in the top 10.\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The release of OpenAI’s ChatGPT in November 2022 has greatly increased public enthusiasm for generative AI (GenAI). It has been described by many, including Nvidia CEO JenHsun Huang, as an “iPhone moment” for GenAI. This is because the OpenAI platform has made it easier for all users to access advanced GenAI programs, particularly large language models (LLMs). These models have reached new levels of performance, demonstrating the potential for various real-world applications, triggering a wave of research and development, and large corporate investments in GenAI."
+      },
+      {
+        "excerpt": "The technological advances in GenAI are reflected by the sharp increase in patenting activity. Over the past 10 years, the number of patent families in GenAI has grown from just only 733 in 2014 to more than 14,000 in 2023. Since the introduction of the transformer in 2017, the deep neural network architecture behind the Large Language Models that have become synonymous with GenAI, the number of GenAI patents has increased by over 800%. The number of scientific publications has increased even more over the same period, from just 116 in 2014 to more than 34,000 in 2023. Over 25% of all GenAI patents and over 45% of all GenAI scientific papers were published in 2023 alone."
+      },
+      {
+        "excerpt": "The Chinese companies Tencent, Ping An Insurance Group and Baidu own the most GenAI patents. Tencent plans to add GenAI capabilities to its products such as WeChat to improve the user experience. Ping An focuses on GenAI models for underwriting and risk assessment. Baidu was one of the early players in GenAI and recently unveiled its latest LLM-based AI chatbot, ERNIE 4.0. The Chinese Academy of Sciences (fourth) is the only research organization in the top 10 ranking. Alibaba (sixth) and Bytedance (ninth) are other Chinese companies in the top 10."
+      }
+    ]
+  }
+}

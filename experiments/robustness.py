@@ -40,6 +40,25 @@ def _filter_tasks(tasks: list[dict[str, Any]], args: argparse.Namespace) -> list
     return selected
 
 
+def _sample_id(task_id: str, setup: str, sample_index: int) -> str:
+    return f"{task_id}:{setup}:sample-{sample_index + 1}"
+
+
+def _load_resume_state(path: Path) -> tuple[str | None, set[str]]:
+    if not path.exists():
+        return None, set()
+    records = load_jsonl(path)
+    if not records:
+        return None, set()
+    run_id = records[0].get("robustness_run_id")
+    completed = {
+        str(record["sample_id"])
+        for record in records
+        if record.get("sample_id") and not record.get("errors")
+    }
+    return str(run_id) if run_id else None, completed
+
+
 def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
     if args.samples < 2:
         raise ValueError("Robustness runs require --samples >= 2")
@@ -79,10 +98,19 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
         )
     )
 
-    run_id = f"{_slug(sampled_generator.model)}-temp{args.temperature:g}-k{args.samples}-{_timestamp()}"
+    resume_run_id, completed_sample_ids = _load_resume_state(output_path) if args.resume else (None, set())
+    run_id = resume_run_id or (
+        f"{_slug(sampled_generator.model)}-temp{args.temperature:g}-k{args.samples}-{_timestamp()}"
+    )
+    if completed_sample_ids:
+        print(f"Resuming {output_path} with {len(completed_sample_ids)} completed samples")
     for task in tasks:
         for setup in setups:
             for sample_index in range(args.samples):
+                sample_id = _sample_id(task["task_id"], setup, sample_index)
+                if sample_id in completed_sample_ids:
+                    print(f"{sample_id} skip")
+                    continue
                 failed_attempts: list[dict[str, Any]] = []
                 record: dict[str, Any] | None = None
                 for attempt_index in range(args.max_attempts):
@@ -125,7 +153,7 @@ def run_robustness(args: argparse.Namespace, config: HarnessConfig) -> int:
                         "temperature": args.temperature,
                         "samples_per_condition": args.samples,
                         "sample_index": sample_index,
-                        "sample_id": f"{task['task_id']}:{setup}:sample-{sample_index + 1}",
+                        "sample_id": sample_id,
                         "max_attempts": args.max_attempts,
                         "attempt_count": len(failed_attempts) + (0 if record["errors"] else 1),
                         "failed_attempts": failed_attempts,
@@ -249,6 +277,11 @@ def build_parser() -> argparse.ArgumentParser:
     run_parser.add_argument("--task-id", help="Run one task ID")
     run_parser.add_argument("--limit", type=int, help="Limit selected task count")
     run_parser.add_argument("--output", help="Robustness result JSONL path")
+    run_parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="If output JSONL already exists, skip completed sample_ids and append only remaining runs",
+    )
 
     summary_parser = subparsers.add_parser(
         "summarize", help="Summarize a judged robustness JSONL"

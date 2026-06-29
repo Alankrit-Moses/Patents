@@ -1,0 +1,21 @@
+{
+  "task_id": "exp3-P1-fold2",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P1",
+  "metrics": {
+    "M_alignment_score": 2,
+    "T_alignment_score": 3
+  },
+  "errors": [],
+  "run_type": "stochastic_robustness",
+  "robustness_run_id": "mistral-small-3.2-24b-temp0.2-k3-20260624-140907",
+  "generator_model": "mistral-small-3.2-24b",
+  "temperature": 0.2,
+  "samples_per_condition": 3,
+  "sample_index": 2,
+  "sample_id": "exp3-P1-fold2:B:sample-3",
+  "max_attempts": 3,
+  "attempt_count": 1,
+  "failed_attempts": []
+}

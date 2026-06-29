@@ -1,0 +1,112 @@
+===== MESSAGE 1: SYSTEM =====
+Execute the typed framework query exactly. Return only the requested target components as valid JSON.
+
+===== MESSAGE 2: USER =====
+<framework_guide>
+The modular framework represents data as D=(D.text,D.tab) and a pattern as P=(M,T,E).
+- D.text is report text and D.tab is source structured data.
+- M is a mathematical pattern definition, T is its natural-language description, and E is a set of examples.
+- E.text is an exact contiguous excerpt from D.text. E.tab is observed compact tabular evidence supplied with an example; an internal table summary is not a new E.tab.
+- A concrete component is known input, ? is a target to produce, _ is irrelevant or omitted, and [n] requests n outputs.
+- A named component whose value is not supplied is unavailable; _ deliberately marks a component as irrelevant or not requested.
+- Never use an unavailable or irrelevant component. Return only target components.
+
+Read and decompose queries internally as follows:
+1. D:(D.text,_), P:(M,_,{(?,_)[2]}) means use known M to find two exact E.text excerpts in D.text, while D.tab, T, and E.tab are not used.
+2. D:(D.text,_), P:(_,_,{(?,E.tab)}) means summarize the provided E.tab internally, search D.text for matching evidence, and return one exact E.text. Do not create E.tab.
+3. D:(_,_), P:(?,?,{(E1.text,E1.tab),...}) means compare the provided paired examples, infer their shared rule, and return M and T.
+These decompositions are reasoning guidance inside one model call, not additional tools or data.
+</framework_guide>
+
+<framework_query>
+D:(_,_)
+P:(?,?,{(E1.text,E1.tab),(E2.text,E2.tab),...})
+</framework_query>
+
+<query_interpretation>
+Use only the provided paired E.text/E.tab examples. External D.text and D.tab are unavailable. Produce the target M and T only.
+</query_interpretation>
+
+<known_components>
+<paired_examples>
+<example id="P1-E1">
+<E_text>
+Although patent publications in GANs dominated up to 2020, it has slowed down since and patent publications in diffusion models have grown tremendously since 2021.
+</E_text>
+<E_tab format="compact_csv">
+year,distinct_gan_patent_family_count
+2017,38
+2018,237
+2019,851
+2020,1585
+2021,2102
+2022,2504
+2023,2370
+
+</E_tab>
+</example>
+<example id="P1-E2">
+<E_text>
+In both Japan and the Republic of Korea, speech/voice/music is a very important GenAI mode in terms of patent families. However, patent growth rates differ significantly between the two Asian countries. While the growth of GenAI patent families in the Republic of Korea has been very dynamic across all modes in recent years, Japan's GenAI patent families peaked in 2020/2021 and have been declining since then.
+</E_text>
+<E_tab format="compact_csv">
+year,distinct_japan_genai_patent_family_count
+2014,147
+2015,175
+2016,166
+2017,222
+2018,356
+2019,436
+2020,523
+2021,549
+2022,447
+2023,399
+
+</E_tab>
+</example>
+<example id="P1-E3">
+<E_text>
+In terms of growth of patent families, image/video- and molecules/genes/proteins- based GenAI patent families increased the most over the last decade (an average annual growth rate of around 45% between 2014 and 2023). Molecules/genes/proteins GenAI patent families have also been the growth leaders in recent years. In contrast, the total number of GenAI patent families based on speech/sound/music data has increased only slightly since 2021 (Figure 24).
+</E_text>
+<E_tab format="compact_csv">
+year,distinct_speech_voice_music_genai_patent_family_count
+2014,299
+2015,338
+2016,378
+2017,529
+2018,828
+2019,1351
+2020,2096
+2021,2465
+2022,2490
+2023,2704
+
+</E_tab>
+</example>
+<example id="P1-E4">
+<E_text>
+The significant advances in GenAI are reflected in the sharp increase in patent activity in the field. Over the last 10 years, the number of published patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000 in 2023. There has been a big surge in patent activity beginning in 2017, with an average annual growth of around 45% since then. This coincides with the introduction of transformers in 2017.
+</E_text>
+<E_tab format="compact_csv">
+year,distinct_global_genai_patent_family_count
+2014,733
+2015,880
+2016,1023
+2017,1518
+2018,2586
+2019,4941
+2020,7884
+2021,9626
+2022,11629
+2023,14078
+
+</E_tab>
+</example>
+</paired_examples>
+</known_components>
+
+<output_constraints>
+Return only the requested M and T components.
+Never infer or create newly verified E.tab when D.tab is unavailable.
+Return JSON only, without Markdown or commentary. Use exactly this schema: {"M":"mathematical definition","T":"natural-language description"}
+</output_constraints>

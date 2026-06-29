@@ -1,0 +1,32 @@
+===== EVALUATOR CALL 1 / EXPERIMENT 2 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well the candidate exact report excerpt describes the same evidence as the provided compact table. The paired reference excerpt is diagnostic evidence showing the intended table-text correspondence, not a wording template. A different exact report passage can receive full credit if it expresses the same entities, metric, interval, values or trend, and pattern behavior.
+
+Provided compact E.tab:
+year,distinct_global_genai_patent_family_count
+2014,733
+2015,880
+2016,1023
+2017,1518
+2018,2586
+2019,4941
+2020,7884
+2021,9626
+2022,11629
+2023,14078
+
+
+Paired reference E.text:
+The significant advances in GenAI are reflected in the sharp increase in patent activity in the field. Over the last 10 years, the number of published patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000 in 2023. There has been a big surge in patent activity beginning in 2017, with an average annual growth of around 45% since then. This coincides with the introduction of transformers in 2017.
+
+Candidate exact report excerpt:
+the number of published
+patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000
+in 2023
+
+Use this alignment scale: 5 = describes the same evidence clearly and completely; 4 = same evidence with a minor omission or ambiguity; 3 = partially aligned evidence; 2 = only weakly related evidence; 1 = unrelated to the table evidence. Judge semantic evidence alignment, not lexical overlap with the reference excerpt.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.

@@ -1,0 +1,1266 @@
+{
+  "task_id": "exp2-P2-E3",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "P2-E3",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"chemical molecules/genes/proteins\"}",
+  "parsed_output": {
+    "excerpt": "chemical molecules/genes/proteins"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "Molecules, Genes, Proteins",
+            "Speech, Voice, Music"
+          ],
+          "metric": "cagr_percent",
+          "years_or_interval": "2021-2023",
+          "trend": "growth",
+          "turning_point": null,
+          "comparison": {
+            "Molecules, Genes, Proteins": "Speech, Voice, Music",
+            "ratio": 10.85
+          },
+          "likely_pattern_behavior": "Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music"
+        },
+        "raw_output": "{\n  \"entities\": [\n    \"Molecules, Genes, Proteins\",\n    \"Speech, Voice, Music\"\n  ],\n  \"metric\": \"cagr_percent\",\n  \"years_or_interval\": \"2021-2023\",\n  \"trend\": \"growth\",\n  \"turning_point\": null,\n  \"comparison\": {\n    \"Molecules, Genes, Proteins\": \"Speech, Voice, Music\",\n    \"ratio\": 10.85\n  },\n  \"likely_pattern_behavior\": \"Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music\"\n}",
+        "usage": {
+          "prompt_tokens": 142,
+          "total_tokens": 276,
+          "completion_tokens": 134,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "The compound annual growth rate (CAGR) for the entities 'Molecules, Genes, Proteins' is significantly higher than that for 'Speech, Voice, Music' during the period 2021-2023, with a ratio of 10.85. This trend indicates that 'Molecules, Genes, Proteins' are expected to continue growing at a much faster rate compared to 'Speech, Voice, Music'.",
+        "raw_output": "{\n  \"T_hat\": \"The compound annual growth rate (CAGR) for the entities 'Molecules, Genes, Proteins' is significantly higher than that for 'Speech, Voice, Music' during the period 2021-2023, with a ratio of 10.85. This trend indicates that 'Molecules, Genes, Proteins' are expected to continue growing at a much faster rate compared to 'Speech, Voice, Music'.\"\n}",
+        "usage": {
+          "prompt_tokens": 203,
+          "total_tokens": 304,
+          "completion_tokens": 101,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "the number of GenAI patents has increased by over 800%",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              },
+              {
+                "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend",
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of GenAI patents has increased by over 800%\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\", \"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4339,
+              "total_tokens": 4483,
+              "completion_tokens": 144,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "chemical molecules/genes/proteins",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric",
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"chemical molecules/genes/proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"years\"]\n    },\n    {\n      \"excerpt\": \"The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased research interest in LLMs.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\", \"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4242,
+              "total_tokens": 4405,
+              "completion_tokens": 163,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "Speech, Voice,\nMusic",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growing at a much faster rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3869,
+              "total_tokens": 4020,
+              "completion_tokens": 151,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "Molecules, genes, proteins",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Speech, sound, music",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules, genes, proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Speech, sound, music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3856,
+              "total_tokens": 3934,
+              "completion_tokens": 78,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The compound annual growth rate (CAGR) for the entities 'Molecules, Genes, Proteins' is significantly higher than that for 'Speech, Voice, Music' during the period 2021-2023, with a ratio of 10.85. This trend indicates that 'Molecules, Genes, Proteins' are expected to continue growing at a much faster rate compared to 'Speech, Voice, Music'.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4700,
+              "total_tokens": 4851,
+              "completion_tokens": 151,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4510,
+              "total_tokens": 4597,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5073,
+              "total_tokens": 5264,
+              "completion_tokens": 191,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "Molecules/genes/proteins",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Speech/voice/music",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules/genes/proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Speech/voice/music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"an average annual growth rate of around 45% between 2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"the highest growth since 2018 has been in patent publications related to molecules/genes/and proteins, including in the last three years since 2021\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\", \"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"Molecules/genes/proteins GenAI patent families have also been the growth leaders in recent years\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\", \"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5564,
+              "total_tokens": 5821,
+              "completion_tokens": 257,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "molecules/genes/proteins",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "speech/voice/music",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"molecules/genes/proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"speech/voice/music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"annual growth of 64% between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"the highest patent family growth rates\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"molecules/genes/proteins data is mainly processed in GAN and VAE models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4878,
+              "total_tokens": 5093,
+              "completion_tokens": 215,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "Molecules/genes/proteins data is mainly used for GenAI in life and medical sciences as well\nas physical sciences and engineering.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend",
+                  "behavior"
+                ]
+              },
+              {
+                "excerpt": "Speech/voice/music is the most important data type in personal devices,\ntelecommunications, personal devices and education and also relevant for software and\nother applications.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend",
+                  "behavior"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules/genes/proteins data is mainly used for GenAI in life and medical sciences as well as physical sciences and engineering.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    },\n    {\n      \"excerpt\": \"Speech/voice/music is the most important data type in personal devices, telecommunications, personal devices and education and also relevant for software and other applications.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4554,
+              "total_tokens": 4720,
+              "completion_tokens": 166,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "Molecules/genes/proteins",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Speech/voice/music",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules/genes/proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Speech/voice/music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3775,
+              "total_tokens": 3891,
+              "completion_tokens": 116,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"GenAI\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4589,
+              "total_tokens": 4735,
+              "completion_tokens": 146,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [
+              {
+                "excerpt": "Molecules, genes, proteins",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules, genes, proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Speech, voice, music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9859,
+              "total_tokens": 10085,
+              "completion_tokens": 226,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5418,
+              "total_tokens": 5644,
+              "completion_tokens": 226,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "2010-2023",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2010-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"Molecules, Genes, Proteins\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4041,
+              "total_tokens": 4158,
+              "completion_tokens": 117,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "GenAI is expected to play an important part in many business areas",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              },
+              {
+                "excerpt": "GenAI will also\ntransform the customer operations landscape, enhancing both efficiency and customer\nsatisfaction",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GenAI is expected to play an important part in many business areas\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"GenAI will also transform the customer operations landscape, enhancing both efficiency and customer satisfaction\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3614,
+              "total_tokens": 3712,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Speech, Voice, Music\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3710,
+              "total_tokens": 3791,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4504,
+              "total_tokens": 4591,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 6032,
+              "total_tokens": 6041,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "the number of GenAI patents has increased by over 800%",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend",
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "chemical molecules/genes/proteins",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric",
+              "years"
+            ]
+          },
+          {
+            "excerpt": "Speech, Voice,\nMusic",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Molecules, genes, proteins",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Speech, sound, music",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Molecules/genes/proteins",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Speech/voice/music",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Molecules/genes/proteins data is mainly used for GenAI in life and medical sciences as well\nas physical sciences and engineering.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "Speech/voice/music is the most important data type in personal devices,\ntelecommunications, personal devices and education and also relevant for software and\nother applications.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "2010-2023",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "GenAI is expected to play an important part in many business areas",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "GenAI will also\ntransform the customer operations landscape, enhancing both efficiency and customer\nsatisfaction",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions one of the entities ('chemical molecules/genes/proteins') but fails to include the metric (cagr_percent), the year interval (2021-2023), the trend (growth), and the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).",
+            "candidate": {
+              "excerpt": "chemical molecules/genes/proteins",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entity\"],\n  \"failed_conditions\": [\"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate text only mentions one of the entities ('chemical molecules/genes/proteins') but fails to include the metric (cagr_percent), the year interval (2021-2023), the trend (growth), and the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).\"\n}",
+            "usage": {
+              "prompt_tokens": 288,
+              "total_tokens": 411,
+              "completion_tokens": 123,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity, 'Molecules, genes, proteins', without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).",
+            "candidate": {
+              "excerpt": "Molecules, genes, proteins",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entity\"],\n  \"failed_conditions\": [\"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate text only mentions one entity, 'Molecules, genes, proteins', without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).\"\n}",
+            "usage": {
+              "prompt_tokens": 287,
+              "total_tokens": 409,
+              "completion_tokens": 122,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one of the entities ('Molecules/genes/proteins') but fails to include the metric (cagr_percent), the year interval (2021-2023), the trend (growth), and the likely pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).",
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entity\"],\n  \"failed_conditions\": [\"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate excerpt only mentions one of the entities ('Molecules/genes/proteins') but fails to include the metric (cagr_percent), the year interval (2021-2023), the trend (growth), and the likely pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).\"\n}",
+            "usage": {
+              "prompt_tokens": 288,
+              "total_tokens": 412,
+              "completion_tokens": 124,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "entities"
+            ],
+            "failed_conditions": [
+              "metric",
+              "years_or_interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions the entities 'Speech, Voice, Music' without providing any information about the metric (cagr_percent), the years or interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).",
+            "candidate": {
+              "excerpt": "Speech, Voice,\nMusic",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"entities\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions the entities 'Speech, Voice, Music' without providing any information about the metric (cagr_percent), the years or interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music).\"\n}",
+            "usage": {
+              "prompt_tokens": 286,
+              "total_tokens": 418,
+              "completion_tokens": 132,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'Speech, sound, music' does not match any of the conditions specified in the TabSignal. It does not mention the entities 'Molecules, Genes, Proteins' or 'Speech, Voice, Music', the metric 'cagr_percent', the year interval '2021-2023', the trend 'growth', or the likely pattern behavior.",
+            "candidate": {
+              "excerpt": "Speech, sound, music",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text 'Speech, sound, music' does not match any of the conditions specified in the TabSignal. It does not mention the entities 'Molecules, Genes, Proteins' or 'Speech, Voice, Music', the metric 'cagr_percent', the year interval '2021-2023', the trend 'growth', or the likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 286,
+              "total_tokens": 419,
+              "completion_tokens": 133,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'Speech/voice/music' does not describe any of the observed compact table evidence. It does not mention the entities 'Molecules, Genes, Proteins', the metric 'cagr_percent', the year interval '2021-2023', the trend 'growth', or the likely pattern behavior.",
+            "candidate": {
+              "excerpt": "Speech/voice/music",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text 'Speech/voice/music' does not describe any of the observed compact table evidence. It does not mention the entities 'Molecules, Genes, Proteins', the metric 'cagr_percent', the year interval '2021-2023', the trend 'growth', or the likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 286,
+              "total_tokens": 409,
+              "completion_tokens": 123,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "pattern_behavior"
+            ],
+            "rationale": "The candidate text '2010-2023' does not match any of the conditions specified in the TabSignal. It does not mention the entities, the metric (cagr_percent), the correct years or interval (2021-2023), the trend (growth), or any pattern behavior.",
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text '2010-2023' does not match any of the conditions specified in the TabSignal. It does not mention the entities, the metric (cagr_percent), the correct years or interval (2021-2023), the trend (growth), or any pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 290,
+              "total_tokens": 414,
+              "completion_tokens": 124,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not match any of the conditions specified in the TabSignal. The entities, metric, years, trend, and pattern behavior described in the candidate text are completely different from those in the TabSignal.",
+            "candidate": {
+              "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend",
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match any of the conditions specified in the TabSignal. The entities, metric, years, trend, and pattern behavior described in the candidate text are completely different from those in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 339,
+              "total_tokens": 438,
+              "completion_tokens": 99,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, the specific metric (CAGR percent), the time interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins growing much faster than Speech, Voice, Music). It also does not provide any comparable ratio or specific growth rates for the entities mentioned in the table.",
+            "candidate": {
+              "excerpt": "the number of GenAI patents has increased by over 800%",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, the specific metric (CAGR percent), the time interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins growing much faster than Speech, Voice, Music). It also does not provide any comparable ratio or specific growth rates for the entities mentioned in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 295,
+              "total_tokens": 431,
+              "completion_tokens": 136,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not match any of the conditions specified in the TabSignal. It discusses a different entity (diffusion models), a different metric (number of patent families), different years (2020-2023), and a different trend (specific growth from 18 to 441). The pattern behavior is also not comparable.",
+            "candidate": {
+              "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric",
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match any of the conditions specified in the TabSignal. It discusses a different entity (diffusion models), a different metric (number of patent families), different years (2020-2023), and a different trend (specific growth from 18 to 441). The pattern behavior is also not comparable.\"\n}",
+            "usage": {
+              "prompt_tokens": 312,
+              "total_tokens": 441,
+              "completion_tokens": 129,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the key elements from the table, such as the entities, the metric (CAGR percent), the years or interval (2021-2023), the trend (growth), or the likely pattern behavior (Molecules, Genes, Proteins growing much faster than Speech, Voice, Music). It only provides a general statement about the use of molecules/genes/proteins data.",
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins data is mainly used for GenAI in life and medical sciences as well\nas physical sciences and engineering.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the key elements from the table, such as the entities, the metric (CAGR percent), the years or interval (2021-2023), the trend (growth), or the likely pattern behavior (Molecules, Genes, Proteins growing much faster than Speech, Voice, Music). It only provides a general statement about the use of molecules/genes/proteins data.\"\n}",
+            "usage": {
+              "prompt_tokens": 308,
+              "total_tokens": 452,
+              "completion_tokens": 144,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metrics, years or intervals, trends, or pattern behaviors described in the table or the internal tab signal. It only discusses the importance of the data type.",
+            "candidate": {
+              "excerpt": "Speech/voice/music is the most important data type in personal devices,\ntelecommunications, personal devices and education and also relevant for software and\nother applications.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metrics, years or intervals, trends, or pattern behaviors described in the table or the internal tab signal. It only discusses the importance of the data type.\"\n}",
+            "usage": {
+              "prompt_tokens": 312,
+              "total_tokens": 410,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the table or the internal tab signal.",
+            "candidate": {
+              "excerpt": "GenAI is expected to play an important part in many business areas",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the table or the internal tab signal.\"\n}",
+            "usage": {
+              "prompt_tokens": 294,
+              "total_tokens": 380,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the table or the internal tab signal.",
+            "candidate": {
+              "excerpt": "GenAI will also\ntransform the customer operations landscape, enhancing both efficiency and customer\nsatisfaction",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the table or the internal tab signal.\"\n}",
+            "usage": {
+              "prompt_tokens": 301,
+              "total_tokens": 387,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "chemical molecules/genes/proteins",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Molecules, genes, proteins",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions one entity, 'Molecules, genes, proteins', without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music)."
+          },
+          {
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate excerpt only mentions one of the entities ('Molecules/genes/proteins') but fails to include the metric (cagr_percent), the year interval (2021-2023), the trend (growth), and the likely pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music)."
+          },
+          {
+            "candidate": {
+              "excerpt": "Speech, Voice,\nMusic",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate excerpt only mentions the entities 'Speech, Voice, Music' without providing any information about the metric (cagr_percent), the years or interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins will continue to grow at a much faster rate than Speech, Voice, Music)."
+          },
+          {
+            "candidate": {
+              "excerpt": "Speech, sound, music",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text 'Speech, sound, music' does not match any of the conditions specified in the TabSignal. It does not mention the entities 'Molecules, Genes, Proteins' or 'Speech, Voice, Music', the metric 'cagr_percent', the year interval '2021-2023', the trend 'growth', or the likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "Speech/voice/music",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text 'Speech/voice/music' does not describe any of the observed compact table evidence. It does not mention the entities 'Molecules, Genes, Proteins', the metric 'cagr_percent', the year interval '2021-2023', the trend 'growth', or the likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text '2010-2023' does not match any of the conditions specified in the TabSignal. It does not mention the entities, the metric (cagr_percent), the correct years or interval (2021-2023), the trend (growth), or any pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend",
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match any of the conditions specified in the TabSignal. The entities, metric, years, trend, and pattern behavior described in the candidate text are completely different from those in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of GenAI patents has increased by over 800%",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, the specific metric (CAGR percent), the time interval (2021-2023), the trend (growth), or the pattern behavior (Molecules, Genes, Proteins growing much faster than Speech, Voice, Music). It also does not provide any comparable ratio or specific growth rates for the entities mentioned in the table."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric",
+                "years"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match any of the conditions specified in the TabSignal. It discusses a different entity (diffusion models), a different metric (number of patent families), different years (2020-2023), and a different trend (specific growth from 18 to 441). The pattern behavior is also not comparable."
+          },
+          {
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins data is mainly used for GenAI in life and medical sciences as well\nas physical sciences and engineering.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the key elements from the table, such as the entities, the metric (CAGR percent), the years or interval (2021-2023), the trend (growth), or the likely pattern behavior (Molecules, Genes, Proteins growing much faster than Speech, Voice, Music). It only provides a general statement about the use of molecules/genes/proteins data."
+          },
+          {
+            "candidate": {
+              "excerpt": "Speech/voice/music is the most important data type in personal devices,\ntelecommunications, personal devices and education and also relevant for software and\nother applications.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metrics, years or intervals, trends, or pattern behaviors described in the table or the internal tab signal. It only discusses the importance of the data type."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI is expected to play an important part in many business areas",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the table or the internal tab signal."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI will also\ntransform the customer operations landscape, enhancing both efficiency and customer\nsatisfaction",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the table or the internal tab signal."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001"
+  ]
+}

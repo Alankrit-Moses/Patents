@@ -1,0 +1,11 @@
+{
+  "task_id": "exp3-P2-fold3",
+  "experiment": "3",
+  "setup": "A",
+  "pattern_id": "P2",
+  "metrics": {
+    "M_alignment_score": 3,
+    "T_alignment_score": 4
+  },
+  "errors": []
+}

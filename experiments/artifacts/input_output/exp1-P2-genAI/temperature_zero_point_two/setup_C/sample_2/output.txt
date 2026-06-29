@@ -1,0 +1,818 @@
+{
+  "task_id": "exp1-P2-genAI",
+  "experiment": "1",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-genAI",
+  "errors": [],
+  "raw_output": "{\"examples\": [{\"excerpt\": \"The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased\\nresearch interest in LLMs.\"}, {\"excerpt\": \"In contrast, diffusion models and LLMs show much\\nhigher growth rates over the last three years, with the number of patent families for diffusion\\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\\nin 2023.\"}, {\"excerpt\": \"The number of scientific publications has risen even more over the same period, from only\\naround 100 in 2014 to more than 34,000 in 2023.\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased\nresearch interest in LLMs."
+      },
+      {
+        "excerpt": "In contrast, diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023."
+      },
+      {
+        "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023."
+      }
+    ]
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "known",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "irrelevant"
+          },
+          "requested_count": 3,
+          "known": [
+            "D.text",
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "DescriptionInductionAgent(optional T_hat)",
+          "TextEvidenceAgent(map-reduce)",
+          "TextPatternVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "M"
+      ],
+      "output": {
+        "T_hat": "A comparative growth pattern exists between entities ei and ej in a set E, measured by attribute m over a shared interval [t_start, t_end], if the difference in their Compound Annual Growth Rates (CAGR) exceeds a threshold epsilon. An entity ei is identified as a growth leader if its CAGR is the maximum among all entities in E. All entities must have non-zero, non-missing starting values for the CAGR calculation.",
+        "raw_output": "{\n  \"T_hat\": \"A comparative growth pattern exists between entities ei and ej in a set E, measured by attribute m over a shared interval [t_start, t_end], if the difference in their Compound Annual Growth Rates (CAGR) exceeds a threshold epsilon. An entity ei is identified as a growth leader if its CAGR is the maximum among all entities in E. All entities must have non-zero, non-missing starting values for the CAGR calculation.\"\n}",
+        "usage": {
+          "prompt_tokens": 368,
+          "total_tokens": 469,
+          "completion_tokens": 101,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "M",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4502,
+              "total_tokens": 4629,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "In contrast, diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased\nresearch interest in LLMs.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"In contrast, diffusion models and LLMs show much higher growth rates over the last three years, with the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881 in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased research interest in LLMs.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4405,
+              "total_tokens": 4567,
+              "completion_tokens": 162,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A comparative growth pattern holds when there exist two entities ei and ej such that:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"where epsilon >= 0 is a threshold for a meaningful growth-rate difference.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"An entity ei is a growth leader within E when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4032,
+              "total_tokens": 4554,
+              "completion_tokens": 522,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4019,
+              "total_tokens": 4153,
+              "completion_tokens": 134,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4863,
+              "total_tokens": 4990,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "In 2023 particularly, there has been a strong\nincrease in scientific publications.",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The number of scientific publications has risen even more over the same period, from only around 100 in 2014 to more than 34,000 in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"In 2023 particularly, there has been a strong increase in scientific publications.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4673,
+              "total_tokens": 4796,
+              "completion_tokens": 123,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"China has also reached very high average growth rates of patent family publications (50% per year, X-axis) in that period among the top inventor locations despite its already large GenAI patent portfolio.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"India had even higher growth rates in GenAI patent family publications (56% per year).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5236,
+              "total_tokens": 5357,
+              "completion_tokens": 121,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\"candidates\": [\n    {\"excerpt\": \"the highest growth since 2018 has been in patent publications related to molecules/genes/and proteins, including in the last three years since 2021\", \"local_score\": 1, \"matched_constraints\": []},\n    {\"excerpt\": \"Molecules/genes/proteins GenAI patent families have also been the growth leaders in recent years\", \"local_score\": 1, \"matched_constraints\": []}\n]}",
+            "usage": {
+              "prompt_tokens": 5727,
+              "total_tokens": 5831,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 5041,
+              "total_tokens": 5048,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4717,
+              "total_tokens": 4844,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "The impact of GenAI on the labor market",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The role of GenAI regarding copyright and the protection of\nintellectual property",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The impact of GenAI on the labor market\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The role of GenAI regarding copyright and the protection of intellectual property\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3938,
+              "total_tokens": 4023,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4752,
+              "total_tokens": 4840,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 10022,
+              "total_tokens": 10149,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5581,
+              "total_tokens": 5715,
+              "completion_tokens": 134,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4204,
+              "total_tokens": 4331,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GenAI can also improve the way banks manage their back-office operations. For example, GenAI tools can assist customer service representatives by transcribing conversations, extracting relevant information and generating notes during phone calls, allowing the human agent to concentrate on providing better customer service.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3777,
+              "total_tokens": 3865,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3873,
+              "total_tokens": 3961,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4667,
+              "total_tokens": 4674,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 6195,
+              "total_tokens": 6322,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "In contrast, diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased\nresearch interest in LLMs.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "In 2023 particularly, there has been a strong\nincrease in scientific publications.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The impact of GenAI on the labor market",
+            "chunk_id": "chunk-0010",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The role of GenAI regarding copyright and the protection of\nintellectual property",
+            "chunk_id": "chunk-0010",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextPatternVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "M",
+        "T_hat"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, an attribute measured over time, or any growth rates. It merely states a general observation about increased research interest in LLMs due to the popularity of ChatGPT.",
+            "candidate": {
+              "excerpt": "The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased\nresearch interest in LLMs.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, an attribute measured over time, or any growth rates. It merely states a general observation about increased research interest in LLMs due to the popularity of ChatGPT.\"\n}",
+            "usage": {
+              "prompt_tokens": 500,
+              "total_tokens": 582,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention the Compound Annual Growth Rate (CAGR), the threshold epsilon, or the requirement for non-zero, non-missing starting values. It also does not explicitly state the comparative growth pattern or identify a growth leader.",
+            "candidate": {
+              "excerpt": "In contrast, diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention the Compound Annual Growth Rate (CAGR), the threshold epsilon, or the requirement for non-zero, non-missing starting values. It also does not explicitly state the comparative growth pattern or identify a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 555,
+              "total_tokens": 645,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any set of comparable entities, the attribute measured over time, the Compound Annual Growth Rate (CAGR) formula, or the threshold epsilon. It also does not discuss the growth leader or the conditions for comparison.",
+            "candidate": {
+              "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention any set of comparable entities, the attribute measured over time, the Compound Annual Growth Rate (CAGR) formula, or the threshold epsilon. It also does not discuss the growth leader or the conditions for comparison.\"\n}",
+            "usage": {
+              "prompt_tokens": 519,
+              "total_tokens": 609,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any of the key elements required by the pattern constraints, such as a set of comparable entities, an attribute measured over time, Compound Annual Growth Rate (CAGR), a shared interval, or a threshold epsilon. It also does not discuss comparative growth patterns or growth leaders.",
+            "candidate": {
+              "excerpt": "In 2023 particularly, there has been a strong\nincrease in scientific publications.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any of the key elements required by the pattern constraints, such as a set of comparable entities, an attribute measured over time, Compound Annual Growth Rate (CAGR), a shared interval, or a threshold epsilon. It also does not discuss comparative growth patterns or growth leaders.\"\n}",
+            "usage": {
+              "prompt_tokens": 494,
+              "total_tokens": 592,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention the Compound Annual Growth Rate (CAGR), the shared interval [t_start, t_end], the threshold epsilon, or the requirement for non-zero, non-missing starting values. It also does not identify a growth leader or discuss the comparative growth pattern in the context of the given constraints.",
+            "candidate": {
+              "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention the Compound Annual Growth Rate (CAGR), the shared interval [t_start, t_end], the threshold epsilon, or the requirement for non-zero, non-missing starting values. It also does not identify a growth leader or discuss the comparative growth pattern in the context of the given constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 516,
+              "total_tokens": 618,
+              "completion_tokens": 102,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention a set of comparable entities, a specific attribute measured over time, a shared interval, or any calculation of CAGR. It also does not discuss a threshold epsilon or the concept of a growth leader. The text is too vague and lacks the necessary details to satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention a set of comparable entities, a specific attribute measured over time, a shared interval, or any calculation of CAGR. It also does not discuss a threshold epsilon or the concept of a growth leader. The text is too vague and lacks the necessary details to satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 494,
+              "total_tokens": 599,
+              "completion_tokens": 105,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any specific entities, attribute, time interval, or growth rate comparison. It also does not define or discuss CAGR or the threshold epsilon. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any specific entities, attribute, time interval, or growth rate comparison. It also does not define or discuss CAGR or the threshold epsilon. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 496,
+              "total_tokens": 579,
+              "completion_tokens": 83,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss a set of comparable entities, an attribute measured over time, or the calculation of Compound Annual Growth Rate (CAGR). It also does not mention a comparative growth pattern or a growth leader within a set of entities.",
+            "candidate": {
+              "excerpt": "The impact of GenAI on the labor market",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss a set of comparable entities, an attribute measured over time, or the calculation of Compound Annual Growth Rate (CAGR). It also does not mention a comparative growth pattern or a growth leader within a set of entities.\"\n}",
+            "usage": {
+              "prompt_tokens": 484,
+              "total_tokens": 571,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, an attribute measured over time, or any growth rates. It is unrelated to the pattern constraints provided.",
+            "candidate": {
+              "excerpt": "The role of GenAI regarding copyright and the protection of\nintellectual property",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, an attribute measured over time, or any growth rates. It is unrelated to the pattern constraints provided.\"\n}",
+            "usage": {
+              "prompt_tokens": 491,
+              "total_tokens": 560,
+              "completion_tokens": 69,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, their attributes, or growth rates over time. It also does not mention any comparative growth patterns or growth leaders.",
+            "candidate": {
+              "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, their attributes, or growth rates over time. It also does not mention any comparative growth patterns or growth leaders.\"\n}",
+            "usage": {
+              "prompt_tokens": 528,
+              "total_tokens": 599,
+              "completion_tokens": 71,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "The GenAI boom caused by modern chatbots such as ChatGPT has clearly increased\nresearch interest in LLMs.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "In contrast, diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881\nin 2023.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "In 2023 particularly, there has been a strong\nincrease in scientific publications.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the key elements required by the pattern constraints, such as a set of comparable entities, an attribute measured over time, Compound Annual Growth Rate (CAGR), a shared interval, or a threshold epsilon. It also does not discuss comparative growth patterns or growth leaders."
+          },
+          {
+            "candidate": {
+              "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention the Compound Annual Growth Rate (CAGR), the shared interval [t_start, t_end], the threshold epsilon, or the requirement for non-zero, non-missing starting values. It also does not identify a growth leader or discuss the comparative growth pattern in the context of the given constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention a set of comparable entities, a specific attribute measured over time, a shared interval, or any calculation of CAGR. It also does not discuss a threshold epsilon or the concept of a growth leader. The text is too vague and lacks the necessary details to satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entities, attribute, time interval, or growth rate comparison. It also does not define or discuss CAGR or the threshold epsilon. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "The impact of GenAI on the labor market",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss a set of comparable entities, an attribute measured over time, or the calculation of Compound Annual Growth Rate (CAGR). It also does not mention a comparative growth pattern or a growth leader within a set of entities."
+          },
+          {
+            "candidate": {
+              "excerpt": "The role of GenAI regarding copyright and the protection of\nintellectual property",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any set of comparable entities, an attribute measured over time, or any growth rates. It is unrelated to the pattern constraints provided."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any set of comparable entities, their attributes, or growth rates over time. It also does not mention any comparative growth patterns or growth leaders."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001",
+    "chunk-0005"
+  ]
+}

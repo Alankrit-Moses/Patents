@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P1-fold1",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "exp3-P1-fold1",
+  "errors": [],
+  "raw_output": "{\n  \"M\": \"Identify the Compound Annual Growth Rate (CAGR) from the initial and final values over a specified period, using the formula: CAGR = (Ending Value / Beginning Value)^(1 / Number of Years) - 1.\",\n  \"T\": \"The pattern describes the Compound Annual Growth Rate (CAGR) of a specific category or technology over a given period, highlighting the growth rate based on the initial and final values of patent families or other metrics.\"\n}",
+  "parsed_output": {
+    "M": "Identify the Compound Annual Growth Rate (CAGR) from the initial and final values over a specified period, using the formula: CAGR = (Ending Value / Beginning Value)^(1 / Number of Years) - 1.",
+    "T": "The pattern describes the Compound Annual Growth Rate (CAGR) of a specific category or technology over a given period, highlighting the growth rate based on the initial and final values of patent families or other metrics."
+  }
+}

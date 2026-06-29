@@ -1,0 +1,837 @@
+{
+  "task_id": "exp2-P2-E2",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "P2-E2",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"Between 2014 and 2023\"}",
+  "parsed_output": {
+    "excerpt": "Between 2014 and 2023"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "China",
+            "India",
+            "Republic of Korea",
+            "Japan",
+            "United Kingdom"
+          ],
+          "metric": "cagr_percent",
+          "years_or_interval": "2014-2023",
+          "trend": "growth",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": "India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan."
+        },
+        "raw_output": "{\n  \"entities\": [\n    \"China\",\n    \"India\",\n    \"Republic of Korea\",\n    \"Japan\",\n    \"United Kingdom\"\n  ],\n  \"metric\": \"cagr_percent\",\n  \"years_or_interval\": \"2014-2023\",\n  \"trend\": \"growth\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\"\n}",
+        "usage": {
+          "prompt_tokens": 186,
+          "total_tokens": 298,
+          "completion_tokens": 112,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.",
+        "raw_output": "{\n  \"T_hat\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\"\n}",
+        "usage": {
+          "prompt_tokens": 181,
+          "total_tokens": 213,
+          "completion_tokens": 32,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "India",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "China",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"China\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"United Kingdom\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4248,
+              "total_tokens": 4528,
+              "completion_tokens": 280,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "Between 2014 and 2023",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"In terms of patent growth, GAN patents show the strongest increase over the past decade.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4151,
+              "total_tokens": 4243,
+              "completion_tokens": 92,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3778,
+              "total_tokens": 3860,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3765,
+              "total_tokens": 3774,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4609,
+              "total_tokens": 4667,
+              "completion_tokens": 58,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4419,
+              "total_tokens": 4517,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4982,
+              "total_tokens": 5075,
+              "completion_tokens": 93,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "India",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "China",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"China\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"United Kingdom\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5473,
+              "total_tokens": 5749,
+              "completion_tokens": 276,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4787,
+              "total_tokens": 4831,
+              "completion_tokens": 44,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years_or_interval",
+                  "trend",
+                  "behavior"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has an above-average share of all GenAI patent families in networks and smart cities.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years_or_interval\", \"trend\", \"behavior\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4463,
+              "total_tokens": 4575,
+              "completion_tokens": 112,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3684,
+              "total_tokens": 3782,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4498,
+              "total_tokens": 4600,
+              "completion_tokens": 102,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9768,
+              "total_tokens": 9818,
+              "completion_tokens": 50,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5327,
+              "total_tokens": 5409,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "2010-2023",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2010-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3950,
+              "total_tokens": 4000,
+              "completion_tokens": 50,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years_or_interval\",\n        \"trend\",\n        \"likely_pattern_behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3523,
+              "total_tokens": 3609,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3619,
+              "total_tokens": 3628,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest CAGR, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4413,
+              "total_tokens": 4495,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5941,
+              "total_tokens": 5950,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "India",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "China",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Between 2014 and 2023",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "2010-2023",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 3,
+            "matched_conditions": [
+              "year/interval"
+            ],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions the years 2014 and 2023, which matches the year/interval condition. However, it does not mention any entities, the metric (CAGR percent), the trend (growth), or the pattern behavior (specific ranking of countries by CAGR).",
+            "candidate": {
+              "excerpt": "Between 2014 and 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"year/interval\"\n  ],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions the years 2014 and 2023, which matches the year/interval condition. However, it does not mention any entities, the metric (CAGR percent), the trend (growth), or the pattern behavior (specific ranking of countries by CAGR).\"\n}",
+            "usage": {
+              "prompt_tokens": 315,
+              "total_tokens": 437,
+              "completion_tokens": 122,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "years_or_interval"
+            ],
+            "failed_conditions": [
+              "entities",
+              "metric",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions the years_or_interval. It does not include any information about the entities, metric, trend, or likely_pattern_behavior.",
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"years_or_interval\"],\n  \"failed_conditions\": [\"entities\", \"metric\", \"trend\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text only mentions the years_or_interval. It does not include any information about the entities, metric, trend, or likely_pattern_behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 312,
+              "total_tokens": 391,
+              "completion_tokens": 79,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "trend"
+            ],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any entities, the metric (CAGR), or the specific years (2014-2023). It also does not describe the pattern behavior of the entities' growth rates.",
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"trend\"\n  ],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any entities, the metric (CAGR), or the specific years (2014-2023). It also does not describe the pattern behavior of the entities' growth rates.\"\n}",
+            "usage": {
+              "prompt_tokens": 312,
+              "total_tokens": 418,
+              "completion_tokens": 106,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "China",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 304,
+              "total_tokens": 389,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text 'India' does not describe any of the observed compact table evidence. It does not mention the metric (CAGR percent), the years or interval (2014-2023), the trend (growth), or the pattern behavior (India having the highest CAGR, followed by other countries).",
+            "candidate": {
+              "excerpt": "India",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text 'India' does not describe any of the observed compact table evidence. It does not mention the metric (CAGR percent), the years or interval (2014-2023), the trend (growth), or the pattern behavior (India having the highest CAGR, followed by other countries).\"\n}",
+            "usage": {
+              "prompt_tokens": 304,
+              "total_tokens": 430,
+              "completion_tokens": 126,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any specific entities, metrics, years or intervals, trends, or pattern behaviors that match the provided table and TabSignal.",
+            "candidate": {
+              "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any specific entities, metrics, years or intervals, trends, or pattern behaviors that match the provided table and TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 320,
+              "total_tokens": 406,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metric, year/interval, trend, or pattern behavior described in the TabSignal. It discusses a different topic related to GenAI patent families.",
+            "candidate": {
+              "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metric, year/interval, trend, or pattern behavior described in the TabSignal. It discusses a different topic related to GenAI patent families.\"\n}",
+            "usage": {
+              "prompt_tokens": 323,
+              "total_tokens": 419,
+              "completion_tokens": 96,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "Between 2014 and 2023",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions the years_or_interval. It does not include any information about the entities, metric, trend, or likely_pattern_behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text does not mention any entities, the metric (CAGR), or the specific years (2014-2023). It also does not describe the pattern behavior of the entities' growth rates."
+          },
+          {
+            "candidate": {
+              "excerpt": "China",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "India",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'India' does not describe any of the observed compact table evidence. It does not mention the metric (CAGR percent), the years or interval (2014-2023), the trend (growth), or the pattern behavior (India having the highest CAGR, followed by other countries)."
+          },
+          {
+            "candidate": {
+              "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entities, metrics, years or intervals, trends, or pattern behaviors that match the provided table and TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval",
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metric, year/interval, trend, or pattern behavior described in the TabSignal. It discusses a different topic related to GenAI patent families."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001"
+  ]
+}

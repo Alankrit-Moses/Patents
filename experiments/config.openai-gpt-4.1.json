@@ -1,0 +1,36 @@
+{
+  "project_root": "..",
+  "results_dir": "artifacts/openai-gpt-4.1",
+  "generator": {
+    "base_url": "https://api.openai.com/v1",
+    "model": "gpt-4.1",
+    "api_key_env": "OPENAI_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "timeout_seconds": 300,
+    "response_format": {
+      "type": "json_object"
+    },
+    "retry_attempts": 5,
+    "retry_initial_sleep_seconds": 2.0,
+    "retry_backoff_factor": 2.0
+  },
+  "judge": {
+    "base_url": "https://api.openai.com/v1",
+    "model": "gpt-4.1",
+    "api_key_env": "OPENAI_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "timeout_seconds": 300
+  },
+  "context_limit_tokens": 28000,
+  "chars_per_token_estimate": 3.5,
+  "chunk_chars": 16000,
+  "chunk_overlap_chars": 2000,
+  "max_workers": 2,
+  "max_steps": 8,
+  "repair_once": true,
+  "induction_pairs": 4,
+  "fold_count": 3,
+  "seed": 17
+}

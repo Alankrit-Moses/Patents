@@ -1,0 +1,22 @@
+{
+  "task_id": "exp1-P2-genAI",
+  "experiment": "1",
+  "setup": "A",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-genAI",
+  "errors": [],
+  "raw_output": "{\"examples\":[{\"excerpt\":\"The largest number of patents were published in the area of GANs. Between 2014 and 2023, there were 9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.\"},{\"excerpt\":\"VAEs are important for application areas such as physical sciences and engineering, networks/smart cities or personal devices. VAEs excel at capturing the underlying structure (latent space) of the data they are trained on. They can be used to generate new data such as images or to detect anomalies in data points. VAEs are a promising tool for various tasks in physical sciences and engineering, particularly in areas of data exploration or the discovery of novel materials, molecules and designs. They can also contribute to the generation of digital twins.\"},{\"excerpt\":\"The top datasets are all based on images with a few text-based datasets such as Wikipedia and PubMed.\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The largest number of patents were published in the area of GANs. Between 2014 and 2023, there were 9,700 patent families of this model type, with 2,400 patent families published in 2023 alone."
+      },
+      {
+        "excerpt": "VAEs are important for application areas such as physical sciences and engineering, networks/smart cities or personal devices. VAEs excel at capturing the underlying structure (latent space) of the data they are trained on. They can be used to generate new data such as images or to detect anomalies in data points. VAEs are a promising tool for various tasks in physical sciences and engineering, particularly in areas of data exploration or the discovery of novel materials, molecules and designs. They can also contribute to the generation of digital twins."
+      },
+      {
+        "excerpt": "The top datasets are all based on images with a few text-based datasets such as Wikipedia and PubMed."
+      }
+    ]
+  }
+}

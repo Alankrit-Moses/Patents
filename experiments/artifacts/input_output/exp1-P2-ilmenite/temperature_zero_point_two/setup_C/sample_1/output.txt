@@ -1,0 +1,847 @@
+{
+  "task_id": "exp1-P2-ilmenite",
+  "experiment": "1",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-ilmenite",
+  "errors": [],
+  "raw_output": "{\"examples\": [{\"excerpt\": \"The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez\\net al., 2014).\"}, {\"excerpt\": \"The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez\\net al., 2014).\"}, {\"excerpt\": \"compound\\nannual growth rate, CAGR 2014–2019 = +8 percent\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez\net al., 2014)."
+      },
+      {
+        "excerpt": "The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez\net al., 2014)."
+      },
+      {
+        "excerpt": "compound\nannual growth rate, CAGR 2014–2019 = +8 percent"
+      }
+    ]
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "known",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "irrelevant"
+          },
+          "requested_count": 3,
+          "known": [
+            "D.text",
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "DescriptionInductionAgent(optional T_hat)",
+          "TextEvidenceAgent(map-reduce)",
+          "TextPatternVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "M"
+      ],
+      "output": {
+        "T_hat": "A comparative growth pattern exists between entities ei and ej in set E for attribute m over interval [t_start, t_end] if CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon, where epsilon >= 0. Entity ei is a growth leader if its CAGR is the maximum in E. All entities must have non-zero, non-missing starting values for m.",
+        "raw_output": "{\n  \"T_hat\": \"A comparative growth pattern exists between entities ei and ej in set E for attribute m over interval [t_start, t_end] if CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon, where epsilon >= 0. Entity ei is a growth leader if its CAGR is the maximum in E. All entities must have non-zero, non-missing starting values for m.\"\n}",
+        "usage": {
+          "prompt_tokens": 368,
+          "total_tokens": 474,
+          "completion_tokens": 106,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "M",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 10,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3962,
+              "total_tokens": 4089,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez\net al., 2014).",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez\net al., 2014).",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez et al., 2014).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez et al., 2014).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4525,
+              "total_tokens": 4655,
+              "completion_tokens": 130,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "compound\nannual growth rate, CAGR 2014–2019 = +8 percent",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\"candidates\": [{\"excerpt\": \"compound annual growth rate, CAGR 2014–2019 = +8 percent\", \"local_score\": 1, \"matched_constraints\": []}]}",
+            "usage": {
+              "prompt_tokens": 4471,
+              "total_tokens": 4521,
+              "completion_tokens": 50,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "Pangang’s patent portfolio is the largest and the most diversified, although its patents do not\nextend to countries outside China, and only 53 percent are active.",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The large patent portfolio of Pangang reflects its leading position in the industrial production\nof titanium dioxide, with a yearly production of approximately 220,000 tonnes (Reuters, 2020),\ncompared to a total production capacity of 4 million tonnes in China and 8 million tonnes\nworldwide (USGS, n.d.).",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Pangang’s patent portfolio is the largest and the most diversified, although its patents do not extend to countries outside China, and only 53 percent are active.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The large patent portfolio of Pangang reflects its leading position in the industrial production of titanium dioxide, with a yearly production of approximately 220,000 tonnes (Reuters, 2020), compared to a total production capacity of 4 million tonnes in China and 8 million tonnes worldwide (USGS, n.d.).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4867,
+              "total_tokens": 5034,
+              "completion_tokens": 167,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "with a CAGR of +15 percent between 2014\nand 2019.",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"with a CAGR of +15 percent between 2014 and 2019.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4545,
+              "total_tokens": 4604,
+              "completion_tokens": 59,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "CAGR is the compound annual growth rate.",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "CAGR2014–2019 = +11%",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR is the compound annual growth rate.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR2014–2019 = +11%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR2014–2019 = +23%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4703,
+              "total_tokens": 4833,
+              "completion_tokens": 130,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "with a CAGR of +12 percent between 2014 and 2019",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "with a CAGR of +23 percent between 2014 and 2019",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"with a CAGR of +12 percent between 2014 and 2019\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"with a CAGR of +23 percent between 2014 and 2019\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4828,
+              "total_tokens": 4935,
+              "completion_tokens": 107,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "CAGR2014–2019 = +23%",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "CAGR2014–2019 = +25%",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR2014–2019 = +23%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR2014–2019 = +25%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3918,
+              "total_tokens": 4013,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4625,
+              "total_tokens": 4752,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "The compound annual growth rate, or CAGR, is the average rate at\nwhich a value grows over a certain period of time (CAGR Calculator,\nn.d.). The formula for CAGR is:\nCAGR = (EV/SV)1/n – 1,\nwhere EV = ending value; SV = starting value; n = number of years.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The compound annual growth rate, or CAGR, is the average rate at which a value grows over a certain period of time (CAGR Calculator, n.d.). The formula for CAGR is: CAGR = (EV/SV)1/n – 1, where EV = ending value; SV = starting value; n = number of years.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3515,
+              "total_tokens": 3626,
+              "completion_tokens": 111,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez\net al., 2014).",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez\net al., 2014).",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "compound\nannual growth rate, CAGR 2014–2019 = +8 percent",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Pangang’s patent portfolio is the largest and the most diversified, although its patents do not\nextend to countries outside China, and only 53 percent are active.",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The large patent portfolio of Pangang reflects its leading position in the industrial production\nof titanium dioxide, with a yearly production of approximately 220,000 tonnes (Reuters, 2020),\ncompared to a total production capacity of 4 million tonnes in China and 8 million tonnes\nworldwide (USGS, n.d.).",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "with a CAGR of +15 percent between 2014\nand 2019.",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "CAGR is the compound annual growth rate.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "CAGR2014–2019 = +11%",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "with a CAGR of +12 percent between 2014 and 2019",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "with a CAGR of +23 percent between 2014 and 2019",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "CAGR2014–2019 = +23%",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "CAGR2014–2019 = +25%",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The compound annual growth rate, or CAGR, is the average rate at\nwhich a value grows over a certain period of time (CAGR Calculator,\nn.d.). The formula for CAGR is:\nCAGR = (EV/SV)1/n – 1,\nwhere EV = ending value; SV = starting value; n = number of years.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextPatternVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "M",
+        "T_hat"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any of the key concepts required by the pattern constraints, such as comparable entities, attributes measured over time, CAGR, or growth leaders.",
+            "candidate": {
+              "excerpt": "The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez\net al., 2014).",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any of the key concepts required by the pattern constraints, such as comparable entities, attributes measured over time, CAGR, or growth leaders.\"\n}",
+            "usage": {
+              "prompt_tokens": 514,
+              "total_tokens": 586,
+              "completion_tokens": 72,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any comparable entities, attributes measured over time, or growth rates. It merely states a fact about the chloride process's share of TiO2 production in a specific year.",
+            "candidate": {
+              "excerpt": "The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez\net al., 2014).",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any comparable entities, attributes measured over time, or growth rates. It merely states a fact about the chloride process's share of TiO2 production in a specific year.\"\n}",
+            "usage": {
+              "prompt_tokens": 513,
+              "total_tokens": 590,
+              "completion_tokens": 77,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It only provides a single entity's CAGR without any comparison to other entities or mention of a set E, attribute m, interval [t_start, t_end], or epsilon threshold.",
+            "candidate": {
+              "excerpt": "compound\nannual growth rate, CAGR 2014–2019 = +8 percent",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It only provides a single entity's CAGR without any comparison to other entities or mention of a set E, attribute m, interval [t_start, t_end], or epsilon threshold.\"\n}",
+            "usage": {
+              "prompt_tokens": 505,
+              "total_tokens": 594,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any of the required elements such as CAGR, entities, attributes, time intervals, or comparative growth patterns. It only mentions the size and diversity of Pangang's patent portfolio and its geographical and active status.",
+            "candidate": {
+              "excerpt": "Pangang’s patent portfolio is the largest and the most diversified, although its patents do not\nextend to countries outside China, and only 53 percent are active.",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any of the required elements such as CAGR, entities, attributes, time intervals, or comparative growth patterns. It only mentions the size and diversity of Pangang's patent portfolio and its geographical and active status.\"\n}",
+            "usage": {
+              "prompt_tokens": 515,
+              "total_tokens": 601,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss growth rates, CAGR, or any comparative growth patterns. It only provides information about the production capacity of titanium dioxide.",
+            "candidate": {
+              "excerpt": "The large patent portfolio of Pangang reflects its leading position in the industrial production\nof titanium dioxide, with a yearly production of approximately 220,000 tonnes (Reuters, 2020),\ncompared to a total production capacity of 4 million tonnes in China and 8 million tonnes\nworldwide (USGS, n.d.).",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not discuss growth rates, CAGR, or any comparative growth patterns. It only provides information about the production capacity of titanium dioxide.\"\n}",
+            "usage": {
+              "prompt_tokens": 553,
+              "total_tokens": 625,
+              "completion_tokens": 72,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not satisfy the pattern constraints. It only mentions a CAGR value for a single entity without providing context for comparison with other entities, a specific attribute, or a threshold epsilon. It also does not discuss the growth leader or the conditions for a comparative growth pattern.",
+            "candidate": {
+              "excerpt": "with a CAGR of +15 percent between 2014\nand 2019.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not satisfy the pattern constraints. It only mentions a CAGR value for a single entity without providing context for comparison with other entities, a specific attribute, or a threshold epsilon. It also does not discuss the growth leader or the conditions for a comparative growth pattern.\"\n}",
+            "usage": {
+              "prompt_tokens": 503,
+              "total_tokens": 601,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It only defines CAGR without providing any context of comparative growth patterns, entities, or intervals.",
+            "candidate": {
+              "excerpt": "CAGR is the compound annual growth rate.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It only defines CAGR without providing any context of comparative growth patterns, entities, or intervals.\"\n}",
+            "usage": {
+              "prompt_tokens": 489,
+              "total_tokens": 556,
+              "completion_tokens": 67,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It only provides a CAGR value without any context, entities, or comparison.",
+            "candidate": {
+              "excerpt": "CAGR2014–2019 = +11%",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It only provides a CAGR value without any context, entities, or comparison.\"\n}",
+            "usage": {
+              "prompt_tokens": 496,
+              "total_tokens": 560,
+              "completion_tokens": 64,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not satisfy the pattern constraints. It only mentions a CAGR value for a single entity without providing a comparative context, other entities, or the necessary conditions for a comparative growth pattern.",
+            "candidate": {
+              "excerpt": "with a CAGR of +23 percent between 2014 and 2019",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not satisfy the pattern constraints. It only mentions a CAGR value for a single entity without providing a comparative context, other entities, or the necessary conditions for a comparative growth pattern.\"\n}",
+            "usage": {
+              "prompt_tokens": 502,
+              "total_tokens": 584,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "Does not define CAGR or comparative growth pattern",
+              "Does not mention set of entities E",
+              "Does not specify attribute m",
+              "Does not provide start and end years in the context of CAGR calculation",
+              "Does not discuss epsilon or growth leader"
+            ],
+            "rationale": "The candidate text only mentions a CAGR value without providing the necessary context or definitions required by the pattern constraints M and T_hat.",
+            "candidate": {
+              "excerpt": "with a CAGR of +12 percent between 2014 and 2019",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"Does not define CAGR or comparative growth pattern\",\n    \"Does not mention set of entities E\",\n    \"Does not specify attribute m\",\n    \"Does not provide start and end years in the context of CAGR calculation\",\n    \"Does not discuss epsilon or growth leader\"\n  ],\n  \"rationale\": \"The candidate text only mentions a CAGR value without providing the necessary context or definitions required by the pattern constraints M and T_hat.\"\n}",
+            "usage": {
+              "prompt_tokens": 502,
+              "total_tokens": 621,
+              "completion_tokens": 119,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'CAGR2014–2019 = +23%' does not match the pattern constraints. It lacks context about the entities, the attribute, the interval, and the comparative growth pattern. It also does not mention the threshold epsilon or the growth leader.",
+            "candidate": {
+              "excerpt": "CAGR2014–2019 = +23%",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text 'CAGR2014–2019 = +23%' does not match the pattern constraints. It lacks context about the entities, the attribute, the interval, and the comparative growth pattern. It also does not mention the threshold epsilon or the growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 496,
+              "total_tokens": 597,
+              "completion_tokens": 101,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'CAGR2014–2019 = +25%' does not satisfy the pattern constraints. It lacks the necessary context and information about entities, the set E, the attribute m, the interval [t_start, t_end], and the comparison between entities. It also does not mention the threshold epsilon or the condition for a growth leader.",
+            "candidate": {
+              "excerpt": "CAGR2014–2019 = +25%",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'CAGR2014–2019 = +25%' does not satisfy the pattern constraints. It lacks the necessary context and information about entities, the set E, the attribute m, the interval [t_start, t_end], and the comparison between entities. It also does not mention the threshold epsilon or the condition for a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 496,
+              "total_tokens": 610,
+              "completion_tokens": 114,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention the set of comparable entities E, the shared interval [t_start, t_end], the threshold epsilon, or the requirement for all entities to have non-zero, non-missing starting values. It also does not discuss comparative growth patterns or growth leaders.",
+            "candidate": {
+              "excerpt": "The compound annual growth rate, or CAGR, is the average rate at\nwhich a value grows over a certain period of time (CAGR Calculator,\nn.d.). The formula for CAGR is:\nCAGR = (EV/SV)1/n – 1,\nwhere EV = ending value; SV = starting value; n = number of years.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention the set of comparable entities E, the shared interval [t_start, t_end], the threshold epsilon, or the requirement for all entities to have non-zero, non-missing starting values. It also does not discuss comparative growth patterns or growth leaders.\"\n}",
+            "usage": {
+              "prompt_tokens": 555,
+              "total_tokens": 652,
+              "completion_tokens": 97,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez\net al., 2014).",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez\net al., 2014).",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "compound\nannual growth rate, CAGR 2014–2019 = +8 percent",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Pangang’s patent portfolio is the largest and the most diversified, although its patents do not\nextend to countries outside China, and only 53 percent are active.",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any of the required elements such as CAGR, entities, attributes, time intervals, or comparative growth patterns. It only mentions the size and diversity of Pangang's patent portfolio and its geographical and active status."
+          },
+          {
+            "candidate": {
+              "excerpt": "The large patent portfolio of Pangang reflects its leading position in the industrial production\nof titanium dioxide, with a yearly production of approximately 220,000 tonnes (Reuters, 2020),\ncompared to a total production capacity of 4 million tonnes in China and 8 million tonnes\nworldwide (USGS, n.d.).",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss growth rates, CAGR, or any comparative growth patterns. It only provides information about the production capacity of titanium dioxide."
+          },
+          {
+            "candidate": {
+              "excerpt": "with a CAGR of +15 percent between 2014\nand 2019.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not satisfy the pattern constraints. It only mentions a CAGR value for a single entity without providing context for comparison with other entities, a specific attribute, or a threshold epsilon. It also does not discuss the growth leader or the conditions for a comparative growth pattern."
+          },
+          {
+            "candidate": {
+              "excerpt": "CAGR is the compound annual growth rate.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It only defines CAGR without providing any context of comparative growth patterns, entities, or intervals."
+          },
+          {
+            "candidate": {
+              "excerpt": "CAGR2014–2019 = +11%",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It only provides a CAGR value without any context, entities, or comparison."
+          },
+          {
+            "candidate": {
+              "excerpt": "with a CAGR of +23 percent between 2014 and 2019",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not satisfy the pattern constraints. It only mentions a CAGR value for a single entity without providing a comparative context, other entities, or the necessary conditions for a comparative growth pattern."
+          },
+          {
+            "candidate": {
+              "excerpt": "with a CAGR of +12 percent between 2014 and 2019",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text only mentions a CAGR value without providing the necessary context or definitions required by the pattern constraints M and T_hat."
+          },
+          {
+            "candidate": {
+              "excerpt": "CAGR2014–2019 = +23%",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'CAGR2014–2019 = +23%' does not match the pattern constraints. It lacks context about the entities, the attribute, the interval, and the comparative growth pattern. It also does not mention the threshold epsilon or the growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "CAGR2014–2019 = +25%",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'CAGR2014–2019 = +25%' does not satisfy the pattern constraints. It lacks the necessary context and information about entities, the set E, the attribute m, the interval [t_start, t_end], and the comparison between entities. It also does not mention the threshold epsilon or the condition for a growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "The compound annual growth rate, or CAGR, is the average rate at\nwhich a value grows over a certain period of time (CAGR Calculator,\nn.d.). The formula for CAGR is:\nCAGR = (EV/SV)1/n – 1,\nwhere EV = ending value; SV = starting value; n = number of years.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention the set of comparable entities E, the shared interval [t_start, t_end], the threshold epsilon, or the requirement for all entities to have non-zero, non-missing starting values. It also does not discuss comparative growth patterns or growth leaders."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001",
+    "chunk-0002"
+  ]
+}

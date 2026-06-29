@@ -1,0 +1,5054 @@
+===== MESSAGE 1: SYSTEM =====
+Execute the typed framework query exactly. Return only the requested target components as valid JSON.
+
+===== MESSAGE 2: USER =====
+<framework_guide>
+The modular framework represents data as D=(D.text,D.tab) and a pattern as P=(M,T,E).
+- D.text is report text and D.tab is source structured data.
+- M is a mathematical pattern definition, T is its natural-language description, and E is a set of examples.
+- E.text is an exact contiguous excerpt from D.text. E.tab is observed compact tabular evidence supplied with an example; an internal table summary is not a new E.tab.
+- A concrete component is known input, ? is a target to produce, _ is irrelevant or omitted, and [n] requests n outputs.
+- A named component whose value is not supplied is unavailable; _ deliberately marks a component as irrelevant or not requested.
+- Never use an unavailable or irrelevant component. Return only target components.
+
+Read and decompose queries internally as follows:
+1. D:(D.text,_), P:(M,_,{(?,_)[2]}) means use known M to find two exact E.text excerpts in D.text, while D.tab, T, and E.tab are not used.
+2. D:(D.text,_), P:(_,_,{(?,E.tab)}) means summarize the provided E.tab internally, search D.text for matching evidence, and return one exact E.text. Do not create E.tab.
+3. D:(_,_), P:(?,?,{(E1.text,E1.tab),...}) means compare the provided paired examples, infer their shared rule, and return M and T.
+These decompositions are reasoning guidance inside one model call, not additional tools or data.
+</framework_guide>
+
+<framework_query>
+D:(D.text,_)
+P:(_,_,{(?,E.tab)})
+</framework_query>
+
+<query_interpretation>
+Use D.text and the provided compact E.tab. D.tab is unavailable. Return one exact E.text matching that evidence. Do not create or return E.tab.
+</query_interpretation>
+
+<known_components>
+<E_tab format="compact_csv">
+entity,start_year,end_year,cagr_percent
+Titanium dioxide production,2002,2019,9.2
+Titanium metal production,2002,2019,0.9
+
+</E_tab>
+</known_components>
+<available_data>
+<D_text>
+SOURCE_TITLE: WIPO Patent Landscape Report - Production of titanium and titanium dioxide from ilmenite and related applications
+SOURCE_FILE: ilmenite.pdf
+EXTRACTION_METHOD: Poppler pdftotext 25.06.0, UTF-8, default reading-order extraction, page-by-page
+OCR: no
+PAGE_COUNT: 56
+NOTES: This file is intended as a stable plain-text ground truth for searching text instances. It contains embedded PDF text extracted by pdftotext. Figure captions and chart labels may appear if they are embedded as PDF text; text embedded only in raster images is not OCRed.
+
+
+
+===== PAGE 1 / 56 =====
+
+[NO EXTRACTED TEXT ON THIS PAGE]
+
+
+
+===== PAGE 2 / 56 =====
+
+Patent
+Landscape
+Report
+
+Production of titanium
+and titanium dioxide
+from ilmenite and
+related applications
+
+
+
+===== PAGE 3 / 56 =====
+
+This work is licensed under Creative Commons Attribution 4.0 International.
+
+© WIPO, 2023
+
+The user is allowed to reproduce, distribute, adapt, translate and publicly
+perform this publication, including for commercial purposes, without
+explicit permission, provided that the content is accompanied by an
+acknowledgement that WIPO is the source and that it is clearly indicated if
+changes were made to the original content.
+
+World Intellectual Property Organization
+34, chemin des Colombettes, P.O. Box 18
+CH-1211 Geneva 20, Switzerland
+
+Suggested citation: WIPO (2022). Production of titanium and titanium dioxide
+from ilmenite and related applications. Geneva: World Intellectual Property
+Organization. DOI:10.34667/tind.47029
+Adaptation/translation/derivatives should not carry any official emblem or
+logo, unless they have been approved and validated by WIPO. Please contact
+us via the WIPO website to obtain permission.
+
+ISBN: 978-92-805-3439-9 (print)
+ISBN: 978-92-805-3438-2 (online)
+ISSN: 2790-7007 (print)
+ISSN: 2790-7015 (online)
+
+Attribution 4.0 International (CC BY 4.0)
+Cover: Wikimedia, Researchgate.net
+
+For any derivative work, please include the following disclaimer: “The
+Secretariat of WIPO assumes no liability or responsibility with regard to the
+transformation or translation of the original content.”
+When content published by WIPO, such as images, graphics, trademarks
+or logos, is attributed to a third-party, the user of such content is solely
+responsible for clearing the rights with the right holder(s).
+To view a copy of this license, please visit
+https://creativecommons.org/licenses/by/4.0
+Any dispute arising under this license that cannot be settled amicably shall
+be referred to arbitration in accordance with Arbitration Rules of the United
+Nations Commission on International Trade Law (UNCITRAL) then in force.
+The parties shall be bound by any arbitration award rendered as a result of
+such arbitration as the final adjudication of such a dispute.
+The designations employed and the presentation of material throughout
+this publication do not imply the expression of any opinion whatsoever
+on the part of WIPO concerning the legal status of any country, territory
+or area or of its authorities, or concerning the delimitation of its frontiers
+or boundaries.
+This publication is not intended to reflect the views of the Member States or
+the WIPO Secretariat.
+The mention of specific companies or products of manufacturers does not
+imply that they are endorsed or recommended by WIPO in preference to
+others of a similar nature that are not mentioned.
+
+2
+
+
+
+===== PAGE 4 / 56 =====
+
+Contents
+Acknowledgements4
+Key findings
+
+5
+
+Context and introduction
+
+7
+
+Introduction7
+Titanium extraction from mineral ores
+
+7
+
+Titanium mining and world production
+
+8
+
+Production of titanium dioxide
+
+11
+
+Processing of ilmenite
+
+11
+
+Overview11
+The sulfate process
+
+12
+
+The chloride process
+
+12
+
+The Becher process
+
+12
+
+Patent landscape
+
+13
+
+Patent activity
+
+13
+
+Titanium sources, processing and final products
+
+13
+
+Geographical coverage and key players
+
+16
+
+Production of titanium metal
+
+20
+
+Processing20
+Overview20
+Processes20
+The Kroll process
+The Hunter and Armstrong processes
+Patent landscape
+
+20
+21
+21
+
+Patent activity
+
+21
+
+Titanium source, process and product
+
+21
+
+Geographical coverage and key players
+
+23
+
+Industrial applications of titanium dioxide and titanium
+
+27
+
+Overview27
+Patent landscape
+
+27
+
+Ceramics27
+Electrodes for batteries
+
+31
+
+Medical technology
+
+34
+
+Cosmetics37
+Coatings41
+Water treatment
+
+44
+
+Perspectives47
+Annex48
+Methodology and search strategy
+
+48
+
+Production of titanium dioxide
+
+48
+
+Production of titanium metal
+
+49
+
+Industrial applications of titanium dioxide and titanium
+
+50
+
+Glossary53
+
+﻿
+
+References54
+
+3
+
+
+
+===== PAGE 5 / 56 =====
+
+Acknowledgements
+This Patent Landscape Report on Production of titanium and titanium dioxide from ilmenite and
+related applications was prepared following a related request from Sri Lanka.
+This publication was prepared under the stewardship of Marco M. Alemán (Assistant Director
+General, IP and Innovation Ecosystems Sector), under the direction of Alejandro Roca Campañá
+(Senior Director, Technology and Innovation Support Division) and Andrew Czajkowski (Director,
+Technology and Innovation Support Division), with the generous financial support by FundsIn-Trust Japan Industrial Property Global provided by the Japan Patent Office.
+The report was prepared by a project team initially led by Irene Kitsara (IP Information Officer,
+Technology and Innovation Support Division) and then by Lakshmi Supriya (Patent Analytics
+Officer, Technology and Innovation Support Division), including Fany Di Lorenzo, Rayhana
+Laamiri and Nathalie Mantrand-Foussadier (Questel Consulting), and Craig Dsouza (Young
+Expert Professional, Technology and Innovation Support Division). The project team retrieved
+and analyzed the data, prepared the visualizations and wrote the report. Thanks also go to
+Hong Kan (Patent Analytics Officer, Technology and Innovation Support Division) for help with
+the visualizations.
+The report draws on helpful input received during conceptualization of the project and
+in reviewing the data and report from Professor Nilwala Kottegoda (University of Sri
+Jayewardenepura, Sri Lanka) and the team at the National Innovation Agency of Sri Lanka:
+Professor Ajith de Alwis (Chief Innovation Officer/Dean Graduate Studies, University of Moratuwa,
+Sri Lanka), and Senior Innovation Officers Vindya Wijesinghe, Navodi Wickramasinghe, Thidasi
+Dahanayake, and Bhagya Herath from NIA circle. Our thanks also go to Julio Raffo (Head,
+Innovation Economy Section) for reviewing the report and providing valuable inputs.
+Finally, our gratitude to the WIPO editorial and design team, including Charlotte Beauchamp
+(Head, Publications and Design Section) for her invaluable support and advice, Vanessa Harwood
+for her editorial oversight and Sheyda Navab for the report design.
+Further information
+Online resources: The electronic version of this report can be
+accessed at https://www.wipo.int/publications/en/details.jsp?id=4648.
+This webpage also includes datasets from the report.
+Contact: patent.information@wipo.int
+
+4
+
+
+
+===== PAGE 6 / 56 =====
+
+Key findings
+Titanium is a metal with high industrial and commercial interest. It is used in many applications in
+the form of dioxide, elementary metal or in alloys. Titanium is mainly extracted from ilmenite ore
+(82 percent), other sources being slags (13 percent) and rutile ore (5 percent). About 94 percent
+of the world’s titanium is used to produce titanium dioxide, with the remaining 6 percent being
+used for titanium metal and alloys. China is the largest producer of titanium dioxide and titanium
+metal, followed by the United States of America (US) for titanium dioxide and Japan for titanium
+metal. This report provides a landscape of patenting activity relating to the production of
+titanium from ilmenite from 2002 to 2022, along with a section on patenting activity for selected
+industrial applications of titanium and titanium dioxide.
+
+Patenting activity related to titanium dioxide production from ilmenite
+is rapidly increasing
+Between 2002 and 2022, there have been 459 patent families that describe the production of
+titanium dioxide from ilmenite, and this number is growing rapidly. The majority of these patents
+describe pre-treatment processes, such as using smelting and magnetic separation to increase
+titanium concentration in low-grade ores, leading to titanium concentrates or slags. Other patents
+describe processes to obtain titanium dioxide, either by a direct hydrometallurgical process or
+through two industrially exploited processes, the sulfate process and the chloride process.
+Acid leaching might be used either as a pre-treatment or as part of a hydrometallurgical process
+to directly obtain titanium dioxide or synthetic rutile (>90 percent titanium dioxide, TiO2). The
+sulfate process represents 40 percent of the world’s titanium dioxide production and is protected
+in 23 percent of patent families. The chloride process is only mentioned in 8 percent of patent
+families, although it provides 60 percent of the worldwide industrial production of titanium
+dioxide. Given the findings from this patent landscape report, we can expect to see industrial
+chloride process use progressively decrease within the next few years and an increasing use of
+direct hydrometallurgical processes, which require fewer steps and are more convenient.
+Key contributors to patents on the production of titanium dioxide are companies from China,
+Australia and the United States, reflecting the major contribution of these countries to industrial
+production. Chinese companies Pangang and Lomon Billions Groups are the main contributors
+and hold diversified patent portfolios covering both pre-treatment and the processes leading to a
+final product.
+
+Patenting activity related to titanium metal production from ilmenite
+remains stable
+Between 2002 and 2022, there have been 92 patent families that describe the production
+of titanium metal from ilmenite, and this number has remained quite steady. These patents
+describe the production of titanium metal starting from mineral ores, such as ilmenite,
+and from titanium dioxide (TiO2) and titanium tetrachloride (TiCl4), a chemical obtained as
+an intermediate in the chloride process. The starting materials are purified if needed, and
+then converted to titanium metal by a chemical reduction process using a reducing agent.
+Processes mainly differ in regard to the reducing agent used to transform the starting
+material into titanium metal: magnesium is the most frequently cited reducing agent and the
+most exploited in industrial production.
+
+﻿
+
+Key players in the field are Japanese companies, in particular Toho Titanium and Osaka Titanium
+Technologies, both focusing on reduction using magnesium. Pangang also contributes to
+titanium metal production and holds patents describing reduction by molten salt electrolysis.
+5
+
+
+
+===== PAGE 7 / 56 =====
+
+As the patent dynamics are slow in this field and most industrial players describe the standard
+industrial process, we do not expect a big shift from this process within the next few years.
+The one emerging technology seems to be molten salt electrolysis developed by Pangang.
+
+Titanium dioxide and titanium metal are used in a wide range of
+industrial applications
+Patents on industrial applications of titanium dioxide and titanium from 2012 to 2022 were
+analyzed, focusing on six technological domains: ceramics, electrodes for batteries, medical
+technology, cosmetics, coatings and water treatment.
+
+Patent Landscape Report: Ilmenite
+
+• 2,027 patent families described the increasing use of titanium dioxide and titanium
+composites in ceramics. These materials are used as insulators in electronics, as well as for
+consumer goods (oven coatings), construction and decoration (tiles). Several leading industrial
+actors are among the top players, showing the maturity of this technology and its extended
+industrial use. Among the top industrial players, three are multinational corporations and
+world leaders in electronic components and devices: TDK, LG and Samsung.
+• 1,874 patent families protected the use of titanium dioxide in electrodes and this number is
+growing rapidly, in part because of the development of electric cars. Patents mainly focus
+on the use of titanium-based compounds as cathodes in lithium-based secondary batteries
+for electronics or automobiles. The presence of several big companies among the top actors
+shows the maturity of this technology and its broad industrial application. Among the top
+players, several leading multinational companies of the electronics and automobile industries
+are present: LG, Samsung, Toshiba, Toyota and Nissan.
+• 1,182 patent families cited the use of titanium metal and alloys in medical technology, owing
+to the high strength-to-weight ratio and chemical stability of titanium, and the number is
+increasing rapidly. Implantable products such as bone prostheses, cortical plates, stents and
+clamps are the most frequently described applications. Some patents also describe coatings
+for such implantable products and non-implantable surgical devices (guides, robots). Chinese
+companies and universities dominate this application field, with the Shanghai Jiao Tong
+University School of Medicine being the top contributor.
+• 953 patent families protected cosmetic compositions containing titanium dioxide, mainly
+used for its opacity and high covering power, as well as an ultraviolet (UV) filter. Patents cover
+products for hair coloring/dressing, sunscreen, toothpaste, skin whitening and make-up for
+skin or lips. The very large presence of big companies among the top actors reflects the high
+maturity of this technology. French multinational company L’Oréal is the top player with 53
+active patents and is followed by several Japanese companies, such as Shiseido and Kao.
+• 908 patent families described the use of titanium dioxide and composites in coatings. This
+field is dominated by Chinese academic institutions and companies. Konfoong Materials
+International specializes in coating materials for semiconductors, Zhaoqing Hongwang Metal
+Industry is a steel manufacturer and Guangzhou UV Technology Material is another coatings
+manufacturer for glass, photovoltaics and decorative products.
+• 719 patent families protected the use of titanium dioxide in water treatment. This technology
+is rapidly emerging and expected to grow further within the next few years. Patents describe
+processes for water treatment, such as electrochemical processes, where titanium dioxide or
+titanium composites are used as electrodes, or purification by UV irradiation, where titanium
+dioxide is used as a photocatalyst. Other patents describe a purification technique based on
+the precipitation of impurities, where titanium tetrachloride is used as a coagulant. Key players
+are mainly Chinese universities with the exception of China Petroleum Chemical. The lack of
+industrial contributors reflects the low maturity of this technology and its growth potential.
+
+6
+
+
+
+===== PAGE 8 / 56 =====
+
+Context and introduction
+Introduction
+Titanium extraction from mineral ores
+
+Titanium is the ninth most abundant element on Earth and represents about 0.6 percent of the
+Earth’s crust (Ngugen and Lee, 2019). It is used in several applications, mainly in the form of
+titanium dioxide, but also as titanium metal, or in alloys. Titanium dioxide is present worldwide in
+coastal deposits of heavy-mineral sands, which are sources of heavy industrial minerals, such as
+ilmenite, rutile and leucoxene.
+This report provides a landscape of the patent activity related to the process of extracting titanium
+dioxide or titanium metal from ilmenite ore. In addition, a section on the industrial applications
+of titanium dioxide and titanium metal is included, focusing on selected applications, such as
+ceramics, electrodes for batteries, medical technology, cosmetics, coatings and water treatment.
+The mineral ilmenite is mainly composed of iron and titanium oxide having an ideal chemical
+formula FeTiO3 and a stoichiometric content of 53 percent titanium dioxide (TiO2), although the
+real TiO2 content varies between 40 and 65 percent (Van Gosen and Ellefsen, 2018; Ngugen and
+Lee, 2019). Indeed, weathering can increase the TiO2 content in titaniferous ores by leaching the
+iron. Natural rutile contains around 95 percent TiO2, while leucoxene comprises a mixture of
+FeTiO3 and TiO2 with a total TiO2 content over 65 percent (Ngugen and Lee, 2019).
+Ilmenite is commonly processed to obtain a titanium concentrate, which is called “synthetic
+rutile” if it contains more than 90 percent TiO2, or more generally “titaniferous slags” if it has a
+lower TiO2 content.
+More than 80 percent of the estimated global production of titanium concentrate is obtained
+from the processing of ilmenite, while 13 percent is obtained from titaniferous slags and
+5 percent from rutile (Figure 1).
+Figure 1. Estimated world production of titanium concentrate by mineral source in metric
+tons, 2015–2019.
+Titanium concentrate is mainly obtained from processing of ilmenite mineral, followed by titaniferous
+slags and natural rutile.
+
+11,000,000
+10,000,000
+
+Ilmenite
+Titaniferous slag
+Rutile
+
+9,000,000
+
+Metric tons
+
+8,000,000
+7,000,000
+6,000,000
+5,000,000
+4,000,000
+3,000,000
+2,000,000
+1,000,000
+0
+2015
+
+2016
+
+2017
+
+2018
+
+2019
+
+Source: based on data from USGS (n.d.).
+7
+
+
+
+===== PAGE 9 / 56 =====
+
+Titanium mining and world production
+
+China has by far the highest titanium mining activity (Figure 2). About 35 percent of the world’s
+ilmenite is mined in China, representing 33 percent of total titanium mineral mining (including
+ilmenite and rutile). South Africa and Mozambique are also important contributors, representing
+13 percent and 12 percent of worldwide ilmenite mining, respectively. Australia represents
+6 percent of the total ilmenite mining and 31 percent of rutile mining.
+China is the biggest producer of titanium dioxide, followed by the United States and Germany
+(Figure 3). China is also the leader in the production of titanium metal, but Japan, the Russian
+Federation and Kazakhstan have emerged as important contributors to this field (Figure 4).
+
+Figure 2. Worldwide mining of the titanium-containing minerals ilmenite and rutile in
+thousand tonnes of TiO2 equivalent by country, 2020.
+China, South Africa and Mozambique are the biggest contributors to ilmenite mining, while Australia,
+Sierra Leone and Ukraine are the biggest contributors to rutile mining.
+China
+South Africa
+Mozambique
+Australia
+480
+Canada
+595
+Ukraine
+464
+Norway
+444
+Senegal
+300
+Kenya 201 73
+Madagascar
+254
+India 174
+Viet Nam 138
+Sierra Leone 114
+US 100
+Other countries 67
+
+2,800
+1,020
+
+86
+
+965
+190
+
+95
+
+Rutile
+Ilmenite
+
+Source: based on data from USGS (n.d.).
+
+Patent Landscape Report: Ilmenite
+
+Figure 3. Production capacity (in thousand tonnes) of titanium dioxide by country, 2020.
+China has the largest production capacity for titanium dioxide, followed by the United States.
+
+8
+
+China
+US
+Other countries
+785
+Germany
+472
+UK
+315
+Japan
+314
+Mexico
+300
+Australia
+260
+Saudi Arabia
+210
+Ukraine
+120
+India
+108
+Canada
+104
+Russian Federation 55
+Kazakhstan 1
+Source: based on data from USGS (n.d.).
+
+4,000
+1,370
+
+
+
+===== PAGE 10 / 56 =====
+
+Figure 4. Production capacity of titanium metal by country, 2020.
+The main producers of titanium metal are China, Japan and the Russian Federation.
+China
+Japan
+Russian Federation
+Kazakhstan
+Saudi Arabia
+US
+Ukraine
+Other countries
+India
+UK
+Germany
+
+158
+69
+47
+26
+16
+13
+12
+1
+1
+0
+0
+
+Source: based on data from USGS (n.d.).
+
+Figure 5 compares the contribution of the different countries to the mining of titaniumcontaining ores and production of titanium dioxide and titanium metal:
+• China leads titanium mining and processing, representing 33 percent of worldwide titanium
+mining and almost 50 percent of total production of titanium and titanium dioxide.
+• The United States, Australia, Canada, Ukraine and India are active in both titanium mining
+and processing.
+• South Africa, Mozambique, Norway, Senegal, Kenya and Madagascar are only sources of ores
+and are not involved in titanium processing.
+• Japan, the Russian Federation, Kazakhstan, Saudi Arabia, Germany, Mexico and the United
+Kingdom (UK) are not involved in mining the natural ores, but are important contributors to the
+processing of ores or slags and the production of titanium dioxide and/or titanium metal.
+
+48
+49
+
+Figure 5. Percentage contribution by country to the mining of titanium-containing ores, TiO2
+production and Ti production (estimated based on production capacity), 2020.
+Some countries contribute both to the mining and processing of titanium (China is the leader). Other
+countries, mainly in Africa, contribute only to mining, while several Asian and European countries
+contribute only to processing.
+Titanium
+mining and
+processing
+
+Mining
+TiO2 production capacity
+Ti production capacity
+
+33
+
+Only titanium
+processing
+
+13
+
+11
+
+Context and introduction
+
+Other 1
+countries
+
+4
+Japan
+
+4
+Mexico
+
+Russian
+Federation 1
+
+4
+UK
+
+Kazakhstan
+
+3
+Madagascar
+
+3
+4
+
+3
+Kenya
+
+Saudi Arabia
+
+4
+Senegal
+
+Germany
+
+5
+Norway
+
+6
+
+7
+
+9
+
+Source: based on data from USGS (n.d.).
+
+Mozambique
+
+South Africa
+
+7
+Ukraine 1
+3
+2
+India 1
+
+Canada 1
+
+Australia
+
+US
+
+China
+
+1
+
+4
+8
+3
+7
+
+13
+
+16
+
+19
+
+Only titanium
+mining
+
+9
+
+
+
+===== PAGE 11 / 56 =====
+
+This report provides a patent landscape of the processes used to extract titanium dioxide and
+titanium metal from ilmenite ores. The landscape has worldwide coverage for the years
+2002–2022. Patents on extraction of titanium dioxide and titanium metal are categorized
+according to the starting raw materials used, the type of process described and the final product.
+
+Patent Landscape Report: Ilmenite
+
+In addition, a section is dedicated to patents describing industrial applications of titanium and
+titanium-based compounds. Again, this landscape has worldwide coverage and is restricted to
+active patents from 2012 to 2022. Patent activity was analyzed focusing on six technological fields
+corresponding to high-tech applications with increasing activity since 2012: ceramics, electrodes
+for batteries, medical technology, cosmetics, coatings and water treatment.
+
+10
+
+
+
+===== PAGE 12 / 56 =====
+
+Production of titanium dioxide
+Processing of ilmenite
+Overview
+
+This section focuses on the extraction of titanium dioxide from mineral ores. About 94 percent of
+the world’s titanium consumption in 2020 was used to produce titanium dioxide (USGS, n.d.).
+Ilmenite is the most abundant titanium-containing mineral but has a low titanium dioxide content
+and contains iron along with impurities such as dioxides of chromium, manganese, vanadium,
+magnesium, aluminum, calcium and silicon (Gázquez et al., 2014).
+Sand ilmenite is often processed by smelting or redox pre-treatments to increase its titanium
+content, leading to “titanium concentrate” or “upgraded slags” (Gázquez et al., 2014). Upgraded
+slags are commonly treated with the sulfate process to obtain titanium dioxide (Figure 6). This
+process represented around 40 percent of the total TiO2 production in 2014 (Gázquez et al., 2014).
+Other processes, such as the Becher process, have been used to directly transform ilmenite into
+synthetic rutile, which has a TiO2 content of over 90 percent and can be treated with the chloride
+process to obtain titanium dioxide as the final product (see Figure 6). Overall, the chloride process
+represented around 60 percent of the world’s TiO2 production in 2014 (Gázquez et al., 2014).
+Figure 6. Different processes leading to titanium dioxide from ilmenite ore.
+Extraction of titanium dioxide from ilmenite ore is commonly achieved by the sulfate and chloride
+processes after smelting or redox pre-treatments. Hydrometallurgical processes that are more direct
+with fewer steps are currently in development.
+ILMENITE
+
+SMELTING
+
+Slag/upgraded
+ilmenite
+
+REDOX
+PRETREATMENT
+
+•
+•
+•
+•
+
+Becher process
+Benilite process
+Murso
+Austpac (ERMS
+and EARS)
+
+Direct
+hydrometallurgical
+process
+
+•
+•
+
+Sulfate
+process
+
+•
+Chloride
+process/
+chlorination
+
+Sulfuric acid leaching
+(BHP Billiton)
+Hydrochloric acid leaching
+(Altair process)
+Alkaline Leaching
+
+Synthetic
+rutile
+
+Titanium dioxide
+
+Note: EARS is enhanced acid regeneration; ERMS is enhanced roasting and magnetic separation.
+Source: Adapted from Ngugen and Lee (2019).
+
+11
+
+
+
+===== PAGE 13 / 56 =====
+
+There is a need to find alternative processes to obtain titanium dioxide from low-grade
+titanium ores with a reduced waste production and lower economic cost. Recently, some
+hydrometallurgical processes have emerged that directly obtain titanium dioxide from ilmenite
+sands or rocks. Hydrometallurgical processes consist of multiple steps, and usually fall into
+one of two categories: (1) smelting followed by acid leaching at high temperature; (2) redox
+pre-treatments or roasting followed by acid and/or alkaline leaching (Ngugen and Lee, 2019). A
+magnetic separation step can be included to increase titanium content.
+
+The sulfate process
+
+The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez
+et al., 2014). In this process, ilmenite is reacted with concentrated sulfuric acid (H2SO4). The
+resulting solution contains titanyl sulfate (TiOSO4) and iron sulfate (FeSO4) dissolved in sulfuric
+acid. A chemical reduction process is required to ensure that all iron is dissolved. The solution
+is concentrated, titanium sulfate hydrolyzed and hydrated titanium dioxide precipitated and
+separated by filtration. The precipitate is calcined, leading to the growth of TiO2 crystals and
+removal of residual water and acid (Gázquez et al., 2014).
+The general reaction is:
+FeTiO3 + 2H2SO4 → TiOSO4 + FeSO4 + H2O [dissolution]
+TiOSO4 + H2O → TiO2 nH2O + H2SO4 [TiO2 precipitation]
+TiO2 nH2O → TiO2 + nH2O [TiO2 calcination]
+The sulfate process is simple and cheap, can be applied to low-grade ores, and produces a
+pigment suitable for use in papers, ceramics and inks (Gázquez et al., 2014). However, the quality
+of product is low and large quantities of waste iron sulfate produced. The overall yield is about
+0.5 tonnes of titanium dioxide for approximately 1 tonnes of starting raw ilmenite material
+(Gázquez et al., 2014).
+
+The chloride process
+
+The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez
+et al., 2014). It can be used for ilmenite, slag or rutile, but commonly natural or synthetic rutile is
+used, which limits iron waste by-product.
+In this process, the raw material is mixed with gaseous chlorine in the presence of coke as a
+reducing agent. The resulting gas stream contains titanium tetrachloride (TiCl4), carbon dioxides
+and chlorides of metal impurities (except for silica and zirconium, which are not chlorinated and
+remain in the reactor). The gas stream is cooled with liquid TiCl4 at a temperature where the
+other metal chlorides solidify and are separated. The purified TiCl4 stream is further cooled and
+condensed as liquid, then reacted with oxygen at high temperature to form titanium dioxide and
+chlorine, which is recycled. Residual chlorine is removed by hydrolysis (Gázquez et al., 2014).
+The general reaction process is:
+2TiO2 + 3C + 4Cl2 → 2TiCl4 + 2CO + CO2 [chlorination]
+TiCl4 (gas, impure) → TiCl4 (pure, liquid) [purification]
+
+Patent Landscape Report: Ilmenite
+
+TiCl4 + O2 → TiO2 + 2Cl2
+
+12
+
+The waste produced is mainly coke and unchlorinated solid impurities, along with an acid solution
+following addition of HCl to the residues of chlorination (Gázquez et al., 2014). Consumption of
+chloride depends on the amount of iron present in the raw material and hence this process is
+used only with raw material of a high titanium content.
+
+The Becher process
+
+Ilmenite ores can be upgraded to synthetic rutile by increasing their TiO2 content to between 90
+and 96 percent. In the Becher process, a chemical reduction is applied to iron in the presence of
+coke, and the material is then leached by ammonium chloride (NH4Cl) to oxidize and precipitate
+the iron as dioxide or hydroxide as fine particles, which are then separated from the larger
+particles of TiO2 (Gázquez et al., 2014).
+
+
+
+===== PAGE 14 / 56 =====
+
+Patent landscape
+Patent activity
+
+Among the 2,235 patent families obtained from the search, 459 related to the production of
+titanium dioxide from ilmenite and were considered for in-depth analysis. Non-relevant patents
+described processes to separate ilmenite from other minerals, the recovery of titanium dioxide
+from industrial wastewaters, industrial reactors without process description, or analytical
+methods to measure specific process parameters (see Annex for detailed methodology).
+The first filing year of the earliest priority year associated with each patent family is a common
+metric for patent activity. Patent activity has increased quite steadily since 2012 (compound
+annual growth rate, CAGR 2014–2019 = +8 percent) (Figure 7), indicating an increasing interest in the
+topic. Approximately 44 percent of the relevant patent families have been granted, 19 percent
+are pending and 37 percent have lapsed. The term lapsed here refers to a patent family where all
+members are inactive for any reason: that is, expiration of the patent duration, non-payment of
+annual fees, revocation and so on.
+
+Figure 7. Relevant patent families describing titanium dioxide production from
+ilmenite, 2002–2021.
+Patent activity on titanium dioxide production from ilmenite has increased since 2012.
+
+CAGR2014–2019 = +8%
+
+1
+20
+2020
+
+25
+19
+12
+
+10
+2015
+
+2019
+
+17
+8
+2014 1
+
+8
+
+20
+11
+2011 1
+
+2021
+
+5
+2018
+
+2017 1
+
+4
+2016
+
+2013 2
+
+2012 1
+
+2009
+
+2008
+
+2005
+
+2004 1
+
+3
+
+5
+
+7
+
+7
+
+11
+
+5
+6
+5
+2003
+
+2010 2
+
+3
+2007
+
+4
+
+14
+2006 1
+
+6
+3
+
+5
+4
+2002
+
+1
+23
+
+18
+
+5
+
+12
+
+9
+
+4
+
+16
+
+20
+
+15
+
+4
+
+5
+
+2
+
+20
+
+23
+
+18
+
+Granted
+Lapsed
+Pending
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and publication.
+2019 is the last year for which complete data are available. The FAMPAT family definition is used here. A patent family is
+considered granted if at least one member patent has been granted, pending if no member patent has been granted and the
+grant decision for at least one member is pending, and lapsed if the none of the patents in the family is active for any reason.
+
+Titanium sources, processing and final products
+Overview
+
+Patents in this section describe either the whole process for obtaining titanium dioxide from
+ilmenite, or only specific steps. For example, some patents only describe the processing of the
+mineral to obtain a slag or concentrate, others describe upgrading slags to a higher titanium
+content; yet other patents describe the production of titanium dioxide starting from upgraded
+materials such as processed slags or synthetic rutile.
+
+Production of titanium dioxide
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+13
+
+
+
+===== PAGE 15 / 56 =====
+
+This report does not include patents describing the production of titanium dioxide from natural
+rutile mineral, but only from synthetic rutile, which can be an intermediate product in the
+production of titanium products from ilmenite.
+In 55 percent of patent families related to titanium dioxide production, the starting raw material
+used is ilmenite ore. Since our search was limited to ilmenite ore, the results may be slightly
+biased. Twenty-nine percent of patent families describe the extraction of titanium dioxide from
+ilmenite, while in 27 percent of patent families ilmenite is processed to provide upgraded slag or
+concentrate for further transformation (Figure 8). Ilmenite is also processed to synthetic rutile
+(8 percent of patent families) or to other intermediate products such as TiCl4 or TiOSO4 (4 percent
+of patent families).
+Twenty-five percent of relevant patents cite more generally titaniferous ores or slags as starting
+material and describe the conversion to titanium dioxide (10 percent), synthetic rutile (9 percent)
+or simply upgraded slags with increased titanium content (10 percent).
+The most cited process is smelting at high temperature, which is mentioned in 43 percent
+of patents. Smelting is a pre-treatment process and in the majority of patents it leads to the
+formation of slag or titanium concentrate as the final product (Figure 9). Smelting is combined
+with magnetic separation in 14 percent of patent families and with acid leaching in 10 percent
+of patent families. Some patents describe the use of microwave irradiation to homogeneously
+heat the material to achieve efficient smelting. Redox treatments and roasting are mentioned in
+16 percent of patent families and mainly used to obtain synthetic rutile or titanium dioxide rather
+than slags.
+Acid leaching is mentioned in 37 percent of patent families and usually performed by hydrochloric
+acid, although some inventions describe the use of sulfuric acid. Acid leaching may be a pretreatment and purification step, in combination with smelting or redox treatments (17 percent
+of patent families), or part of a hydrometallurgical process to directly obtain synthetic rutile
+or titanium dioxide (see Figure 9). Leaching at a low acid concentration is commonly used to
+selectively leach iron and other impurities from ilmenite, leading to an increase in titanium
+concentration. In contrast, leaching at a high acid concentration is commonly used to leach
+titanium together with other impurities before subsequent purification.
+
+Figure 8. Categorization of relevant patents according to the titanium source used and the
+final titanium product.
+Twenty-nine percent of patents describe the transformation of ilmenite into titanium dioxide,
+27 percent describe its transformation into slags and in 8 percent of patents the final product is
+synthetic rutile. A quarter of innovations describe generic ores, slags or tailings as the starting
+material and their conversion to synthetic rutile, titanium dioxide or upgraded slags.
+Ti source
+
+Titanium product
+
+Slag concentrate
+360
+Ilmenite
+507
+
+Patent Landscape Report: Ilmenite
+
+Titanium dioxide
+318
+
+14
+
+Ore slag tailing
+221
+
+Titano-magnetite
+
+Synthetic rutile
+177
+
+Rutile
+Not specified
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Other
+
+
+
+===== PAGE 16 / 56 =====
+
+Figure 9. Categorization of relevant patents according to the process used and the final
+titanium product.
+Smelting is mentioned in 43 percent of patent families, is used in combination with magnetic
+separation and mainly leads to slags. Acid leaching is mentioned in 37 percent of patent families,
+either as a pre-treatment or as a direct process for obtaining titanium dioxide or synthetic rutile. The
+sulfate process is protected in 23 percent of patent families and almost exclusively used to obtain
+titanium dioxide, while the chloride process is only mentioned in 8 percent of patent families.
+Titanium process
+
+Smelting
+244
+
+Titanium product
+
+Slag concentrate
+360
+
+Acid leaching
+170
+
+Magnetic separation
+120
+
+Titanium dioxide
+318
+
+Sulfate
+114
+Redox pretreatment
+Chloride
+Fluoride
+Microwave irradiation
+Other
+Alkali leaching
+
+Synthetic rutile
+177
+Other
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+The industrially exploited sulfate process is protected in 23 percent of patent families and is
+almost exclusively used to obtain titanium dioxide. This process is most frequently cited on its
+own, although 6 percent of patent families include pre-treatments based on smelting and/or
+acid leaching.
+The chloride process is only mentioned in 8 percent of patent families, although it provided
+60 percent of global titanium dioxide industrial production in 2014 (Gázquez et al., 2014). Patents
+mainly describe the production of titanium dioxide using this process, although some also lead to
+the production of titanium tetrachloride (denoted as “other” in Figure 9).
+The low number of families obtained on the chloride process could be because it requires
+natural or synthetic rutile of a high purity (>90 percent TiO2) as a starting material and is
+not suitable for ilmenite and low-grade ores (Gázquez et al., 2014). Ilmenite can be transformed
+to synthetic rutile suitable for the chloride process, but only 8 percent of patent families
+describe this transformation. In the large majority of analyzed patents, ilmenite is
+directly processed to titanium dioxide or slag, without using synthetic rutile as an
+intermediate product.
+
+Patents protecting more efficient processes for extracting titanium from ilmenite without
+synthetic rutile as an intermediate product are also present in the dataset. Given the
+findings in this patent landscape, we can expect the industrial use of the chloride process
+to progressively decrease in the coming years. The chloride process could be progressively
+replaced by direct hydrometallurgical processes, which require fewer steps and are more
+convenient.
+Finally, some patents describe alkaline leaching as an alternative to acid leaching, or a process
+based on fluoride as an alternative to the chloride process; however, these processes only
+represent 4 percent of patent families, indicating limited development.
+
+Production of titanium dioxide
+
+The chloride process is the most suitable for obtaining titanium dioxide from natural rutile, but
+this ore is far rarer and only 5 percent of the world’s titanium is extracted from natural rutile
+(USGS, n.d.).
+
+15
+
+
+
+===== PAGE 17 / 56 =====
+
+Geographical coverage and key players
+
+China dominates the patent filings in processes for the production of titanium dioxide from
+titanium, with 73 percent of all patents in our dataset being filed with China as the priority
+country – that is, the country where the first patent of each patent family is filed (Figure 10). China
+is followed by Australia (5 percent) and the United States (4 percent).
+China is also the jurisdiction where most inventions are protected, as 72 percent of all patent
+families on titanium dioxide production contain a patent that is currently granted in China
+(Figure 11). India is next, with 12 percent of patent families having a member granted in this
+country. India is followed by Europe (represented by filings at the European Patent Office (EPO))
+and the United States (7 percent of patent families).
+
+Figure 10. Relevant patent families by jurisdiction of first priority.
+China is by far the most frequent first priority country for titanium dioxide production. Australia and
+the United States also have important patenting activity.
+
+Granted
+Lapsed
+Pending
+
+132
+
+141
+
+61
+China
+
+Australia Russian
+Federation
+
+US
+
+Republic of India
+Korea
+
+Germany
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Figure 11. Relevant patent families by jurisdiction in which at least one family member
+is granted.
+China has the highest number of patents granted, followed by India, Europe and the United States.
+205
+
+16
+
+21
+
+20
+
+17
+
+16
+
+16
+
+16
+
+13
+
+12
+
+12
+
+Europe
+
+US
+
+South Africa
+
+Germany
+
+Canada
+
+Australia
+
+Russian
+Federation
+
+Ukraine
+
+Republic
+of Korea
+
+India
+
+China
+
+Patent Landscape Report: Ilmenite
+
+34
+
+Note: Europe represents filings at the European Patent Office (EPO).
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+
+
+===== PAGE 18 / 56 =====
+
+Patents filed in China generally apply only to China and are not filed internationally, allowing
+freedom to operate in other countries. Among the 459 relevant patent families related to the
+production of titanium dioxide, 70 percent cover only China and have only one patent member.
+The important role of China in patenting is a reflection of its position as a world leader in both
+mining and the production of titanium dioxide. India, the United States, Canada, Australia, and
+Ukraine are well protected by patents and are industrially active both in titanium mining and
+processing (Figure 5). Mexico is involved in the production of titanium dioxide, but does not have
+much patent protection. By contrast, in the Republic of Korea, inventions are well-protected by
+patents, but it is not a significant contributor to titanium mineral mining or titanium production
+(see Figure 5).
+Key players in the extraction of titanium dioxide from ilmenite comprise an almost equal mix of
+both industrial and academic players and are mainly from China. Most patents are filed by single
+applicants, although there are some collaborations between Chinese companies and academics.
+The Chinese company Pangang emerges as the main contributor to patents for processing of
+the mineral to obtain titanium dioxide (Figure 12). It holds patents covering pre-treatments, in
+particular smelting, and the two industrially exploited sulfate and chloride processes. Pangang
+also holds patents for less common processes, such as the use of microwave irradiation to
+achieve more homogeneous heating, the use of alkali leaching as an alternative to acid leaching,
+and a process based on fluoride as an alternative to chloride (Figure 13).
+Pangang has collaborated with the Institute of Process Engineering of the Chinese Academy of
+Science on one patent focusing on the preparation of high-titanium slag.
+Figure 12. Industrial key players in the production of titanium dioxide.
+Key industrial players reflect the contribution of China, Australia and the United States to titanium
+dioxide production.
+Pending
+
+Lapsed
+
+PANGANG (China)
+3
+
+Granted
+
+18
+
+18
+
+LOMON BILLIONS GROUP (China)
+10
+8
+
+7
+
+BHP BILLITON INNOVATION (Australia)
+7
+3
+3
+DU PONT DE NEMOURS (US)
+6
+2
+YUNNAN METALLURGICAL XINLI TITANIUM INDUSTRY (China)
+7
+ILUKA RESOURCES (Australia)
+1
+3
+2
+SICHUAN XINGMING ENERGY ENVIRONMENTAL PROTECTION TECHNOLOGY (China)
+1
+5
+CHINA ENFI ENGINEERING (China)
+3
+2 1
+OUTOTEC (Finland)
+4
+SHANDONG YONGXIN ENERGY (China)
+GUANGXI JINMAO TITANIUM (China)
+3
+1
+TRONOX (US)
+2
+2
+YIBIN TIANYUAN GROUP (China)
+2
+2
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Production of titanium dioxide
+
+4
+
+17
+
+
+
+===== PAGE 19 / 56 =====
+
+Figure 13. Industrial key players in titanium dioxide production and the processes described
+in their patents.
+Pangang and Lomon Billions Group have diversified portfolios covering pre-treatments and final
+processes; BHP Billiton Innovation focuses on a modified sulfate process; Yunnan Metallurgical Xinli
+Titanium Industry specializes in the chloride process; Shandong Yongxin Energy specializes in the use
+of microwave irradiation as homogeneous heating for smelting.
+Smelting
+
+Acid
+leaching
+
+China
+
+25
+
+10
+
+5
+
+6
+
+4
+
+3
+
+1
+
+4
+
+LOMON BILLIONS GROUP
+
+China
+
+16
+
+10
+
+8
+
+3
+
+2
+
+3
+
+1
+
+6
+
+CHINA ENFI ENGINEERING
+
+China
+
+6
+
+SHANDONG YONGXIN ENERGY
+
+China
+
+4
+
+4
+
+OUTOTEC
+
+Finland
+
+4
+
+4
+
+YIBIN TIANYUAN GROUP
+
+China
+
+2
+
+4
+
+1
+
+DU PONT DE NEMOURS
+
+US
+
+2
+
+1
+
+5
+
+SICHUAN XINGMING ENERGY
+ENVIRONMENTAL
+PROTECTION TECHNOLOGY
+
+China
+
+1
+
+YUNNAN METALLURGICAL
+XINLI TITANIUM INDUSTRY
+
+China
+
+TRONOX
+
+US
+
+ILUKA RESOURCES
+
+Australia
+
+GUANGXI JINMAO TITANIUM
+
+China
+
+2
+
+2
+
+BHP BILLITON INNOVATION
+
+Australia
+
+4
+
+13
+
+Company
+
+Country
+
+PANGANG
+
+Redox
+Alkali
+treatment leaching
+
+Sulfate
+
+Chloride
+
+Magnetic Microwave
+Fluoride separation irradiation
+
+3
+
+1
+
+1
+
+1
+
+1
+
+4
+
+1
+0
+
+5
+
+7
+2
+
+3
+
+1
+
+1
+
+5
+
+1
+
+1
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Pangang’s patent portfolio is the largest and the most diversified, although its patents do not
+extend to countries outside China, and only 53 percent are active.
+The large patent portfolio of Pangang reflects its leading position in the industrial production
+of titanium dioxide, with a yearly production of approximately 220,000 tonnes (Reuters, 2020),
+compared to a total production capacity of 4 million tonnes in China and 8 million tonnes
+worldwide (USGS, n.d.).
+Other Chinese companies such the Lomon Billions Group, Yunnan Metallurgical Xinli Titanium
+Industry and China Enfi Engineering are key players (see Figure 12).
+Lomon Billions Group is another Chinese company holding a patent portfolio similar to that of
+Pangang, although smaller and covering pre-treatments, as well as the sulfate and the chloride
+processes. It holds a patent with the Institute of Multipurpose Utilization of Mineral Resources of
+the Chinese Academy of Geological Sciences focusing on the upgrading of a titanium slag. Lomon
+Billions’ patents are protected only in China.
+
+Patent Landscape Report: Ilmenite
+
+The Chinese company Yunnan Metallurgical Xinli Titanium Industry is the biggest contributor to
+patents on the chloride process and its portfolio covers exclusively this technique. All its patents
+are active but protection does not extend outside China.
+
+18
+
+Finally, the Chinese company Shandong Yongxin Energy emerges as the main user of
+microwave irradiation for homogeneous heating, all its patents combining microwave
+irradiation, smelting and magnetic separation. These patents are only protected in China and
+not extended to other countries, as typically observed for applications by Chinese companies in
+this field.
+Australia is represented by BHP Billiton Innovation and Iluka Resources. BHP Billiton Innovation
+holds several patents based on a modified sulfate process. Their patents are filed in China, Europe,
+the United States and also other countries such as India and Brazil. Iluka Resources specializes
+
+
+
+===== PAGE 20 / 56 =====
+
+in the production of synthetic rutile starting from ilmenite, using processes based on redox
+treatments. Some of their patents are also filed in Brazil, Canada, China, Europe, India and the
+United States.
+Du Pont de Nemours is a key player from the United States, and has developed processes to
+directly produce titanium dioxide from ilmenite, mainly based on redox reactions. Its patents are
+mainly filed in the United States, Europe and Australia.
+Key players from China, Australia and the United States reflect the contribution of these three
+countries to titanium dioxide industrial production. No German industrial actor emerges in the top
+players, although Germany has a significant production capacity (Figure 3). One Finnish company,
+Outotec, is present among the key players, although Finland does not emerge as a major producer
+of titanium dioxide (see Figure 3).
+Among the non-industrial players, several Chinese universities and public research institutes
+are present, although none emerges as the overall leader (Figure 14). Among the non-Chinese
+contributors are public research institutes from India, the Russian Federation and the Republic of
+Korea. The patent activity of Chinese, Indian and Russian public institutes reflects the industrial
+activity of these countries. By contrast, the Republic of Korea does not emerge as a significant
+contributor to titanium production (see Figure 3).
+
+Figure 14. Academic and public institutions having significant patent activity in titanium
+dioxide production.
+The patent activity of Chinese, Indian and Russian public institutes reflects the industrial activity of
+these countries. The Republic of Korea is a key player in patents, but does not emerge as a significant
+contributor to titanium production.
+Pending
+
+Lapsed
+
+Granted
+
+KUNMING UNIVERSITY OF SCIENCE & TECHNOLOGY (China)
+6
+7
+CENTRAL SOUTH UNIVERSITY (China)
+2
+4
+
+6
+
+8
+
+INSTITUTE OF PROCESS ENGINEERING, CHINESE ACADEMY OF SCIENCES (China)
+7
+6
+YUNNAN UNIVERSITY OF NATIONALITIES (China)
+8
+NORTHEASTERN UNIVERSITY (China)
+5
+3
+
+4
+
+2
+
+BEIJING GENERAL RESEARCH INSTITUTE OF MINING & METALLURGY (China)
+4
+2
+COUNCIL OF SCIENTIFIC & INDUSTRIAL RESEARCH, CSIR (India)
+3
+3
+SICHUAN UNIVERSITY (China)
+5
+1
+INSTITUTE OF MULTIPURPOSE UTILIZATION OF MINERAL RESOURCES CHINESE ACADEMY OF
+GEOLOGICAL SCIENCES (China)
+1
+
+3
+
+1
+
+1
+
+3
+
+KOREA INSTITUTE OF GEOSCIENCE & MINERAL RESOURCES (Republic of Korea)
+4
+UNIVERSITY OF SCIENCE & TECHNOLOGY BEIJING (China)
+2
+1
+1
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Production of titanium dioxide
+
+FEDERAL NOE GOSUDARSTVENNOE BJUDZHETONE UCHREZHDENIE NAUKI INSTITUT KHIMII DAL
+NEVOSTOCHNOGO OTDELENIJA ROSSIJSKOJ AKADEMII NAUK (Russian Federation)
+
+19
+
+
+
+===== PAGE 21 / 56 =====
+
+Production of titanium metal
+Processing
+Overview
+
+Titanium metal is a silver-white metal not found in nature, because of its strong affinity to
+oxygen, carbon and nitrogen. It has low density, good strength, excellent corrosion resistance to
+salt and acids, and low electric and thermal conductivities (El Khalloufi et al., 2021).
+Titanium metal is used in many different applications owing to its special properties. The most
+common titanium alloy is Ti6A-4V (90 percent titanium, 6 percent aluminum, 4 percent vanadium)
+and typically used in medical implants (El Khalloufi et al., 2021).
+The production of titanium metal represents only a small fraction (6 percent in 2020) of total
+titanium consumption, with the remainder being industrially exploited as titanium dioxide.
+Titanium metal is commonly obtained in the form a sponge, which can be reprocessed to obtain
+compact metal, such as ingots or billets, or a fine powder (Figure 15).
+Figure 15. Different forms of titanium.
+Titanium sponge is the most common form of the metal, which can be processed to obtain different
+products such as rods, ingots, and titanium metal powder.
+
+Source: (left-hand image) https://commons.wikimedia.org/wiki/File:Titanium_sponge_cylinder,_120_grams.jpg
+(right-hand image) adapted from https://commons.wikimedia.org/wiki/File:Titanium_products.jpg
+
+Processes
+
+For the production of titanium metal, titanium dioxide (TiO2) or titanium tetrachloride (TiCl4)
+derived from the chloride process are typically used. The standard industrially used process is the
+Kroll process first developed by Du Pont Germany in 1848 (El Khalloufi et al., 2021). The Hunter and
+Armstrong processes are also commercially used, but not considered economically competitive (El
+Khalloufi et al., 2021).
+
+The Kroll process
+
+The Kroll process uses TiCl4 produced by the chloride process as the starting material (El Khalloufi
+et al., 2021). Titanium is reduced by the addition of metallic magnesium (Mg). Mg and magnesium
+chloride (MgCl2) are then separated by vacuum distillation or helium sweeping followed by
+leaching. Mg is then recycled by electrolysis of MgCl2. A sponge of titanium metal is obtained as
+the final product:
+2TiCl4 (liquid) + 2 Mg (solid) → Ti (solid) + 2 MgCl2 (liquid) [reduction]
+MgCl2 (liquid) → Mg (solid) + Cl2 (gas) [recycling by electrolysis]
+20
+
+
+
+===== PAGE 22 / 56 =====
+
+The Hunter and Armstrong processes
+
+The Hunter and Armstrong processes are similar to the Kroll process, but sodium (Na) is used
+to reduce titanium instead of magnesium (El Khalloufi et al., 2021). These processes are more
+expensive, because four molecules of sodium are required to reduce one molecule of titanium
+tetrachloride or titanium dioxide, whereas only two molecules of magnesium are required for
+the same purpose. Recovering sodium by electrolysis is as expensive as recovering magnesium,
+and this makes the process using sodium more expensive, although the purity of the obtained
+titanium powder is higher (99 percent) (El Khalloufi et al., 2021).
+
+Patent landscape
+Patent activity
+
+Among the 304 patent families found, 92 related to the production of metal titanium and were
+considered for in-depth analysis. Of these about half (52 percent) were granted, 15 percent
+pending and 33 percent lapsed.
+Patent activity on titanium metal production has remained quite steady since 2002, indicating a
+constant but not significantly growing interest in the topic (Figure 16).
+
+Figure 16. Number of relevant patent families based on first priority year, 2002–2021.
+Patent activity related to titanium metal production from ilmenite has been steady since 2002.
+Granted
+Lapsed
+Pending
+
+6
+
+2
+
+4
+
+6
+
+3
+
+3
+
+3
+
+3
+2
+
+1
+
+1
+
+1
+4
+
+2
+
+1
+
+3
+2
+
+2
+1
+
+3
+2
+
+3
+
+3
+
+1
+
+2
+1
+
+3
+
+3
+
+2
+
+3
+
+2
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+3
+2
+
+1
+
+1
+
+2002 2003 2004 2005 2006 2007 2008 2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021
+
+Note: There is an average 18-month delay between patent filing and publication. 2019 is the last year for which complete
+data are available. There was no relevant patent activity in the year 2009.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Patent families for the production of titanium metal were categorized according to the starting
+material, the reducing agent used to reduce the starting material to titanium metal, and the final
+form of titanium metal product.
+The starting material used is ilmenite, rutile (synthetic or natural), titanium dioxide or more
+generally, titaniferous ore or slag (Figure 17). Some patents do not specify the source of
+titanium; others use the titanium tetrachloride (TiCl4) produced with the chloride process as a
+starting material.
+
+Production of titanium metal
+
+Titanium source, process and product
+
+21
+
+
+
+===== PAGE 23 / 56 =====
+
+Figure 17. Titanium metal production according to titanium source.
+Titanium metal can be obtained not only starting from ilmenite, rutile, slags and titanium dioxide, but
+also from TiCl4 obtained by the chloride process.
+3%
+13%
+
+23%
+Ilmenite
+Not specified / other / TiCl4
+Rutile
+Titaniferous ore, slag, tailing
+Titanium dioxide
+Titano-magnetite
+
+20%
+
+23%
+18%
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+The main final product is a titanium metal sponge (42 percent of patent families). In 16 percent
+of patent families, a powder or a particulate is obtained and in 7 percent further processing is
+required to obtain compact titanium in the form of ingots, rods or billets (Figure 18).
+
+Figure 18. Titanium metal production according to titanium final product.
+Titanium metal is usually obtained in the form of a sponge, but can be reprocessed to obtain a powder
+or ingots.
+Ingot rod billet
+Not specified
+Powder, particles
+Sponge
+
+7%
+
+42%
+36%
+
+16%
+
+Patent Landscape Report: Ilmenite
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+22
+
+For the reduction of the starting material to metallic titanium, magnesium is used in about
+50 percent of patent families, reflecting the broad industrial use of the Kroll process (Figure 19).
+Other patents describe the use of other multivalent metals, such as aluminum (7 percent of
+patent families), calcium (7 percent), manganese (2 percent) or vanadium (2 percent). The use of
+magnesium and calcium in combination is also described.
+The use of monovalent sodium is only described in 3 percent of patent families, although the
+Hunter and Armstrong processes are commercially used. The interest in reduction methods with
+monovalent metals seems very limited, probably because of its higher cost.
+About one-quarter (26 percent) of patent families describe obtaining titanium dioxide by molten
+salt electrolysis.
+
+
+
+===== PAGE 24 / 56 =====
+
+Figure 19. Patent families categorized according to reducing agent.
+Magnesium is described as a reduction agent in half of patent families, but some patents mention the
+use of other metals (aluminum, calcium, manganese or sodium). Reduction by electrolysis is cited in
+26 percent of patent families.
+Magnesium
+
+4
+
+Electrolysis
+
+4
+
+Aluminum
+
+2 2
+2
+
+Calcium
+Carbon or carbon-based
+
+15
+8
+
+27
+12
+
+3
+4
+
+2 2
+
+1
+2
+
+Hydrogen 1 1 3
+Sodium 1 2
+Vanadium 1 1
+Manganese
+
+Granted
+Lapsed
+Pending
+
+2
+
+Plasma 1 1
+Not specified, others
+
+2
+
+5
+
+2
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Other non-metallic reducing agents described are hydrogen (5 percent), used alone or in
+combination with vanadium, and coke or carbon-based reducing agents (6 percent).
+
+Geographical coverage and key players
+
+China and Japan are the most frequent jurisdictions where the first patent application of
+each patent family was filed. China and Japan are the first priority countries in 37 percent and
+32 percent, respectively, of patent families related to titanium metal production (Figure 20).
+
+Figure 20. Relevant patent families by country of first priority.
+China, Japan and the United States are the most frequent first priority countries.
+Granted
+Lapsed
+Pending
+16
+
+19
+
+11
+
+8
+7
+
+3
+2
+
+China
+
+4
+
+Japan
+
+1
+US
+
+2
+1
+Australia
+
+1
+1
+1
+Germany
+
+2
+1
+UK
+
+2
+1
+India
+
+1
+1
+2
+1
+Republic of Russian
+Federation
+Korea
+
+The significant contribution of China and Japan to patents related to titanium metal production
+reflects their important role in titanium metal industrial production. Japan emerges as a key
+contributor to titanium metal production, although its patenting and industrial activity in the
+fields of titanium dioxide production and mining is very limited (Figure 5). The United States
+is also an important first priority country, although its industrial activity in titanium metal
+production is minor (Figure 5).
+The countries with the highest number of granted patents are China, Japan and the United States,
+reflecting the important industrial production capacity of these countries (Figure 21). Patents
+
+Production of titanium metal
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+23
+
+
+
+===== PAGE 25 / 56 =====
+
+Figure 21. Number of relevant patent families by country, where at least one family member
+is granted.
+China, Japan and the United States are where most patents are granted, followed by in Europe (EPO).
+25
+23
+
+14
+12
+
+7
+6
+4
+
+China
+
+Japan
+
+US
+
+Europe
+
+India Germany France
+
+4
+
+UK
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+filed in China and Japan frequently cover only those countries and are not filed internationally:
+28 percent of relevant patent families cover only China and 22 percent only Japan.
+Inventions are also protected in Europe and India by a significant number of granted patents,
+although no major industrial activity is present in either. By contrast, the Russian Federation and
+Kazakhstan are important contributors to titanium metal production, but do not feature among
+those countries with the highest number of granted patents.
+
+Patent Landscape Report: Ilmenite
+
+Key players in the production of titanium metal mainly comprise companies, although some
+Chinese universities are also present (Figure 22). Patents were most frequently filed by single
+applicants, although some companies collaborated. Japanese companies Toho Titanium, Osaka
+Titanium Technologies and Sumitomo Titanium are the main contributors to patents related to
+titanium metal production, making Japan the leading country in this field (see Figure 22). Osaka
+Titanium Technologies and Sumitomo Titanium have collaborated on a patent protecting the
+use of calcium as reduction agent. Their patents were frequently filed only in Japan, with the
+exception of one pending application in Europe.
+
+24
+
+
+
+===== PAGE 26 / 56 =====
+
+Figure 22. Industrial and academic key players in the production of titanium metal.
+Apart from industrial actors, there are also several Chinese universities among the top players.
+Pending
+
+Lapsed
+
+Granted
+
+TOHO TITANIUM ( Japan)
+3
+
+10
+
+OSAKA TITANIUM TECHNOLOGIES ( Japan)
+2
+3
+
+6
+
+SUMITOMO TITANIUM ( Japan)
+3
+3
+PANGANG (China)
+3
+
+2
+
+UNIVERSITY OF SCIENCE & TECHNOLOGY BEIJING (China)
+2
+2
+NORTHEASTERN UNIVERSITY OF CHINA (China)
+3
+GUIZHOU UNIVERSITY (China)
+1
+1
+JIANGXI HONG KE SPECIAL ALLOY (China)
+2
+1
+
+KUNMING UNIVERISTY OF SCIENCE & TECHNOLOGY (China)
+1
+SCIENTIFIC & PRODUCTION ECOLOGICAL FIRM ECO TECHNOLOGY (Russian Federation)
+2
+
+1
+
+SHENWU TECHNOLOGY (China)
+1
+SHENZHEN SUNXING LIGHT ALLOY MATERIALS (China)
+2
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Pangang, the leading company in the production of titanium dioxide, holds patents describing
+production of titanium metal by electrolysis or using coke as a reducing agent. Some of their
+patents are extended to the United States, Japan and Germany, in contrast to their patents on
+titanium dioxide, which were only filed in China. This might be because of the important role of
+Japan in the industrial production of titanium metal.
+The other key players mainly consist of Chinese universities and companies, with the exception of
+a Russian company, which only owns two lapsed patent families.
+Industrial key players in the production of titanium metal frequently described the use magnesium
+as a reducing agent, reflecting the most widely used industrial production method (Figure 23).
+
+Production of titanium metal
+
+Because of the limited interest in methods to obtain titanium metal from ilmenite and the fact
+that most industrial players describe the standard, industrially used processes, we do not expect
+a big shift away from this process in the coming years. The only emerging technology seems to
+be molten salt electrolysis, with Pangang driving its development.
+
+25
+
+
+
+===== PAGE 27 / 56 =====
+
+Figure 23. Industrial key players in the production of titanium metal categorized according
+to the reducing agent used.
+Industrial key players mainly use magnesium as the reducing agent, with the exception of Pangang,
+which focuses on electrolysis and reduction with coke, and Shenzhen Sunxing Light Alloy Materials,
+which uses aluminum.
+Calcium
+
+TOHO TITANIUM
+
+Japan
+
+13
+
+OSAKA TITANIUM
+TECHNOLOGIES
+
+Japan
+
+8
+
+3
+
+SUMITOMO TITANIUM
+
+Japan
+
+5
+
+1
+
+PANGANG
+
+China
+
+0
+
+JIANGXI HONG KE
+SPECIAL ALLOY
+
+China
+
+1
+
+SCIENTIFIC &
+PRODUCTION
+ECOLOGICAL FIRM ECO
+TECHNOLOGY
+
+Russian
+Federation
+
+2
+
+SHENWU TECHNOLOGY
+
+China
+
+2
+
+1
+
+Patent Landscape Report: Ilmenite
+
+Not specified
+
+Sodium
+
+3
+
+1
+
+1
+
+2
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+26
+
+Carbon or
+carbon-based Electrolysis
+
+Country
+
+SHENZHEN SUNXING
+China
+LIGHT ALLOY MATERIALS
+
+Magnesium
+
+Aluminum
+
+Company
+
+
+
+===== PAGE 28 / 56 =====
+
+Industrial applications of
+titanium dioxide and titanium
+Overview
+About 94 percent of the world’s titanium in 2019 was used to produce titanium dioxide and about
+6 percent used to produce titanium metal and titanium alloys (USGS, n.d.).
+Titanium dioxide is mainly used to produce pigments for paints, paper and the plastics industry
+(USGS, n.d.). For the rest, titanium dioxide is used in the chemical industry for the manufacturing
+of carbides and other compounds.
+Titanium metal and alloys are used for the following:
+• the production of spacecraft and missiles in the aerospace and military industries, because of
+their strength-to-weight ratio;
+• coatings for ships and seawater-cooled power plants, because of their high resistance to
+salt corrosion;
+• a catalyst in petroleum refineries and in the chemical industry;
+• the production of artificial joints, stents and surgical instruments in the medical industry;
+• lightweight consumer goods and sports equipment, such as jewelry, golf clubs and bicycles
+(El Khalloufi et al., 2021; Ngugen and Lee, 2019).
+
+Patent landscape
+The patent landscape for the industrial applications of titanium dioxide and titanium metal is very
+large, reflecting the broad use of these compounds in very different fields. The search, limited to
+granted or pending patents from 2012 to 2022 in order to focus on the most recent applications
+and to estimate emerging trends in the next few years, led to a collection of 53,754 patent
+families. From this dataset, some specific technological domains were selected for in-depth
+analysis. These domains were chosen according to the type of patent (focusing on products and
+excluding processes, analysis methods and general compositions without a specific application),
+with a preference for “high-tech” applications and for emerging technologies, as reflected by the
+variation in patent activity since 2012 (see Annex for details).
+The application domains selected for in-depth analysis cover the use of titanium dioxide, titanium
+metal and alloys in ceramics, as electrodes for batteries, in medical technology, in cosmetics, as
+coating materials and for the treatment of water and wastewater.
+
+Ceramics
+
+Patent activity
+Between 2012 and 2022, there were 2,027 active patent families describing the use of titanium
+dioxide and titanium in ceramics (Figure 24). Patent activity shows a growing interest in ceramics
+as an industrial application of titanium since 2016, with a CAGR of +15 percent between 2014
+and 2019.
+
+27
+
+
+
+===== PAGE 29 / 56 =====
+
+Figure 24. Patent families in ceramics based on first priority year, 2012–2021.
+Patent filings related to the use of titanium and titanium dioxide in ceramics have strongly increased
+since 2012.
+
+CAGR2014–2019 = +15%
+
+Granted
+Pending
+
+52
+122
+
+22
+
+148
+
+153
+150
+88
+
+106
+
+15
+2012
+
+2013
+
+9
+2014
+
+2015
+
+269
+
+2020
+
+2021
+
+200
+
+143
+121
+
+262
+
+102
+14
+
+35
+
+2016
+
+2017
+
+2018
+
+2019
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and
+publication. 2019 is the last year for which complete data are available.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Patent content
+Patents on the application of titanium and titanium dioxide in ceramics describe novel ceramic
+compositions. Among the 2,027 patent families in the field of ceramics, 337 mention terms
+related to nanotechnologies, such as nanostructure, nano powder or nanoparticles.
+Patent families related to ceramics can be classified into different categories according to their
+principal International Patent Classification (IPC) codes, which mainly reflect the chemical
+composition of the products (Figure 25). Titanium dioxide is frequently used in combination with
+other metals (barium, aluminum, bismuth, zirconium, hafnium and iron, but also vanadium,
+niobium, tantalum, molybdenum, strontium, zinc, tin and rare earth metals, included in “others”
+in Figure 25) and oxides, or non-metallic elements (silicon, boron, nitrogen and carbon, but
+
+Patent Landscape Report: Ilmenite
+
+Figure 25. Classification of patent families related to ceramics according to their
+application area.
+Ceramics include a variety of different applications.
+
+28
+
+Ceramics based on barium titanates
+
+172
+
+Mortars (construction)
+
+150
+
+Enamels, glazes
+
+125
+
+Ceramics based on aluminum oxide
+
+108
+
+Glass frit
+
+82
+
+Ceramics based on bismuth titanates
+
+67
+
+Ceramics based on silica
+
+61
+
+Ceramics based on titanium dioxide
+
+58
+
+Ceramics based on zirconium or hafnium oxides
+Ceramics based on borides, nitrides, oxynitrides,
+carbonitrides, oxycarbonitrides or silicides
+Ceramics based on ferrites
+
+52
+
+49
+
+Ceramics based on carbides or oxycarbides
+
+49
+
+Ceramics based on alkaline earth metal titanates
+
+49
+
+52
+
+Others
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+953
+
+
+
+===== PAGE 30 / 56 =====
+
+also phosphorous, included in “others” in Figure 25) and their oxides. In addition, titaniumbased products are classified according to their application as mortars for construction and
+coating material such as enamels and glazes. These coatings might facilitate cleaning, increase
+brightness and strength, or have anti-bacterial properties. They can be used for ovens and
+cookware or car components.
+Geographical coverage and key players
+China is leading the patent activity on ceramics, with 83 percent of patent families having China
+as the first priority country (Figure 26), followed by Japan and the Republic of Korea. Chinese
+patenting activity is marked by a strong domestic environment: 80 percent of patent families
+describing the use of titanium in ceramics are filed exclusively in China.
+The United States and European countries have between them less than 50 active patent families
+related to titanium applications in ceramics, but tend to protect their inventions in other countries.
+China is by far the country with the highest number of granted patents, followed by Japan, the
+United States, the Republic of Korea and Europe (Figure 27).
+Chinese universities are very active in the field of titanium dioxide use in ceramics (Figure 28).
+Nevertheless, several leading industrial actors are also among the top players, suggesting the
+maturity of this area and its extended industrial use. Patents are most frequently filed by single
+applicants, although there are some collaborations between Chinese universities and companies.
+
+Figure 26. Patent families related to ceramics by jurisdiction of first priority.
+China is the most frequent country of first priority, followed by Japan and the Republic of Korea.
+China
+
+1,692
+
+Japan
+
+113
+
+Republic of Korea
+
+72
+
+US
+
+38
+
+Russian Federation 25
+Taiwan Province of China 17
+France 14
+India 11
+Germany 8
+Brazil 8
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+1,781
+
+China
+158
+
+Japan
+US
+
+138
+
+Republic of Korea
+
+116
+103
+
+Europe
+
+55
+
+Germany
+Taiwan Province of
+China
+France
+
+42
+
+UK
+
+35
+
+Russian Federation
+
+32
+
+47
+
+Note: Europe represents patent applications filed at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Industrial applications of titanium dioxide and titanium
+
+Figure 27. Patent families related to ceramics by jurisdiction, where at least one family
+member is granted.
+Most patents are granted in China, followed by Japan, the United States, the Republic of Korea
+and Europe.
+
+29
+
+
+
+===== PAGE 31 / 56 =====
+
+Among the top six industrial players, three are multinational corporations and world leaders in
+electronic components and devices: namely, TDK (Japan), LG (Republic of Korea) and Samsung
+(Republic of Korea). Patents belonging to TDK and Samsung mainly protect titanium dioxide in
+ceramics used as insulating electronic components, while LG focuses on enamel compositions for
+oven coatings.
+The other industrial key players are Monalisa and Liling Taorun Development, Chinese ceramic
+manufacturers of floor tiles, buildings and everyday applications, and Ferro, a ceramics
+manufacturer for automobiles, construction, consumer goods and electronics based in the
+United States.
+The Guangdong University of Technology and the Wuhan University of Science and Technology
+are the main academic contributors. Wuhan University of Science and Technology has
+collaborated with the Jinzhou Guotai Industrial on five patent families related to materials having
+high heat resistance.
+
+Figure 28. Industrial and academic key players in the field of titanium use for ceramics.
+Key players include several Chinese universities and companies from Japan and the Republic of Korea.
+Pending
+
+Granted
+
+GUANGDONG UNIVERSITY OF TECHNOLOGY (China)
+19
+
+15
+
+WUHAN UNIVERSITY OF SCIENCE & TECHNOLOGY (China)
+22
+11
+TDK ( Japan)
+12
+
+13
+TIANJIN UNIVERSITY (China)
+11
+
+10
+
+SHANGHAI INSTITUTE OF CERAMICS, CHINESE ACADEMY OF SCIENCES (China)
+16
+5
+WUHAN UNIVERSITY OF TECHNOLOGY (China)
+9
+10
+LG (Republic of Korea)
+6
+3
+
+13
+
+HARBIN INSTITUTE OF TECHNOLOGY (China)
+15
+SHAANXI UNIVERSITY OF SCIENCE & TECHNOLOGY (China)
+8
+7
+SAMSUNG (Republic of Korea)
+11
+
+4
+
+HANGZHOU DIANZI UNIVERSITY (China)
+14
+1
+
+MONALISA (China)
+13
+XI AN UNIVERSITY OF TECHNOLOGY (China)
+2
+11
+
+Patent Landscape Report: Ilmenite
+
+LILING TAORUN DEVELOPMENT (China)
+2
+11
+
+30
+
+UNIVERSITY OF ELECTRONIC SCIENCE & TECHNOLOGY OF CHINA (China)
+8
+5
+SOUTH CHINA UNIVERSITY OF TECHNOLOGY (China)
+7
+5
+FERRO (US)
+4
+
+8
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+
+
+===== PAGE 32 / 56 =====
+
+The patent activity of China, Japan and in the Republic of Korea reflects the important
+industrial role of these countries in the manufacturing of electronics, consumer goods and
+construction materials.
+
+Electrodes for batteries
+Patent activity
+
+Between 2012 and 2022, there were 1,875 patent families filed that are still active and describe
+the application of titanium dioxide and titanium in electrodes for batteries. Patent activity has
+increased since 2012, with a CAGR of +11 percent between 2014 and 2019, which can be explained
+by the growing demand for electric cars (Figure 29).
+
+Figure 29. Patent families related to titanium-based electrodes and batteries based on first
+priority year, 2012–2021.
+Patent activity related to the use of titanium and titanium dioxide in electrodes for batteries has
+increased since 2012.
+
+Granted
+Pending
+CAGR2014–2019 = +11%
+
+215
+
+118
+85
+
+16
+
+206
+
+162
+137
+107
+
+142
+
+157
+136
+
+118
+
+125
+
+78
+12
+2012
+
+12
+2013
+
+2014
+
+9
+2015
+
+10
+2016
+
+25
+2017
+
+2018
+
+2019
+
+2020
+
+2021
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and
+publication. 2019 is the last year for which complete data are available.
+
+Patent content
+Patents in this area mainly describe the use of titanium dioxide and titanates as electrodes
+for batteries. Among the 1,875 patent families that are active, 808 mention terms related to
+nanotechnologies, such as nanoparticles, nanotubes, nanosheets and nanofibers, indicating the
+widespread use of nanosized compounds in electrodes for batteries.
+Patent families in this section can be classified according to their principal IPC code, which
+reflects the chemical composition of the described products. The inventions are mainly divided
+into two categories: active compositions based on dioxides and hydroxides and compositions not
+based on dioxides and hydroxides (Figure 30).
+Seventy-nine percent of patent families in this section mention lithium and 32 percent refer to
+compositions of lithium titanate. Lithium-titanate batteries may represent an improvement over
+
+Industrial applications of titanium dioxide and titanium
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+31
+
+
+
+===== PAGE 33 / 56 =====
+
+Figure 30. Patents related to electrodes for batteries according to their chemical
+composition or special application.
+A significant proportion of patent families describe active materials for electrodes.
+Active materials for electrodes
+
+628
+
+Inorganic oxides/hydroxides for
+intercalating light metals
+
+216
+
+Inactive substances for electrodes
+
+85
+
+Inorganic oxides or hydroxides as
+active materials
+Active material other than oxides and
+hydroxides
+Manufacturing of lithium ion batteries
+Oxides/hydroxides containing Mn for
+intercalating light materials
+Electrodes based on mixed oxides or
+hydroxides
+
+64
+57
+50
+49
+45
+726
+
+Others
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+lithium iron phosphate batteries conventionally used in cars: they can endure more charging
+cycles, can be charged more rapidly and can work at higher temperatures without significant
+safety concerns (Changzhou Ruidefeng Precision Technology Co., Ltd., 2021).
+Some inventions describe electrodes with catalytic activity, mainly to be used in fuel cells, while
+some other patents focus on electric conductors rather than electrodes; these two applications
+are included in the category “others” in Figure 30).
+Geographical coverage and key players
+China is leading patent activity related to electrodes for batteries, with 76 percent of patent
+families having China as the first priority country (Figure 31). Chinese patent activity is markedly
+domestic, with 97 percent of Chinese inventions (corresponding to 74 percent of relevant patent
+families related to electrodes for batteries) being protected only in China.
+Japan is second in terms of priority country, with 204 patent families related to electrodes, of which
+61 percent are also protected in other countries. The Republic of Korea and the United States also
+emerge as first priority countries. Applicants filing in the United States as the first priority country
+have a high tendency to extend protection to other countries, with 76 percent of patent families
+also protected in other countries, compared to 50 percent for the Republic of Korea (Figure 32).
+Patent filings related to the use of titanium in electrodes is led by both industrial actors and
+academic institutions (Figure 33). Although the top filer is an academic institution, Central South
+
+Patent Landscape Report: Ilmenite
+
+Figure 31. Patent families related to titanium-based electrodes and batteries by country of
+first priority.
+China is by far the most frequent first priority country for patents in the field of electrodes for
+batteries. Japan, the Republic of Korea and the United States are also important contributors.
+
+32
+
+China
+Japan
+96
+Republic of Korea
+60
+US
+Germany 14
+Russian Federation 12
+India 11
+Europe 10
+
+1,423
+204
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+
+
+===== PAGE 34 / 56 =====
+
+Figure 32. Patent families on titanium-based electrodes and batteries by jurisdiction, where
+at least one family member is granted.
+China has the largest number of active patents in the field of electrodes for batteries, significantly
+more that the countries that follow: namely, Japan, the United States, the Republic of Korea and Europe.
+China
+Japan
+US
+Republic of Korea
+Europe
+Germany
+UK
+France
+India
+
+1,585
+274
+218
+167
+151
+91
+62
+60
+45
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Figure 33. Industrial and academic key players in the field of titanium use for electrodes
+and batteries.
+Key players are almost exclusively Chinese companies, universities and public institutions.
+Pending
+
+Granted
+
+CENTRAL SOUTH UNIVERSITY (China)
+7
+TOSHIBA ( Japan)
+7
+
+41
+
+30
+
+LG (Republic Korea)
+30
+
+4
+
+YINLONG ENERGY (China)
+7
+21
+TOYOTA MOTOR ( Japan)
+15
+7
+HEFEI GOUXUAN HIGH TECH POWER ENERGY (China)
+18
+4
+SAMSUNG (Republic of Korea)
+17
+2
+INSTITUTE OF PROCESS ENGINEERING, CHINESE ACADEMY SCIENCES (China)
+14
+
+HARBIN INSTITUTE OF TECHNOLOGY (China)
+11
+7
+HUAZHONG UNIVERSITY OF SCIENCE & TECHNOLOGY (China)
+5
+12
+ZHEJIANG UNIVERSITY (China)
+2
+14
+SOUTH CHINA UNIVERSITY OF TECHNOLOGY (China)
+3
+11
+SOUTH CHINA NORMAL UNIVERSITY (China)
+13
+1
+MURATA MANUFACTURING ( Japan)
+1
+13
+2
+3
+1
+
+FUZHOU UNIVERSITY (China)
+12
+SHANDONG UNIVERSITY (China)
+10
+NISSAN MOTOR ( Japan)
+12
+JIANGSU UNIVERSITY (China)
+8
+5
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Industrial applications of titanium dioxide and titanium
+
+4
+
+33
+
+
+
+===== PAGE 35 / 56 =====
+
+University, the other players among the top five are companies. The presence of several large
+companies among the top actors shows the maturity of this technology and its broad industrial
+application. Most patents are filed by single applicants, although some collaboration between
+companies is present.
+Several leading multinational companies from the electronics and automobile industries are
+among the top players. Their patents mainly focus on the use of titanium-based compounds as
+cathodes in lithium-based secondary batteries for electronics or automobiles. Among these key
+players, we find LG and Samsung Electronics, two leaders in electronics from the Republic of
+Korea, along with leading Japanese automobile manufacturers, Toshiba, Toyota and Nissan.
+The Japanese company Murata Manufacturing produces electronics components and has recently
+acquired Sony’s battery business (Murata Manufacturing Co., Ltd., 2016). It has collaborated with
+the Canadian hydroelectric company Hydro Quebec on two patent families on electrolytes related
+to batteries.
+Two Chinese companies specializing in the domain of batteries are also present among the
+key players. Yinlong Energy is one of the world leaders in lithium-titanate electrodes, and has
+acquired Otitan Nanotechnology, a US company with more than eight years of experience in this
+field, and the Chinese company Aotai Nanotechnology. Yinlong Energy and Aotai Nanotechnology
+co-own eight patent families related to lithium-titanate electrodes.
+Another Chinese key player is Hefei Guoxuan, a Gotion High Tech subsidiary, which also produces
+batteries based on lithium-titanate electrodes.
+The importance of China, Japan and the Republic of Korea in patent filing related to titaniumbased electrodes reflects the prominent role of their electronics and automobiles industries.
+
+Medical technology
+Patent activity
+
+The set of results focusing on the use of titanium dioxide and titanium in the field of medical
+technology has 1,182 active patent families dating from 2012. Patent activity shows a growing
+interest in this field, with a CAGR of +23 percent between 2014 and 2019 (Figure 34).
+
+Figure 34. Number of patent families related to titanium use for medical devices based on
+first priority year, 2012–2021.
+Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly
+increased since 2012.
+Granted
+Pending
+CAGR2014–2019 = +23%
+146
+126
+121
+
+55
+
+98
+Patent Landscape Report: Ilmenite
+
+96
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and
+publication. 2019 is the last year for which complete data are available.
+
+34
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+89
+63
+40
+
+34
+12
+
+2012
+
+2013
+
+2014
+
+2015
+
+2016
+
+31
+2017
+
+44
+2018
+
+77
+
+75
+
+2020
+
+2021
+
+56
+
+2019
+
+
+
+===== PAGE 36 / 56 =====
+
+Patent content
+Patents in the field of medical technology protect medical instrumentation made of titanium metal
+or titanium alloys, and their coatings, frequently based on titanium dioxide. Among the 1,182
+active patent families in this field, only 162 mention terms related to nanotechnologies, indicating
+that the use of nanosized or nanostructured compounds in medical technology is very limited.
+The classification of the inventions according to their principal IPC code reflects their specific
+application. Three types of products emerge: implantable products (bone prostheses, cortical
+plates, stents, clamps, spinal fixation, but also screws and suture material, included in “others”
+in Figure 35), non-implantable surgical instruments (guides, robots, but also surgical staplers,
+trocars and puncturing needles, included in “others” in Figure 35) and coatings for implantable
+devices (Figure 35). Implantable products are the most frequently described in patent
+applications. In these applications, titanium metal and titanium-containing alloys are used to
+exploit the high strength-to-weight ratio of titanium.
+Figure 35. Patent families on medical technology domain according to the specific product.
+The use of titanium and its alloys and implantable prosthetics are some key applications in the area.
+Titanium or titanium alloys
+
+120
+70
+
+Implantable prostheses
+Internal fixation devices, cortical
+plates
+Joints for the spine
+
+55
+
+Bone stabilizers
+
+55
+
+Surgical instruments and methods
+
+63
+
+47
+
+Materials for prostheses coatings
+
+29
+
+Devices for joint and bone treatment
+Devices for tubular body parts (blood
+vessels, umbilical cords)
+Clamps, clips
+
+26
+
+27
+
+25
+665
+
+Others
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Geographical coverage and key players
+As is the case for other applications of titanium, China leads patent filing in the field of medical
+technology, with 79 percent of patent families having this as the country of first priority (Figure 36).
+As seen for the other application areas, Chinese patent activity is marked by domestic protection,
+with 96 percent of Chinese patent families (77 percent of the total relevant patent families) not
+protected in other countries. The Russian Federation is second in terms of priority filings with 99
+patent families, of which 95 percent are protected only within the Russian Federation.
+
+Figure 36. Number of patent families on titanium use for medical technology by jurisdiction
+of first priority.
+China is the most frequent first priority country and is followed by the Russian Federation.
+934
+
+China
+Russian Federation
+
+99
+
+US
+
+30
+
+Republic of Korea
+
+21
+
+Japan
+
+20
+
+India
+
+10
+
+Brazil
+
+8
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Industrial applications of titanium dioxide and titanium
+
+Among the various jurisdictions, China has the highest number of granted patents, followed by
+the Russian Federation, the United States and Europe (Figure 37).
+
+35
+
+
+
+===== PAGE 37 / 56 =====
+
+Figure 37. Patent families on titanium use for medical technology by country where at least
+one family member is granted.
+China is the country with the highest number of granted patents. The Russian Federation, the United
+States and Europe (EPO) are also protected by a significant number of granted patents.
+China
+Russian Federation
+US
+Europe
+Japan
+Republic of Korea
+Germany
+UK
+France
+India
+
+941
+102
+50
+48
+35
+31
+22
+20
+19
+18
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Key players in the use of titanium in medical technology are almost exclusively Chinese
+companies, universities and hospitals, with the exception of a Russian state-owned institute
+(Figure 38). Patents are mainly filed by single applicants, apart from a collaboration between
+Figure 38. Industrial and academic key players in the field of titanium use for
+medical technology.
+Pending
+
+Granted
+
+Patent Landscape Report: Ilmenite
+
+SHANGHAI NINTH PEOPLE'S HOSPITAL AFFILIATED TO SHANGHAI JIAO TONG UNIVERSITY
+SCHOOL OF MEDICINE (China)
+13
+20
+CHANGZHOU HUASEN MEDICAL INSTRUMENT (China)
+12
+
+36
+
+SHANGHAI SHAPE MEMORY ALLOY (China)
+12
+CHANGZHOU ANKANG MEDICAL EQUIPMENT (China)
+8
+4
+SCIENCE & INNOVATIONS (Russian Federation)
+2
+9
+XIANGYA HOSPITAL CENTRAL SOUTH UNIVERSITY (China)
+10
+ZHEJIANG UNIVERSITY (China)
+1
+9
+NINGBO CIBEI MEDICAL TREATMENT APPLIANCES (China)
+8
+PANZHIHUA WUYUE TECHNOLOGY (China)
+8
+SICHUAN UNIVERSITY (China)
+3
+5
+PEKING UNIVERSITY THIRD HOSPITAL (China)
+3
+5
+JILIN UNIVERSITY (China)
+2
+6
+JIANGSU ZHUYI INTELLIGENT EQUIPMENT TECHNOLOGY (China)
+1
+6
+SHANGHAI EAST HOSPITAL AFFILIATED TO TONGJI UNIVERSITY SCHOOL OF MEDICINE (China)
+1
+6
+SHENKANG MEDICAL EQUIPMENT (China)
+1
+6
+BEIJING CHUNLIZHENGDA MEDICAL INSTRUMENT (China)
+2
+5
+SOUTH CHINA UNIVERSITY OF TECHNOLOGY (China)
+5
+2
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+
+
+===== PAGE 38 / 56 =====
+
+Chinese universities. Shanghai Ninth People’s Hospital Affiliated to Shanghai Jiao Tong University
+School of Medicine is the top player and leading research into titanium-based materials for
+bone fractures.
+The presence of several Chinese companies among the key players indicates the widespread
+industrial development of this technological domain. Chinese companies can be divided into
+two groups:
+• those working on surgical instruments or stents, which comprise Shanghai Shape Memory
+Alloy, Changzhou Ankang Medical Equipment, Shenkang Medical Equipment and Beijing
+Chunlizhengda Medical Instrument;
+• those developing titanium-based materials for bone reconstruction such as implantable
+prostheses and their coatings, namely Panzhihua Wuyue Technology, Changzhou Huasen
+Medical Instrument and Ningbo Cibei Medical Treatment Appliances.
+The South China University of Technology has collaborated with the Peking University Third
+Hospital on a patent describing a femoral implant based on a titanium alloy and coated with
+titanium dioxide.
+Non-Chinese actors do not feature among the top players, suggesting a lack of big companies
+specialized in this field outside of China.
+
+Cosmetics
+
+Patent activity
+The set of results for patent families on the use of titanium dioxide and titanium in cosmetics
+contains 953 active patent families filed since 2012. Patent activity shows a small growth
+for this field during this period, with a CAGR of +12 percent between 2014 and 2019
+(Figure 39).
+
+Figure 39. Number of patent families on titanium-based cosmetics, 2012–2021.
+Patent activity in the field of cosmetics has increased slightly since 2012.
+Granted
+Pending
+CAGR2014–2019 = +12%
+
+35
+
+20
+
+75
+
+75
+
+114
+
+74
+
+121
+6
+
+83
+68
+
+56
+52
+
+49
+
+7
+2012
+
+2013
+
+2014
+
+16
+
+13
+
+2015
+
+2016
+
+18
+2017
+
+2018
+
+2019
+
+2020
+
+2021
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and
+publication. 2019 is the last year for which complete data are available.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Industrial applications of titanium dioxide and titanium
+
+66
+
+37
+
+
+
+===== PAGE 39 / 56 =====
+
+Patent content
+Patents on the use of titanium and titanium dioxide in the field of cosmetics mainly cover
+products containing titanium dioxide for hair coloring/dressing, sunscreen, toothpaste, skin
+whitening and make-up for skin or lips. Titanium dioxide is used for its opacity and high covering
+power (an indication of how much material is needed to cover the previous color), as well as a
+UV filter.
+Among the 953 active patent families in this field, only 167 mention terms related to
+nanotechnologies (nanoparticles, nanotitania), indicating that their use in cosmetics is quite
+limited. This is probably because titanium dioxide particles need to be larger than 100 nm to
+provide opacity and high covering power, and particles of this size are too large to fall into the
+definition of nanotechnology (European Union Scientific Committee on Consumer Safety, 2020).
+The classification of patent families according to their principal IPC code might reflect the
+chemical composition of titanium-containing cosmetics (silicon compounds, zinc, specific flowers,
+compounds of animal or vegetal origin, polysaccharides, but also aluminum and heterocyclic
+compounds, included in “others” in Figure 40) or the physical form of the product (oils, waxes,
+emulsions, masks). Compositions containing angiosperm and magnoliopsida plants are mainly
+related to Chinese traditional medicine and used as toothpaste or as creams for skincare. Siliconbased cosmetics are mainly used as toothpaste or hair styling products. Zinc-based compositions
+pertain to sunscreen or skin-whitening products.
+
+Figure 40. Patents in the cosmetics field according to their principal IPC code, reflecting their
+chemical composition.
+Apart from titanium, cosmetic compositions include other chemical ingredients and products of plant
+or animal origin.
+Containing titanium
+
+191
+75
+
+Containing inorganic ingredients
+Containing angiosperm and
+magnoliopsida plants
+Silicon compounds (mainly
+toothpaste and hair styling)
+Special physical form (masks,
+films, powders)
+
+75
+56
+51
+
+Oils, fats, waxes
+
+43
+
+Zinc compounds (mainly
+sunscreen)
+
+40
+
+Emulsions
+
+31
+
+Containing compounds of animal
+origin (skincare, sunscreen)
+
+29
+
+Angiosperms and liliopsida
+
+27
+
+Containing compounds from
+algae, fungi, lichens or plants
+Containing macromolecules,
+polysaccharides
+Containing saturated
+polysiloxanes
+
+26
+23
+21
+
+Others
+
+265
+
+Patent Landscape Report: Ilmenite
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+38
+
+Geographical coverage and key players
+Among the patent families in this application area, 87 percent had an Asian country as the
+country of first priority. China is the top country of priority filing, followed by Japan and the
+Republic of Korea (Figure 41).
+Although the United States and France are behind Asia in terms of filings, they have a tendency to
+protect their inventions in other countries also. Their main target jurisdictions for protection are
+Europe, China, Japan and the Republic of Korea.
+
+
+
+===== PAGE 40 / 56 =====
+
+Figure 41. Patent families on titanium-based cosmetics by jurisdiction of first priority.
+China, Japan and the Republic of Korea are the most frequent jurisdictions of first priority filing.
+China
+
+381
+199
+
+Japan
+Republic of Korea
+
+165
+
+US
+
+69
+
+France
+
+38
+
+Germany
+
+17
+
+Europe
+
+11
+
+UK
+
+10
+
+India
+
+7
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Figure 42. Number of patent families related to titanium cosmetics by country, where at
+least one family member is granted.
+China, Japan and the Republic of Korea are the jurisdictions with most patents granted, followed by
+Europe and the United States.
+China
+Japan
+Republic of Korea
+Europe
+US
+France
+Germany
+UK
+Brazil
+
+511
+270
+229
+161
+140
+98
+82
+75
+52
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+China, Japan and the Republic of Korea are the countries covered by the highest number of
+granted patents in this technological domain, although the United States and Europe are also
+protected by a significant number of patent families (Figure 42).
+
+Key players regarding patents related to use of titanium-based materials in cosmetics are
+almost exclusively companies based in Japan, the United States, the Republic of Korea, France,
+Germany and China (Figure 43). Among the key players we found several big companies in the
+field of cosmetics and personal care. Single applicants file the majority of patents, although
+some companies and universities from the Republic of Korea have collaborated and filed
+applications jointly.
+The dominance of large companies among the top actors reflects the widespread industrial use
+of titanium dioxide in cosmetics and the high maturity of this technology.
+The French multinational company L’Oréal is the top player, with 53 active patent families and
+is followed by several Japanese cosmetic companies, such as Shiseido, Kao, Mandom, Kosé and
+Fujifilm. Mandom holds patents on hair structuring products and body deodorants.
+
+Industrial applications of titanium dioxide and titanium
+
+Patent protection on the use of titanium in cosmetics is more international and less strongly
+dominated by China, with only 39 percent of patent families covering only China (compared to
+between 74 and 80 percent for the other applications described in this report).
+
+39
+
+
+
+===== PAGE 41 / 56 =====
+
+Figure 43. Industrial and academic key players in the field of titanium use for cosmetics.
+Key players are almost exclusively industries based in several different countries.
+Pending
+
+Granted
+
+L'OREAL (France)
+18
+
+35
+
+KAO ( Japan)
+8
+
+26
+
+MANDOM ( Japan)
+22
+
+3
+SHISEIDO ( Japan)
+8
+
+17
+
+AMOREPACIFIC (Republic of Korea)
+18
+5
+
+1
+
+KOSE ( Japan)
+9
+5
+COSMAX (Republic of Korea)
+10
+
+1
+
+HENKEL (Germany)
+9
+
+2
+3
+
+UNILEVER (UK)
+8
+BEIERSDORF (Germany)
+6
+FUJIFILM ( Japan)
+9
+
+POLA CHEMICAL INDUSTRIES ( Japan)
+6
+3
+PROCTER & GAMBLE (US)
+8
+CHENGDU UNIVERSITY OF TECHNOLOGY (China)
+8
+
+1
+
+CHONGQING PELLETS TECHNIQUE TRADE (China)
+7
+COLGATE PALMOLIVE (US)
+6
+
+1
+3
+
+GUANGDONG DANZ (China)
+4
+
+3
+
+GUANGZHOU KENENG COSMETIC RESEARCH (China)
+4
+KOLMAR (Republic of Korea)
+7
+
+1
+
+MARY KAY (US)
+5
+
+Patent Landscape Report: Ilmenite
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+40
+
+Amorepacific, Cosmax and Kolmar are cosmetic companies from the Republic of Korea, while
+Mary Kay is based in the United States. Cosmax and Kolmar have collaborated with Hanyang
+University: Cosmax co-owns a patent family on an infrared (IR)-blocking composition to
+prevent skin aging, while the collaboration of Kolmar relates to a patent family on a UVblocking composition.
+Unilever (UK) and Procter & Gamble (US) are leading companies in consumer goods and hold
+patents on titanium dioxide-containing products for skincare and make-up. Unilever and Colgate
+Palmolive (US) hold patents on the use of titanium dioxide in oral hygiene.
+
+
+
+===== PAGE 42 / 56 =====
+
+German companies Henkel and Beiersdorf are also key players: Henkel’s patents focus on hair
+decolorization, while Beiersdorf has a patent family on sunscreen compositions containing
+titanium dioxide.
+Guangzhou Keneg Cosmetic Research and Guangdong Danz are two Chinese cosmetic companies
+who collaborated with each other and with Guangzhou Baiyun Lianjia Fine Chemical Factory
+on seven patent families describing sunscreen and skin make-up compositions containing
+titanium dioxide.
+Although the number of its patents is very high, China is not well represented among the top
+players, because Chinese actors hold smaller portfolios.
+
+Coatings
+
+Patent activity
+We found 908 patent families active since 2012 describing the use of titanium dioxide and
+titanium as a coating material. Patent activity shows a growing interest in titanium-based
+coatings, with a CAGR of +23 percent between 2014 and 2019 (Figure 44).
+Figure 44. Number of patent families related to titanium-based coatings based on first
+priority year, 2012–2021.
+The number of patent families related to titanium-containing coatings has strongly increased
+since 2012.
+
+Granted
+Pending
+
+CAGR2014–2019 = +23%
+54
+25
+83
+
+86
+
+83
+
+49
+
+80
+
+57
+
+104
+
+58
+
+46
+
+31
+
+25
+
+2013
+
+2014
+
+2015
+
+2016
+
+12
+2017
+
+2018
+
+2019
+
+2020
+
+2021
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and
+publication. 2019 is the last year for which complete data are available.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Patent content
+Patents on the use of titanium compounds as a coating material mainly describe compositions
+with titanium dioxide and titanium alloys. Their principal IPC code reflects the specific coating
+techniques used (sputtering, but also vacuum evaporation and ion implantation and other
+specific techniques, included in “others” in Figure 45), the chemical composition of the coating
+(silicates, oxides) or the composition of the substrate (metal, boron, silicon) (Figure 45). The most
+frequent property these coatings are used for is increased resistance to corrosion, but other
+functionalities are also described, such as increased heat resistance, flame-retardant properties
+or decreased friction.
+
+Industrial applications of titanium dioxide and titanium
+
+6
+2012
+
+96
+
+41
+
+
+
+===== PAGE 43 / 56 =====
+
+Figure 45. Patent families in the field of coatings according to their principal IPC code.
+Classification reflects the coating process, the coating compositions and substrates, with most patents
+filed in the area of fabricating coatings by vacuum evaporation.
+Compositions for coatings by vacuum
+evaporation, sputtering or by ion implantation
+Sputtering by application of a magnetic field
+
+277
+136
+100
+
+Coating characterized by the coating material
+69
+
+Coating by sputtering
+43
+
+Vacuum evaporation by explosion
+
+43
+
+Coating on metal, boron or silicon
+Coating with alkali metal silicates
+
+34
+
+Coating with oxides
+
+27
+
+Others
+
+179
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Among the 908 active patent families in this field, 299 mention terms related to nanotechnologies
+such as nanostructure, nanotube or nanolayer, indicating a significant use of nanostructured
+materials in coatings.
+Geographical coverage and key players
+Chinese applicants have led patent fillings, with 73 percent of patent families since 2012
+(Figure 46). Chinese patenting activity is marked by a strong preference for domestic protection,
+with 72 percent of all relevant patent families protected only in China. The Russian Federation and
+the Republic of Korea also emerge as countries of first priority applications, although they are far
+behind China.
+China is also the jurisdiction where the highest number of patent families (78 percent)
+has a granted patent (Figure 47). The Republic of Korea, the Russian Federation, Japan,
+the United States and Europe (EPO) are also protected by a significant number of granted
+patents.
+The technological field of titanium-based coatings is dominated by academic players, mainly
+Chinese universities (Figure 48). Patents are filed by single applicants and no collaborations
+emerge between the top players. Two Russian universities are also present among the top
+players: the UFA State Aviation Technical University and the Ulyanovsk State Technical University.
+Their main focus is on coatings for aeronautics and metal cutting tools.
+
+Figure 46. Patent families on titanium coatings by jurisdiction of first priority.
+China is the most frequent country of priority and is followed by the Russian Federation and the
+Republic of Korea.
+China
+
+667
+
+Russian Federation
+
+63
+
+Republic of Korea
+
+61
+41
+
+Patent Landscape Report: Ilmenite
+
+Japan
+
+42
+
+23
+
+US
+Taiwan Province of China
+
+8
+
+Europe
+
+8
+
+Germany
+
+7
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+
+
+===== PAGE 44 / 56 =====
+
+Figure 47. Patent families on titanium coatings by jurisdiction where at least one family
+member is granted.
+China has the highest number of granted patents, followed by the Republic of Korea, the Russian
+Federation, Japan, the United States and Europe.
+China
+
+706
+86
+
+Republic of Korea
+Russian Federation
+
+69
+
+Japan
+
+61
+
+US
+
+54
+
+Europe
+
+48
+
+Taiwan Province of China
+
+28
+
+Germany
+
+25
+
+India
+
+16
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Figure 48. Academic and industrial key players in the field of titanium coatings.
+Key players are dominated by Chinese universities, although they include some industries.
+Granted
+
+NINGBO INSTITUTE OF MATERIALS TECHNOLOGY & ENGINEERING, CHINESE ACADEMY OF
+SCIENCES (China)
+3
+12
+GUANGDONG UNIVERSITY OF TECHNOLOGY (China)
+4
+9
+UFA STATE AVIATION TECHNICAL UNIVERSITY (Russian Federation)
+12
+LANZHOU INSTITUTE OF CHEMICAL PHYSICS, CHINESE ACADEMY OF SCIENCES (China)
+4
+7
+NANJING UNIVERSITY OF AERONAUTICS & ASTRONAUTICS, NUAA (China)
+4
+7
+TAIYUAN UNIVERSITY OF TECHNOLOGY (China)
+2
+9
+KONFOONG MATERIALS INTERNATIONAL (China)
+9
+OERLIKON SURFACE SOLUTIONS (Switzerland)
+3
+5
+ULYANOVSK STATE TECHNICAL UNIVERSITY (Russian Federation)
+7
+ANHUI UNIVERSITY OF TECHNOLOGY (China)
+1
+5
+XIANGYA HOSPITAL CENTRAL SOUTH UNIVERSITY (China)
+2
+4
+GUANGZHOU UV TECHNOLOGY MATERIAL (China)
+4
+1
+INSTITUTE OF AUTOMATION, CHINESE ACADEMY OF SCIENCES (China)
+5
+MITSUBISHI ( Japan)
+3
+2
+SHANGHAI INSTITUTE OF CERAMICS, CHINESE ACADEMY OF SCIENCES (China)
+5
+SHENYANG UNIVERSITY (China)
+5
+ZHAOQING HONGWANG METAL INDUSTRIAL (China)
+5
+ZHEJIANG UNIVERSITY (China)
+1
+4
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Industrial applications of titanium dioxide and titanium
+
+Pending
+
+43
+
+
+
+===== PAGE 45 / 56 =====
+
+Among industrial players, three Chinese companies are present: Konfoong Materials
+International specializes in manufacturing ultra-high-purity metal materials and coating
+materials for the semiconductor and integrated circuit industries; Guangzhou UV Technology
+Material is a leader manufacturer in coating materials for glass, photovoltaics, web and
+decorative products; Zhaoqing Hongwang Metal Industrial is a steel manufacturer.
+Among non-Chinese industrial key players, we find Oerlikon Surface Solutions, a Swiss company
+that specializes in surface technology and coating solutions. Its patents focus on coatings for
+steel, ceramics and special anti-corrosion coatings. The Japanese corporation Mitsubishi owns five
+patent families related to coatings for heat exchangers, piezo-electric coatings and cutting tools.
+No key player is seen from the Republic of Korea in this category, although this country is
+important in terms of first priority filing.
+
+Water treatment
+Patent activity
+
+The set of results for patent families regarding titanium dioxide and titanium used in the field of
+water treatment contains 719 active families. Patent activity shows an increasing interest since
+2012, with a CAGR of +25 percent between 2014 and 2019 (Figure 49). Although the number of
+patents is limited, this technology is rapidly emerging and expected to further grow over the next
+few years.
+
+Figure 49. Patent families related to titanium use in water treatment, 2012–2021.
+The number of patent families related to the use of titanium and titanium dioxide in water treatment
+has increased strongly since 2012.
+Granted
+Pending
+40
+
+CAGR2014–2019 = +25%
+
+65
+
+69
+
+22
+
+62
+
+55
+
+83
+
+87
+
+2020
+
+2021
+
+48
+38
+
+31
+21
+2012
+
+44
+
+22
+2013
+
+2014
+
+4
+2015
+
+7
+2016
+
+15
+2017
+
+2018
+
+2019
+
+Note: CAGR is the compound annual growth rate. There is an average 18-month delay between patent filing and
+publication. 2019 is the last year for which complete data are available.
+
+Patent Landscape Report: Ilmenite
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+44
+
+Patent content
+Patents on the use of titanium in the field of water treatment can be classified according to the
+process used for the purification of water or wastewater (Figure 50). The majority of patent
+families describe electrolysis or electrochemical processes, where titanium dioxide or titanium
+composites are used as electrodes. Other patents describe a purification process by employing
+UV irradiation with titanium dioxide used as a photocatalyst. Another purification technique is
+based on flocculation and the precipitation of impurities and is mainly mediated by using titanium
+tetrachloride as a coagulant.
+
+
+
+===== PAGE 46 / 56 =====
+
+Figure 50. Classification of patent families in the field of water treatment according to their
+principal IPC code, reflecting the water treatment process.
+Patents in this area are dominated by electrolysis processes, with a mixture of other technologies also
+being patented.
+By electrolysis
+
+253
+
+By irradiation with UV light
+
+70
+
+By precipitation of impurities
+
+63
+
+By irradiation
+
+46
+
+By electrochemical disinfection
+
+46
+
+By oxidation
+
+36
+
+Treatment of water, waste water, sewage
+
+28
+
+By sorption
+
+22
+
+By electrochemical methods
+
+22
+
+By electro-separation (electro-dialysis, electrophoresis)
+
+21
+
+Others
+
+112
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Among the 719 active patent families in this field, 219 mention terms related to nanotechnologies,
+such as nanotubes, nano-electrodes or nanoparticles, indicating a significant use of compounds
+of a nanometric size in water treatment.
+Geographical coverage and key players
+Chinese applicants lead patent fillings, with 89 percent of patent families since 2012 having China
+as the first priority country. Applications were also filed by players from the Republic of Korea, the
+Russian Federation, India and the United States, although far behind Chinese players in numbers
+(Figure 51).
+China has also by far the highest number of granted patents in this field (Figure 52): 89 percent
+of patent families are protected in China, and 87 percent protected exclusively in China and not
+filed internationally.
+
+Figure 51. Number of patent families related to titanium use for water treatment by
+jurisdiction of first priority.
+China is by far the most frequent country of first priority, and is followed by the Republic of Korea.
+China
+Republic of Korea
+Russian Federation
+India
+US
+Japan
+
+641
+30
+12
+10
+9
+6
+
+Figure 52. Number of patent families related to titanium use for water treatment by
+country, where at least one family member is granted.
+As in other applications, China again has the highest number of granted patents.
+China
+Republic of Korea
+US
+Russian Federation
+India
+Japan
+Europe
+
+643
+32
+15
+14
+12
+8
+6
+
+Note: Europe represents filings at the EPO.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Industrial applications of titanium dioxide and titanium
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+45
+
+
+
+===== PAGE 47 / 56 =====
+
+Chinese universities and public research institutes are leading patent filings related to the use of
+titanium and titanium dioxide for water treatment (Figure 53). China Petroleum Chemical is the
+only industrial key player. Patents are filed by single applicants and no collaboration between
+the top players emerge. The lack of other industrial contributors reflects the low maturity of this
+technology and its very recent emergence and high growth potential.
+China Petroleum Chemical and Chinese public research institutes hold patents related to
+the use of titanium in the production of substrates, electrodes and molecular sieves for the
+electrocatalytic treatment of wastewaters.
+
+Figure 53. Industrial and academic key players in the field of titanium use for
+water treatment.
+Key players are mainly Chinese universities and public institutions.
+Pending
+
+Granted
+
+TONGJI UNIVERSITY
+5
+
+8
+SHANDONG UNIVERSITY
+3
+
+9
+
+DONGGUAN UNIVERSITY OF TECHNOLOGY
+7
+1
+
+3
+
+NANJING UNIVERSITY OF SCIENCE & TECHNOLOGY
+7
+HARBIN INSTITUTE OF TECHNOLOGY
+3
+5
+XI AN UNIVERSITY OF ARCHITECTURE & TECHNOLOGY
+5
+2
+TSINGHUA UNIVERSITY
+5
+2
+NANJING UNIVERSITY
+4
+3
+CHINA PETROLEUM CHEMICAL
+5
+2
+SHAANXI UNIVERSITY OF SCIENCE & TECHNOLOGY
+6
+RESEARCH CENTER FOR ECO ENVIRONMENTAL PROTECTION TECHNOLOGY
+4
+2
+JIANGSU YAOXING ENVIRONMENTAL PROTECTION TECHNOLOGY
+6
+
+1
+
+ZHEJIANG UNIVERSITY OF TECHNOLOGY
+4
+YANCHENG INSTITUTE OF TECHNOLOGY
+1
+4
+SHANGHAI NATIONAL ENGINEERING RESEARCH CENTER FOR NANOTECHNOLOGY
+5
+
+Note: All key players in this graph are Chinese.
+
+Patent Landscape Report: Ilmenite
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+46
+
+
+
+===== PAGE 48 / 56 =====
+
+Perspectives
+This report provides an overview of patent documents published until April 2022 related to the
+extraction of titanium dioxide and titanium metal from ilmenite mineral. It also includes a section
+on selected industrial applications of titanium-based compounds.
+Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite
+has grown strongly. Key contributors to patents on the production of titanium dioxide are
+companies from China, Australia and the United States, reflecting the major contribution of these
+countries to the industrial production of titanium dioxide.
+Some patents describe pre-treatment processes to increase titanium concentration in low-grade
+ores and obtain titanium concentrates or slags. Other patents describe processes to obtain
+titanium dioxide, either by a direct hydrometallurgical process or through two industrially
+exploited processes, the sulfate and chloride processes.
+The chloride process is described in very few patents, although it remains the most exploited
+process in the industrial production of titanium dioxide today. Given the findings in this patent
+landscape, we can expect the chloride process to be progressively substituted by more direct
+hydrometallurgical processes in future, which require fewer steps and are more convenient.
+In contrast, patent activity related to the process for the production of titanium metal has
+remained steady since 2002. Key players in this field are mainly Japanese companies. All industrial
+key players describe the industrially exploited Kroll process, which is based on the reduction of
+titanium dioxide or titanium tetrachloride with magnesium.
+Given the slow patent dynamic and the fact that a large majority of patents describe the
+Kroll process, we do not expect a big shift away from this process over the coming years. The
+only emerging technology seems to be molten salt electrolysis developed by the Chinese
+company Pangang.
+A large and increasing number of patents filed since 2012 describe the use of titanium dioxide
+in ceramic insulators in electronics and as electrodes in batteries for electronic devices and
+automobiles. Key players in these fields are several multinational corporations in electronics and
+automobiles from Japan, the Republic of Korea and several Chinese universities. The presence
+of many leading industrial actors reflects the maturity of these technologies and their extended
+industrial use.
+Titanium metal and titanium dioxide are also widely used in medical technology, and patent
+activity in this field is increasing strongly. Patents describe implantable medical devices and
+surgical instruments made of titanium metal or alloys, and their coatings made of titanium
+dioxide. This technological field is dominated by Chinese companies and universities.
+Titanium dioxide is also widely used in cosmetic compositions for skincare, make-up and oral
+care. Key players in this field are almost exclusively companies coming from several countries
+in Asia, Europe and the United States. The significant presence of big companies among the top
+actors reflects the high maturity of this technology.
+Other emerging applications of titanium dioxide are in the fields of coatings and water treatment.
+Titanium-based coatings mainly prevent the corrosion of metal. Key players in this field are
+companies and universities from China.
+Patents in the field of water treatment describe the use of titanium dioxide or titanium composites
+as electrodes, photocatalysts, coagulants or in purification by UV irradiation, where titanium
+dioxide is used as a photocatalyst. This field is dominated by Chinese universities and the lack of
+industrial contributors reflects the low maturity of this technology and its growth potential.
+
+47
+
+
+
+===== PAGE 49 / 56 =====
+
+Annex
+Methodology and search strategy
+Production of titanium dioxide
+Scope definition
+
+This section focuses on patents describing processes to obtain titanium dioxide from ilmenite
+ore. These processes comprise multiple steps; patents describing only intermediate steps were
+also included in the scope, for example:
+• smelting or redox treatments to increase titanium content and obtain titaniferous slags or
+synthetic rutile;
+• processes to obtain titanium tetrachloride or titanyl sulfate as intermediate products of the
+chloride and sulfate processes;
+• processes to transform synthetic rutile into titanium dioxide.
+Processes to obtain titanium dioxide from natural rutile or titano-magnetite were not specifically
+searched in the queries but were considered relevant.
+Patents that were considered out of scope include:
+• processes to separate ilmenite and titaniferous ores from other minerals;
+• processes to recover titanium dioxide or titanium from wastewaters (e.g., catalyst recycling);
+• reactors, devices and apparatus without process description;
+• re-processing of titanium dioxide;
+• analytical methods to measure specific process parameters.
+Geographical and temporal coverage
+The patents dataset has worldwide geographical coverage, because of the widespread
+production of titanium. The dataset covers patent families with an earliest priority date from
+2002 to 2022. Because of the 18-month delay between patent filing and publication, the dataset
+built by April 15, 2022 is incomplete for 2020, 2021 and 2022.
+Search query and dataset construction
+The dataset for titanium dioxide extraction from ilmenite ores was built by searching for methods
+to produce titanium dioxide from ilmenite, titaniferous ores, titaniferous slags or synthetic
+rutile (query 1), and for methods to produce synthetic rutile intermediate product from ilmenite,
+titaniferous ores or titaniferous slags (query 2) (Table 1).
+
+Table 1.
+
+Search queries used to build dataset for titanium dioxide production from ilmenite.
+Number of patent
+families
+
+#
+
+Query
+
+1
+
+((( ILMENITE OR TITANIFEROUS) AND (TITANIUM OR TITANIA OR TITANATE OR TIO2 OR
+(SYNTHETIC RUTILE) OR (ARTIFICIAL RUTILE)))/TI/AB/CLMS/OBJ/ICLM) AND EPRD >= 2002
+
+2
+
+((( ILMENITE OR TITANIFEROUS OR (SYNTHETIC RUTILE) OR (ARTIFICIAL RUTILE)) AND
+(TITANIUM OR TITANIA OR TITANATE OR TIO2 ))/TI/AB/CLMS/OBJ/ICLM) AND EPRD >= 2002
+
+2,229
+
+3
+
+1 OR 2
+
+2,235
+
+2,119
+
+Note: There is an average 18-month delay between patent filing and publication. 2019 is the last year for which complete
+data are available.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+48
+
+
+
+===== PAGE 50 / 56 =====
+
+The dataset set was manually reviewed to assess to relevancy of each patent family according to
+the scope definition.
+Patent categorization
+Patent families considered relevant to the scope were categorized for in-depth analysis. This was
+done according to keyword searches in title/abstract/claims and manual review.
+Patent families were categorized according the following segmentation:
+• Titanium source: ilmenite, rutile (synthetic or natural), titano-magnetite, ore/slag/tailing,
+not specified.
+• Processing: smelting, redox treatment, magnetic separation, sulfate, chloride, Becher, acid
+leaching, alkaline leaching, fluorine, microwave irradiation, electrolysis, bioleaching, other.
+
+Production of titanium metal
+Scope definition
+
+This section focuses on patents describing processes to obtain titanium metal from ilmenite,
+rutile, titaniferous ores and titaniferous slags. Processes to obtain titanium metal from
+intermediate products such as synthetic rutile, titanium dioxide or titanium tetrachloride were
+not specifically searched in the queries but considered relevant.
+Geographical and temporal coverage
+The patent dataset has worldwide geographical coverage, because of the widespread production
+of titanium. The dataset covers patent families with an earliest priority date from 2002 to 2022.
+Because of the 18-month delay between patent filing and publication, the dataset built by
+April 15, 2022 is incomplete for 2020, 2021 and 2022.
+Search query and dataset construction
+The dataset for titanium dioxide extraction from ilmenite ores was built by searching for methods
+to produce titanium metal or sponge from ilmenite, titaniferous ores, titaniferous slags or
+synthetic rutile (query 1), and searching for the two industrially used processes (query 2) (Table 2).
+The dataset set was manually reviewed to assess to relevancy of each patent family according to
+the scope definition.
+
+Table 2. Search queries used to build dataset for titanium metal production from ilmenite.
+Number of patent
+families
+
+#
+
+Query
+
+1
+
+((( ILMENITE OR TITANIFEROUS SLAG? OR TITANIFEROUS ORE? OR RUTILE OR (FURNACE 1D
+SLAG?)) AND ((TITANIUM D METAL) OR (SPONGE D TITANIUM) OR METALLIC TITANIUM))/TI/
+AB/CLMS/OBJ/ICLM) AND EPRD >= 2002
+
+260
+
+2
+
+((( HUNTER PROCESS OR KROLL PROCESS))/TI/AB/CLMS/OBJ/ICLM) AND EPRD >= 2002
+
+45
+
+3
+
+1 OR 2
+
+304
+
+Note: There is an average 18-month delay between patent filing and publication. 2019 is the last year for which complete
+data are available.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Patent categorization
+Patent families considered relevant to the scope were categorized for in-depth analysis. This was
+done according to keyword searches in title/abstract/claims and manual review.
+
+• Titanium source: ilmenite, rutile (synthetic or natural), titano-magnetite, titaniferous ore/slag/
+tailing, not specified/other.
+
+Annex
+
+Patent families were categorized according to the following segmentation:
+
+49
+
+
+
+===== PAGE 51 / 56 =====
+
+• Reducing agent: magnesium (Kroll process), sodium (Hunter and Armstrong processes),
+aluminum, calcium, carbon/carbon-based, manganese, vanadium, other metal, electrolysis,
+hydrogen, plasma, not specified.
+• Titanium product: sponge, powder/particles, ingot/rod/billet, not specified.
+
+Industrial applications of titanium dioxide and titanium
+Scope definition
+
+This section is dedicated to a macroscopic analysis of patents describing industrial applications
+of titanium dioxide, titanium metal and titanium alloys. All types of titanium-containing materials
+were considered and patents collected in all industrial domains. For the analysis, some specific
+application domains were selected, focusing more on high-tech applications.
+Geographical and temporal coverage
+The patent dataset has worldwide geographical coverage and covers patent families with an
+earliest priority date from 2012 to 2022. The temporal coverage is restricted to this period to
+focus on the most recent applications and to estimate emerging trends in the next few years.
+Because of the 18-month delay between patent filing and publication, the dataset built by
+April 15, 2022 is incomplete for 2020, 2021 and 2022.
+Search query and dataset construction
+The dataset was built by searching for uses, applications, products or compositions of titanium
+dioxide or titanium (Table 3). Patents corresponding to chemical and physical processes and
+related apparatus were excluded by use of the B01 CPC classification. In addition, only granted or
+pending patents were considered.
+Table 3. Search queries used to build dataset for titanium dioxide production from ilmenite.
+#
+
+Query
+
+1
+
+((((TITANIUM OR TITANIA OR TITANATE OR TIO2) P (USE? OR APPLICATION? OR PRODUCT?
+OR HIGH_TECH OR COMPOSITION?)/TI/AB/ICLM) AND EPRD >= 2012) NOT (B01+)/IPC/CPC)
+AND ( STATE/ACT=ALIVE)
+
+Number of patent
+families
+53,754
+
+Note: There is an average 18-month delay between patent filing and publication. 2019 is the last year for which complete
+data are available.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Selection of application domains for analysis
+The patent dataset was divided into different pools according to the technology classification
+defined by WIPO crossed with the principal IPC of each patent. Among the 36 technology-IPC
+pool containing the largest number of documents, shown in Table 4, some specific pools were
+selected according to following criteria:
+• the type of patent, focusing on products and excluding processes, analysis methods and
+general compositions without application;
+• the “high-tech” character of the application domain, for example, considering paints and
+cements as low tech;
+• the variation in the number of documents since 2012, to identify emerging technologies.
+
+Patent Landscape Report: Ilmenite
+
+According to the selection criteria described above, six pools of patent families corresponding to
+high-tech applications were chosen for analysis (Table 5).
+
+50
+
+
+
+===== PAGE 52 / 56 =====
+
+Table 4. Pools of patent families according to technology and principal IPC, number of
+documents, temporal variation and pool selection.
+Technology
+Materials, metallurgy
+Electrical machinery, apparatus,
+energy
+
+Principal IPC
+C04B-035 (ceramics)
+
+Patent
+families
+1,683
+
+H01M-004 (electrodes)
+
+1,564
+
++74%
+
+Selection focus
+CERAMICS
+ELECTRODES for
+BATTERIES
+
+Materials, metallurgy
+Organic fine chemistry
+
+C01G-023 (titanium compounds)
+A61K-008 (cosmetics)
+
+1,318
+953
+
++55%
++40%
+
+Not selected
+COSMETICS
+
+Environmental technology
+Macromolecular chemistry,
+polymers
+
+C02F-001 (water treatment)
+
+719
+
++146%
+
+WATER TREATMENT
+
+C08L-023 (polymer compositions)
+
+653
+
++51%
+
+Not selected
+
+Materials, metallurgy
+
+C22C-038 (ferrous alloys, steel)
+
+640
+
++11%
+
+Not selected
+
+Surface technology, coating
+
+C09D-133 (polymer coatings)
+
+635
+
++49%
+
+Not selected
+
+Materials, metallurgy
+
+584
+
++44%
+
+Not selected
+
+Surface technology, coating
+
+C22C-014 (alloys based on titanium)
+C23C-014 (coatings with special
+processes)
+
+563
+
++103%
+
+Medical technology
+
+A61B-017 (surgical devices)
+
+558
+
++201%
+
+COATINGS
+MEDICAL
+TECHNOLOGY
+
+Basic material chemistry
+
+533
+
++43%
+
+Not selected
+
+Materials, metallurgy
+
+C09D-163 (epoxy resins coatings)
+C22C-001 (making non-ferrous
+alloys)
+
+528
+
++109%
+
+Not selected
+
+Materials, metallurgy
+
+C03C-003 (glass compositions)
+
+482
+
+–12%
+
+Not selected
+
+Machine tools
+
+B23K-035 (welding rods)
+
+480
+
++50%
+
+Not selected
+
+Materials, metallurgy
+Macromolecular chemistry,
+polymers
+
+C04B-028 (cements, concrete)
+
+459
+
++140%
+
+Not selected
+
+C08F-010 (polymers)
+
+498
+
+–45%
+
+Not selected
+
+Basic material chemistry
+
+C09C-001 (dyes, paints)
+
+421
+
++46%
+
+Not selected
+
+Materials, metallurgy
+Macromolecular chemistry,
+polymers
+Basic material chemistry
+
+C22C-021 (aluminum-based alloys)
+
+414
+
++42%
+
+Not selected
+
+C08G-063 (polymers)
+C09D-005 (coatings, paints)
+
+383
+378
+
++7%
++63%
+
+Not selected
+Not selected
+
+Basic material chemistry
+
+C09D-175 (polymer coatings)
+
+364
+
++80%
+
+Not selected
+
+Environmental technology
+
+C02F-009 (water treatment)
+
+362
+
++120%
+
+Not selected
+
+Measurement
+Macromolecular chemistry,
+polymers
+
+G01N-027 (electric analysis)
+
+351
+
++72%
+
+Not selected
+
+C08L-027 (polymers)
+
+350
+
+45%
+
+Not selected
+
+Basic material chemistry
+
+C09D-001 (coatings, paints)
+
+345
+
++156%
+
+COATINGS
+
+Materials, metallurgy
+
+C03C-008 (enamels, glazes)
+
+344
+
++225%
+
+CERAMICS
+
+Surface technology, coating
+
+C25D-011 (electrolytic coating)
+
+343
+
++79%
+
+Not selected
+
+Materials, metallurgy
+
+C22F-001 (alloys treatment)
+
+326
+
++76%
+
+Not selected
+
+Surface technology, coating
+
+323
+
+27%
+
+Not selected
+
+Materials, metallurgy
+
+B32B-027 (layered resins)
+C22B-034 (obtaining refractory
+metals)
+
+321
+
++141%
+
+Not selected
+
+Basic material chemistry
+
+C09D-011 (inks)
+
+319
+
+–3%
+
+Medical technology
+Electrical machinery, apparatus,
+energy
+
+A61L-027 (prostheses)
+H01M-010 (secondary elements for
+electrochemistry)
+
+317
+
+48%
+
+311
+
+17%
+
+Medical technology
+
+A61F-002 (prostheses, stents)
+H01L-021 (processes to fabricate
+semi-conductors)
+
+307
+
++170%
+
+Not selected
+MEDICAL
+TECHNOLOGY
+ELECTRODES for
+BATTERIES
+MEDICAL
+TECHNOLOGY
+
+303
+
+–23%
+
+Not selected
+
+Semiconductors
+
+Δ(2017–2022)/
+(2012–2016)
++93%
+
+Gray = negative growth; pink = up to 60% growth; purple = more than 60% growth.
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+Annex
+
+Note: There is an average 18-month delay between patent filing and publication. 2019 is the last year for which complete
+data are available.
+
+51
+
+
+
+===== PAGE 53 / 56 =====
+
+Table 5. Selected pools of patent families, their technology and IPC classification, the
+number of patent and their temporal evolution.
+Pool
+CERAMICS
+ELECTRODES FOR
+BATTERIES
+
+Principal IPC
+Materials, metallurgy
+Electrical machinery, apparatus,
+energy
+
+Principal IPC
+C04B-035 and C03C-008
+
+Patent
+families
+2,027
+
+Δ(2017–2022)/
+(2012–2016)
++109%
+
+H01M-004 and H01M-010
+
+1,875
+
++63%
+
+MEDICAL TECHNOLOGY Medical technology
+
+A61B-017, A61L-027, A61F-002
+
+1,182
+
++185%
+
+COSMETICS
+
+Organic fine chemistry
+
+A61K-008
+
+953
+
++40%
+
+COATINGS
+
+Surface technology, coating
+
+C23C-014, C09D-001
+
+908
+
++121%
+
+WATER TREATMENT
+
+Environmental technology
+
+C02F-001
+
+719
+
++146%
+
+Pink = up to 60% growth; purple = more than 60% growth.
+Note: There is an average 18-month delay between patent filing and publication. 2019 is the last year for which complete
+data are available.
+
+Patent Landscape Report: Ilmenite
+
+Source: WIPO, based on patent data from Orbit up to April 2022.
+
+52
+
+
+
+===== PAGE 54 / 56 =====
+
+Glossary
+C
+carbon
+CAGR	The compound annual growth rate, or CAGR, is the average rate at
+which a value grows over a certain period of time (CAGR Calculator,
+n.d.). The formula for CAGR is:
+CAGR = (EV/SV)1/n – 1,
+where EV = ending value; SV = starting value; n = number of years.
+Cl2
+chlorine
+CO
+carbon monoxide
+CO2
+carbon dioxide
+Fe
+iron
+FeSO4
+iron sulfate
+FeTiO3
+ilmenite
+H2SO4
+sulfuric acid
+Mg
+magnesium
+MgCl2
+magnesium chloride
+Na
+sodium
+NH4Cl
+ammonium chloride
+O2
+oxygen
+Patent	A legal title that gives inventors the right, for a limited period
+(usually 20 years), to prevent others from making, using or selling
+their invention without their permission in the countries for which
+the patent has been granted.
+Patent application/filing	A request for patent protection for an invention in a given
+jurisdiction filed with a patent office.
+Patent family	A set of interrelated patent applications filed in one or more
+countries to protect the same or a similar invention by a common
+inventor and linked by one or several common priority data. For
+this report’s search and analysis, the FAMPAT family definition as
+used in Orbit Intelligence was used. A patent family is considered
+granted if at least one member patent has been granted, pending if
+no member patent has been granted and the grant decision for at
+least one member is pending, and lapsed if none of the patents in
+the family is active for any reason.
+Priority	The earliest filing of the first patent in a family of patent
+applications, which includes a priority date and a priority country,
+that is the jurisdiction where it was first filed.
+Ti
+titanium
+TiCl4
+titanium tetrachloride
+TiO2
+titanium dioxide
+TiOSO4
+titanyl sulfate
+
+53
+
+
+
+===== PAGE 55 / 56 =====
+
+References
+CAGR Calculator (n.d.). Available at: https://
+cagrcalculator.net/result (accessed May 11, 2022).
+Changzhou Ruidefeng Precision Technology Co.,
+Ltd. (2021). Available at: www.red-fairy.com/en/
+news/60/740.html (accessed May 6, 2022).
+El Khalloufi, M., O. Drevelle and G. Soucy (2021).
+Titanium: An overview of resources and production
+methods. Minerals, 11, 1425.
+European Union Scientific Committee on Consumer
+Safety (2020). Titanium dioxide (TiO2) used in
+cosmetic products that lead to exposure by
+inhalation. Available at: https://ec.europa.eu/health/
+system/files/2021-11/sccs_o_238.pdf (accessed May
+6, 2022).
+Gázquez, M., J. Bolívar, R. Garcia-Tenorio and F. Vaca
+(2014). A review of the production cycle of titanium
+dioxide pigment. Materials Sciences and Applications,
+5, 441–458.
+Murata Manufacturing Co., Ltd. (2016) Murata
+Manufacturing and Sony sign definitive agreement
+for the transfer of battery business. Available at:
+https://corporate.murata.com/en-eu/newsroom/
+news/company/general/2016/1031 (accessed May
+6, 2022).
+
+54
+
+Ngugen, T.H. and M.S. Lee (2019). A review on the
+recovery of titanium dioxide from ilmenite ores by
+direct leaching technologies. Mineral Processing and
+Extractive Metallurgy Review, 40, 231–247.
+Reuters (2020). China titanium producer Pangang
+shuts unit as coronavirus cases found. Available
+at: www.reuters.com/article/us-china-healthtitanium-idUSKBN20819K (accessed May 6, 2022).
+Toho Titanium Co. Ltd. (n.d.). Titanium sponge.
+Available at: www.toho-titanium.co.jp/en/products/
+sponge.html (accessed May 6, 2022).
+USGS (n.d.). Titanium statistics and information.
+Available at: www.usgs.gov/centers/nationalminerals-information-center/titanium-statisticsand-information (accessed May 6, 2022).
+Van Gosen, B.S. and K.J. Ellefsen (2018). Titanium
+mineral resources in heavy-mineral sands in
+the Atlantic Coastal Plain of the southeastern
+United States. U.S. Geological Survey. Scientific
+Investigations Report 2018–5045, 32.
+
+
+
+===== PAGE 56 / 56 =====
+
+[NO EXTRACTED TEXT ON THIS PAGE]
+
+
+</D_text>
+</available_data>
+
+<output_constraints>
+Every returned passage must be contiguous text copied exactly from the supplied report. A definition, criterion, table value, prompt instruction, heading copied without its evidence, vague description, summary, paraphrase, or invented wording is not a valid passage. Return only genuine report evidence; never fill a requested slot with an invalid substitute.
+Never infer or create newly verified E.tab when D.tab is unavailable.
+Return JSON only, without Markdown or commentary. Use exactly this schema: {"excerpt":"exact report text"}
+</output_constraints>

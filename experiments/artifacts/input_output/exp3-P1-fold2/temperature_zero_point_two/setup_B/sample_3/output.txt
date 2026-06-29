@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P1-fold2",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "exp3-P1-fold2",
+  "errors": [],
+  "raw_output": "{\n  \"M\": \"Identify the year with the highest count and the year with the lowest count, then calculate the percentage change from the lowest to the highest year.\",\n  \"T\": \"This pattern describes a trend where the count of patent families increases or decreases significantly over a period, with a notable percentage change from the lowest to the highest year.\"\n}",
+  "parsed_output": {
+    "M": "Identify the year with the highest count and the year with the lowest count, then calculate the percentage change from the lowest to the highest year.",
+    "T": "This pattern describes a trend where the count of patent families increases or decreases significantly over a period, with a notable percentage change from the lowest to the highest year."
+  }
+}

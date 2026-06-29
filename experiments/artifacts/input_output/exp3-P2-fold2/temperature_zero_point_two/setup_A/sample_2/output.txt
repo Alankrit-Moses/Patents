@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P2-fold2",
+  "experiment": "3",
+  "setup": "A",
+  "pattern_id": "P2",
+  "example_id": "exp3-P2-fold2",
+  "errors": [],
+  "raw_output": "{\n  \"mathematical_definition\": \"The recurring behavior in the pairs can be defined as the Compound Annual Growth Rate (CAGR), calculated as: CAGR = (EV/BV)^(1/n) - 1, where EV is the ending value, BV is the beginning value, and n is the number of years.\",\n  \"natural_language_description\": \"The recurring behavior in the pairs is the varying growth rates of different entities or fields over specific periods. Some entities or fields exhibit high growth rates, indicating a significant increase in patent activity, while others show stagnation or decline. This behavior is quantified using the Compound Annual Growth Rate (CAGR), which measures the mean annual growth rate of an investment over a specified period of time longer than one year.\"\n}",
+  "parsed_output": {
+    "M": "The recurring behavior in the pairs can be defined as the Compound Annual Growth Rate (CAGR), calculated as: CAGR = (EV/BV)^(1/n) - 1, where EV is the ending value, BV is the beginning value, and n is the number of years.",
+    "T": "The recurring behavior in the pairs is the varying growth rates of different entities or fields over specific periods. Some entities or fields exhibit high growth rates, indicating a significant increase in patent activity, while others show stagnation or decline. This behavior is quantified using the Compound Annual Growth Rate (CAGR), which measures the mean annual growth rate of an investment over a specified period of time longer than one year."
+  }
+}

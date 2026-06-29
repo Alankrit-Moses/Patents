@@ -1,0 +1,14 @@
+No LLM judge call was issued. The candidate failed exact membership recovery against the report, so the assigned score is 0.
+
+Candidate text:
+year,distinct_diffusion_model_patent_family_count
+2014,0
+2015,2
+2016,1
+2017,4
+2018,7
+2019,10
+2020,18
+2021,20
+2022,57
+2023,441

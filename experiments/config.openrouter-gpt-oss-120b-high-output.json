@@ -1,0 +1,46 @@
+{
+  "project_root": "..",
+  "results_dir": "artifacts/openrouter",
+  "generator": {
+    "base_url": "https://openrouter.ai/api/v1",
+    "model": "openai/gpt-oss-120b",
+    "api_key_env": "OPENROUTER_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 8192,
+    "timeout_seconds": 300,
+    "response_format": {
+      "type": "json_object"
+    },
+    "extra_body": {
+      "reasoning": {
+        "effort": "medium",
+        "exclude": true
+      }
+    },
+    "extra_headers": {
+      "HTTP-Referer": "https://github.com/local/wipo-framework-experiments",
+      "X-Title": "WIPO Framework Experiments"
+    },
+    "retry_attempts": 5,
+    "retry_initial_sleep_seconds": 2.0,
+    "retry_backoff_factor": 2.0
+  },
+  "judge": {
+    "base_url": "http://h100-8s-02:8001/v1",
+    "model": "gemma3-12b-it",
+    "api_key_env": "OPENAI_API_KEY",
+    "temperature": 0.0,
+    "max_output_tokens": 2048,
+    "timeout_seconds": 300
+  },
+  "context_limit_tokens": 98304,
+  "chars_per_token_estimate": 3.5,
+  "chunk_chars": 16000,
+  "chunk_overlap_chars": 2000,
+  "max_workers": 2,
+  "max_steps": 8,
+  "repair_once": true,
+  "induction_pairs": 4,
+  "fold_count": 3,
+  "seed": 17
+}

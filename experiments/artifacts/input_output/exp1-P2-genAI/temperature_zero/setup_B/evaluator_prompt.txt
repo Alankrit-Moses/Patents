@@ -1,0 +1,48 @@
+===== EVALUATOR CALL 1 / EXPERIMENT 1 =====
+No LLM judge call was issued. The candidate failed exact membership recovery against the report, so the assigned score is 0.
+
+Candidate text:
+The largest number of patents were published in the area of GANs. Between 2014 and 2023, there were 9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.
+
+===== EVALUATOR CALL 2 / EXPERIMENT 1 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well this exact report excerpt instantiates the supplied mathematical pattern definition.
+
+Mathematical pattern definition:
+Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.
+
+For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:
+
+CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1
+
+A comparative growth pattern holds when there exist two entities ei and ej such that:
+
+CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon
+
+where epsilon >= 0 is a threshold for a meaningful growth-rate difference.
+
+An entity ei is a growth leader within E when:
+
+CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).
+
+All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.
+
+
+Candidate report excerpt:
+The Chinese Academy of Sciences is clearly in the lead in terms of scientific publications with
+more than 1,100 publications since 2010. Tsinghua University and Stanford University follow in
+second and third place with more than 600 publications each.
+
+Use this alignment scale: 5 = clear and complete instantiation; 4 = valid instantiation with minor ambiguity or omitted context; 3 = partial or uncertain instantiation; 2 = weakly related but missing central conditions; 1 = not an instantiation. Judge semantic pattern alignment, not wording similarity. The saved example collection is non-exhaustive and must not be considered.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.
+
+
+===== EVALUATOR CALL 3 / EXPERIMENT 1 =====
+No LLM judge call was issued. The candidate failed exact membership recovery against the report, so the assigned score is 0.
+
+Candidate text:
+The Chinese Academy of Sciences is the only research organization in the top 10 ranking. Alibaba (sixth) and Bytedance (ninth) are other Chinese companies in the top 10.

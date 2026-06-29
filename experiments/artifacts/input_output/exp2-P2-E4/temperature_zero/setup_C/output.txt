@@ -1,0 +1,843 @@
+{
+  "task_id": "exp2-P2-E4",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "P2-E4",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"Republic of Korea\"}",
+  "parsed_output": {
+    "excerpt": "Republic of Korea"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "Japan",
+            "Republic of Korea"
+          ],
+          "metric": "cagr_percent",
+          "years_or_interval": "2021-2023",
+          "trend": "decrease, increase",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": ""
+        },
+        "raw_output": "{\n  \"entities\": [\"Japan\", \"Republic of Korea\"],\n  \"metric\": \"cagr_percent\",\n  \"years_or_interval\": \"2021-2023\",\n  \"trend\": \"decrease, increase\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"\"\n}",
+        "usage": {
+          "prompt_tokens": 134,
+          "total_tokens": 209,
+          "completion_tokens": 75,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "Between 2021 and 2023, the compound annual growth rate (CAGR) percentage in Japan and the Republic of Korea showed a decrease followed by an increase.",
+        "raw_output": "{\n  \"T_hat\": \"Between 2021 and 2023, the compound annual growth rate (CAGR) percentage in Japan and the Republic of Korea showed a decrease followed by an increase.\"\n}",
+        "usage": {
+          "prompt_tokens": 149,
+          "total_tokens": 198,
+          "completion_tokens": 49,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Japan",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"decrease followed by an increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4233,
+              "total_tokens": 4415,
+              "completion_tokens": 182,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "Between 2014 and 2023",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "increase",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4136,
+              "total_tokens": 4220,
+              "completion_tokens": 84,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3763,
+              "total_tokens": 3850,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3750,
+              "total_tokens": 3759,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4594,
+              "total_tokens": 4681,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "Japan",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"decrease followed by an increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4404,
+              "total_tokens": 4586,
+              "completion_tokens": 182,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              },
+              {
+                "excerpt": "Japan",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"50% per year\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"10% per year\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"decrease\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4967,
+              "total_tokens": 5205,
+              "completion_tokens": 238,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"Between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"an average annual growth rate of around 45% between 2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"annual growth of 64% between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5458,
+              "total_tokens": 5676,
+              "completion_tokens": 218,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "Japan",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"compound annual growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"decreasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4772,
+              "total_tokens": 4978,
+              "completion_tokens": 206,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "Japan",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4448,
+              "total_tokens": 4519,
+              "completion_tokens": 71,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3669,
+              "total_tokens": 3756,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "2023",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4483,
+              "total_tokens": 4567,
+              "completion_tokens": 84,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"decrease followed by an increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9753,
+              "total_tokens": 9935,
+              "completion_tokens": 182,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR) percentage\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"Japan and the Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"decrease followed by an increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5312,
+              "total_tokens": 5473,
+              "completion_tokens": 161,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3935,
+              "total_tokens": 3944,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"Between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3508,
+              "total_tokens": 3598,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3604,
+              "total_tokens": 3646,
+              "completion_tokens": 42,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "2023",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4398,
+              "total_tokens": 4474,
+              "completion_tokens": 76,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5926,
+              "total_tokens": 5935,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "Republic of Korea",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Japan",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Between 2014 and 2023",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "increase",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "years"
+            ]
+          },
+          {
+            "excerpt": "2023",
+            "chunk_id": "chunk-0011",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "years_or_interval",
+              "trend",
+              "pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity, Republic of Korea, without providing any information about the metric (cagr_percent), the years or interval (2021-2023), the trend (increase), or any pattern behavior.",
+            "candidate": {
+              "excerpt": "Republic of Korea",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity, Republic of Korea, without providing any information about the metric (cagr_percent), the years or interval (2021-2023), the trend (increase), or any pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 222,
+              "total_tokens": 331,
+              "completion_tokens": 109,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or likely pattern behavior.",
+            "candidate": {
+              "excerpt": "Japan",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 220,
+              "total_tokens": 306,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text 'increase' does not describe any of the observed compact table evidence. It lacks specific entities, metric, years or interval, trend, and pattern behavior.",
+            "candidate": {
+              "excerpt": "increase",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text 'increase' does not describe any of the observed compact table evidence. It lacks specific entities, metric, years or interval, trend, and pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 221,
+              "total_tokens": 314,
+              "completion_tokens": 93,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities (Japan, Republic of Korea), the metric (cagr_percent), the years or interval (2021-2023), the trend (decrease, increase), or any likely pattern behavior. The years mentioned (2014-2023) do not match the interval in the table (2021-2023).",
+            "candidate": {
+              "excerpt": "Between 2014 and 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities (Japan, Republic of Korea), the metric (cagr_percent), the years or interval (2021-2023), the trend (decrease, increase), or any likely pattern behavior. The years mentioned (2014-2023) do not match the interval in the table (2021-2023).\"\n}",
+            "usage": {
+              "prompt_tokens": 231,
+              "total_tokens": 376,
+              "completion_tokens": 145,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text '2014–2023' does not mention any entities, metrics, trends, or pattern behaviors. It also does not match the specified years or interval (2021-2023).",
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text '2014–2023' does not mention any entities, metrics, trends, or pattern behaviors. It also does not match the specified years or interval (2021-2023).\"\n}",
+            "usage": {
+              "prompt_tokens": 228,
+              "total_tokens": 336,
+              "completion_tokens": 108,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text '2023' does not describe any of the observed compact table evidence. It does not mention any entities, metrics, years or intervals, trends, or pattern behaviors.",
+            "candidate": {
+              "excerpt": "2023",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text '2023' does not describe any of the observed compact table evidence. It does not mention any entities, metrics, years or intervals, trends, or pattern behaviors.\"\n}",
+            "usage": {
+              "prompt_tokens": 223,
+              "total_tokens": 320,
+              "completion_tokens": 97,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "Republic of Korea",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Japan",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "increase",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'increase' does not describe any of the observed compact table evidence. It lacks specific entities, metric, years or interval, trend, and pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "Between 2014 and 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities (Japan, Republic of Korea), the metric (cagr_percent), the years or interval (2021-2023), the trend (decrease, increase), or any likely pattern behavior. The years mentioned (2014-2023) do not match the interval in the table (2021-2023)."
+          },
+          {
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text '2014–2023' does not mention any entities, metrics, trends, or pattern behaviors. It also does not match the specified years or interval (2021-2023)."
+          },
+          {
+            "candidate": {
+              "excerpt": "2023",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text '2023' does not describe any of the observed compact table evidence. It does not mention any entities, metrics, years or intervals, trends, or pattern behaviors."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0000"
+  ]
+}

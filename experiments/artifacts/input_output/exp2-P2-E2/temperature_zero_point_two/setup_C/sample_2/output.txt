@@ -1,0 +1,988 @@
+{
+  "task_id": "exp2-P2-E2",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "P2-E2",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"India\\nhad even higher growth rates in GenAI patent family publications (56% per year)\"}",
+  "parsed_output": {
+    "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year)"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "China",
+            "India",
+            "Republic of Korea",
+            "Japan",
+            "United Kingdom"
+          ],
+          "metric": "cagr_percent",
+          "years_or_interval": "2014-2023",
+          "trend": "growth",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": "India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan."
+        },
+        "raw_output": "{\n  \"entities\": [\n    \"China\",\n    \"India\",\n    \"Republic of Korea\",\n    \"Japan\",\n    \"United Kingdom\"\n  ],\n  \"metric\": \"cagr_percent\",\n  \"years_or_interval\": \"2014-2023\",\n  \"trend\": \"growth\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.\"\n}",
+        "usage": {
+          "prompt_tokens": 186,
+          "total_tokens": 297,
+          "completion_tokens": 111,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "India has the highest growth rate in cagr_percent from 2014-2023 among the given entities, followed by China, Republic of Korea, United Kingdom, and Japan.",
+        "raw_output": "{\n  \"T_hat\": \"India has the highest growth rate in cagr_percent from 2014-2023 among the given entities, followed by China, Republic of Korea, United Kingdom, and Japan.\"\n}",
+        "usage": {
+          "prompt_tokens": 180,
+          "total_tokens": 230,
+          "completion_tokens": 50,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "India",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "China",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"China\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"United Kingdom\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4265,
+              "total_tokens": 4540,
+              "completion_tokens": 275,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "Between 2014 and 2023",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"In terms of patent growth, GAN patents show the strongest increase over the past decade.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4168,
+              "total_tokens": 4260,
+              "completion_tokens": 92,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3795,
+              "total_tokens": 3863,
+              "completion_tokens": 68,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3782,
+              "total_tokens": 3791,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4626,
+              "total_tokens": 4633,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    },\n    {\n      \"excerpt\": \"India, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4436,
+              "total_tokens": 4526,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year)",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years_or_interval",
+                  "trend",
+                  "behavior"
+                ]
+              },
+              {
+                "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years_or_interval",
+                  "trend",
+                  "behavior"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India had even higher growth rates in GenAI patent family publications (56% per year)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years_or_interval\", \"trend\", \"behavior\"]\n    },\n    {\n      \"excerpt\": \"China has also reached very high average growth rates of patent family publications (50% per year, X-axis) in that period among the top inventor locations despite its already large GenAI patent portfolio.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years_or_interval\", \"trend\", \"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4999,
+              "total_tokens": 5155,
+              "completion_tokens": 156,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "India",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "China",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"China\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"United Kingdom\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5490,
+              "total_tokens": 5800,
+              "completion_tokens": 310,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest growth rate in cagr_percent from 2014-2023 among the given entities, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4804,
+              "total_tokens": 4880,
+              "completion_tokens": 76,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend",
+                  "behavior"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has an above-average share of all GenAI patent families in networks and smart cities.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"years\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4480,
+              "total_tokens": 4600,
+              "completion_tokens": 120,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "China",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"China\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"India\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"United Kingdom\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3701,
+              "total_tokens": 3899,
+              "completion_tokens": 198,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"India has the highest growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4515,
+              "total_tokens": 4600,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9785,
+              "total_tokens": 9835,
+              "completion_tokens": 50,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5344,
+              "total_tokens": 5421,
+              "completion_tokens": 77,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3967,
+              "total_tokens": 3976,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\", \"trend\", \"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3540,
+              "total_tokens": 3599,
+              "completion_tokens": 59,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"India has the highest growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"trend\", \"behavior\"]\n    },\n    {\n      \"excerpt\": \"followed by China, Republic of Korea, United Kingdom, and Japan\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3636,
+              "total_tokens": 3738,
+              "completion_tokens": 102,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "Republic of Korea",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Republic of Korea\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"India has the highest growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4430,
+              "total_tokens": 4507,
+              "completion_tokens": 77,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5958,
+              "total_tokens": 5967,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "India",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "China",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Between 2014 and 2023",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year)",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": [
+              "years"
+            ]
+          },
+          {
+            "excerpt": "Republic of Korea",
+            "chunk_id": "chunk-0017",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 5,
+            "matched_conditions": [
+              "entity: India",
+              "metric: cagr_percent",
+              "years_or_interval: 2014-2023",
+              "trend: growth",
+              "likely_pattern_behavior: India has the highest growth rate"
+            ],
+            "failed_conditions": [],
+            "rationale": "The candidate text accurately reflects the data in the table, mentioning the correct entity (India), metric (CAGR percent), time interval (2014-2023), trend (growth), and pattern behavior (highest growth rate). The slight difference in the growth rate (56% vs 55.8%) is negligible and likely due to rounding.",
+            "candidate": {
+              "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year)",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 5,\n  \"matched_conditions\": [\n    \"entity: India\",\n    \"metric: cagr_percent\",\n    \"years_or_interval: 2014-2023\",\n    \"trend: growth\",\n    \"likely_pattern_behavior: India has the highest growth rate\"\n  ],\n  \"failed_conditions\": [],\n  \"rationale\": \"The candidate text accurately reflects the data in the table, mentioning the correct entity (India), metric (CAGR percent), time interval (2014-2023), trend (growth), and pattern behavior (highest growth rate). The slight difference in the growth rate (56% vs 55.8%) is negligible and likely due to rounding.\"\n}",
+            "usage": {
+              "prompt_tokens": 321,
+              "total_tokens": 482,
+              "completion_tokens": 161,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "year/interval"
+            ],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions the years 2014 and 2023, which matches the year/interval condition. However, it does not mention any entities, the metric (cagr_percent), the trend (growth), or the pattern behavior (India having the highest growth rate, etc.).",
+            "candidate": {
+              "excerpt": "Between 2014 and 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"year/interval\"\n  ],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions the years 2014 and 2023, which matches the year/interval condition. However, it does not mention any entities, the metric (cagr_percent), the trend (growth), or the pattern behavior (India having the highest growth rate, etc.).\"\n}",
+            "usage": {
+              "prompt_tokens": 314,
+              "total_tokens": 435,
+              "completion_tokens": 121,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend"
+            ],
+            "failed_conditions": [
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions the correct entities, metric, and time interval. It also correctly identifies the trend as growth. However, it does not mention the specific growth rates or the pattern behavior that India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.",
+            "candidate": {
+              "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\"\n  ],\n  \"failed_conditions\": [\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text mentions the correct entities, metric, and time interval. It also correctly identifies the trend as growth. However, it does not mention the specific growth rates or the pattern behavior that India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan.\"\n}",
+            "usage": {
+              "prompt_tokens": 343,
+              "total_tokens": 462,
+              "completion_tokens": 119,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "year/interval"
+            ],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only mentions the year interval, which matches the TabSignal. However, it does not mention the entities, metric, trend, or pattern behavior, which are all present in the TabSignal.",
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"year/interval\"\n  ],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions the year interval, which matches the TabSignal. However, it does not mention the entities, metric, trend, or pattern behavior, which are all present in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 311,
+              "total_tokens": 410,
+              "completion_tokens": 99,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions 'India' without providing any information about the metric, years or interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "India",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions 'India' without providing any information about the metric, years or interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 303,
+              "total_tokens": 387,
+              "completion_tokens": 84,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "China",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 303,
+              "total_tokens": 388,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any specific entities, the metric 'cagr_percent', the year interval '2014-2023', or the specific pattern behavior described in the TabSignal. It only vaguely mentions 'patent growth' and 'GAN patents' without providing specific details that match the table evidence.",
+            "candidate": {
+              "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any specific entities, the metric 'cagr_percent', the year interval '2014-2023', or the specific pattern behavior described in the TabSignal. It only vaguely mentions 'patent growth' and 'GAN patents' without providing specific details that match the table evidence.\"\n}",
+            "usage": {
+              "prompt_tokens": 319,
+              "total_tokens": 442,
+              "completion_tokens": 123,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metric (cagr_percent), years or interval (2014-2023), trend (growth), or the likely pattern behavior described in the TabSignal. It discusses a different topic (GenAI patent families) and does not align with the provided table data.",
+            "candidate": {
+              "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metric (cagr_percent), years or interval (2014-2023), trend (growth), or the likely pattern behavior described in the TabSignal. It discusses a different topic (GenAI patent families) and does not align with the provided table data.\"\n}",
+            "usage": {
+              "prompt_tokens": 322,
+              "total_tokens": 445,
+              "completion_tokens": 123,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "Republic of Korea",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 305,
+              "total_tokens": 390,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year)",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "behavior"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Between 2014 and 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions the years 2014 and 2023, which matches the year/interval condition. However, it does not mention any entities, the metric (cagr_percent), the trend (growth), or the pattern behavior (India having the highest growth rate, etc.)."
+          },
+          {
+            "candidate": {
+              "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval",
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text mentions the correct entities, metric, and time interval. It also correctly identifies the trend as growth. However, it does not mention the specific growth rates or the pattern behavior that India has the highest growth rate, followed by China, Republic of Korea, United Kingdom, and Japan."
+          },
+          {
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions the year interval, which matches the TabSignal. However, it does not mention the entities, metric, trend, or pattern behavior, which are all present in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "India",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate excerpt only mentions 'India' without providing any information about the metric, years or interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "China",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entities, the metric 'cagr_percent', the year interval '2014-2023', or the specific pattern behavior described in the TabSignal. It only vaguely mentions 'patent growth' and 'GAN patents' without providing specific details that match the table evidence."
+          },
+          {
+            "candidate": {
+              "excerpt": "India has an above-average share of all GenAI patent\nfamilies in networks and smart cities.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metric (cagr_percent), years or interval (2014-2023), trend (growth), or the likely pattern behavior described in the TabSignal. It discusses a different topic (GenAI patent families) and does not align with the provided table data."
+          },
+          {
+            "candidate": {
+              "excerpt": "Republic of Korea",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text only mentions one entity and does not provide any information about the metric, years or interval, trend, or pattern behavior."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0006"
+  ]
+}

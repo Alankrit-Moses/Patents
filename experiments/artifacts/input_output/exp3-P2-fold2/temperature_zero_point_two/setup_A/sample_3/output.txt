@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P2-fold2",
+  "experiment": "3",
+  "setup": "A",
+  "pattern_id": "P2",
+  "example_id": "exp3-P2-fold2",
+  "errors": [],
+  "raw_output": "{\n  \"mathematical_definition\": \"The recurring behavior in the pairs can be defined as the Compound Annual Growth Rate (CAGR), which is calculated using the formula: CAGR = (EV/BV)^(1/n) - 1, where EV is the ending value, BV is the beginning value, and n is the number of years.\",\n  \"natural_language_description\": \"The recurring behavior in the pairs is the comparison of growth rates of different entities or application areas over specific time periods. In each pair, the report passage describes the trends and changes in growth rates, while the compact table provides the specific CAGR percentages for each entity or application area over the given time period. The behavior highlights how some entities or application areas have experienced significant growth, while others have seen slower growth or even declines.\"\n}",
+  "parsed_output": {
+    "M": "The recurring behavior in the pairs can be defined as the Compound Annual Growth Rate (CAGR), which is calculated using the formula: CAGR = (EV/BV)^(1/n) - 1, where EV is the ending value, BV is the beginning value, and n is the number of years.",
+    "T": "The recurring behavior in the pairs is the comparison of growth rates of different entities or application areas over specific time periods. In each pair, the report passage describes the trends and changes in growth rates, while the compact table provides the specific CAGR percentages for each entity or application area over the given time period. The behavior highlights how some entities or application areas have experienced significant growth, while others have seen slower growth or even declines."
+  }
+}

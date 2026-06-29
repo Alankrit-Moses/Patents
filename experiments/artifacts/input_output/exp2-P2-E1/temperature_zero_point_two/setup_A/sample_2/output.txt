@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P2-E1",
+  "experiment": "2",
+  "setup": "A",
+  "pattern_id": "P2",
+  "example_id": "P2-E1",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"The release of ChatGPT in 2022 was an iPhone moment for GenAI\"}",
+  "parsed_output": {
+    "excerpt": "The release of ChatGPT in 2022 was an iPhone moment for GenAI"
+  }
+}

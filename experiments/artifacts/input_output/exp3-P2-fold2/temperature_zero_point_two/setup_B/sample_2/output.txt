@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P2-fold2",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "exp3-P2-fold2",
+  "errors": [],
+  "raw_output": "{\n  \"M\": \"CAGR_percent = ((End_Year_Value / Start_Year_Value)^(1 / (End_Year - Start_Year))) - 1\",\n  \"T\": \"The mathematical pattern defines the Compound Annual Growth Rate (CAGR) percentage, which measures the mean annual growth rate of an investment over a specified period of time longer than one year. It is calculated by taking the nth root of the total growth rate, where n is the number of years in the period, and then subtracting one.\"\n}",
+  "parsed_output": {
+    "M": "CAGR_percent = ((End_Year_Value / Start_Year_Value)^(1 / (End_Year - Start_Year))) - 1",
+    "T": "The mathematical pattern defines the Compound Annual Growth Rate (CAGR) percentage, which measures the mean annual growth rate of an investment over a specified period of time longer than one year. It is calculated by taking the nth root of the total growth rate, where n is the number of years in the period, and then subtracting one."
+  }
+}

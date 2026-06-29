@@ -1,0 +1,25 @@
+===== EVALUATOR CALL 1 / EXPERIMENT 2 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well the candidate exact report excerpt describes the same evidence as the provided compact table. The paired reference excerpt is diagnostic evidence showing the intended table-text correspondence, not a wording template. A different exact report passage can receive full credit if it expresses the same entities, metric, interval, values or trend, and pattern behavior.
+
+Provided compact E.tab:
+entity,start_year,end_year,cagr_percent
+Titanium dioxide production,2002,2019,9.2
+Titanium metal production,2002,2019,0.9
+
+
+Paired reference E.text:
+Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite has grown strongly. Key contributors to patents on the production of titanium dioxide are companies from China, Australia and the United States, reflecting the major contribution of these countries to the industrial production of titanium dioxide.
+
+In contrast, patent activity related to the process for the production of titanium metal has remained steady since 2002. Key players in this field are mainly Japanese companies. All industrial key players describe the industrially exploited Kroll process, which is based on the reduction of titanium dioxide or titanium tetrachloride with magnesium.
+
+Candidate exact report excerpt:
+compound
+annual growth rate, CAGR 2014–2019 = +8 percent
+
+Use this alignment scale: 5 = describes the same evidence clearly and completely; 4 = same evidence with a minor omission or ambiguity; 3 = partially aligned evidence; 2 = only weakly related evidence; 1 = unrelated to the table evidence. Judge semantic evidence alignment, not lexical overlap with the reference excerpt.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.

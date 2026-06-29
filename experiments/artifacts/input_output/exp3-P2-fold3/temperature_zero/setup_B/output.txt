@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P2-fold3",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "exp3-P2-fold3",
+  "errors": [],
+  "raw_output": "{\n  \"M\": \"CAGR_percent = (End_value / Start_value)^(1 / (End_year - Start_year)) - 1\",\n  \"T\": \"The mathematical pattern is the Compound Annual Growth Rate (CAGR) formula, which calculates the mean annual growth rate of an investment over a specified period of time longer than one year. It is used to measure the growth of patent families over a given time period.\"\n}",
+  "parsed_output": {
+    "M": "CAGR_percent = (End_value / Start_value)^(1 / (End_year - Start_year)) - 1",
+    "T": "The mathematical pattern is the Compound Annual Growth Rate (CAGR) formula, which calculates the mean annual growth rate of an investment over a specified period of time longer than one year. It is used to measure the growth of patent families over a given time period."
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P1-E5",
+  "experiment": "2",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "P1-E5",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"year,distinct_diffusion_model_patent_family_count\\n2014,0\\n2015,2\\n2016,1\\n2017,4\\n2018,7\\n2019,10\\n2020,18\\n2021,20\\n2022,57\\n2023,441\"}",
+  "parsed_output": {
+    "excerpt": "year,distinct_diffusion_model_patent_family_count\n2014,0\n2015,2\n2016,1\n2017,4\n2018,7\n2019,10\n2020,18\n2021,20\n2022,57\n2023,441"
+  }
+}

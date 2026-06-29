@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P1-fold1",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "exp3-P1-fold1",
+  "errors": [],
+  "raw_output": "{\n  \"M\": \"Identify the Compound Annual Growth Rate (CAGR) or average annual growth rate from the given data points in the table and match it with the corresponding text description.\",\n  \"T\": \"The pattern involves calculating the growth rate of patent families over a specified period and matching it with the textual description of the growth trend.\"\n}",
+  "parsed_output": {
+    "M": "Identify the Compound Annual Growth Rate (CAGR) or average annual growth rate from the given data points in the table and match it with the corresponding text description.",
+    "T": "The pattern involves calculating the growth rate of patent families over a specified period and matching it with the textual description of the growth trend."
+  }
+}

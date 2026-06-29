@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P2-E5",
+  "experiment": "2",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "P2-E5",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"entity,start_year,end_year,cagr_percent\\nEnergy management,2021,2023,78.4\\nAgriculture,2021,2023,53.5\\nLife sciences,2021,2023,28.7\\nSecurity,2021,2023,27.6\\nPhysical sciences and engineering,2021,2023,10.2\\nTelecommunications,2021,2023,-4.0\\nMilitary,2021,2023,6.9\\nArts and humanities,2021,2023,-15.1\\n\\\"Industrial property, law, social and behavioral sciences\\\",2021,2023,-7.6\"}",
+  "parsed_output": {
+    "excerpt": "entity,start_year,end_year,cagr_percent\nEnergy management,2021,2023,78.4\nAgriculture,2021,2023,53.5\nLife sciences,2021,2023,28.7\nSecurity,2021,2023,27.6\nPhysical sciences and engineering,2021,2023,10.2\nTelecommunications,2021,2023,-4.0\nMilitary,2021,2023,6.9\nArts and humanities,2021,2023,-15.1\n\"Industrial property, law, social and behavioral sciences\",2021,2023,-7.6"
+  }
+}

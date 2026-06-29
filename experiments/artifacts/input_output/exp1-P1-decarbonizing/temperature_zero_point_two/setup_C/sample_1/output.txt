@@ -1,0 +1,1493 @@
+{
+  "task_id": "exp1-P1-decarbonizing",
+  "experiment": "1",
+  "setup": "C",
+  "pattern_id": "P1",
+  "example_id": "exp1-P1-decarbonizing",
+  "errors": [],
+  "raw_output": "{\"examples\": [{\"excerpt\": \"Between 2000 and 2019, Chinese patent families expanded by compound\\nrate of 38% per year. However, China’s patent growth has slowed in recent years, leading to\\nan annual growth rate of 14% between 2019 and 2024\"}, {\"excerpt\": \"The transition away from internal combustion engines powered by fossil fuels is the central\\npillar of heavy-duty road transport decarbonization.\"}, {\"excerpt\": \"The patent analysis focuses on four core technology areas critical to\\nreducing greenhouse gas emissions from buses and heavy-duty trucks\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "Between 2000 and 2019, Chinese patent families expanded by compound\nrate of 38% per year. However, China’s patent growth has slowed in recent years, leading to\nan annual growth rate of 14% between 2019 and 2024"
+      },
+      {
+        "excerpt": "The transition away from internal combustion engines powered by fossil fuels is the central\npillar of heavy-duty road transport decarbonization."
+      },
+      {
+        "excerpt": "The patent analysis focuses on four core technology areas critical to\nreducing greenhouse gas emissions from buses and heavy-duty trucks"
+      }
+    ]
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "known",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "irrelevant"
+          },
+          "requested_count": 3,
+          "known": [
+            "D.text",
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "DescriptionInductionAgent(optional T_hat)",
+          "TextEvidenceAgent(map-reduce)",
+          "TextPatternVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "M"
+      ],
+      "output": {
+        "T_hat": "A trajectory shift pattern is observed when the trend of an attribute 'm' of an entity 'e' changes significantly before and after a specific time or event 'τ'. This change can be identified when the trends before (g_pre) and after (g_post) 'τ' are not equal (g_pre ≠ g_post), or when the absolute difference between g_post and g_pre exceeds a meaningful change threshold ε (|g_post - g_pre| > ε).",
+        "raw_output": "{\n  \"T_hat\": \"A trajectory shift pattern is observed when the trend of an attribute 'm' of an entity 'e' changes significantly before and after a specific time or event 'τ'. This change can be identified when the trends before (g_pre) and after (g_post) 'τ' are not equal (g_pre ≠ g_post), or when the absolute difference between g_post and g_pre exceeds a meaningful change threshold ε (|g_post - g_pre| > ε).\"\n}",
+        "usage": {
+          "prompt_tokens": 222,
+          "total_tokens": 328,
+          "completion_tokens": 106,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "M",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 23,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4175,
+              "total_tokens": 4182,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "The transition away from internal combustion engines powered by fossil fuels is the central\npillar of heavy-duty road transport decarbonization.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The transition away from internal combustion engines powered by fossil fuels is the central pillar of heavy-duty road transport decarbonization.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4118,
+              "total_tokens": 4180,
+              "completion_tokens": 62,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "The patent analysis focuses on four core technology areas critical to\nreducing greenhouse gas emissions from buses and heavy-duty trucks",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The patent analysis focuses on four core technology areas critical to reducing greenhouse gas emissions from buses and heavy-duty trucks\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy sources – currently show comparable patenting activity.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4227,
+              "total_tokens": 4336,
+              "completion_tokens": 109,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "patent growth in this area has been subdued\nover the past five years",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "patent growth\nin these key research locations has been subdued in recent years",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"patent growth in this area has been subdued over the past five years\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"patent growth in these key research locations has been subdued in recent years\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4016,
+              "total_tokens": 4109,
+              "completion_tokens": 93,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "the number of published patent families in the field of low-emission\nenergy sources for heavy-duty road vehicles increased from fewer than 380 annually to almost\n4,800",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of published patent families in the field of low-emission energy sources for heavy-duty road vehicles increased from fewer than 380 annually to almost 4,800\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the number of patent families increased from under 200 annually to around 1,400 within the same period\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4372,
+              "total_tokens": 4498,
+              "completion_tokens": 126,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "Between 2000 and 2019, Chinese patent families expanded by compound\nrate of 38% per year. However, China’s patent growth has slowed in recent years, leading to\nan annual growth rate of 14% between 2019 and 2024",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2000 and 2019, Chinese patent families expanded by compound rate of 38% per year. However, China’s patent growth has slowed in recent years, leading to an annual growth rate of 14% between 2019 and 2024\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4300,
+              "total_tokens": 4400,
+              "completion_tokens": 100,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "If data solely from 2024 were considered, the battery share would exceed the\nhybrid share both in Italy and in Sweden, as well as in all other major research countries.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "China is the clear leader in battery research, with 11,360\npatent families, compared to around 3,800 each in, respectively, second- and third-ranked Japan\nand the United States.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"If data solely from 2024 were considered, the battery share would exceed the hybrid share both in Italy and in Sweden, as well as in all other major research countries.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"China is the clear leader in battery research, with 11,360 patent families, compared to around 3,800 each in, respectively, second- and third-ranked Japan and the United States.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5063,
+              "total_tokens": 5206,
+              "completion_tokens": 143,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "There has been a significant increase in the number of patents related to low-emission energy\nsources for heavy-duty vehicles in recent decades.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"There has been a significant increase in the number of patents related to low-emission energy sources for heavy-duty vehicles in recent decades.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"This is reflected in the patent dynamics of the top patent owners.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3931,
+              "total_tokens": 4032,
+              "completion_tokens": 101,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "infrastructure deployment lags behind the trajectory\nrequired for large-scale fleet electrification.",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"infrastructure deployment lags behind the trajectory required for large-scale fleet electrification.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the trajectory of patenting activity in energy infrastructure closely mirrors that of low-emission energy sources for heavy-duty road transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4184,
+              "total_tokens": 4286,
+              "completion_tokens": 102,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the behavior of v(e, m, t) differs before and after τ\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the trends before (g_pre) and after (g_post) 'τ' are not equal (g_pre ≠ g_post)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4461,
+              "total_tokens": 4565,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"A trajectory shift pattern holds when there exists a time or event τ such that the behavior of v(e, m, t) differs before and after τ.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A trajectory shift holds when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"g_pre ≠ g_post\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"|g_post - g_pre| > ε\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4294,
+              "total_tokens": 4459,
+              "completion_tokens": 165,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "growing from approximately 750 to more than 5,100\npublished families",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "rising from 437 to just under 2,000",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"growing from approximately 750 to more than 5,100 published families\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"rising from 437 to just under 2,000\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4286,
+              "total_tokens": 4384,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"A trajectory shift pattern holds when there exists a time or event τ such that the behavior of v(e, m, t) differs before and after τ.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A trajectory shift holds when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4773,
+              "total_tokens": 4872,
+              "completion_tokens": 99,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Let e be an entity and let m be an attribute defined over time. Let v(e, m, t) denote the value or state of entity e with respect to attribute m at time t.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A trajectory shift pattern holds when there exists a time or event τ such that the behavior of v(e, m, t) differs before and after τ.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Let g_pre denote the trend of v(e, m, t) before τ, and let g_post denote the trend of v(e, m, t) after τ.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A trajectory shift holds when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"g_pre ≠ g_post\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"|g_post - g_pre| > ε,\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"where ε is a threshold for meaningful change.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4244,
+              "total_tokens": 4569,
+              "completion_tokens": 325,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum (Figure\n6.4).",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "In contrast, patenting activity has stagnated in the United States since 2019 and\ndeclined in Germany, the United Kingdom, France and Austria.",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Sweden has achieved the highest patent growth rate in the area of green heavy-duty road transport digitalization over the past five years, at a compound rate of 27% per annum (Figure 6.4).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"In contrast, patenting activity has stagnated in the United States since 2019 and declined in Germany, the United Kingdom, France and Austria.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4468,
+              "total_tokens": 4608,
+              "completion_tokens": 140,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "The increasing availability of electric truck models, as well as their improved range coverage and\nperformance, is opening the door for long-distance transport, resulting in surging sales across\nmarkets.",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "In 2024, global electric medium- and heavy-duty trucks sales surpassed 90,000 units\n(representing a year-on-year growth of 80%).",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The increasing availability of electric truck models, as well as their improved range coverage and performance, is opening the door for long-distance transport, resulting in surging sales across markets.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"In 2024, global electric medium- and heavy-duty trucks sales surpassed 90,000 units (representing a year-on-year growth of 80%).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4358,
+              "total_tokens": 4494,
+              "completion_tokens": 136,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the behavior of v(e, m, t) differs before and after τ\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the trends before (g_pre) and after (g_post) 'τ' are not equal (g_pre ≠ g_post)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the absolute difference between g_post and g_pre exceeds a meaningful change threshold ε (|g_post - g_pre| > ε)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4329,
+              "total_tokens": 4484,
+              "completion_tokens": 155,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "This does, however,\nrepresent a risk, as battery-electric variants are currently the most competitive models\nattracting the greatest interest from investors.",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "This could make current H2 transport\ninfrastructure investments debatable due to potential under utilization.",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"This does, however, represent a risk, as battery-electric variants are currently the most competitive models attracting the greatest interest from investors.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"This could make current H2 transport infrastructure investments debatable due to potential under utilization.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3958,
+              "total_tokens": 4063,
+              "completion_tokens": 105,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [
+              {
+                "excerpt": "Electric truck sales in the country grew by 188% in the\nfirst half of 2025, far outpacing the European average of 46%.",
+                "chunk_id": "chunk-0018",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Electric truck sales in the country grew by 188% in the first half of 2025, far outpacing the European average of 46%.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4273,
+              "total_tokens": 4346,
+              "completion_tokens": 73,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0019",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 3892,
+              "total_tokens": 3899,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0020",
+            "candidates": [
+              {
+                "excerpt": "shift away from the thoughtful evolution of incremental\noptimizations",
+                "chunk_id": "chunk-0020",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "shift continues",
+                "chunk_id": "chunk-0020",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"shift away from the thoughtful evolution of incremental optimizations\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"shift continues\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3433,
+              "total_tokens": 3508,
+              "completion_tokens": 75,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0021",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the behavior of v(e, m, t) differs before and after τ\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the trend of v(e, m, t) before τ\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the trend of v(e, m, t) after τ\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3503,
+              "total_tokens": 3631,
+              "completion_tokens": 128,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0022",
+            "candidates": [
+              {
+                "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+                "chunk_id": "chunk-0022",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "A positive RSI value indicates that\na location has a higher specialization in a specific field than would be expected, while a negative\nvalue indicates a lower specialization than expected for that location.",
+                "chunk_id": "chunk-0022",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Determine the compound annual growth rate (CAGR) of patent families for each combination over the same period.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A positive RSI value indicates that a location has a higher specialization in a specific field than would be expected, while a negative value indicates a lower specialization than expected for that location.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 1345,
+              "total_tokens": 1465,
+              "completion_tokens": 120,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "The transition away from internal combustion engines powered by fossil fuels is the central\npillar of heavy-duty road transport decarbonization.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The patent analysis focuses on four core technology areas critical to\nreducing greenhouse gas emissions from buses and heavy-duty trucks",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "patent growth in this area has been subdued\nover the past five years",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "patent growth\nin these key research locations has been subdued in recent years",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "the number of published patent families in the field of low-emission\nenergy sources for heavy-duty road vehicles increased from fewer than 380 annually to almost\n4,800",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Between 2000 and 2019, Chinese patent families expanded by compound\nrate of 38% per year. However, China’s patent growth has slowed in recent years, leading to\nan annual growth rate of 14% between 2019 and 2024",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "If data solely from 2024 were considered, the battery share would exceed the\nhybrid share both in Italy and in Sweden, as well as in all other major research countries.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "China is the clear leader in battery research, with 11,360\npatent families, compared to around 3,800 each in, respectively, second- and third-ranked Japan\nand the United States.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "There has been a significant increase in the number of patents related to low-emission energy\nsources for heavy-duty vehicles in recent decades.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "infrastructure deployment lags behind the trajectory\nrequired for large-scale fleet electrification.",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "growing from approximately 750 to more than 5,100\npublished families",
+            "chunk_id": "chunk-0011",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "rising from 437 to just under 2,000",
+            "chunk_id": "chunk-0011",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum (Figure\n6.4).",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "In contrast, patenting activity has stagnated in the United States since 2019 and\ndeclined in Germany, the United Kingdom, France and Austria.",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The increasing availability of electric truck models, as well as their improved range coverage and\nperformance, is opening the door for long-distance transport, resulting in surging sales across\nmarkets.",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "In 2024, global electric medium- and heavy-duty trucks sales surpassed 90,000 units\n(representing a year-on-year growth of 80%).",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "This does, however,\nrepresent a risk, as battery-electric variants are currently the most competitive models\nattracting the greatest interest from investors.",
+            "chunk_id": "chunk-0017",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "This could make current H2 transport\ninfrastructure investments debatable due to potential under utilization.",
+            "chunk_id": "chunk-0017",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Electric truck sales in the country grew by 188% in the\nfirst half of 2025, far outpacing the European average of 46%.",
+            "chunk_id": "chunk-0018",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "shift away from the thoughtful evolution of incremental\noptimizations",
+            "chunk_id": "chunk-0020",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "shift continues",
+            "chunk_id": "chunk-0020",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+            "chunk_id": "chunk-0022",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "A positive RSI value indicates that\na location has a higher specialization in a specific field than would be expected, while a negative\nvalue indicates a lower specialization than expected for that location.",
+            "chunk_id": "chunk-0022",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextPatternVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "M",
+        "T_hat"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 4,
+            "matched_conditions": [
+              "M"
+            ],
+            "failed_conditions": [
+              "T_hat"
+            ],
+            "rationale": "The candidate text describes a change in the growth rate of Chinese patent families before and after the year 2019, which aligns with the 'M' pattern constraint. However, it does not explicitly mention the trends before and after the shift point (g_pre and g_post) or the threshold for meaningful change (ε), which are required by the 'T_hat' pattern constraint.",
+            "candidate": {
+              "excerpt": "Between 2000 and 2019, Chinese patent families expanded by compound\nrate of 38% per year. However, China’s patent growth has slowed in recent years, leading to\nan annual growth rate of 14% between 2019 and 2024",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 4,\n  \"matched_conditions\": [\"M\"],\n  \"failed_conditions\": [\"T_hat\"],\n  \"rationale\": \"The candidate text describes a change in the growth rate of Chinese patent families before and after the year 2019, which aligns with the 'M' pattern constraint. However, it does not explicitly mention the trends before and after the shift point (g_pre and g_post) or the threshold for meaningful change (ε), which are required by the 'T_hat' pattern constraint.\"\n}",
+            "usage": {
+              "prompt_tokens": 399,
+              "total_tokens": 515,
+              "completion_tokens": 116,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention trends before and after 'τ' or any meaningful change threshold 'ε'. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "The transition away from internal combustion engines powered by fossil fuels is the central\npillar of heavy-duty road transport decarbonization.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention trends before and after 'τ' or any meaningful change threshold 'ε'. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 361,
+              "total_tokens": 450,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "The patent analysis focuses on four core technology areas critical to\nreducing greenhouse gas emissions from buses and heavy-duty trucks",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 358,
+              "total_tokens": 447,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after a specific time or event, nor does it discuss any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after a specific time or event, nor does it discuss any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 360,
+              "total_tokens": 455,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any meaningful change threshold 'ε'. It only states a general observation about patent growth without any specific details or comparisons.",
+            "candidate": {
+              "excerpt": "patent growth in this area has been subdued\nover the past five years",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any meaningful change threshold 'ε'. It only states a general observation about patent growth without any specific details or comparisons.\"\n}",
+            "usage": {
+              "prompt_tokens": 350,
+              "total_tokens": 446,
+              "completion_tokens": 96,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss the trends before and after 'τ' or any meaningful change threshold ε.",
+            "candidate": {
+              "excerpt": "the number of published patent families in the field of low-emission\nenergy sources for heavy-duty road vehicles increased from fewer than 380 annually to almost\n4,800",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss the trends before and after 'τ' or any meaningful change threshold ε.\"\n}",
+            "usage": {
+              "prompt_tokens": 373,
+              "total_tokens": 452,
+              "completion_tokens": 79,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only states a general observation about patent growth without providing specific details or trends that could indicate a trajectory shift pattern.",
+            "candidate": {
+              "excerpt": "patent growth\nin these key research locations has been subdued in recent years",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only states a general observation about patent growth without providing specific details or trends that could indicate a trajectory shift pattern.\"\n}",
+            "usage": {
+              "prompt_tokens": 350,
+              "total_tokens": 454,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after a specific time or event, nor does it discuss any meaningful change threshold ε.",
+            "candidate": {
+              "excerpt": "If data solely from 2024 were considered, the battery share would exceed the\nhybrid share both in Italy and in Sweden, as well as in all other major research countries.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after a specific time or event, nor does it discuss any meaningful change threshold ε.\"\n}",
+            "usage": {
+              "prompt_tokens": 372,
+              "total_tokens": 456,
+              "completion_tokens": 84,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any trajectory shift pattern or changes in trends of an attribute over time. It merely states a fact about the number of patent families in different countries.",
+            "candidate": {
+              "excerpt": "China is the clear leader in battery research, with 11,360\npatent families, compared to around 3,800 each in, respectively, second- and third-ranked Japan\nand the United States.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any trajectory shift pattern or changes in trends of an attribute over time. It merely states a fact about the number of patent families in different countries.\"\n}",
+            "usage": {
+              "prompt_tokens": 381,
+              "total_tokens": 453,
+              "completion_tokens": 72,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any specific entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only states a general observation without providing specific details required by the pattern constraints.",
+            "candidate": {
+              "excerpt": "There has been a significant increase in the number of patents related to low-emission energy\nsources for heavy-duty vehicles in recent decades.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any specific entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only states a general observation without providing specific details required by the pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 362,
+              "total_tokens": 460,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It does not describe a trajectory shift pattern as defined by the constraints.",
+            "candidate": {
+              "excerpt": "infrastructure deployment lags behind the trajectory\nrequired for large-scale fleet electrification.",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It does not describe a trajectory shift pattern as defined by the constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 350,
+              "total_tokens": 445,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only provides a numerical growth without any context or comparison of trends.",
+            "candidate": {
+              "excerpt": "growing from approximately 750 to more than 5,100\npublished families",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only provides a numerical growth without any context or comparison of trends.\"\n}",
+            "usage": {
+              "prompt_tokens": 354,
+              "total_tokens": 449,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not describe a trajectory shift pattern as defined by the constraints. It merely states a numerical increase without mentioning any trends before and after a specific time or event, nor does it discuss any meaningful change threshold.",
+            "candidate": {
+              "excerpt": "rising from 437 to just under 2,000",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not describe a trajectory shift pattern as defined by the constraints. It merely states a numerical increase without mentioning any trends before and after a specific time or event, nor does it discuss any meaningful change threshold.\"\n}",
+            "usage": {
+              "prompt_tokens": 350,
+              "total_tokens": 431,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any trajectory shift pattern, trends before and after a specific time or event, or any meaningful change threshold. It only states a fact about Sweden's patent growth rate without any comparison or trend analysis.",
+            "candidate": {
+              "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum (Figure\n6.4).",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any trajectory shift pattern, trends before and after a specific time or event, or any meaningful change threshold. It only states a fact about Sweden's patent growth rate without any comparison or trend analysis.\"\n}",
+            "usage": {
+              "prompt_tokens": 380,
+              "total_tokens": 462,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity 'e', attribute 'm', or specific time/event 'τ'. It also does not discuss trends before and after 'τ' or any meaningful change threshold 'ε'.",
+            "candidate": {
+              "excerpt": "In contrast, patenting activity has stagnated in the United States since 2019 and\ndeclined in Germany, the United Kingdom, France and Austria.",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity 'e', attribute 'm', or specific time/event 'τ'. It also does not discuss trends before and after 'τ' or any meaningful change threshold 'ε'.\"\n}",
+            "usage": {
+              "prompt_tokens": 367,
+              "total_tokens": 447,
+              "completion_tokens": 80,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss trends before and after 'τ' or any meaningful change threshold ε.",
+            "candidate": {
+              "excerpt": "The increasing availability of electric truck models, as well as their improved range coverage and\nperformance, is opening the door for long-distance transport, resulting in surging sales across\nmarkets.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss trends before and after 'τ' or any meaningful change threshold ε.\"\n}",
+            "usage": {
+              "prompt_tokens": 371,
+              "total_tokens": 449,
+              "completion_tokens": 78,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any trajectory shift pattern, trends before and after a specific time or event, or any comparison of trends. It only provides a single data point about electric truck sales in 2024.",
+            "candidate": {
+              "excerpt": "In 2024, global electric medium- and heavy-duty trucks sales surpassed 90,000 units\n(representing a year-on-year growth of 80%).",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any trajectory shift pattern, trends before and after a specific time or event, or any comparison of trends. It only provides a single data point about electric truck sales in 2024.\"\n}",
+            "usage": {
+              "prompt_tokens": 373,
+              "total_tokens": 455,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "This does, however,\nrepresent a risk, as battery-electric variants are currently the most competitive models\nattracting the greatest interest from investors.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 363,
+              "total_tokens": 452,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity, attribute, or time-related trends, nor does it mention any shift or change in trends before and after a specific time or event. It merely states a potential issue with current infrastructure investments.",
+            "candidate": {
+              "excerpt": "This could make current H2 transport\ninfrastructure investments debatable due to potential under utilization.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity, attribute, or time-related trends, nor does it mention any shift or change in trends before and after a specific time or event. It merely states a potential issue with current infrastructure investments.\"\n}",
+            "usage": {
+              "prompt_tokens": 352,
+              "total_tokens": 435,
+              "completion_tokens": 83,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss the trends before and after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "Electric truck sales in the country grew by 188% in the\nfirst half of 2025, far outpacing the European average of 46%.",
+              "chunk_id": "chunk-0018",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss the trends before and after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 370,
+              "total_tokens": 460,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any meaningful change threshold 'ε'. It does not satisfy the pattern constraints provided.",
+            "candidate": {
+              "excerpt": "shift away from the thoughtful evolution of incremental\noptimizations",
+              "chunk_id": "chunk-0020",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any meaningful change threshold 'ε'. It does not satisfy the pattern constraints provided.\"\n}",
+            "usage": {
+              "prompt_tokens": 345,
+              "total_tokens": 434,
+              "completion_tokens": 89,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'shift continues' does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It does not satisfy the pattern constraints provided.",
+            "candidate": {
+              "excerpt": "shift continues",
+              "chunk_id": "chunk-0020",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'shift continues' does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It does not satisfy the pattern constraints provided.\"\n}",
+            "usage": {
+              "prompt_tokens": 336,
+              "total_tokens": 430,
+              "completion_tokens": 94,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any trajectory shift pattern or changes in trends before and after a specific time or event. It merely mentions calculating the compound annual growth rate (CAGR) of patent families, which does not align with the provided pattern constraints.",
+            "candidate": {
+              "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+              "chunk_id": "chunk-0022",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any trajectory shift pattern or changes in trends before and after a specific time or event. It merely mentions calculating the compound annual growth rate (CAGR) of patent families, which does not align with the provided pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 358,
+              "total_tokens": 446,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss the trajectory shift pattern or the trends of an attribute of an entity before and after a specific time or event. Instead, it explains the meaning of RSI values.",
+            "candidate": {
+              "excerpt": "A positive RSI value indicates that\na location has a higher specialization in a specific field than would be expected, while a negative\nvalue indicates a lower specialization than expected for that location.",
+              "chunk_id": "chunk-0022",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss the trajectory shift pattern or the trends of an attribute of an entity before and after a specific time or event. Instead, it explains the meaning of RSI values.\"\n}",
+            "usage": {
+              "prompt_tokens": 371,
+              "total_tokens": 447,
+              "completion_tokens": 76,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "Between 2000 and 2019, Chinese patent families expanded by compound\nrate of 38% per year. However, China’s patent growth has slowed in recent years, leading to\nan annual growth rate of 14% between 2019 and 2024",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The transition away from internal combustion engines powered by fossil fuels is the central\npillar of heavy-duty road transport decarbonization.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The patent analysis focuses on four core technology areas critical to\nreducing greenhouse gas emissions from buses and heavy-duty trucks",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after a specific time or event, nor does it discuss any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "patent growth in this area has been subdued\nover the past five years",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any meaningful change threshold 'ε'. It only states a general observation about patent growth without any specific details or comparisons."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of published patent families in the field of low-emission\nenergy sources for heavy-duty road vehicles increased from fewer than 380 annually to almost\n4,800",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss the trends before and after 'τ' or any meaningful change threshold ε."
+          },
+          {
+            "candidate": {
+              "excerpt": "patent growth\nin these key research locations has been subdued in recent years",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only states a general observation about patent growth without providing specific details or trends that could indicate a trajectory shift pattern."
+          },
+          {
+            "candidate": {
+              "excerpt": "If data solely from 2024 were considered, the battery share would exceed the\nhybrid share both in Italy and in Sweden, as well as in all other major research countries.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after a specific time or event, nor does it discuss any meaningful change threshold ε."
+          },
+          {
+            "candidate": {
+              "excerpt": "China is the clear leader in battery research, with 11,360\npatent families, compared to around 3,800 each in, respectively, second- and third-ranked Japan\nand the United States.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any trajectory shift pattern or changes in trends of an attribute over time. It merely states a fact about the number of patent families in different countries."
+          },
+          {
+            "candidate": {
+              "excerpt": "There has been a significant increase in the number of patents related to low-emission energy\nsources for heavy-duty vehicles in recent decades.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only states a general observation without providing specific details required by the pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "infrastructure deployment lags behind the trajectory\nrequired for large-scale fleet electrification.",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It does not describe a trajectory shift pattern as defined by the constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "growing from approximately 750 to more than 5,100\npublished families",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It only provides a numerical growth without any context or comparison of trends."
+          },
+          {
+            "candidate": {
+              "excerpt": "rising from 437 to just under 2,000",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not describe a trajectory shift pattern as defined by the constraints. It merely states a numerical increase without mentioning any trends before and after a specific time or event, nor does it discuss any meaningful change threshold."
+          },
+          {
+            "candidate": {
+              "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum (Figure\n6.4).",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any trajectory shift pattern, trends before and after a specific time or event, or any meaningful change threshold. It only states a fact about Sweden's patent growth rate without any comparison or trend analysis."
+          },
+          {
+            "candidate": {
+              "excerpt": "In contrast, patenting activity has stagnated in the United States since 2019 and\ndeclined in Germany, the United Kingdom, France and Austria.",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity 'e', attribute 'm', or specific time/event 'τ'. It also does not discuss trends before and after 'τ' or any meaningful change threshold 'ε'."
+          },
+          {
+            "candidate": {
+              "excerpt": "The increasing availability of electric truck models, as well as their improved range coverage and\nperformance, is opening the door for long-distance transport, resulting in surging sales across\nmarkets.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss trends before and after 'τ' or any meaningful change threshold ε."
+          },
+          {
+            "candidate": {
+              "excerpt": "In 2024, global electric medium- and heavy-duty trucks sales surpassed 90,000 units\n(representing a year-on-year growth of 80%).",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any trajectory shift pattern, trends before and after a specific time or event, or any comparison of trends. It only provides a single data point about electric truck sales in 2024."
+          },
+          {
+            "candidate": {
+              "excerpt": "This does, however,\nrepresent a risk, as battery-electric variants are currently the most competitive models\nattracting the greatest interest from investors.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity 'e', attribute 'm', or time/event 'τ'. It also does not mention any trends before or after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "This could make current H2 transport\ninfrastructure investments debatable due to potential under utilization.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity, attribute, or time-related trends, nor does it mention any shift or change in trends before and after a specific time or event. It merely states a potential issue with current infrastructure investments."
+          },
+          {
+            "candidate": {
+              "excerpt": "Electric truck sales in the country grew by 188% in the\nfirst half of 2025, far outpacing the European average of 46%.",
+              "chunk_id": "chunk-0018",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entity 'e', attribute 'm', or time/event 'τ'. It also does not discuss the trends before and after 'τ' or any meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "shift away from the thoughtful evolution of incremental\noptimizations",
+              "chunk_id": "chunk-0020",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any meaningful change threshold 'ε'. It does not satisfy the pattern constraints provided."
+          },
+          {
+            "candidate": {
+              "excerpt": "shift continues",
+              "chunk_id": "chunk-0020",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'shift continues' does not mention any entity 'e', attribute 'm', time or event 'τ', trends before and after 'τ' (g_pre and g_post), or any threshold for meaningful change 'ε'. It does not satisfy the pattern constraints provided."
+          },
+          {
+            "candidate": {
+              "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+              "chunk_id": "chunk-0022",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any trajectory shift pattern or changes in trends before and after a specific time or event. It merely mentions calculating the compound annual growth rate (CAGR) of patent families, which does not align with the provided pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "A positive RSI value indicates that\na location has a higher specialization in a specific field than would be expected, while a negative\nvalue indicates a lower specialization than expected for that location.",
+              "chunk_id": "chunk-0022",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss the trajectory shift pattern or the trends of an attribute of an entity before and after a specific time or event. Instead, it explains the meaning of RSI values."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001",
+    "chunk-0002",
+    "chunk-0005"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P2-E4",
+  "experiment": "2",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "P2-E4",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"entity,start_year,end_year,cagr_percent\\nJapan,2021,2023,-14.7\\nRepublic of Korea,2021,2023,13.7\"}",
+  "parsed_output": {
+    "excerpt": "entity,start_year,end_year,cagr_percent\nJapan,2021,2023,-14.7\nRepublic of Korea,2021,2023,13.7"
+  }
+}

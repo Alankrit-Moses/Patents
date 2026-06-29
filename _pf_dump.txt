@@ -1,0 +1,1484 @@
+===== PAGE 1 =====
+A Modular Framework for LLM-Guided Pattern Analysis
+Anonymous Author(s)
+ABSTRACT
+Exploratory pattern analysis is difficult not simply because data are
+large, but because end-to-end analytical workflows require coordi-
+nated, strategic reasoning over textual and tabular data alike. In this
+work, we present a modular framework for LLM-assisted pattern
+analysis. Our framework formulates inputs to language models
+in the forms of triples containing (a) mathematical definitions, (b)
+corresponding textual interpretation, and (c) a set of example pairs
+gluing textual and tabular evidence. Based on these, we map users
+from partially specified pattern components to target components,
+thus enabling pattern recognition, formulation, as well as instance
+discovery to be expressed within a unified formal representation.
+We investigate whether such complementary representations of
+pattern knowledge, including examples, textual descriptions, formal
+definitions, and their combinations, improve LLM-guided explo-
+ration in an end-to-end, analyst-like workflow environment. We
+instantiate the approach through a suite of prompting strategies
+and evaluate our proof-of-concept over the USPTO dataset and its
+corresponding WIPO report corpus. Our results validate that modu-
+lar, component-wise grounding can help make LLM reasoning more
+coherent in exploratory pattern analysis, while also highlighting
+the current limits of LLMs for the same.
+PVLDB Reference Format:
+Anonymous Author(s). A Modular Framework for LLM-Guided Pattern
+Analysis. PVLDB, 14(1): XXX-XXX, 2020.
+doi:XX.XX/XXX.XX
+PVLDB Artifact Availability:
+The source code, data, and/or other artifacts have been made available at
+URL_TO_YOUR_ARTIFACTS.
+1 INTRODUCTION
+Pattern analysis using large language models (LLMs) is challenging
+not only because data are large, but because meaningful patterns
+must often be articulated before they can be searched, compared,
+or validated. For non-experts, the barrier may be partially technical
+and partly conceptual: even when an interesting phenomenon is
+visible, it may not be intuitive how to formalize that observation
+or tie it across multiple sources of evidence. Recent advancements
+in language model capabilities have created new opportunities to
+lower this barrier by supporting more natural interaction with
+data. However, as the complexity associated with underlying tasks
+increases, purely linguistic prompting can become insufficient for
+This work is licensed under the Creative Commons BY-NC-ND 4.0 International
+License. Visit https://creativecommons.org/licenses/by-nc-nd/4.0/ to view a copy of
+this license. For any use beyond those covered by this license, obtain permission by
+emailing info@vldb.org. Copyright is held by the owner/author(s). Publication rights
+licensed to the VLDB Endowment.
+Proceedings of the VLDB Endowment, Vol. 14, No. 1 ISSN 2150-8097.
+doi:XX.XX/XXX.XX
+preserving the logical and mathematical discipline that complex
+pattern analysis necessitates.
+Our problem is inherently evident in exploratory workflows that
+comprise a mixture of structured and unstructured data. For ex-
+ample, a textual report may describe an interesting pattern - for
+instance, a major turning point, convergence across trends, or asso-
+ciation rules - while the corresponding evidence may live in struc-
+tured counts or time series. In order to facilitate powerful human-AI
+workflows, LLM-powered agents must therefore do more than an-
+swer questions fluently: they mustrecognizecross-modal evidence,
+formulate the mathematical logicof a pattern, and further use that
+logic tosearch for insightsin an integrated manner.
+In this paper, we address this problem by proposing a modular
+framework for LLM-assisted pattern analysis. To this light, we
+represent a pattern in the form of pattern triple P=(M,T,E)
+as a composition of mathematical definition (M), its textual in-
+terpretation (T ) and examples (E). By formulating analysis as a
+mapping from partially known components to desired components,
+our proposed framework leverages the concept of component-wise
+grounding: the model resolves one analytical element at a time
+instead of collapsing the objective into a single hop. This design
+is intended to both reduce contextual drift and keep reasoning
+anchored to the available evidence.
+The core focus of our work is to investigate the aforesaid design
+principle in contrast to claiming a general-purpose discovery en-
+gine. Our focus is to test whether complementary representations
+of pattern knowledge - including examples, textual descriptions,
+formal definitions, as well as their combinations - materially im-
+prove an LLM’s ability to recognize, formalize, and operationalize
+patterns in an end-to-end exploratory workflow. In this paper, we
+investigate and test our hypothesis through a USPTO case study
+using structured, tabular data and a corresponding WIPO report
+corpus. Our key contributions include:
+[leftmargin=0pt]
+• We re-imagine and formalize the pattern-analysis work-
+flows as transformations over multiple key modular pattern
+components.
+• We propose a framework that supports component-wise
+grounding through mathematical definitions, textual de-
+scriptions, and example pairs.
+• We perform an extensive performance evaluation study on
+the USPTO and WIPO datasets demonstrating how different
+pattern representations affect LLM-guided exploration in
+practice.
+Raghav: describe Figure 1 once doctor chengkai li approves of it.
+===== PAGE 2 =====
+Figure 1: Overview Of Our Framework
+(1) Convergence/Divergence Pattern (P1)
+(1.1) Mathematical Definition (M1) (1.2) Textual Description (T1)
+Let ¯XA(t) and ¯XB(t) be two time series. LetD(t) =
+| ¯XA(t)− ¯XB(t)|represent the distance between them
+at timet.
+•ADivergence Patternexists ifD(t end)>
+D(tstart).
+•AConvergence Patternexists ifD(t end)<
+D(tstart).
+This pattern identifies when two different timeseries
+are moving closer together or pulling further apart
+over a period of time.
+(1.3) Instances in Report (E1.text) (1.4) Instances in Data (E1.tab)
+“In terms of patent growth, patent families assigned
+to GANs show the strongest increase over the past
+decade. However, patent growth of GAN patent fam-
+ilies has slowed down and GAN patent families have
+increased only moderately over the last three years.
+In contrast, diffusion models and LLMs show much
+higher growth rates over the last three years...”
+Grant Year GAN Count LLM/Diff Count
+2018 (tstart) 1,240 1,100
+2019 1,350 1,450
+2020 1,420 2,100
+2021 1,480 4,200
+2022 1,510 8,900
+2023 1,550 14,300
+2024 (tend) 1,590 22,100
+(2) Change-Point Pattern (P2)
+(2.1) Mathematical Definition (M2) (2.2) Textual Description (T2)
+Let ¯X(t) be a time series. A change pointτis iden-
+tified if there is a significant change in the trend’s
+slopeβ, where:
+|β2−β 1|≫0
+givenβ 1 is the slope fort<τandβ 2 is the slope for
+t>τ.
+This pattern identifies a specific point in time like a
+date, year, etc. (a “turning point”) where a trend’s
+direction or speed changes dramatically.
+(2.3) Instances in Report (E2.text) (2.4) Instances in Data (E2.tab)
+“There has been a big surge in patent activity be-
+ginning in 2017, with an average annual growth of
+around 45% since then. This coincides with the in-
+troduction of transformers in 2017.”
+Change Point = 2018
+Grant Year GenAI Count
+2013 3,201
+2014 3,475
+2015 3,893
+2016 4,686
+2017 5,250
+2018 5,582
+2019 8,538
+2020 11,399
+Figure 2: Pattern cards illustrating the components of a pattern. Each card contains a mathematical definition, a textual
+description, and example pairs consisting of textual and tabular examples.
+2 RELATED WORKS
+In the context of relevant literature, this Section highlights prior
+efforts that focus on (a) fine-tuning task instructions, (b) in-context
+example selection for downstream performance optimization, and
+(c) benchmarks that expose the need forexplicitdecomposition.
+2.1 Instruction Tuning and Task Descriptions
+[18] early demonstration that models can generalize to unseen tasks
+when natural-language task descriptions are treated as first-class
+supervision
+[10] showed that diverse human-written instructions can induce
+broad transfer across tasks
+[17] established instruction tuning as a scalable recipe for zero-shot
+generalization, making instruction format a central design variable
+rather than an afterthought
+[12] cast many tasks into a prompted text-to-text format and showed
+that multitask prompting can improve cross-task generalization
+without task-specific architectures
+[16] expanded the instruction-tuning paradigm to a large and het-
+erogeneous benchmark, providing a strong empirical basis for study-
+ing instruction robustness
+[15] showed that instruction-following behavior can be bootstrapped
+from model-generated tasks and responses, underscoring the im-
+portance of instruction diversity
+[7] inverted the problem by asking models to infer task descriptions
+from examples, which is directly relevant to our concern with
+representational abstractions
+2.2 In-Context Learning and Example Selection
+[1] made few-shot prompting a mainstream paradigm by showing
+that large language models can adapt to tasks from examples alone
+[8] demonstrated that example order can strongly affect perfor-
+mance, highlighting the fragility of naive demonstration design
+[9] argued that label-space and input-format regularities explain
+more of in-context learning than previously assumed
+[11] treated prompt selection as a retrieval problem, suggesting
+principled ways to choose representative examples
+[2] connected in-context behavior to the statistical structure of
+pretraining data
+[4] offered a controlled theoretical perspective on the algorithmic
+limits of in-context learners
+2
+===== PAGE 3 =====
+[20] provided a mechanistic explanation of in-context learning,
+which is useful when interpreting why some pattern representa-
+tions transfer better than others
+2.3 Benchmarks for Decomposed and
+Multi-Step Reasoning
+[21] made multi-hop reasoning and supporting-fact identification
+central to question answering evaluation
+[6] constructed questions with explicit reasoning-step coverage,
+reducing shortcuts and exposing genuine multi-hop difficulty
+[3] focused on incomplete-information reading comprehension,
+where answering requires seeking additional context beyond the
+initial passage
+[19] benchmarked question decomposition itself, treating the gen-
+eration of subquestions as a core capability
+[5] targeted questions whose reasoning strategy is implicit rather
+than stated, an especially relevant challenge for open-ended ana-
+lytical discovery
+[13] required reasoning across text, tables, and images, broadening
+decomposition beyond single-modality evidence paths
+[14] systematically composed single-hop questions into genuine
+multihop problems, offering a clean benchmark for connected rea-
+soning
+3 FRAMEWORK
+The goal of this framework is to formulate analytical tasks by mod-
+ularizingpatternsanddatainto components. These components act
+as building blocks that allow analytical problems to be expressed
+in a structured format to the computational tools.
+Instead of defining broad research goals, the framework encourages
+users to express analytical tasks as mappings between patterns as
+InputsandOutputs. Users take the information currently available,
+such as mathematical definitions of multiple patterns, examples of
+a single pattern, etc., and define it as the input to a tool. They then
+specify a desired output, which may represent new knowledge that
+is not currently available to them. The transformation from input
+to output is performed by the LLM. The input–output formulation
+allows users to clearly state what information is given to the tool
+and what result they expect in return.
+3.1 Pattern and Data Representation
+The framework operates on patterns as primary objects of analysis,
+with data providing the source from which patterns are identified
+and the context in which they are grounded.
+This framework works with two types of data:tabular data(𝐷.𝑡𝑎𝑏 )
+andtextual data( 𝐷.𝑡𝑒𝑥𝑡 ). Tabular data refers to structured datasets
+such as spreadsheets or relational tables. Textual data refers to
+information expressed in natural language, such as patent landscape
+reports, corporate reports, or technical documents. For the purpose
+of this study, tabular data corresponds to asingle unified table,
+and reports correspond to aset of textual reports.
+A Pattern is defined as a recurring structural behavior found in
+data. For instance, in the context of multiple time-series datasets,
+one can observe periods where the gap between series either closes
+(convergence) or widens (divergence). The behavior portrayed by
+data during these periods can be called a convergence or divergence
+pattern. Similarly, all such observable structural behaviors, where
+data follows a recognizable and repeatable logic, we specify them
+as patterns.
+To facilitate analysis, a pattern is modularized into these compo-
+nents: a Mathematical Definition (𝑀), a Textual Description (𝑇 ),
+and a set of Examples (𝐸).
+Examples(𝐸) is a set comprised of pairs. Pairs are denoted by𝑒,
+making𝐸={𝑒 1,𝑒 2,...} . Each pair (𝑒) is composed of two parts: a
+Tabular Example(𝐸.𝑡𝑎𝑏) and aTextual Example(𝐸.𝑡𝑒𝑥𝑡).
+Textual Example of a pattern is an observed instance that is found
+in text data, such as reports. A textual example for the conver-
+gence/divergence pattern is shown in Figure 2 (𝐸1.𝑡𝑒𝑥𝑡 ). The textual
+example (𝐸1.𝑡𝑒𝑥𝑡 ) for the convergence/divergence pattern describes
+two time series, the patent count for the GAN family and the patent
+count for LLM/diffusion models. It notes that one is growing much
+faster than the other. Provide
+URLs
+to
+re-
+port
+and
+data.
+Corresponding to the textual example (𝐸.𝑡𝑒𝑥𝑡 ), there exists a tabular
+example (𝐸.𝑡𝑎𝑏 ) found in tabular data. For the convergence/divergence
+pattern,𝐸1.𝑡𝑎𝑏 is the corresponding tabular example for the textual
+example𝐸1.𝑡𝑒𝑥𝑡
+Since, these two correspond to the same instance of a pattern in dif-
+ferent modalities, together, (𝐸1.𝑡𝑒𝑥𝑡 ,𝐸1.𝑡𝑎𝑏) form a pair. Although
+examples are represented as pairs, textual and tabular examples
+may also exist independently. In practice, only one form of example
+may be available for a pattern. The framework therefore allows ana-
+lytical tasks to be formulated using either𝐸.𝑡𝑒𝑥𝑡 or𝐸.𝑡𝑎𝑏 alone. The
+pair representation simply preserves the correspondence between
+the two forms when both are available. improve
+fig-
+ure
+res-
+olu-
+tion.
+The behavior illustrated by the examples can be summarized using
+atextual description( 𝑇 ). A textual description explains the com-
+mon behavior shared by the examples using natural language. In
+the pattern card, the behavior observed in the example pair (𝐸1.𝑡𝑒𝑥𝑡 ,
+𝐸1.𝑡𝑎𝑏) is described by the textual description𝑇1 in Figure 2. Unlike
+examples which is a set, a pattern has a single textual description
+that summarizes its behavior.
+The pattern is also specified using amathematical definition(𝑀).
+The mathematical definition provides a formal rule that determines
+when the pattern occurs. In the convergence/divergence pattern
+card, the mathematical definition labeled (𝑀1) in Figure 2 formalizes
+the same behavior described in the textual description ( 𝑇1) and
+illustrated by the example pair (𝐸1.𝑡𝑒𝑥𝑡,𝐸1.𝑡𝑎𝑏).
+3.2 Problem Formulation
+A problem in this framework is defined as a mapping from a set
+of patterns to a target pattern, supported by specific data sources.
+To represent these tasks, we use a notation system inspired by
+logic programming and regular expressions. This notation describes
+the information available for each pattern, and the available data
+3
+===== PAGE 4 =====
+Table 1: Representative problem formulations and signatures grounded in the USPTO study.
+ID Formulation Description Definition
+1 𝐷:(_,𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟)
+𝑃1 :(?,𝑇 1,_)
+Utilizing only 𝑇1 from the conver-
+gence/divergence pattern, formulate 𝑀1
+that is suitable for𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟
+Utilize text description of a pattern to formulate its
+mathematical definition, that is suitable for the pro-
+vided tabular dataset
+2 𝐷:(𝐷.𝑡𝑒𝑥𝑡,_)
+𝑃1 :(𝑀 1,𝑇1,{(?,_)})
+Utilizing only 𝑀1 and 𝑇1 from the conver-
+gence/divergence pattern, we find 𝐸1.𝑡𝑒𝑥𝑡
+within𝐷.𝑡𝑒𝑥𝑡for the same.
+Utilize the Mathematical definition and Text Descrip-
+tion of a pattern to find text examples for the same
+pattern in reports.
+3 𝐷:(_,𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟)
+𝑃1 :(_,_,{(𝐸 1,𝑡𝑒𝑥𝑡,?)})
+Utilizing only 𝐸1.𝑡𝑒𝑥𝑡 from the conver-
+gence/divergence pattern, we find 𝐸1𝑡𝑎𝑏𝑢𝑙𝑎𝑟
+within𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟 for the same.
+Utilizing an observed textual example of a pattern, lo-
+cate the corresponding tabular example within tabular
+data
+4 𝐷:(𝐷.𝑡𝑒𝑥𝑡,𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟)
+𝑃1 :(𝑀 1,𝑇1,_)
+𝑃2 :(?,?,_)
+Utilize 𝑀1 and 𝑇1 from the conver-
+gence/divergence pattern to synthesize
+𝑀2 and 𝑇2 for a new pattern, namely, the
+change-point pattern
+Utilize Math definition and text description of a known
+pattern as reference to synthesize the math definition
+and text description of a new pattern that is aligned
+with text and tabular data
+5 𝐷:(_,_)
+𝑃1 :(𝑀 1,𝑇1,_)
+𝑃2 :(?,𝑇 2,_)
+Utilize the 𝑀1 and 𝑇1 from the conver-
+gence/divergence pattern and𝑇2 from change-
+point pattern as reference, to synthesize𝑀2 for
+the change-point pattern
+Formulate the mathematical definition of pattern by
+utilizing its text description along with the math defini-
+tion and text description of a new pattern as reference
+6 𝐷:(_,_)
+𝑃1 :(?,?,{(𝐸1.𝑡𝑒𝑥𝑡,𝐸1.𝑡𝑎𝑏)})
+Utilizing E1.text, and E1.tab formulate M1 and
+T1 for the convergence/divergence pattern.
+Utilizing one example pair for a pattern, formulate its
+mathematical definition and text description
+7 𝐷:(𝐷.𝑡𝑒𝑥𝑡,𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟)
+𝑃1 :(_,_,{(𝐸 1.𝑡𝑒𝑥𝑡,𝐸 1.𝑡𝑎𝑏),( ?, ?)[ 2]})
+Utilizing E1.text and E1.tab as basis, to mine
+other examples of convergence/divergence pat-
+tern from𝐷.𝑡𝑒𝑥𝑡and𝐷 𝑡𝑎𝑏𝑢𝑙𝑎𝑟
+Utilize a given example pair to mine two other example
+pairs for the same pattern from tabular data and text
+reports
+8 𝐷:(𝐷.𝑡𝑒𝑥𝑡,𝐷.𝑡𝑎𝑏)
+𝑃1 :(𝑀1,_,{(?,?)[2]})
+Utilize M1 to find two example pairs
+from 𝐷.𝑡𝑒𝑥𝑡 and 𝐷.𝑡𝑎𝑏 for the conver-
+gence/divergence pattern
+Utilize the mathematical definition of a pattern to mine
+two examples from text reports and tabular data.
+sources using three primary operators. TheUnderscore(_) acts as a
+wildcard for information irrelevant to the task, theQuestion Mark
+(?) identifies a variable that serves as a goal for the LLM to discover
+or synthesize, and theFixed Count( [𝑛]), borrowed from regex,
+sets the number of results required. If no count is specified, the
+operator defaults to 1. Table 1 presents several problem formulations
+as queries using this system.
+Within the pattern triple(𝑀,𝑇,𝐸) , where𝐸 is a set of pairs(𝐸.𝑡𝑒𝑥𝑡,𝐸.𝑡𝑎𝑏) ,
+any individual component may be omitted. However, for a pattern
+to be valid, it must have at least one active component, meaning it
+must contain either a known value or a variable (?). For instance,
+in Problem 4, the input pattern 𝑃1is represented as (𝑀 1,𝑇 1,_) .
+Even though the set of examples is marked as irrelevant,𝑃1is valid
+because it provides known values for the mathematical definition
+and textual description. Similarly, the target pattern𝑃2in the same
+problem is represented as(?, ?,_) . While this configuration con-
+tains no known values, it is also a valid pattern because the first
+two components are active variables for the LLM to solve. These
+examples demonstrate that the only invalid configuration for a
+pattern is(_,_,_) , as it provides no information for the tool and no
+goal for it to reach.
+In contrast, within the data pair(𝐷.𝑡𝑒𝑥𝑡,𝐷.𝑡𝑎𝑏) , either source can
+be omitted if not needed for the query. For instance, Problem 2
+utilizes only the textual data(𝐷.𝑡𝑒𝑥𝑡,_) , while Problem 5 operates
+without requiring external data sources(_,_).
+The framework always operates over aset of patterns. In Problem
+5, the input is a set of two patterns, namely the convergence/divergence
+and change-point patterns. Even, in a problem, when only a single
+pattern is provided, such as Problem 1 and 2, it can be treated as a
+singleton set, ensuring a uniform representation across all problem
+formulations.
+The structure allows the framework to support bothintra-pattern
+andinter-patternproblem formulations. In Problem 2, the mathe-
+matical definition and textual description of the convergence/divergence
+pattern are used to identify textual examples of thesame pattern
+from reports, illustrating an intra-pattern transformation. In con-
+trast, Problem 4 demonstrates an inter-pattern formulation, where
+the components of the convergence/divergence pattern are used
+to synthesize the components of adifferent pattern, namely the
+change-point pattern.
+4 METHODOLOGY
+Our methodology is organized as a case study designed to investi-
+gate the framework presented in Section 3 along three complemen-
+tary dimensions. Rather than positioning the framework against a
+4
+===== PAGE 5 =====
+predetermined baseline or claiming a general-purpose reasoning
+advantage, we examine whether the framework’s modular repre-
+sentation (a) changes the reliability of LLM outputs when it is made
+available in the prompt, (b) exposes a structured landscape of prob-
+lem difficulty that is interpretable through its own components,
+and (c) treats its three components (𝑀,𝑇 ,𝐸) as functionally distinct
+carriers of pattern knowledge rather than redundant encodings.
+The three research questions are investigated through two com-
+plementary experimental structures. RQ1 is addressed through a
+paired comparison between the framework and a non-framework
+prose condition on selected problem formulations from the catalog.
+RQ2 and RQ3 are addressed jointly through a subtractive ablation
+grid run entirely within the framework condition, in which input
+components are progressively removed while the target is held
+fixed. The two structures are connected: the ablation grid opera-
+tionalizes a family of problem formulations within the framework’s
+notation, and its results inform both the difficulty landscape of RQ2
+and the component-distinctness analysis of RQ3.
+4.1 Case Study Setting
+We instantiate our study over a bounded subset of the USPTO patent
+dataset and a curated corpus of WIPO patent landscape reports.
+From the USPTO dataset we construct pre-aggregated tabular slices
+scoped to the technology areas covered by the reports, at an aggre-
+gation granularity (year× field× country, with US-centric filtering)
+that matches the level at which the reports discuss trends. From
+each report we manually extract a small set of pattern instances,
+hand-authoring their components as gold references. The resulting
+case study operates over a compact and verifiable data environment
+where both tabular and textual evidence for each pattern can be
+directly inspected.
+Each pattern instance is represented according to the notation in-
+troduced in Section 3. Each analytical problem is specified as a
+configuration of given components, absent components, and target
+components, following the “?” and “_” conventions defined in the
+framework. This notation is the sole interface through which prob-
+lems are posed to the LLM in the framework-enabled conditions of
+our study.
+4.2 Selected Problem Formulations
+From the representative problem catalog introduced in Section 3
+(Table 1), we select a subset of formulations that together exercise
+different parts of the framework. The selected formulations are
+chosen to (i) cover varied target components (𝑀,𝑇,𝐸 text,𝐸 tab), (ii)
+include both same-pattern and cross-pattern configurations, and
+(iii) permit the ablations required for our three research questions.Select
+the
+final
+sub-
+set
+of
+for-
+mu-
+la-
+tions
+(e.g.,
+3–4
+out
+of
+8).
+Sug-
+gested
+set:
+For-
+mu-
+la-
+tion
+1
+(𝑇→
+𝑀
+with
+tab-
+ular
+data),
+For-
+mu-
+la-
+tion
+3
+(𝐸text→
+𝐸tab),
+For-
+mu-
+la-
+tion
+6 (𝐸
+pair
+→
+𝑀
+and
+𝑇 ),
+For-
+mu-
+la-
+tion
+8
+(𝑀→
+two
+ex-
+am-
+ple
+pairs
+across
+modal-
+i-
+ties).
+Jus-
+tify
+each
+se-
+lec-
+tion
+in
+terms
+of
+which
+re-
+search
+ques-
+tions
+it
+in-
+forms.
+4.3 Models and Runtime
+We evaluate our study across open-weight LLMs spanning small
+and medium scales. Specifically, we use models in the 7B-14B range
+for preliminary and primary results, and complement these with
+larger models (70B-class) where feasible for scale-behavior analysis.
+Inference is performed with reasoning enabled across all conditions,
+as the models we consider are moderately sized and reasoning is a
+standard mode of operation for them. Temperature is fixed across
+runs to ensure comparability, with deterministic decoding where
+supported. All models are served locally on a GPU cluster. Specify
+ex-
+act
+mod-
+els
+(e.g.,
+Llama
+3.1
+8B,
+Qwen
+2.5
+14B,
+Llama
+3.1
+70B),
+in-
+fer-
+ence
+frame-
+work
+(e.g.,
+vLLM),
+and
+hard-
+ware
+(H100s).
+Spec-
+ify
+tem-
+per-
+a-
+ture
+and
+num-
+ber
+of
+runs
+per
+con-
+di-
+tion.
+4.4 Research Questions and Experimental
+Design
+We structure our study around three research questions. RQ1 is a
+comparativequestion that contrasts the framework against a non-
+framework prose alternative. RQ2 and RQ3 arewithin-framework
+questions that characterize the framework’s own internal structure.
+They are therefore evaluated under different experimental designs:
+RQ1 uses a paired framework-vs-prose comparison on the selected
+formulations, while RQ2 and RQ3 share a single subtractive ablation
+grid defined in Section 4.5.
+4.4.1 RQ1: Does the availability of the framework’s modular rep-
+resentation change the reliability of LLM outputs?We test whether
+exposing the LLM to the framework’s component vocabulary and
+notation leads to more reliable outputs than presenting the same
+information in unstructured prose. We hold the information con-
+tent constant across conditions and vary only the representational
+scaffolding available to the model. In both conditions, reasoning is
+enabled and the model is free to organize its reasoning as it sees fit;
+we do not prescribe a decomposition strategy in either condition.
+Framework condition.The prompt introduces the framework’s no-
+tation and component vocabulary (𝑀,𝑇 ,𝐸, with 𝐸 decomposed
+into(𝐸text,𝐸 tab) pairs), specifies the problem in the framework’s
+notation, and provides the given components in their labeled form.
+The LLM is expected to produce the target component(s) using the
+framework’s vocabulary.
+Non-framework condition.The prompt presents the same informa-
+tion in prose without component labels, notation, or structural com-
+mitments. Pattern information is woven into a natural-language
+narrative, and the task is described as a question or instruction in
+plain language.
+Both conditions are templatized, with the underlying pattern con-
+tent held identical. We avoid leaking framework-specific structural
+commitments (such as the triple structure, the pair structure of
+examples, or the correspondence between𝐸text and𝐸tab) into the
+non-framework prompt. Conversely, no framework-specific instruc-
+tion to decompose is added; any decomposition behavior that arises
+is attributed to the LLM’s own reasoning. Each selected formula-
+tion from Section 4.2 is run under both conditions, yielding a set of
+paired runs per pattern instance.
+We measure reliability along two axes: output agreement with gold
+references, and output consistency across models when given the
+same prompt. We additionally inspect the LLM’s reasoning traces
+(as produced by reasoning-enabled decoding) and manually label a
+stratified sample for evidence of component-wise decomposition.
+This allows us to observe whether the framework, when made
+available, induces structured reasoning behavior that differs from
+what the LLM does spontaneously under the prose condition.
+4.4.2 RQ2: Does the framework’s modular representation expose a
+structured landscape of problem difficulty?We test whether perfor-
+mance across different input–target configurations, when viewed
+5
+===== PAGE 6 =====
+through the framework’s lens, reveals interpretable structure rather
+than arbitrary variation. If the framework’s decomposition into𝑀,
+𝑇 , and𝐸 carries meaningful semantic content, we expect that (a)
+the difficulty of recovering different targets varies systematically,
+(b) this variation correlates with framework-level properties of
+the problem (e.g., which component is being produced, whether
+production requires cross-modal grounding), and (c) the observed
+structure is interpretable without appealing to properties external
+to the framework.
+RQ2 is answered entirely from the ablation grid described in Sec-
+tion 4.5. We report accuracy organized along framework-interpretable
+dimensions: target component type, the amount of information
+available to the model, and the modality of the remaining inputs
+relative to the target.
+4.4.3 RQ3: Are the framework’s three components functionally dis-
+tinct?We test whether the components 𝑀,𝑇 , and𝐸 carry meaning-
+fully different information by holding the target fixed and systemat-
+ically varying which other components are available as input. If the
+three components were redundant encodings of the same under-
+lying pattern knowledge, we would expect the choice of provided
+input components to have little effect on output quality. If they are
+functionally distinct, the LLM’s ability to produce the target should
+depend systematically on which components are available, with
+different removals producing different accuracy drops.
+Like RQ2, RQ3 is answered from the ablation grid described in
+Section 4.5. For each fixed target, we read the contribution profile
+of single and paired removals. We additionally examine whether
+different remaining input subsets lead to qualitatively different
+kinds of outputs — for instance, whether outputs produced in the
+presence of 𝑀 tend to be more structurally faithful while those
+produced in the presence of𝑇 tend to be more narratively coherent.
+4.5 Ablation Grid for RQ2 and RQ3
+RQ2 and RQ3 are both within-framework questions: they charac-
+terize how the framework behaves, independent of any comparison
+to a non-framework alternative. We answer both through a single
+subtractive ablation grid, run entirely under the framework con-
+dition. This subsection describes the grid’s structure and the task
+hierarchy it encodes.
+Grid structure.The grid is a table with four columns — one per
+atomic target component (𝑀,𝑇 ,𝐸text,𝐸tab) — and nine rows in-
+dicating which components are removed from the input relative
+to a full-inputs baseline. Each cell corresponds to one analytical
+task expressible in the framework’s notation: produce the column’s
+target, given all components of the pattern except those specified
+in the row. The nine rows are (i) the full-inputs baseline with no
+removals, (ii) four single-component removals ({𝑀} ,{𝑇} ,{𝐸text},
+{𝐸tab}), and (iii) four selected two-component removals ({𝑀,𝑇} ,
+{𝐸text,𝐸 tab},{𝑀,𝐸 tab},{𝑇,𝐸 text}). Cells in which the removed set
+contains the target are undefined and left blank; the remaining cells
+constitute the meaningful conditions under study.
+Subtractive framing.We adopt a subtractive rather than additive
+design because it measures themarginal contributionof each com-
+ponent in the presence of the others, which we view as the most
+informative regime for characterizing functional distinctness. An
+additive counterpart, starting from empty inputs and progressively
+adding components, would characterize standalone sufficiency in-
+stead; this is a complementary question that we leave to future
+work.
+Task hierarchy.The nine rows form a shallow hierarchy organized
+by how much information is withheld from the model. The baseline
+row (no removal) corresponds to the maximum-context tasks, in
+which the model receives every component of the pattern other
+than the target. The four single-removal rows correspond to tasks
+in which exactly one component is withheld, and together they
+isolate the marginal contribution of each individual component to
+each target. The four double-removal rows correspond to tasks in
+which two related components are withheld simultaneously, and
+are chosen to probe specific structural claims of the framework:
+(i){𝑀,𝑇} withholds both definitional forms of the pattern, testing
+whether the mathematical and textual definitions are mutually sub-
+stitutable or jointly necessary; (ii){𝐸text,𝐸 tab} withholds the entire
+example set, testing whether the pair structure contributes beyond
+either example alone; and (iii){𝑀,𝐸 tab} and{𝑇,𝐸 text} withhold one
+definitional and one exemplar component, testing cross-kind com-
+plementarity between definitions and examples. We deliberately
+do not enumerate all  4
+2
+ = 6possible double removals; the four we
+include are selected to correspond to framework-level claims, and
+the remaining two ({𝑀,𝐸 text} and{𝑇,𝐸 tab}) do not probe a distinct
+structural relation beyond what the selected four already expose.
+Connection to the problem catalog.Each cell of the grid instantiates
+a problem expressible in the notation of Section 3. For instance, the
+cell at (row:{𝑀} removed, column:𝐸text) corresponds to a problem
+of the form𝑃 :(_,𝑇,{( ?,𝐸 tab)}) with data in context — a request to
+produce a textual example given only the textual description and
+its paired tabular example. In this sense the grid is a systematic
+slice through the problem space of Section 3, bounded to same-
+pattern single-target configurations for tractability. Cross-pattern
+formulations, which are also part of the framework’s catalog, are
+not included in the grid and are left for future work or qualitative
+treatment.
+Mapping to RQ2 and RQ3.RQ2 reads across the grid. The full-inputs
+baseline row gives the ceiling accuracy for each target, indicat-
+ing which targets are intrinsically hardest to produce even with
+maximal context. The degradation pattern — how accuracy falls as
+components are removed — characterizes each target’s sensitivity
+to input composition. Together these form the difficulty landscape
+of the framework’s problem space.
+RQ3 reads within each column. Comparing the drops produced
+by different single-component removals for the same target tests
+whether those removals carry equivalent information (components
+are redundant) or differentiated information (components are func-
+tionally distinct). The double-removal rows further decompose the
+picture: sub-additive drops indicate that the two removed com-
+ponents were partially substitutable, while super-additive drops
+indicate joint necessity.
+6
+===== PAGE 7 =====
+4.6 Data and Gold Reference Construction
+For each pattern instance used in our study, we construct a gold
+reference by manually authoring the three components (𝑀,𝑇 , and
+a small𝐸 set containing at least one complete(𝐸text,𝐸 tab) pair). The
+gold𝑀 is expressed in the schema vocabulary of the corresponding
+USPTO data slice to ensure operational validity. Gold𝑇 is written
+in natural language consistent with𝑀. Gold𝐸 pairs are drawn from
+the data and the source WIPO report, verified by direct inspection.
+Because the ablation grid requires every component to be available
+as both a potential input and a potential target, full authoring of all
+four component slots per pattern instance is a prerequisite for the
+study rather than an additional cost.Specify
+the
+ex-
+act
+num-
+ber
+of
+pat-
+tern
+in-
+stances
+per
+for-
+mu-
+la-
+tion
+(sug-
+gested:
+3–5
+per
+for-
+mu-
+la-
+tion).
+De-
+scribe
+the
+inter-
+annotator
+veri-
+fica-
+tion
+pro-
+cess
+if
+more
+than
+one
+au-
+thor
+con-
+structs
+gold
+ref-
+er-
+ences.
+4.7 Evaluation Protocol
+For each experimental run, outputs are evaluated using a combi-
+nation of automated checks, LLM-as-judge scoring, and limited
+manual inspection. Schema validity of produced𝑀 is checked au-
+tomatically against the data slice’s column schema and type con-
+straints. Agreement of produced components with gold references
+is measured through criteria-based LLM-as-judge scoring, in which
+a larger judge model is given both the produced and gold com-
+ponents along with a decomposed checklist of criteria (variable
+coverage, directional correctness, threshold consistency, and so on),
+and returns a structured judgment. We validate the judge’s scores
+against direct gold-reference comparisons on a subset of outputs
+and report the correspondence. For reasoning-trace analysis (under
+RQ1), we manually label a stratified sample of traces for evidence
+of component-wise decomposition.
+Specify
+the
+judge
+model
+(should
+be
+from
+a
+dif-
+fer-
+ent
+fam-
+ily
+than
+the
+gen-
+era-
+tor),
+the
+ex-
+act
+cri-
+teria
+check-
+lists
+for
+each
+com-
+po-
+nent
+type,
+and
+the
+size
+of
+the
+manually-
+labeled
+trace
+sam-
+ple.
+5 EV ALUATION
+This section reports the results of the case study described in Sec-
+tion 4. We first present results for RQ1, which contrasts the frame-
+work and non-framework conditions on the selected problem for-
+mulations. We then present the ablation grid results and use them
+to answer RQ2 and RQ3.
+5.1 Setup Summary
+Briefly
+sum-
+ma-
+rize
+the
+final
+ex-
+peri-
+men-
+tal
+setup:
+which
+for-
+mu-
+la-
+tions,
+how
+many
+in-
+stances
+each,
+which
+mod-
+els,
+total
+num-
+ber
+of
+runs.
+A
+sin-
+gle
+com-
+pact
+ta-
+ble
+suf-
+fices.
+5.2 RQ1: Reliability with vs. without the
+Framework
+For each selected problem formulation, we compare paired runs
+under the framework and non-framework conditions. We report
+per-formulation and aggregate differences in accuracy and cross-
+model consistency, and complement the quantitative comparison
+with a manual analysis of reasoning traces.
+Report
+paired
+framework-
+vs-
+non-
+framework
+re-
+sults
+per
+for-
+mu-
+la-
+tion
+and
+in
+ag-
+gre-
+gate.
+Fol-
+low
+with
+reasoning-
+trace
+anal-
+ysis.
+Key observations to report (to be filled in after experiments):
+• Whether framework-condition outputs agree more often
+with gold references, in aggregate and per formulation.
+• Whether framework-condition outputs are more consistent
+across models.
+• Whether reasoning traces in the framework condition show
+systematically more component-wise decomposition than
+the non-framework condition.
+• Whether any formulations show no framework benefit or
+a negative effect, and interpret why.
+5.3 Ablation Grid Results
+We present the9× 4ablation grid introduced in Section 4.5 as the
+basis for both RQ2 and RQ3. Rows correspond to the removed input
+subset (with the first row indicating no removals, i.e., the full-inputs
+baseline); columns correspond to the target component. Each cell
+reports mean accuracy across pattern instances, with cells in which
+the removed set contains the target left blank.
+Table 2: Subtractive ablation grid for RQ2 and RQ3. Rows in-
+dicate the components removed from the input; columns in-
+dicate the target component to be produced. Each cell reports
+accuracy (mean across pattern instances). Cells in which the
+removed set contains the target are undefined and marked
+“–”. The top row is the full-inputs baseline (no removals).
+Removed 𝑀 𝑇 𝐸 text 𝐸tab
+(none, full inputs) X.XX X.XX X.XX X.XX
+{𝑀} – X.XX X.XX X.XX
+{𝑇} X.XX – X.XX X.XX
+{𝐸text} X.XX X.XX – X.XX
+{𝐸tab} X.XX X.XX X.XX –
+{𝑀,𝑇} – – X.XX X.XX
+{𝐸text,𝐸 tab} X.XX X.XX – –
+{𝑀,𝐸 tab} – X.XX X.XX –
+{𝑇,𝐸 text} X.XX – – X.XX
+5.4 RQ2: Difficulty Landscape
+To answer RQ2, we examine two projections of the ablation grid.
+First, the full-inputs baseline row gives the ceiling accuracy for each
+target, indicating which targets are intrinsically hardest to produce
+even with maximal context. Second, the degradation profile — how
+accuracy falls as inputs are removed — characterizes each target’s
+sensitivity to input composition. Targets whose ceiling is low are
+hard in an absolute sense; targets whose ceiling is high but degrade
+sharply under removals are input-dependent. Report
+ceil-
+ing
+ac-
+cu-
+ra-
+cies
+per
+tar-
+get
+and
+the
+av-
+er-
+age
+degra-
+da-
+tion
+per
+tar-
+get.
+A
+small
+sum-
+mary
+ta-
+ble
+or
+bar
+chart
+works
+well.
+Key observations to report:
+• Which targets are hardest to recover at the ceiling (𝑀,𝑇 ,
+𝐸text,𝐸 tab)?
+• Which targets are most sensitive to input removal (i.e., most
+input-dependent)?
+• Whether cross-modal grounding (e.g., producing𝐸tab from
+text-only inputs) is systematically harder than within-modality
+production.
+• Whether the observed difficulty pattern is interpretable
+through framework-level properties rather than ad-hoc
+task characteristics.
+7
+===== PAGE 8 =====
+5.5 RQ3: Component Distinctiveness
+To answer RQ3, we read each column of the ablation grid and com-
+pare the accuracy drops produced by different single-component
+removals. If the three removal rows (𝑀-removed,𝑇 -removed,𝐸-
+component-removed) yielded equal drops for a given target, we
+would conclude that the components are functionally redundant for
+producing that target. Systematically differentiated drops indicate
+functional distinctness: the components carry different information
+that the LLM uses differently depending on the target.
+We further examine the two-component removal rows to probe spe-
+cific complementarity relations. The{𝑀,𝑇} removal tests whether
+the two definitional forms are mutually substitutable (sub-additive
+drop) or jointly necessary (super-additive drop). The{𝐸text,𝐸 tab} re-
+moval tests the analogous question for the paired example structure.
+The mixed-kind removals ({𝑀,𝐸 tab} and{𝑇,𝐸 text}) test cross-kind
+complementarity.Report
+per-
+target
+con-
+tri-
+bu-
+tion
+pro-
+files
+(drop
+in
+ac-
+cu-
+racy
+for
+each
+sin-
+gle
+re-
+moval),
+and
+the
+sub/super-
+additivity
+anal-
+ysis
+for
+the
+two-
+component
+re-
+movals.
+A
+grouped
+bar
+chart
+or
+small
+multi-
+panel
+fig-
+ure
+works
+well.
+Key observations to report:
+• Whether single-component removals produce differentiated
+drops, indicating functional distinctness.
+• Whether certain components are more informative for cer-
+tain targets (e.g.,𝑀 more critical for producing𝐸tab,𝑇 more
+critical for producing𝐸 text).
+• Whether removing{𝑀,𝑇} together produces a sub-additive
+or super-additive drop, revealing the relationship between
+the two definitional forms.
+• Whether removing{𝐸text,𝐸 tab} together produces a sub- or
+super-additive drop, informing the value of the pair struc-
+ture.
+• Qualitative differences in outputs conditioned on different
+remaining input subsets.
+5.6 Qualitative Analysis
+We complement the quantitative results with a small number of
+qualitative examples. We present side-by-side comparisons illus-
+trating (i) a case where the framework condition produces a cleanly
+decomposed and correct answer while the non-framework condi-
+tion produces an ungrounded or conflated one, (ii) a case where the
+non-framework condition spontaneously produces decomposition
+comparable to the framework condition, illustrating the limits of the
+framework’s advantage, and (iii) a case where both conditions fail,
+illustrating the present limits of LLM capabilities for this problem
+space.
+LIMITATIONS
+The pattern analysis framework presented in this paper seeks to
+benefit from human-in-the-loop methodologies (which this paper
+defers to future efforts). The performance of our framework is in-
+herently reliant on the ground-data provided to the language model,
+which is in-turn determined by underlying pattern-extraction and
+text-extraction tools. It is further constrained by the reasoning ca-
+pabilities of the embedded LLM, which our framework considers
+as black-box. Further note, that our solution is only as good as
+the quality of both tabular as well as textual data provided by an
+end-user (garbage-in garbage-out). We leave deeper investigations
+into these problems to domain experts and/or to future research.
+REFERENCES
+[1] Tom Brown, Benjamin Mann, Nick Ryder, Melanie Subbiah, Jared D Kaplan,
+Prafulla Dhariwal, Arvind Neelakantan, Pranav Shyam, Girish Sastry, Amanda
+Askell, Sandhini Agarwal, Ariel Herbert-Voss, Gretchen Krueger, Tom Henighan,
+Rewon Child, Aditya Ramesh, Daniel Ziegler, Jeffrey Wu, Clemens Winter, Chris
+Hesse, Mark Chen, Eric Sigler, Mateusz Litwin, Scott Gray, Benjamin Chess, Jack
+Clark, Christopher Berner, Sam McCandlish, Alec Radford, Ilya Sutskever, and
+Dario Amodei. 2020. Language Models are Few-Shot Learners. InNeurIPS, Vol. 33.
+1877–1901.
+[2] Stephanie C.Y. Chan, Adam Santoro, Andrew K. Lampinen, Jane X. Wang, Aa-
+ditya K. Singh, Pierre H. Richemond, James L. McClelland, and Felix Hill. 2022.
+Data distributional properties drive emergent in-context learning in transformers.
+InNeurIPS. 18878–18891.
+[3] James Ferguson, Matt Gardner, Hannaneh Hajishirzi, Tushar Khot, and Pradeep
+Dasigi. 2020. IIRC: A Dataset of Incomplete Information Reading Comprehension
+Questions. InEMNLP. 1137–1147.
+[4] Shivam Garg, Dimitris Tsipras, Percy Liang, and Gregory Valiant. 2022. What
+can transformers learn in-context? a case study of simple function classes. In
+NeurIPS. 30583–30598.
+[5] Mor Geva, Daniel Khashabi, Elad Segal, Tushar Khot, Dan Roth, and Jonathan
+Berant. 2021. Did Aristotle Use a Laptop? A Question Answering Benchmark with
+Implicit Reasoning Strategies.Transactions of the Association for Computational
+Linguistics9 (2021), 346–361.
+[6] Xanh Ho, Anh-Khoa Duong Nguyen, Saku Sugawara, and Akiko Aizawa. 2020.
+Constructing A Multi-hop QA Dataset for Comprehensive Evaluation of Reason-
+ing Steps. InCOLING. 6609–6625.
+[7] Or Honovich, Uri Shaham, Samuel R. Bowman, and Omer Levy. 2023. Instruction
+Induction: From Few Examples to Natural Language Task Descriptions. InACL.
+1935–1952.
+[8] Yao Lu, Max Bartolo, Alastair Moore, Sebastian Riedel, and Pontus Stenetorp.
+2022. Fantastically Ordered Prompts and Where to Find Them: Overcoming
+Few-Shot Prompt Order Sensitivity. InACL. 8086–8098.
+[9] Sewon Min, Xinxi Lyu, Ari Holtzman, Mikel Artetxe, Mike Lewis, Hannaneh
+Hajishirzi, and Luke Zettlemoyer. 2022. Rethinking the Role of Demonstrations:
+What Makes In-Context Learning Work?. InEMNLP. 11048–11064.
+[10] Swaroop Mishra, Daniel Khashabi, Chitta Baral, and Hannaneh Hajishirzi. 2022.
+Cross-Task Generalization via Natural Language Crowdsourcing Instructions. In
+ACL. 3470–3487.
+[11] Ohad Rubin, Jonathan Herzig, and Jonathan Berant. 2022. Learning To Retrieve
+Prompts for In-Context Learning. InACL: Human Language Technologies. 2655–
+2671.
+[12] Victor Sanh, Albert Webson, Colin Raffel, Stephen H Bach, Lintang Sutawika,
+Zaid Alyafeai, Antoine Chaffin, Arnaud Stiegler, Teven Le Scao, Arun Raja, et al.
+2021. Multitask prompted training enables zero-shot task generalization.arXiv
+preprint arXiv:2110.08207(2021).
+[13] Alon Talmor, Ori Yoran, Amnon Catav, Dan Lahav, Yizhong Wang, Akari
+Asai, Gabriel Ilharco, Hannaneh Hajishirzi, and Jonathan Berant. 2021. Multi-
+Modal{QA}: complex question answering over text, tables and images. InICLR.
+[14] Harsh Trivedi, Niranjan Balasubramanian, Tushar Khot, and Ashish Sabharwal.
+2022. MuSiQue: Multihop Questions via Single-hop Question Composition.
+Transactions of the Association for Computational Linguistics10 (2022), 539–554.
+[15] Yizhong Wang, Yeganeh Kordi, Swaroop Mishra, Alisa Liu, Noah A. Smith, Daniel
+Khashabi, and Hannaneh Hajishirzi. 2023. Self-Instruct: Aligning Language
+Models with Self-Generated Instructions. InACL. 13484–13508.
+[16] Yizhong Wang, Swaroop Mishra, Pegah Alipoormolabashi, Yeganeh Kordi, Amir-
+reza Mirzaei, Atharva Naik, Arjun Ashok, Arut Selvan Dhanasekaran, Anjana
+Arunkumar, David Stap, Eshaan Pathak, Giannis Karamanolakis, Haizhi Lai,
+Ishan Purohit, Ishani Mondal, Jacob Anderson, Kirby Kuznia, Krima Doshi,
+Kuntal Kumar Pal, Maitreya Patel, Mehrad Moradshahi, Mihir Parmar, Mirali
+Purohit, Neeraj Varshney, Phani Rohitha Kaza, Pulkit Verma, Ravsehaj Singh
+Puri, Rushang Karia, Savan Doshi, Shailaja Keyur Sampat, Siddhartha Mishra,
+Sujan Reddy A, Sumanta Patro, Tanay Dixit, and Xudong Shen. 2022. Super-
+NaturalInstructions: Generalization via Declarative Instructions on 1600+ NLP
+Tasks. InEMNLP. 5085–5109.
+[17] Jason Wei, Maarten Bosma, Vincent Zhao, Kelvin Guu, Adams Wei Yu, Brian
+Lester, Nan Du, Andrew M. Dai, and Quoc V Le. 2022. Finetuned Language
+Models are Zero-Shot Learners. InICLR.
+[18] Orion Weller, Nicholas Lourie, Matt Gardner, and Matthew E. Peters. 2020. Learn-
+ing from Task Descriptions. InEMNLP. 1361–1375.
+[19] Tomer Wolfson, Mor Geva, Ankit Gupta, Matt Gardner, Yoav Goldberg, Daniel
+Deutch, and Jonathan Berant. 2020. Break It Down: A Question Understanding
+Benchmark.Transactions of the Association for Computational Linguistics8 (2020),
+8
+===== PAGE 9 =====
+183–198.
+[20] Sang Michael Xie, Aditi Raghunathan, Percy Liang, and Tengyu Ma. 2022. An
+Explanation of In-context Learning as Implicit Bayesian Inference. InICLR.
+[21] Zhilin Yang, Peng Qi, Saizheng Zhang, Yoshua Bengio, William Cohen, Ruslan
+Salakhutdinov, and Christopher D. Manning. 2018. HotpotQA: A Dataset for
+Diverse, Explainable Multi-hop Question Answering. InEMNLP. 2369–2380.
+A EXAMPLE APPENDIX
+We now present the prompts that our framework uses to interact
+with different LLMs. Raghav: The following is inspired by prompt
+templates used by Akshith Putta Reddy in his paper together with
+Doctors Jacob and Chengkai Li (CaseFacts: A Benchmark for Legal
+Fact-Checking and Precedent Retrieval). Raghav: kindly delete the
+negative examples prompts if needed .. i think they’ll add more
+juice to our paper
+[One-Hop Prompting Baseline]
+You are an expert in multimodal pattern analysis.
+Task: Solve the following analytical problem formulation in one step.
+Problem Formulation:
+D_text: [TEXT REPORTS OR "NONE"]
+D_tab: [TABLE OR "NONE"]
+Input patterns: [PATTERN SET WITH COMPONENTS MARKED AS M, T, E_text, E_tab]
+Target: [ONLY THE COMPONENTS MARKED WITH ? SHOULD BE PREDICTED]
+Rules:
+1. Use only the provided reports, table rows, and input pattern components.
+2. Do not use outside knowledge.
+3. Ignore every component marked with "_".
+4. If the evidence is insufficient, return null for that target and explain why.
+5. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"predicted_M": "... or null",
+"predicted_T": "... or null",
+"predicted_E_text": ["..."],
+"predicted_E_tab": ["..."],
+"support": {
+"report_span_ids": ["..."],
+"table_row_ids": ["..."]
+}
+9
+===== PAGE 10 =====
+[Missing Pattern Output Using Partial Inputs]
+You are a pattern-analysis expert.
+Task:
+Complete only the missing pattern components marked with "?" for the target pattern.
+Available evidence:
+D_text: [TEXT REPORTS OR "NONE"]
+D_tab: [TABLE OR "NONE"]
+Observed components:
+M: [MATHEMATICAL DEFINITION OR null]
+T: [TEXTUAL DESCRIPTION OR null]
+E_text: [TEXT EXAMPLES OR []]
+E_tab: [TABULAR EXAMPLES OR []]
+Rules:
+1. Base your answer only on the provided evidence and observed components.
+2. Do not invent hidden assumptions, thresholds, or variables that are unsupported.
+3. Keep each predicted component concise and pattern-level, not case-specific.
+4. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"predicted_pattern": {
+"M_text": "... or null",
+"M": {
+"pattern_type": "...",
+"variables": ["..."],
+"window": "...",
+"operators": ["..."],
+"thresholds": ["..."]
+},
+"T": "... or null"
+},
+"support": {
+"report_span_ids": ["..."],
+"table_row_ids": ["..."]
+}
+}
+10
+===== PAGE 11 =====
+[Text Matching]
+You are a strict judge for pattern recognition in reports.
+Task: Find textual examples in D_text that express the target pattern.
+Target pattern:
+M: [M OR null]
+T: [T OR null]
+Reports: [D_TEXT WITH IDS]
+Rules:
+1. Use only the provided reports.
+2. Return only spans that explicitly or strongly implicitly express the target pattern.
+3. Do not return near-miss or background spans.
+4. Rank spans by strength of support.
+5. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"predicted_E_text": [
+{
+"span_id": "...",
+"text": "...",
+"justification": "..."
+}
+]
+}
+[Table Matching]
+You are an expert in linking textual claims to tabular evidence.
+Task: Given one or more textual examples of a pattern, identify the corresponding tabular example(s).
+Inputs:
+Target textual examples:
+[E_text WITH ENTITY NAMES, TIME REFERENCES, AND SPAN IDS]
+Table: [D_tab WITH ROW IDS]
+Rules:
+1. Use only the provided table.
+2. The returned table rows must correspond to the same underlying instance as the text.
+3. Prefer exact entity and time alignment when available.
+4. If multiple candidate windows exist, rank them and explain the difference.
+5. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"predicted_E_tab": [
+{
+"row_ids": ["..."],
+"entity_ids": ["..."],
+"time_window": ["start", "end"],
+"measure": "...",
+"justification": "..."
+}
+]
+}
+11
+===== PAGE 12 =====
+[Finding New Patterns]
+You are a pattern-analysis expert.
+Task: Use the source pattern as reference and synthesize the target pattern.
+Source pattern:
+M1: [SOURCE M]
+T1: [SOURCE T]
+E1_text: [OPTIONAL SOURCE TEXT EXAMPLES]
+E1_tab: [OPTIONAL SOURCE TABULAR EXAMPLES]
+Target evidence:
+D_text: [TEXT REPORTS]
+D_tab: [TABLE]
+Target clues:
+M2: [M2 OR null]
+T2: [T2 OR null]
+E2_text: [OPTIONAL TARGET EXAMPLES]
+E2_tab: [OPTIONAL TARGET EXAMPLES]
+Rules:
+1. Use the source pattern only as reference, not as a template to copy blindly.
+2. Synthesize only the target components marked with "?".
+3. Ensure the target pattern is supported by the target evidence.
+4. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"predicted_target_pattern": {
+"M_text": "... or null",
+"M": {...},
+"T": "... or null"
+},
+"support": {
+"report_span_ids": ["..."],
+"table_row_ids": ["..."]
+}
+}
+12
+===== PAGE 13 =====
+[Judge 1 LLM]
+You are a strict evaluation judge.
+Task: Determine whether the proposed target output is fully supported by the provided evidence.
+Evidence:
+D_text: [TEXT]
+D_tab: [TABLE]
+Input pattern components: [INPUT COMPONENTS]
+Proposed output: [MODEL OUTPUT]
+Rules:
+1. Use only the provided evidence and input components.
+2. If a claim is unsupported, incomplete, or inconsistent with the evidence, mark it ungrounded.
+3. Do not reward plausible but unsupported extrapolation.
+4. Evaluate each target component independently.
+5. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"component_labels": {
+"M": "grounded | ungrounded | not_applicable",
+"T": "grounded | ungrounded | not_applicable",
+"E_text": "grounded | ungrounded | not_applicable",
+"E_tab": "grounded | ungrounded | not_applicable"
+},
+"overall_label": "grounded | ungrounded"
+}
+[Judge 2 LLM]
+You are a strict evaluation judge.
+Task: Read two candidate outputs for the same pattern or the same target objective. Decide whether they are:
+- contradictory,
+- redundant,
+- or meaningfully different.
+Candidate A: [OUTPUT A]
+Candidate B: [OUTPUT B]
+Evidence:
+D_text: [TEXT OR NONE]
+D_tab: [TABLE OR NONE]
+Rules:
+1. Use evidence first.
+2. Mark "contradictory" if the two outputs cannot both be correct.
+3. Mark "redundant" if they say the same thing with no meaningful difference.
+4. Mark "different" if both could be valid and non-overlapping.
+5. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"decision": "contradictory | redundant | different"
+}
+13
+===== PAGE 14 =====
+[Repair LLM]
+You are an expert pattern analysis with expertise in conflict resolution.
+Task: Resolve a pair of candidate outputs already flagged as contradictory or redundant.
+Candidate A: [OUTPUT A]
+Candidate B: [OUTPUT B]
+Prior decision: [CONTRADICTORY OR REDUNDANT]
+Reason: [EXPLANATION FROM PREVIOUS STEP]
+Evidence:
+D_text: [TEXT OR NONE]
+D_tab: [TABLE OR NONE]
+Rules:
+1. If one output is better supported, keep that one.
+2. If both are partially correct, return a merged and corrected output.
+3. If neither is supported, reject both.
+4. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"decision": "keep_A | keep_B | merge | reject_both",
+"merged_output": "... or null"
+}
+[Negative LLM Generator]
+You are an expert in pattern analysis.
+Task:
+Create a hard negative for the target pattern. The negative should be plausible and highly similar to a
+true instance, but it must fail one decisive condition of the pattern.
+True pattern:
+M: [GOLD M]
+T: [GOLD T]
+Positive example:
+E_text: [TRUE TEXT EXAMPLE]
+E_tab: [TRUE TABULAR EXAMPLE]
+Rules:
+1. Preserve most surface features of the positive example.
+2. Change exactly one decisive condition (e.g., wrong turning point, wrong trend direction,
+wrong entity pair, wrong time window).
+3. Explain why the negative is close but invalid.
+4. Output valid JSON only.
+Output JSON:
+{
+"reasoning": "...",
+"negative_E_text": "... or null",
+"negative_E_tab": "... or null",
+"failed_condition": "..."
+}
+14
+===== PAGE 15 =====
+[Negative LLM Repair]
+You are a compiler for pattern definitions.
+Task:
+Convert the following free-form mathematical definition into the required normalized DSL.
+Do not change its meaning. If the meaning is ambiguous, return "cannot_normalize".
+Input: [FREE-FORM M]
+Required M fields:
+pattern_type, variables, window, operators, thresholds
+Output JSON:
+{
+"status": "normalized | cannot_normalize",
+"M_": {
+"pattern_type": "...",
+"variables": ["..."],
+"window": "...",
+"operators": ["..."],
+"thresholds": ["..."]
+},
+"notes": "..."
+}
+15

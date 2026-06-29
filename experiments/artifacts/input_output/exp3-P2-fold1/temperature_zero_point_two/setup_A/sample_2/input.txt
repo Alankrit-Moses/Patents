@@ -1,0 +1,52 @@
+===== MESSAGE 1: SYSTEM =====
+Follow the request precisely and return valid JSON only.
+
+===== MESSAGE 2: USER =====
+Below are paired report passages and compact tables. Return a mathematical definition and a natural-language description of the recurring behavior in the pairs.
+
+Pair 1. The report passage is:
+Molecules/genes/proteins GenAI patent families have also been the growth leaders in recent years. In contrast, the total number of GenAI patent families based on speech/sound/music data has increased only slightly since 2021 (Figure 24).
+
+Its compact table is:
+entity,start_year,end_year,cagr_percent
+"Molecules, Genes, Proteins",2021,2023,51.0
+"Speech, Voice, Music",2021,2023,4.7
+
+
+Pair 2. The report passage is:
+In both Japan and the Republic of Korea, speech/voice/music is a very important GenAI mode in terms of patent families. However, patent growth rates differ significantly between the two Asian countries. While the growth of GenAI patent families in the Republic of Korea has been very dynamic across all modes in recent years, Japan's GenAI patent families peaked in 2020/2021 and have been declining since then.
+
+Its compact table is:
+entity,start_year,end_year,cagr_percent
+Japan,2021,2023,-14.7
+Republic of Korea,2021,2023,13.7
+
+
+Pair 3. The report passage is:
+In general, patent growth has been high in all applications since 2014. However, over the last three years there have been diverging growth trends with very high growth rates in both smaller application areas such as agriculture and energy management and large fields such as life sciences, security and physical sciences/engineering. In contrast, the number of patent families has stagnated or even declined in certain application areas such as telecommunications, military, arts and humanities or industrial property/law/social and behavioral sciences (Figure 27).
+
+Its compact table is:
+entity,start_year,end_year,cagr_percent
+Energy management,2021,2023,78.4
+Agriculture,2021,2023,53.5
+Life sciences,2021,2023,28.7
+Security,2021,2023,27.6
+Physical sciences and engineering,2021,2023,10.2
+Telecommunications,2021,2023,-4.0
+Military,2021,2023,6.9
+Arts and humanities,2021,2023,-15.1
+"Industrial property, law, social and behavioral sciences",2021,2023,-7.6
+
+
+Pair 4. The report passage is:
+Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite has grown strongly. Key contributors to patents on the production of titanium dioxide are companies from China, Australia and the United States, reflecting the major contribution of these countries to the industrial production of titanium dioxide.
+
+In contrast, patent activity related to the process for the production of titanium metal has remained steady since 2002. Key players in this field are mainly Japanese companies. All industrial key players describe the industrially exploited Kroll process, which is based on the reduction of titanium dioxide or titanium tetrachloride with magnesium.
+
+Its compact table is:
+entity,start_year,end_year,cagr_percent
+Titanium dioxide production,2002,2019,9.2
+Titanium metal production,2002,2019,0.9
+
+
+Return JSON only, without Markdown or commentary. Use exactly this schema: {"mathematical_definition":"...","natural_language_description":"..."}

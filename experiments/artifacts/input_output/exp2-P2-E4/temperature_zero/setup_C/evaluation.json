@@ -1,0 +1,10 @@
+{
+  "task_id": "exp2-P2-E4",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "metrics": {
+    "E_text_alignment_score": 1
+  },
+  "errors": []
+}

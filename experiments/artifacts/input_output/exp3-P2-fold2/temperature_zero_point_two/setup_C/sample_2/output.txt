@@ -1,0 +1,125 @@
+{
+  "task_id": "exp3-P2-fold2",
+  "experiment": "3",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "exp3-P2-fold2",
+  "errors": [],
+  "raw_output": "{\"M\": \"Given a set of entities E, a start year s, an end year e, and a compound annual growth rate (CAGR) c for each entity, the recurring structural behavior can be defined as follows:\\n\\nFor each entity e_i in E, calculate the CAGR c_i over the period from s to e using the formula:\\nc_i = ( (value_at_e / value_at_s)^(1/(e-s)) - 1 ) * 100\\n\\nwhere value_at_e and value_at_s are the values of the entity at the end year e and start year s, respectively.\\n\\nThe structural behavior is characterized by comparing the CAGR values of different entities over the same or different time periods to identify trends, slowdowns, or accelerations in growth rates.\", \"T\": \"This pattern describes the comparison of compound annual growth rates (CAGR) of different entities over specific time periods to analyze and contrast their growth trends. The pattern is applicable when:\\n\\n1. Comparability: Entities are comparable in terms of the measured attribute (e.g., patent families, research activities).\\n2. Temporal: A clear start year (s) and end year (e) are defined for each entity to calculate the CAGR.\\n3. Aggregation: The pattern can be applied to different levels of aggregation (e.g., technologies, countries, application areas).\\n4. Boundary: The pattern is bounded by the availability of data for the entities and the defined time periods.\"}",
+  "parsed_output": {
+    "M": "Given a set of entities E, a start year s, an end year e, and a compound annual growth rate (CAGR) c for each entity, the recurring structural behavior can be defined as follows:\n\nFor each entity e_i in E, calculate the CAGR c_i over the period from s to e using the formula:\nc_i = ( (value_at_e / value_at_s)^(1/(e-s)) - 1 ) * 100\n\nwhere value_at_e and value_at_s are the values of the entity at the end year e and start year s, respectively.\n\nThe structural behavior is characterized by comparing the CAGR values of different entities over the same or different time periods to identify trends, slowdowns, or accelerations in growth rates.",
+    "T": "This pattern describes the comparison of compound annual growth rates (CAGR) of different entities over specific time periods to analyze and contrast their growth trends. The pattern is applicable when:\n\n1. Comparability: Entities are comparable in terms of the measured attribute (e.g., patent families, research activities).\n2. Temporal: A clear start year (s) and end year (e) are defined for each entity to calculate the CAGR.\n3. Aggregation: The pattern can be applied to different levels of aggregation (e.g., technologies, countries, application areas).\n4. Boundary: The pattern is bounded by the availability of data for the entities and the defined time periods."
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "irrelevant",
+            "D.tab": "irrelevant",
+            "M": "target",
+            "T": "target",
+            "E.text": "known",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "E.text",
+            "E.tab"
+          ],
+          "targets": [
+            "M",
+            "T"
+          ],
+          "irrelevant": [
+            "D.text",
+            "D.tab"
+          ],
+          "available_data": []
+        },
+        "blackboard": {
+          "known_components": [
+            "paired_examples"
+          ],
+          "targets": [
+            "M",
+            "T"
+          ],
+          "irrelevant": [
+            "D.text",
+            "D.tab"
+          ],
+          "available_data": [],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "PatternSynthesisAgent",
+          "DefinitionVerifier",
+          "RepairAgent(at most once, if needed)"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "PatternSynthesisAgent",
+      "input_refs": [
+        "E.text",
+        "E.tab"
+      ],
+      "output": {
+        "M": "Given a set of entities E, a start year s, an end year e, and a compound annual growth rate (CAGR) c for each entity, the recurring structural behavior can be defined as follows:\n\nFor each entity e_i in E, calculate the CAGR c_i over the period from s to e using the formula:\nc_i = ( (value_at_e / value_at_s)^(1/(e-s)) - 1 ) * 100\n\nwhere value_at_e and value_at_s are the values of the entity at the end year e and start year s, respectively.\n\nThe structural behavior is characterized by comparing the CAGR values of different entities over the same or different time periods to identify trends, slowdowns, or accelerations in growth rates.",
+        "T": "This pattern describes the comparison of compound annual growth rates (CAGR) of different entities over specific time periods to analyze and contrast their growth trends. The pattern is applicable when:\n\n1. Comparability: Entities are comparable in terms of the measured attribute (e.g., patent families, research activities).\n2. Temporal: A clear start year (s) and end year (e) are defined for each entity to calculate the CAGR.\n3. Aggregation: The pattern can be applied to different levels of aggregation (e.g., technologies, countries, application areas).\n4. Boundary: The pattern is bounded by the availability of data for the entities and the defined time periods.",
+        "raw_output": "{\n  \"M\": \"Given a set of entities E, a start year s, an end year e, and a compound annual growth rate (CAGR) c for each entity, the recurring structural behavior can be defined as follows:\\n\\nFor each entity e_i in E, calculate the CAGR c_i over the period from s to e using the formula:\\nc_i = ( (value_at_e / value_at_s)^(1/(e-s)) - 1 ) * 100\\n\\nwhere value_at_e and value_at_s are the values of the entity at the end year e and start year s, respectively.\\n\\nThe structural behavior is characterized by comparing the CAGR values of different entities over the same or different time periods to identify trends, slowdowns, or accelerations in growth rates.\",\n  \"T\": \"This pattern describes the comparison of compound annual growth rates (CAGR) of different entities over specific time periods to analyze and contrast their growth trends. The pattern is applicable when:\\n\\n1. Comparability: Entities are comparable in terms of the measured attribute (e.g., patent families, research activities).\\n2. Temporal: A clear start year (s) and end year (e) are defined for each entity to calculate the CAGR.\\n3. Aggregation: The pattern can be applied to different levels of aggregation (e.g., technologies, countries, application areas).\\n4. Boundary: The pattern is bounded by the availability of data for the entities and the defined time periods.\"\n}",
+        "usage": {
+          "prompt_tokens": 1237,
+          "total_tokens": 1562,
+          "completion_tokens": 325,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DefinitionVerifier",
+      "input_refs": [
+        "M",
+        "T",
+        "paired_examples"
+      ],
+      "output": {
+        "score": 4,
+        "M_score": 4,
+        "T_score": 4,
+        "operationalizability": 4,
+        "matched_conditions": [
+          "All examples calculate CAGR over specific time periods for different entities.",
+          "Examples compare growth rates to identify trends and slowdowns."
+        ],
+        "failed_conditions": [
+          "Example P2-E6 does not provide enough detail in the text to fully understand the context of the CAGR values presented in the table."
+        ],
+        "rationale": "The definition is mostly clear and the examples generally follow the pattern. However, one example (P2-E6) lacks sufficient detail in the text to fully understand the context of the CAGR values presented in the table. This reduces the overall score.",
+        "raw_output": "{\n  \"score\": 4,\n  \"M_score\": 4,\n  \"T_score\": 4,\n  \"operationalizability\": 4,\n  \"matched_conditions\": [\n    \"All examples calculate CAGR over specific time periods for different entities.\",\n    \"Examples compare growth rates to identify trends and slowdowns.\"\n  ],\n  \"failed_conditions\": [\n    \"Example P2-E6 does not provide enough detail in the text to fully understand the context of the CAGR values presented in the table.\"\n  ],\n  \"rationale\": \"The definition is mostly clear and the examples generally follow the pattern. However, one example (P2-E6) lacks sufficient detail in the text to fully understand the context of the CAGR values presented in the table. This reduces the overall score.\"\n}",
+        "usage": {
+          "prompt_tokens": 1581,
+          "total_tokens": 1753,
+          "completion_tokens": 172,
+          "prompt_tokens_details": null
+        }
+      }
+    }
+  ],
+  "selected_chunks": []
+}

@@ -1,0 +1,72 @@
+===== MESSAGE 1: SYSTEM =====
+Follow the request precisely and return valid JSON only.
+
+===== MESSAGE 2: USER =====
+Below are paired report passages and compact tables. Return a mathematical definition and a natural-language description of the recurring behavior in the pairs.
+
+Pair 1. The report passage is:
+Although patent publications in GANs dominated up to 2020, it has slowed down since and patent publications in diffusion models have grown tremendously since 2021.
+
+Its compact table is:
+year,distinct_gan_patent_family_count
+2017,38
+2018,237
+2019,851
+2020,1585
+2021,2102
+2022,2504
+2023,2370
+
+
+Pair 2. The report passage is:
+In both Japan and the Republic of Korea, speech/voice/music is a very important GenAI mode in terms of patent families. However, patent growth rates differ significantly between the two Asian countries. While the growth of GenAI patent families in the Republic of Korea has been very dynamic across all modes in recent years, Japan's GenAI patent families peaked in 2020/2021 and have been declining since then.
+
+Its compact table is:
+year,distinct_japan_genai_patent_family_count
+2014,147
+2015,175
+2016,166
+2017,222
+2018,356
+2019,436
+2020,523
+2021,549
+2022,447
+2023,399
+
+
+Pair 3. The report passage is:
+In contrast, diffusion models and LLMs show much higher growth rates over the last three years, with the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023 and for LLMs increasing from 53 in 2020 to 881 in 2023.
+
+Although patent publications in GANs dominated up to 2020, it has slowed down since and patent publications in diffusion models have grown tremendously since 2021.
+
+Its compact table is:
+year,distinct_diffusion_model_patent_family_count
+2014,0
+2015,2
+2016,1
+2017,4
+2018,7
+2019,10
+2020,18
+2021,20
+2022,57
+2023,441
+
+
+Pair 4. The report passage is:
+Between 2012 and 2022, there were 2,027 active patent families describing the use of titanium dioxide and titanium in ceramics (Figure 24). Patent activity shows a growing interest in ceramics as an industrial application of titanium since 2016, with a CAGR of +15 percent between 2014 and 2019.
+
+Its compact table is:
+year,distinct_titanium_ceramics_patent_family_count
+2012,103
+2013,109
+2014,159
+2015,127
+2016,157
+2017,188
+2018,250
+2019,322
+
+
+Return JSON only, without Markdown or commentary. Use exactly this schema: {"mathematical_definition":"...","natural_language_description":"..."}

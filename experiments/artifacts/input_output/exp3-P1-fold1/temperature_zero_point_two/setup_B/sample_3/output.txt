@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P1-fold1",
+  "experiment": "3",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "exp3-P1-fold1",
+  "errors": [],
+  "raw_output": "{\n  \"M\": \"Identify the Compound Annual Growth Rate (CAGR) or average annual growth rate from the provided data and describe the trend in the natural language.\",\n  \"T\": \"The pattern describes a trend in patent family growth over a specified period, highlighting the average annual growth rate and significant changes in the number of patent families.\"\n}",
+  "parsed_output": {
+    "M": "Identify the Compound Annual Growth Rate (CAGR) or average annual growth rate from the provided data and describe the trend in the natural language.",
+    "T": "The pattern describes a trend in patent family growth over a specified period, highlighting the average annual growth rate and significant changes in the number of patent families."
+  }
+}

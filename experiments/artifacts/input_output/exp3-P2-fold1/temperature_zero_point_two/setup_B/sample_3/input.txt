@@ -1,0 +1,92 @@
+===== MESSAGE 1: SYSTEM =====
+Execute the typed framework query exactly. Return only the requested target components as valid JSON.
+
+===== MESSAGE 2: USER =====
+<framework_guide>
+The modular framework represents data as D=(D.text,D.tab) and a pattern as P=(M,T,E).
+- D.text is report text and D.tab is source structured data.
+- M is a mathematical pattern definition, T is its natural-language description, and E is a set of examples.
+- E.text is an exact contiguous excerpt from D.text. E.tab is observed compact tabular evidence supplied with an example; an internal table summary is not a new E.tab.
+- A concrete component is known input, ? is a target to produce, _ is irrelevant or omitted, and [n] requests n outputs.
+- A named component whose value is not supplied is unavailable; _ deliberately marks a component as irrelevant or not requested.
+- Never use an unavailable or irrelevant component. Return only target components.
+
+Read and decompose queries internally as follows:
+1. D:(D.text,_), P:(M,_,{(?,_)[2]}) means use known M to find two exact E.text excerpts in D.text, while D.tab, T, and E.tab are not used.
+2. D:(D.text,_), P:(_,_,{(?,E.tab)}) means summarize the provided E.tab internally, search D.text for matching evidence, and return one exact E.text. Do not create E.tab.
+3. D:(_,_), P:(?,?,{(E1.text,E1.tab),...}) means compare the provided paired examples, infer their shared rule, and return M and T.
+These decompositions are reasoning guidance inside one model call, not additional tools or data.
+</framework_guide>
+
+<framework_query>
+D:(_,_)
+P:(?,?,{(E1.text,E1.tab),(E2.text,E2.tab),...})
+</framework_query>
+
+<query_interpretation>
+Use only the provided paired E.text/E.tab examples. External D.text and D.tab are unavailable. Produce the target M and T only.
+</query_interpretation>
+
+<known_components>
+<paired_examples>
+<example id="P2-E3">
+<E_text>
+Molecules/genes/proteins GenAI patent families have also been the growth leaders in recent years. In contrast, the total number of GenAI patent families based on speech/sound/music data has increased only slightly since 2021 (Figure 24).
+</E_text>
+<E_tab format="compact_csv">
+entity,start_year,end_year,cagr_percent
+"Molecules, Genes, Proteins",2021,2023,51.0
+"Speech, Voice, Music",2021,2023,4.7
+
+</E_tab>
+</example>
+<example id="P2-E4">
+<E_text>
+In both Japan and the Republic of Korea, speech/voice/music is a very important GenAI mode in terms of patent families. However, patent growth rates differ significantly between the two Asian countries. While the growth of GenAI patent families in the Republic of Korea has been very dynamic across all modes in recent years, Japan's GenAI patent families peaked in 2020/2021 and have been declining since then.
+</E_text>
+<E_tab format="compact_csv">
+entity,start_year,end_year,cagr_percent
+Japan,2021,2023,-14.7
+Republic of Korea,2021,2023,13.7
+
+</E_tab>
+</example>
+<example id="P2-E5">
+<E_text>
+In general, patent growth has been high in all applications since 2014. However, over the last three years there have been diverging growth trends with very high growth rates in both smaller application areas such as agriculture and energy management and large fields such as life sciences, security and physical sciences/engineering. In contrast, the number of patent families has stagnated or even declined in certain application areas such as telecommunications, military, arts and humanities or industrial property/law/social and behavioral sciences (Figure 27).
+</E_text>
+<E_tab format="compact_csv">
+entity,start_year,end_year,cagr_percent
+Energy management,2021,2023,78.4
+Agriculture,2021,2023,53.5
+Life sciences,2021,2023,28.7
+Security,2021,2023,27.6
+Physical sciences and engineering,2021,2023,10.2
+Telecommunications,2021,2023,-4.0
+Military,2021,2023,6.9
+Arts and humanities,2021,2023,-15.1
+"Industrial property, law, social and behavioral sciences",2021,2023,-7.6
+
+</E_tab>
+</example>
+<example id="P2-E6">
+<E_text>
+Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite has grown strongly. Key contributors to patents on the production of titanium dioxide are companies from China, Australia and the United States, reflecting the major contribution of these countries to the industrial production of titanium dioxide.
+
+In contrast, patent activity related to the process for the production of titanium metal has remained steady since 2002. Key players in this field are mainly Japanese companies. All industrial key players describe the industrially exploited Kroll process, which is based on the reduction of titanium dioxide or titanium tetrachloride with magnesium.
+</E_text>
+<E_tab format="compact_csv">
+entity,start_year,end_year,cagr_percent
+Titanium dioxide production,2002,2019,9.2
+Titanium metal production,2002,2019,0.9
+
+</E_tab>
+</example>
+</paired_examples>
+</known_components>
+
+<output_constraints>
+Return only the requested M and T components.
+Never infer or create newly verified E.tab when D.tab is unavailable.
+Return JSON only, without Markdown or commentary. Use exactly this schema: {"M":"mathematical definition","T":"natural-language description"}
+</output_constraints>

@@ -1,0 +1,1238 @@
+{
+  "task_id": "exp2-P2-E5",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "P2-E5",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"Telecommunications\"}",
+  "parsed_output": {
+    "excerpt": "Telecommunications"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "Energy management",
+            "Agriculture",
+            "Life sciences",
+            "Security",
+            "Physical sciences and engineering",
+            "Telecommunications",
+            "Military",
+            "Arts and humanities",
+            "Industrial property, law, social and behavioral sciences"
+          ],
+          "metric": "cagr_percent",
+          "years_or_interval": "2021-2023",
+          "trend": "mixed",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": "Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline."
+        },
+        "raw_output": "{\n  \"entities\": [\n    \"Energy management\",\n    \"Agriculture\",\n    \"Life sciences\",\n    \"Security\",\n    \"Physical sciences and engineering\",\n    \"Telecommunications\",\n    \"Military\",\n    \"Arts and humanities\",\n    \"Industrial property, law, social and behavioral sciences\"\n  ],\n  \"metric\": \"cagr_percent\",\n  \"years_or_interval\": \"2021-2023\",\n  \"trend\": \"mixed\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\"\n}",
+        "usage": {
+          "prompt_tokens": 271,
+          "total_tokens": 416,
+          "completion_tokens": 145,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.",
+        "raw_output": "{\n  \"T_hat\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\"\n}",
+        "usage": {
+          "prompt_tokens": 214,
+          "total_tokens": 243,
+          "completion_tokens": 29,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4278,
+              "total_tokens": 4333,
+              "completion_tokens": 55,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "Life sciences",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Telecommunications",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Life sciences\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"Life sciences sector\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Security\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Life sciences\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"document management and publishing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"business solutions\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"industry and manufacturing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"transportation\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"security\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Life sciences\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"document management and publishing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"business solutions\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"industry and manufacturing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"transportation\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"security\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4181,
+              "total_tokens": 4806,
+              "completion_tokens": 625,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "Energy Management",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Agriculture",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy Management\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Agriculture\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Arts and Humanities\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Industrial property, law, social behavioural sciences\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"mixed\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3808,
+              "total_tokens": 4098,
+              "completion_tokens": 290,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3795,
+              "total_tokens": 3804,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4639,
+              "total_tokens": 4736,
+              "completion_tokens": 97,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "an average\nannual growth of around 45%",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"an average annual growth of around 45%\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4449,
+              "total_tokens": 4583,
+              "completion_tokens": 134,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "Growth",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5012,
+              "total_tokens": 5086,
+              "completion_tokens": 74,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "an average annual growth rate of\naround 45% between 2014 and 2023",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric",
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"an average annual growth rate of around 45% between 2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"years\"]\n    },\n    {\n      \"excerpt\": \"an annual growth of 64% between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5503,
+              "total_tokens": 5619,
+              "completion_tokens": 116,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "Energy management",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Agriculture",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Agriculture\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Arts and humanities\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"mixed\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4817,
+              "total_tokens": 5100,
+              "completion_tokens": 283,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "Energy management",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Agriculture",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Agriculture\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Arts and humanities\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"mixed\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4493,
+              "total_tokens": 4778,
+              "completion_tokens": 285,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "Life and medical sciences",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Telecommunications",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Life and medical sciences\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3714,
+              "total_tokens": 3787,
+              "completion_tokens": 73,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4528,
+              "total_tokens": 4607,
+              "completion_tokens": 79,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [
+              {
+                "excerpt": "Energy management",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Agriculture",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Agriculture\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Arts and humanities\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9798,
+              "total_tokens": 10017,
+              "completion_tokens": 219,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [
+              {
+                "excerpt": "Energy management",
+                "chunk_id": "chunk-0013",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "Agriculture",
+                "chunk_id": "chunk-0013",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Agriculture\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Arts and humanities\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"cagr_percent\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2021-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"mixed\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5357,
+              "total_tokens": 5638,
+              "completion_tokens": 281,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "2010-2023",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "Life sciences",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2010-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"Life sciences\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3980,
+              "total_tokens": 4060,
+              "completion_tokens": 80,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "Telecommunications",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "GenAI can be used to transform various aspects of network operations,\ncustomer experience and service delivery.",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "behavior"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"GenAI can be used to transform various aspects of network operations, customer experience and service delivery.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3553,
+              "total_tokens": 3641,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [
+              {
+                "excerpt": "Physical sciences and engineering",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": [
+                  "behavior"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Physical sciences and engineering\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"GenAI is expected to have an impact on various engineering and physical sciences disciplines, with the potential to enhance research, design and innovation.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3649,
+              "total_tokens": 3747,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "Energy management",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\", \"trend\", \"behavior\"]\n    },\n    {\n      \"excerpt\": \"Energy management\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Agriculture\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Arts and humanities\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"Telecommunications\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4443,
+              "total_tokens": 4638,
+              "completion_tokens": 195,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5971,
+              "total_tokens": 5980,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "Life sciences",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Telecommunications",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Energy Management",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Agriculture",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "an average\nannual growth of around 45%",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "Growth",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "an average annual growth rate of\naround 45% between 2014 and 2023",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric",
+              "years"
+            ]
+          },
+          {
+            "excerpt": "Life and medical sciences",
+            "chunk_id": "chunk-0010",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "2010-2023",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "GenAI can be used to transform various aspects of network operations,\ncustomer experience and service delivery.",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": [
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "Physical sciences and engineering",
+            "chunk_id": "chunk-0016",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+            "chunk_id": "chunk-0016",
+            "local_score": 1,
+            "matched_constraints": [
+              "behavior"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions the entity 'Telecommunications' without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (mixed), or the pattern behavior (Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline).",
+            "candidate": {
+              "excerpt": "Telecommunications",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions the entity 'Telecommunications' without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (mixed), or the pattern behavior (Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline).\"\n}",
+            "usage": {
+              "prompt_tokens": 423,
+              "total_tokens": 549,
+              "completion_tokens": 126,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one entity, 'Energy Management', without providing any information about the metric, year/interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "Energy Management",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions one entity, 'Energy Management', without providing any information about the metric, year/interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 423,
+              "total_tokens": 511,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions the entity 'Agriculture' without providing any information about the metric, year/interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "Agriculture",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions the entity 'Agriculture' without providing any information about the metric, year/interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 424,
+              "total_tokens": 512,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions the entity 'Physical sciences and engineering' without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (mixed), or the pattern behavior (Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline).",
+            "candidate": {
+              "excerpt": "Physical sciences and engineering",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions the entity 'Physical sciences and engineering' without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (mixed), or the pattern behavior (Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline).\"\n}",
+            "usage": {
+              "prompt_tokens": 425,
+              "total_tokens": 553,
+              "completion_tokens": 128,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "trend: mixed"
+            ],
+            "failed_conditions": [
+              "entity: does not specify any entities",
+              "metric: does not specify the metric 'cagr_percent'",
+              "years_or_interval: does not specify the interval '2021-2023'",
+              "likely_pattern_behavior: does not mention specific entities or their behaviors"
+            ],
+            "rationale": "The candidate text only mentions 'Growth' which is too vague and does not provide specific details about entities, metric, years_or_interval, or pattern behavior.",
+            "candidate": {
+              "excerpt": "Growth",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"trend: mixed\"\n  ],\n  \"failed_conditions\": [\n    \"entity: does not specify any entities\",\n    \"metric: does not specify the metric 'cagr_percent'\",\n    \"years_or_interval: does not specify the interval '2021-2023'\",\n    \"likely_pattern_behavior: does not mention specific entities or their behaviors\"\n  ],\n  \"rationale\": \"The candidate text only mentions 'Growth' which is too vague and does not provide specific details about entities, metric, years_or_interval, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 423,
+              "total_tokens": 560,
+              "completion_tokens": 137,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [
+              "entity"
+            ],
+            "failed_conditions": [
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one entity 'Life and medical sciences' which is not exactly matching with 'Life sciences' in the table. It does not provide any information about the metric, years or interval, trend, and likely pattern behavior.",
+            "candidate": {
+              "excerpt": "Life and medical sciences",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [\n    \"entity\"\n  ],\n  \"failed_conditions\": [\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions one entity 'Life and medical sciences' which is not exactly matching with 'Life sciences' in the table. It does not provide any information about the metric, years or interval, trend, and likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 425,
+              "total_tokens": 533,
+              "completion_tokens": 108,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It only provides a time range that does not match the interval in the table.",
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It only provides a time range that does not match the interval in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 430,
+              "total_tokens": 525,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate excerpt only mentions one entity, 'Life sciences', without providing any information about the metric, years or interval, trend, or pattern behavior. Therefore, it does not describe the same observed compact table evidence.",
+            "candidate": {
+              "excerpt": "Life sciences",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate excerpt only mentions one entity, 'Life sciences', without providing any information about the metric, years or interval, trend, or pattern behavior. Therefore, it does not describe the same observed compact table evidence.\"\n}",
+            "usage": {
+              "prompt_tokens": 423,
+              "total_tokens": 524,
+              "completion_tokens": 101,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any specific entities, metric, years or interval, trend, or pattern behavior. It only provides a vague statement about average annual growth.",
+            "candidate": {
+              "excerpt": "an average\nannual growth of around 45%",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any specific entities, metric, years or interval, trend, or pattern behavior. It only provides a vague statement about average annual growth.\"\n}",
+            "usage": {
+              "prompt_tokens": 432,
+              "total_tokens": 523,
+              "completion_tokens": 91,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It only provides a range of years (2014–2023) which does not match the interval (2021-2023) in the internal tab signal.",
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It only provides a range of years (2014–2023) which does not match the interval (2021-2023) in the internal tab signal.\"\n}",
+            "usage": {
+              "prompt_tokens": 430,
+              "total_tokens": 550,
+              "completion_tokens": 120,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not match any of the conditions specified in the TabSignal. It mentions a different metric (average annual growth rate), a different time interval (2014-2023), and does not discuss the specific entities or patterns mentioned in the TabSignal.",
+            "candidate": {
+              "excerpt": "an average annual growth rate of\naround 45% between 2014 and 2023",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric",
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match any of the conditions specified in the TabSignal. It mentions a different metric (average annual growth rate), a different time interval (2014-2023), and does not discuss the specific entities or patterns mentioned in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 445,
+              "total_tokens": 560,
+              "completion_tokens": 115,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data. It discusses a different topic altogether.",
+            "candidate": {
+              "excerpt": "GenAI can be used to transform various aspects of network operations,\ncustomer experience and service delivery.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data. It discusses a different topic altogether.\"\n}",
+            "usage": {
+              "prompt_tokens": 439,
+              "total_tokens": 530,
+              "completion_tokens": 91,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metrics, or years/intervals from the table. It also does not discuss the trend or pattern behavior observed in the table.",
+            "candidate": {
+              "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": [
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metrics, or years/intervals from the table. It also does not discuss the trend or pattern behavior observed in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 447,
+              "total_tokens": 542,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "Telecommunications",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Energy Management",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate excerpt only mentions one entity, 'Energy Management', without providing any information about the metric, year/interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "Agriculture",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate excerpt only mentions the entity 'Agriculture' without providing any information about the metric, year/interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "Physical sciences and engineering",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate excerpt only mentions the entity 'Physical sciences and engineering' without providing any information about the metric (cagr_percent), the year interval (2021-2023), the trend (mixed), or the pattern behavior (Energy management and Agriculture show high growth, while Arts and humanities and Telecommunications show decline)."
+          },
+          {
+            "candidate": {
+              "excerpt": "Growth",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 2,
+            "reason": "The candidate text only mentions 'Growth' which is too vague and does not provide specific details about entities, metric, years_or_interval, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "Life and medical sciences",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate excerpt only mentions one entity 'Life and medical sciences' which is not exactly matching with 'Life sciences' in the table. It does not provide any information about the metric, years or interval, trend, and likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 2,
+            "reason": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It only provides a time range that does not match the interval in the table."
+          },
+          {
+            "candidate": {
+              "excerpt": "Life sciences",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate excerpt only mentions one entity, 'Life sciences', without providing any information about the metric, years or interval, trend, or pattern behavior. Therefore, it does not describe the same observed compact table evidence."
+          },
+          {
+            "candidate": {
+              "excerpt": "an average\nannual growth of around 45%",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entities, metric, years or interval, trend, or pattern behavior. It only provides a vague statement about average annual growth."
+          },
+          {
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It only provides a range of years (2014–2023) which does not match the interval (2021-2023) in the internal tab signal."
+          },
+          {
+            "candidate": {
+              "excerpt": "an average annual growth rate of\naround 45% between 2014 and 2023",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric",
+                "years"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match any of the conditions specified in the TabSignal. It mentions a different metric (average annual growth rate), a different time interval (2014-2023), and does not discuss the specific entities or patterns mentioned in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI can be used to transform various aspects of network operations,\ncustomer experience and service delivery.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data. It discusses a different topic altogether."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": [
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metrics, or years/intervals from the table. It also does not discuss the trend or pattern behavior observed in the table."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "task_id": "exp1-P1-decarbonizing",
+  "experiment": "1",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "exp1-P1-decarbonizing",
+  "errors": [],
+  "raw_output": "{\"examples\":[{\"excerpt\":\"The different types of low emission truck options\"},{\"excerpt\":\"The different types of low emission truck options\"},{\"excerpt\":\"The different types of low emission truck options\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The different types of low emission truck options"
+      },
+      {
+        "excerpt": "The different types of low emission truck options"
+      },
+      {
+        "excerpt": "The different types of low emission truck options"
+      }
+    ]
+  }
+}

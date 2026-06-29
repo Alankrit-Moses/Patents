@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P2-E2",
+  "experiment": "2",
+  "setup": "A",
+  "pattern_id": "P2",
+  "example_id": "P2-E2",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"In this WIPO Patent Landscape Report on Generative AI (GenAI), discover the latest patent trends for GenAI with a comprehensive and up-to-date understanding of the GenAI patent landscape, alongside insights into its future applications and potential impact. The report explores patents relating to the different modes, models and industrial application areas of GenAI.\"}",
+  "parsed_output": {
+    "excerpt": "In this WIPO Patent Landscape Report on Generative AI (GenAI), discover the latest patent trends for GenAI with a comprehensive and up-to-date understanding of the GenAI patent landscape, alongside insights into its future applications and potential impact. The report explores patents relating to the different modes, models and industrial application areas of GenAI."
+  }
+}

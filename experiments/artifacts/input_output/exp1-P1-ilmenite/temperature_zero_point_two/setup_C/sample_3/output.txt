@@ -1,0 +1,889 @@
+{
+  "task_id": "exp1-P1-ilmenite",
+  "experiment": "1",
+  "setup": "C",
+  "pattern_id": "P1",
+  "example_id": "exp1-P1-ilmenite",
+  "errors": [],
+  "raw_output": "{\"examples\": [{\"excerpt\": \"Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly\\nincreased since 2012.\"}, {\"excerpt\": \"Titanium extraction from mineral ores\"}, {\"excerpt\": \"Patent activity has increased quite steadily since 2012\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly\nincreased since 2012."
+      },
+      {
+        "excerpt": "Titanium extraction from mineral ores"
+      },
+      {
+        "excerpt": "Patent activity has increased quite steadily since 2012"
+      }
+    ]
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "known",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "irrelevant"
+          },
+          "requested_count": 3,
+          "known": [
+            "D.text",
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "DescriptionInductionAgent(optional T_hat)",
+          "TextEvidenceAgent(map-reduce)",
+          "TextPatternVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "M"
+      ],
+      "output": {
+        "T_hat": "A trajectory shift pattern is observed in an entity e with attribute m over time t, characterized by a change in trend before and after a specific time or event τ. The trend before τ is denoted as g_pre, and the trend after τ is denoted as g_post. A trajectory shift is identified when either g_pre is not equal to g_post, or the absolute difference between g_post and g_pre exceeds a meaningful change threshold ε.",
+        "raw_output": "{\n  \"T_hat\": \"A trajectory shift pattern is observed in an entity e with attribute m over time t, characterized by a change in trend before and after a specific time or event τ. The trend before τ is denoted as g_pre, and the trend after τ is denoted as g_post. A trajectory shift is identified when either g_pre is not equal to g_post, or the absolute difference between g_post and g_pre exceeds a meaningful change threshold ε.\"\n}",
+        "usage": {
+          "prompt_tokens": 222,
+          "total_tokens": 319,
+          "completion_tokens": 97,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "M",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 10,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "Titanium extraction from mineral ores",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Titanium extraction from mineral ores\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3807,
+              "total_tokens": 3852,
+              "completion_tokens": 45,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"A trajectory shift pattern holds when there exists a time or event τ such that the behavior of v(e, m, t) differs before and after τ.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A trajectory shift holds when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"g_pre ≠ g_post\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"|g_post - g_pre| > ε,\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"where ε is a threshold for meaningful change.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4370,
+              "total_tokens": 4570,
+              "completion_tokens": 200,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "Patent activity has increased quite steadily since 2012",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "Patent activity on titanium dioxide production from ilmenite has increased since 2012",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Patent activity has increased quite steadily since 2012\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Patent activity on titanium dioxide production from ilmenite has increased since 2012\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4316,
+              "total_tokens": 4411,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "Pangang\nalso holds patents for less common processes, such as the use of microwave irradiation to\nachieve more homogeneous heating",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "Shandong Yongxin Energy specializes in the use\nof microwave irradiation as homogeneous heating for smelting.",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Pangang also holds patents for less common processes, such as the use of microwave irradiation to achieve more homogeneous heating\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Shandong Yongxin Energy specializes in the use of microwave irradiation as homogeneous heating for smelting.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4712,
+              "total_tokens": 4819,
+              "completion_tokens": 107,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "Because of the limited interest in methods to obtain titanium metal from ilmenite and the fact\nthat most industrial players describe the standard, industrially used processes, we do not expect\na big shift away from this process in the coming years.",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Because of the limited interest in methods to obtain titanium metal from ilmenite and the fact that most industrial players describe the standard, industrially used processes, we do not expect a big shift away from this process in the coming years.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4390,
+              "total_tokens": 4473,
+              "completion_tokens": 83,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "Patent activity has\nincreased since 2012, with a CAGR of +11 percent between 2014 and 2019",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly\nincreased since 2012.",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Patent activity has increased since 2012, with a CAGR of +11 percent between 2014 and 2019\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly increased since 2012.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4548,
+              "total_tokens": 4669,
+              "completion_tokens": 121,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Let e be an entity and let m be an attribute defined over time. Let v(e, m, t) denote the value or state of entity e with respect to attribute m at time t.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A trajectory shift pattern holds when there exists a time or event τ such that the behavior of v(e, m, t) differs before and after τ.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Let g_pre denote the trend of v(e, m, t) before τ, and let g_post denote the trend of v(e, m, t) after τ. A trajectory shift holds when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"g_pre ≠ g_post\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"|g_post - g_pre| > ε,\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"where ε is a threshold for meaningful change.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4673,
+              "total_tokens": 4973,
+              "completion_tokens": 300,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "The number of patent families related to titanium-containing coatings has strongly increased\nsince 2012.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The number of patent families related to the use of titanium and titanium dioxide in water treatment\nhas increased strongly since 2012.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The number of patent families related to titanium-containing coatings has strongly increased since 2012.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The number of patent families related to the use of titanium and titanium dioxide in water treatment has increased strongly since 2012.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3763,
+              "total_tokens": 3871,
+              "completion_tokens": 108,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite\nhas grown strongly.",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "patent activity related to the process for the production of titanium metal has\nremained steady since 2002.",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite has grown strongly.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"patent activity related to the process for the production of titanium metal has remained steady since 2002.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4470,
+              "total_tokens": 4580,
+              "completion_tokens": 110,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "the variation in the number of documents since 2012, to identify emerging technologies.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "temporal variation",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the variation in the number of documents since 2012, to identify emerging technologies.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"temporal variation\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3360,
+              "total_tokens": 3444,
+              "completion_tokens": 84,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "Titanium extraction from mineral ores",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Patent activity has increased quite steadily since 2012",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Patent activity on titanium dioxide production from ilmenite has increased since 2012",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Pangang\nalso holds patents for less common processes, such as the use of microwave irradiation to\nachieve more homogeneous heating",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Shandong Yongxin Energy specializes in the use\nof microwave irradiation as homogeneous heating for smelting.",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Because of the limited interest in methods to obtain titanium metal from ilmenite and the fact\nthat most industrial players describe the standard, industrially used processes, we do not expect\na big shift away from this process in the coming years.",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Patent activity has\nincreased since 2012, with a CAGR of +11 percent between 2014 and 2019",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly\nincreased since 2012.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of patent families related to titanium-containing coatings has strongly increased\nsince 2012.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of patent families related to the use of titanium and titanium dioxide in water treatment\nhas increased strongly since 2012.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite\nhas grown strongly.",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "patent activity related to the process for the production of titanium metal has\nremained steady since 2002.",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "the variation in the number of documents since 2012, to identify emerging technologies.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "temporal variation",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextPatternVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "M",
+        "T_hat"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not explicitly mention the entity, attribute, time, or the trends before and after a specific time or event τ. It also does not discuss the conditions g_pre ≠ g_post or |g_post - g_pre| > ε.",
+            "candidate": {
+              "excerpt": "Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly\nincreased since 2012.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not explicitly mention the entity, attribute, time, or the trends before and after a specific time or event τ. It also does not discuss the conditions g_pre ≠ g_post or |g_post - g_pre| > ε.\"\n}",
+            "usage": {
+              "prompt_tokens": 351,
+              "total_tokens": 439,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity, attribute, time, or trends, nor does it mention any trajectory shift pattern or changes in trends before and after a specific time or event. It simply states a general topic without any relevant details.",
+            "candidate": {
+              "excerpt": "Titanium extraction from mineral ores",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity, attribute, time, or trends, nor does it mention any trajectory shift pattern or changes in trends before and after a specific time or event. It simply states a general topic without any relevant details.\"\n}",
+            "usage": {
+              "prompt_tokens": 333,
+              "total_tokens": 418,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any trajectory shift, change in trend, or a specific time or event τ. It only describes a steady increase in patent activity since 2012, which does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "Patent activity has increased quite steadily since 2012",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention any trajectory shift, change in trend, or a specific time or event τ. It only describes a steady increase in patent activity since 2012, which does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 338,
+              "total_tokens": 426,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity's attribute over time, nor does it mention any trends before and after a specific time or event. It merely states a fact about Pangang's patents.",
+            "candidate": {
+              "excerpt": "Pangang\nalso holds patents for less common processes, such as the use of microwave irradiation to\nachieve more homogeneous heating",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity's attribute over time, nor does it mention any trends before and after a specific time or event. It merely states a fact about Pangang's patents.\"\n}",
+            "usage": {
+              "prompt_tokens": 351,
+              "total_tokens": 427,
+              "completion_tokens": 76,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss the trends before and after τ (g_pre and g_post) or any threshold for meaningful change ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "Patent activity on titanium dioxide production from ilmenite has increased since 2012",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss the trends before and after τ (g_pre and g_post) or any threshold for meaningful change ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 344,
+              "total_tokens": 442,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any entity's attribute changing over time, nor does it mention any trends before and after a specific time or event. It merely describes the company's specialization.",
+            "candidate": {
+              "excerpt": "Shandong Yongxin Energy specializes in the use\nof microwave irradiation as homogeneous heating for smelting.",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any entity's attribute changing over time, nor does it mention any trends before and after a specific time or event. It merely describes the company's specialization.\"\n}",
+            "usage": {
+              "prompt_tokens": 347,
+              "total_tokens": 421,
+              "completion_tokens": 74,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity, attribute, or time, nor does it describe any trend or shift in trend before and after a specific time or event. It merely states an expectation about a process not changing significantly in the coming years.",
+            "candidate": {
+              "excerpt": "Because of the limited interest in methods to obtain titanium metal from ilmenite and the fact\nthat most industrial players describe the standard, industrially used processes, we do not expect\na big shift away from this process in the coming years.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity, attribute, or time, nor does it describe any trend or shift in trend before and after a specific time or event. It merely states an expectation about a process not changing significantly in the coming years.\"\n}",
+            "usage": {
+              "prompt_tokens": 373,
+              "total_tokens": 459,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention an entity e, an attribute m, a specific time or event τ, or trends g_pre and g_post. It also does not discuss a change in trend or a meaningful change threshold ε.",
+            "candidate": {
+              "excerpt": "Patent activity has\nincreased since 2012, with a CAGR of +11 percent between 2014 and 2019",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\",\n    \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention an entity e, an attribute m, a specific time or event τ, or trends g_pre and g_post. It also does not discuss a change in trend or a meaningful change threshold ε.\"\n}",
+            "usage": {
+              "prompt_tokens": 361,
+              "total_tokens": 448,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss trends before and after τ (g_pre and g_post) or a meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "The number of patent families related to titanium-containing coatings has strongly increased\nsince 2012.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss trends before and after τ (g_pre and g_post) or a meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 345,
+              "total_tokens": 441,
+              "completion_tokens": 96,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss the trends before and after τ (g_pre and g_post) or any threshold for meaningful change ε. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "The number of patent families related to the use of titanium and titanium dioxide in water treatment\nhas increased strongly since 2012.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss the trends before and after τ (g_pre and g_post) or any threshold for meaningful change ε. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 352,
+              "total_tokens": 450,
+              "completion_tokens": 98,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any trajectory shift pattern, change in trend before and after a specific time or event, or any comparison of trends (g_pre and g_post). It only states an increase in patent activity since 2002.",
+            "candidate": {
+              "excerpt": "Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite\nhas grown strongly.",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any trajectory shift pattern, change in trend before and after a specific time or event, or any comparison of trends (g_pre and g_post). It only states an increase in patent activity since 2002.\"\n}",
+            "usage": {
+              "prompt_tokens": 351,
+              "total_tokens": 438,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any trajectory shift, change in trend, or a specific time or event τ that causes a difference in trends before and after it. It only states that the patent activity has remained steady since 2002, which does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "patent activity related to the process for the production of titanium metal has\nremained steady since 2002.",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\",\n    \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention any trajectory shift, change in trend, or a specific time or event τ that causes a difference in trends before and after it. It only states that the patent activity has remained steady since 2002, which does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 349,
+              "total_tokens": 449,
+              "completion_tokens": 100,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any entity, attribute, time, or trend analysis, which are key components of the trajectory shift pattern. It also does not discuss any change in trend before and after a specific time or event.",
+            "candidate": {
+              "excerpt": "the variation in the number of documents since 2012, to identify emerging technologies.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any entity, attribute, time, or trend analysis, which are key components of the trajectory shift pattern. It also does not discuss any change in trend before and after a specific time or event.\"\n}",
+            "usage": {
+              "prompt_tokens": 343,
+              "total_tokens": 425,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'temporal variation' does not mention any of the key elements required by the pattern constraints, such as entity, attribute, time, trend before and after a specific time or event, or any comparison of trends.",
+            "candidate": {
+              "excerpt": "temporal variation",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'temporal variation' does not mention any of the key elements required by the pattern constraints, such as entity, attribute, time, trend before and after a specific time or event, or any comparison of trends.\"\n}",
+            "usage": {
+              "prompt_tokens": 328,
+              "total_tokens": 411,
+              "completion_tokens": 83,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "Patent filing related to the use of titanium and titanium dioxide in medical technology has strongly\nincreased since 2012.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Titanium extraction from mineral ores",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Patent activity has increased quite steadily since 2012",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "Pangang\nalso holds patents for less common processes, such as the use of microwave irradiation to\nachieve more homogeneous heating",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity's attribute over time, nor does it mention any trends before and after a specific time or event. It merely states a fact about Pangang's patents."
+          },
+          {
+            "candidate": {
+              "excerpt": "Patent activity on titanium dioxide production from ilmenite has increased since 2012",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss the trends before and after τ (g_pre and g_post) or any threshold for meaningful change ε. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "Shandong Yongxin Energy specializes in the use\nof microwave irradiation as homogeneous heating for smelting.",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any entity's attribute changing over time, nor does it mention any trends before and after a specific time or event. It merely describes the company's specialization."
+          },
+          {
+            "candidate": {
+              "excerpt": "Because of the limited interest in methods to obtain titanium metal from ilmenite and the fact\nthat most industrial players describe the standard, industrially used processes, we do not expect\na big shift away from this process in the coming years.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity, attribute, or time, nor does it describe any trend or shift in trend before and after a specific time or event. It merely states an expectation about a process not changing significantly in the coming years."
+          },
+          {
+            "candidate": {
+              "excerpt": "Patent activity has\nincreased since 2012, with a CAGR of +11 percent between 2014 and 2019",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention an entity e, an attribute m, a specific time or event τ, or trends g_pre and g_post. It also does not discuss a change in trend or a meaningful change threshold ε."
+          },
+          {
+            "candidate": {
+              "excerpt": "The number of patent families related to titanium-containing coatings has strongly increased\nsince 2012.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss trends before and after τ (g_pre and g_post) or a meaningful change threshold ε. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "The number of patent families related to the use of titanium and titanium dioxide in water treatment\nhas increased strongly since 2012.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity e, attribute m, time t, or a specific time or event τ. It also does not discuss the trends before and after τ (g_pre and g_post) or any threshold for meaningful change ε. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "Since 2002, patent activity with regard to the process of obtaining titanium dioxide from ilmenite\nhas grown strongly.",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any trajectory shift pattern, change in trend before and after a specific time or event, or any comparison of trends (g_pre and g_post). It only states an increase in patent activity since 2002."
+          },
+          {
+            "candidate": {
+              "excerpt": "patent activity related to the process for the production of titanium metal has\nremained steady since 2002.",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any trajectory shift, change in trend, or a specific time or event τ that causes a difference in trends before and after it. It only states that the patent activity has remained steady since 2002, which does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "the variation in the number of documents since 2012, to identify emerging technologies.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entity, attribute, time, or trend analysis, which are key components of the trajectory shift pattern. It also does not discuss any change in trend before and after a specific time or event."
+          },
+          {
+            "candidate": {
+              "excerpt": "temporal variation",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'temporal variation' does not mention any of the key elements required by the pattern constraints, such as entity, attribute, time, trend before and after a specific time or event, or any comparison of trends."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0000",
+    "chunk-0002",
+    "chunk-0005"
+  ]
+}

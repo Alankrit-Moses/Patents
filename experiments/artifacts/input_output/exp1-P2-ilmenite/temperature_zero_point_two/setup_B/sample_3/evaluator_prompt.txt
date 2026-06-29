@@ -1,0 +1,125 @@
+===== EVALUATOR CALL 1 / EXPERIMENT 1 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well this exact report excerpt instantiates the supplied mathematical pattern definition.
+
+Mathematical pattern definition:
+Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.
+
+For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:
+
+CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1
+
+A comparative growth pattern holds when there exist two entities ei and ej such that:
+
+CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon
+
+where epsilon >= 0 is a threshold for a meaningful growth-rate difference.
+
+An entity ei is a growth leader within E when:
+
+CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).
+
+All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.
+
+
+Candidate report excerpt:
+The sulfate process represented about 40 percent of the total TiO2 production in 2014 (Gázquez
+et al., 2014). In this process, ilmenite is reacted with concentrated sulfuric acid (H2SO4). The
+resulting solution contains titanyl sulfate (TiOSO4) and iron sulfate (FeSO4) dissolved in sulfuric
+acid. A chemical reduction process is required to ensure that all iron is dissolved. The solution
+is concentrated, titanium sulfate hydrolyzed and hydrated titanium dioxide precipitated and
+separated by filtration. The precipitate is calcined, leading to the growth of TiO2 crystals and
+removal of residual water and acid (Gázquez et al., 2014).
+
+Use this alignment scale: 5 = clear and complete instantiation; 4 = valid instantiation with minor ambiguity or omitted context; 3 = partial or uncertain instantiation; 2 = weakly related but missing central conditions; 1 = not an instantiation. Judge semantic pattern alignment, not wording similarity. The saved example collection is non-exhaustive and must not be considered.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.
+
+
+===== EVALUATOR CALL 2 / EXPERIMENT 1 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well this exact report excerpt instantiates the supplied mathematical pattern definition.
+
+Mathematical pattern definition:
+Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.
+
+For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:
+
+CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1
+
+A comparative growth pattern holds when there exist two entities ei and ej such that:
+
+CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon
+
+where epsilon >= 0 is a threshold for a meaningful growth-rate difference.
+
+An entity ei is a growth leader within E when:
+
+CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).
+
+All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.
+
+
+Candidate report excerpt:
+The chloride process represented nearly 60 percent of total TiO2 production in 2014 (Gázquez
+et al., 2014). It can be used for ilmenite, slag or rutile, but commonly natural or synthetic rutile is
+used, which limits iron waste by-product.
+In this process, the raw material is mixed with gaseous chlorine in the presence of coke as a
+reducing agent. The resulting gas stream contains titanium tetrachloride (TiCl4), carbon dioxides
+and chlorides of metal impurities (except for silica and zirconium, which are not chlorinated and
+remain in the reactor). The gas stream is cooled with liquid TiCl4 at a temperature where the
+other metal chlorides solidify and are separated. The purified TiCl4 stream is further cooled and
+condensed as liquid, then reacted with oxygen at high temperature to form titanium dioxide and
+chlorine, which is recycled. Residual chlorine is removed by hydrolysis (Gázquez et al., 2014).
+
+Use this alignment scale: 5 = clear and complete instantiation; 4 = valid instantiation with minor ambiguity or omitted context; 3 = partial or uncertain instantiation; 2 = weakly related but missing central conditions; 1 = not an instantiation. Judge semantic pattern alignment, not wording similarity. The saved example collection is non-exhaustive and must not be considered.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.
+
+
+===== EVALUATOR CALL 3 / EXPERIMENT 1 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well this exact report excerpt instantiates the supplied mathematical pattern definition.
+
+Mathematical pattern definition:
+Let E = {e1, e2, ..., en} be a set of comparable entities and let m be an attribute measured over time. Let v(e, m, t) denote the value of entity e for attribute m at time t.
+
+For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:
+
+CAGR(e, m; t_start, t_end) = (v(e, m, t_end) / v(e, m, t_start))^(1 / n) - 1
+
+A comparative growth pattern holds when there exist two entities ei and ej such that:
+
+CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon
+
+where epsilon >= 0 is a threshold for a meaningful growth-rate difference.
+
+An entity ei is a growth leader within E when:
+
+CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end).
+
+All compared entities must use the same attribute, aggregation method, start year, and end year. An entity with a zero or missing starting value has an undefined CAGR and is excluded from the comparison.
+
+
+Candidate report excerpt:
+The Becher process
+
+Ilmenite ores can be upgraded to synthetic rutile by increasing their TiO2 content to between 90
+and 96 percent. In the Becher process, a chemical reduction is applied to iron in the presence of
+coke, and the material is then leached by ammonium chloride (NH4Cl) to oxidize and precipitate
+the iron as dioxide or hydroxide as fine particles, which are then separated from the larger
+particles of TiO2 (Gázquez et al., 2014).
+
+Use this alignment scale: 5 = clear and complete instantiation; 4 = valid instantiation with minor ambiguity or omitted context; 3 = partial or uncertain instantiation; 2 = weakly related but missing central conditions; 1 = not an instantiation. Judge semantic pattern alignment, not wording similarity. The saved example collection is non-exhaustive and must not be considered.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.
+

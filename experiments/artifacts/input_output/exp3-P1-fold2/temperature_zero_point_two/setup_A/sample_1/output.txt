@@ -1,0 +1,13 @@
+{
+  "task_id": "exp3-P1-fold2",
+  "experiment": "3",
+  "setup": "A",
+  "pattern_id": "P1",
+  "example_id": "exp3-P1-fold2",
+  "errors": [],
+  "raw_output": "{\n  \"mathematical_definition\": \"A function f(y) representing the count of distinct patent families in a given year y, where the behavior can be described as either exponential growth, linear growth, or decline after a peak.\",\n  \"natural_language_description\": \"The recurring behavior in the pairs is the change in the rate of patent publications over time. This can be observed as a shift from rapid growth to a slowdown or decline, or a significant increase in patent publications after a certain year. In some cases, the growth is dynamic and continuous, while in others, it peaks and then declines.\"\n}",
+  "parsed_output": {
+    "M": "A function f(y) representing the count of distinct patent families in a given year y, where the behavior can be described as either exponential growth, linear growth, or decline after a peak.",
+    "T": "The recurring behavior in the pairs is the change in the rate of patent publications over time. This can be observed as a shift from rapid growth to a slowdown or decline, or a significant increase in patent publications after a certain year. In some cases, the growth is dynamic and continuous, while in others, it peaks and then declines."
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "experiment_1/setup_A": {
+    "runs": 6,
+    "means": {
+      "E_text_alignment_scores": 0.16666666666666666
+    }
+  },
+  "experiment_1/setup_B": {
+    "runs": 6,
+    "means": {
+      "E_text_alignment_scores": 0.6666666666666666
+    }
+  },
+  "experiment_2/setup_A": {
+    "runs": 12,
+    "means": {
+      "E_text_alignment_score": 2.0833333333333335
+    }
+  },
+  "experiment_2/setup_B": {
+    "runs": 12,
+    "means": {
+      "E_text_alignment_score": 0.08333333333333333
+    }
+  },
+  "experiment_3/setup_A": {
+    "runs": 6,
+    "means": {
+      "M_alignment_score": 2.5,
+      "T_alignment_score": 2.8333333333333335
+    }
+  },
+  "experiment_3/setup_B": {
+    "runs": 6,
+    "means": {
+      "M_alignment_score": 1.0,
+      "T_alignment_score": 1.0
+    }
+  }
+}

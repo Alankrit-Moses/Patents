@@ -1,0 +1,1102 @@
+{
+  "task_id": "exp2-P1-E1",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P1",
+  "example_id": "P1-E1",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"the number of GenAI patents has increased by over 800%\"}",
+  "parsed_output": {
+    "excerpt": "the number of GenAI patents has increased by over 800%"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [],
+          "metric": "distinct_gan_patent_family_count",
+          "years_or_interval": "2017-2023",
+          "trend": "increasing",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": "The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023."
+        },
+        "raw_output": "{\n  \"entities\": [],\n  \"metric\": \"distinct_gan_patent_family_count\",\n  \"years_or_interval\": \"2017-2023\",\n  \"trend\": \"increasing\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\"\n}",
+        "usage": {
+          "prompt_tokens": 165,
+          "total_tokens": 273,
+          "completion_tokens": 108,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "The number of distinct GAN patent families increased steadily from 2017 to 2022, with a slight decrease in 2023.",
+        "raw_output": "{\n  \"T_hat\": \"The number of distinct GAN patent families increased steadily from 2017 to 2022, with a slight decrease in 2023.\"\n}",
+        "usage": {
+          "prompt_tokens": 177,
+          "total_tokens": 221,
+          "completion_tokens": 44,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "the number of GenAI patents has increased by over 800%",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              },
+              {
+                "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric",
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of GenAI patents has increased by over 800%\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"Between 2014 and 2023, there were 9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4256,
+              "total_tokens": 4388,
+              "completion_tokens": 132,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "GANs",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "patent families",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GANs\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2014 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"strongest increase\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"this has slowed down recently\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4159,
+              "total_tokens": 4336,
+              "completion_tokens": 177,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "generative adversarial networks (GAN)",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"generative adversarial networks (GAN)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2022\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3786,
+              "total_tokens": 4007,
+              "completion_tokens": 221,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2022\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3773,
+              "total_tokens": 3958,
+              "completion_tokens": 185,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4617,
+              "total_tokens": 4798,
+              "completion_tokens": 181,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4427,
+              "total_tokens": 4609,
+              "completion_tokens": 182,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "Between 2014 and 2023, there were almost 9,700 publications of\npatent families in this model type with almost 2,400 patent families published in 2023 alone.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend",
+                  "behavior"
+                ]
+              },
+              {
+                "excerpt": "The largest number of patents were published in the area of GANs.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2014 and 2023, there were almost 9,700 publications of patent families in this model type with almost 2,400 patent families published in 2023 alone.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    },\n    {\n      \"excerpt\": \"The largest number of patents were published in the area of GANs.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4990,
+              "total_tokens": 5149,
+              "completion_tokens": 159,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5481,
+              "total_tokens": 5662,
+              "completion_tokens": 181,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing steadily from 2017 to 2022, with a slight decrease in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\", \"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4795,
+              "total_tokens": 4944,
+              "completion_tokens": 149,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4471,
+              "total_tokens": 4559,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3692,
+              "total_tokens": 3778,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4506,
+              "total_tokens": 4593,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9776,
+              "total_tokens": 9861,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [
+              {
+                "excerpt": "Generative\nAdversarial Networks",
+                "chunk_id": "chunk-0013",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Generative Adversarial Networks\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\", \"entities\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5335,
+              "total_tokens": 5553,
+              "completion_tokens": 218,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "2010-2023",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2010-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"The number of total results for the base query is 75,870 deduplicated scientific publications, as executed on January 20, 2024 with The Lens.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3958,
+              "total_tokens": 4074,
+              "completion_tokens": 116,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "generative adversarial network generator model",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "E.tab",
+                  "TabSignal",
+                  "metric"
+                ]
+              },
+              {
+                "excerpt": "2023",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "TabSignal",
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"generative adversarial network generator model\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"E.tab\", \"TabSignal\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"TabSignal\", \"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3531,
+              "total_tokens": 3623,
+              "completion_tokens": 92,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2022\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing steadily\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The number of distinct GAN patent families has been increasing steadily from 2017 to 2022, with a slight decrease in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3627,
+              "total_tokens": 3813,
+              "completion_tokens": 186,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct GAN patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2017 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4421,
+              "total_tokens": 4509,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5949,
+              "total_tokens": 5958,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "the number of GenAI patents has increased by over 800%",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric",
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "GANs",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "patent families",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "generative adversarial networks (GAN)",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "Between 2014 and 2023, there were almost 9,700 publications of\npatent families in this model type with almost 2,400 patent families published in 2023 alone.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "The largest number of patents were published in the area of GANs.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "Generative\nAdversarial Networks",
+            "chunk_id": "chunk-0013",
+            "local_score": 1,
+            "matched_constraints": [
+              "entities"
+            ]
+          },
+          {
+            "excerpt": "2010-2023",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "generative adversarial network generator model",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": [
+              "E.tab",
+              "TabSignal",
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "2023",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": [
+              "TabSignal",
+              "years_or_interval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 3,
+            "matched_conditions": [
+              "trend"
+            ],
+            "failed_conditions": [
+              "entities",
+              "metric",
+              "years_or_interval",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions an increase in the number of patents but does not specify the entity (GAN), the exact metric (distinct_gan_patent_family_count), the years or interval, or the specific pattern behavior described in the TabSignal. It only matches the general trend of increasing.",
+            "candidate": {
+              "excerpt": "the number of GenAI patents has increased by over 800%",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"trend\"],\n  \"failed_conditions\": [\"entities\", \"metric\", \"years_or_interval\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text mentions an increase in the number of patents but does not specify the entity (GAN), the exact metric (distinct_gan_patent_family_count), the years or interval, or the specific pattern behavior described in the TabSignal. It only matches the general trend of increasing.\"\n}",
+            "usage": {
+              "prompt_tokens": 292,
+              "total_tokens": 401,
+              "completion_tokens": 109,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "metric",
+              "years_or_interval",
+              "trend"
+            ],
+            "failed_conditions": [
+              "entities",
+              "turning_point",
+              "comparison",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention the specific metric 'distinct_gan_patent_family_count', the years 2017-2023, or the pattern behavior of a steady increase from 2017 to 2022 with a slight decrease in 2023. It also does not mention any entities, turning points, or comparisons.",
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"metric\", \"years_or_interval\", \"trend\"],\n  \"failed_conditions\": [\"entities\", \"turning_point\", \"comparison\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text does not mention the specific metric 'distinct_gan_patent_family_count', the years 2017-2023, or the pattern behavior of a steady increase from 2017 to 2022 with a slight decrease in 2023. It also does not mention any entities, turning points, or comparisons.\"\n}",
+            "usage": {
+              "prompt_tokens": 287,
+              "total_tokens": 423,
+              "completion_tokens": 136,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not match any of the conditions specified in the TabSignal. It mentions different years (2014-2023), a different metric (total patent families), and a different pattern behavior (total count over a period vs. yearly trend).",
+            "candidate": {
+              "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric",
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match any of the conditions specified in the TabSignal. It mentions different years (2014-2023), a different metric (total patent families), and a different pattern behavior (total count over a period vs. yearly trend).\"\n}",
+            "usage": {
+              "prompt_tokens": 323,
+              "total_tokens": 437,
+              "completion_tokens": 114,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'patent families' does not describe any of the observed compact table evidence. It lacks specific details about the entities, metric, years or interval, trend, and pattern behavior.",
+            "candidate": {
+              "excerpt": "patent families",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"entity\", \"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate text 'patent families' does not describe any of the observed compact table evidence. It lacks specific details about the entities, metric, years or interval, trend, and pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 281,
+              "total_tokens": 368,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'GANs' does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It does not describe the observed compact table evidence at all.",
+            "candidate": {
+              "excerpt": "GANs",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text 'GANs' does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It does not describe the observed compact table evidence at all.\"\n}",
+            "usage": {
+              "prompt_tokens": 281,
+              "total_tokens": 375,
+              "completion_tokens": 94,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not match any of the conditions specified in the TabSignal. It mentions a different time interval (2014-2023), a different metric (publications of patent families), and a different pattern behavior (almost 2,400 patent families published in 2023 alone).",
+            "candidate": {
+              "excerpt": "Between 2014 and 2023, there were almost 9,700 publications of\npatent families in this model type with almost 2,400 patent families published in 2023 alone.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"years_or_interval\",\n    \"trend\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match any of the conditions specified in the TabSignal. It mentions a different time interval (2014-2023), a different metric (publications of patent families), and a different pattern behavior (almost 2,400 patent families published in 2023 alone).\"\n}",
+            "usage": {
+              "prompt_tokens": 328,
+              "total_tokens": 454,
+              "completion_tokens": 126,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the required conditions such as the entity (GAN), the metric (distinct_gan_patent_family_count), the years or interval (2017-2023), the trend (increasing), or the pattern behavior (steady increase with a slight decrease in 2023).",
+            "candidate": {
+              "excerpt": "generative adversarial networks (GAN)",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the required conditions such as the entity (GAN), the metric (distinct_gan_patent_family_count), the years or interval (2017-2023), the trend (increasing), or the pattern behavior (steady increase with a slight decrease in 2023).\"\n}",
+            "usage": {
+              "prompt_tokens": 286,
+              "total_tokens": 414,
+              "completion_tokens": 128,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the required conditions such as entity, metric, year/interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "Generative\nAdversarial Networks",
+              "chunk_id": "chunk-0013",
+              "local_score": 1,
+              "matched_constraints": [
+                "entities"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"entity\", \"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate text does not mention any of the required conditions such as entity, metric, year/interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 285,
+              "total_tokens": 360,
+              "completion_tokens": 75,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any specific entity, metric, year or interval, trend, or pattern behavior related to the table data. It only provides a general statement about the number of patents published in the area of GANs.",
+            "candidate": {
+              "excerpt": "The largest number of patents were published in the area of GANs.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any specific entity, metric, year or interval, trend, or pattern behavior related to the table data. It only provides a general statement about the number of patents published in the area of GANs.\"\n}",
+            "usage": {
+              "prompt_tokens": 292,
+              "total_tokens": 395,
+              "completion_tokens": 103,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the key elements present in the table or the internal signal. It discusses a different metric (total results for a base query) and does not provide any information about the distinct GAN patent family count or its trend over the years.",
+            "candidate": {
+              "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the key elements present in the table or the internal signal. It discusses a different metric (total results for a base query) and does not provide any information about the distinct GAN patent family count or its trend over the years.\"\n}",
+            "usage": {
+              "prompt_tokens": 318,
+              "total_tokens": 428,
+              "completion_tokens": 110,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data.",
+            "candidate": {
+              "excerpt": "generative adversarial network generator model",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "E.tab",
+                "TabSignal",
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data.\"\n}",
+            "usage": {
+              "prompt_tokens": 285,
+              "total_tokens": 367,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text '2023' does not describe any of the observed table evidence, including entities, metric, years or interval, trend, or pattern behavior.",
+            "candidate": {
+              "excerpt": "2023",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "TabSignal",
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"entity\", \"metric\", \"year/interval\", \"trend\", \"pattern behavior\"],\n  \"rationale\": \"The candidate text '2023' does not describe any of the observed table evidence, including entities, metric, years or interval, trend, or pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 282,
+              "total_tokens": 364,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "the number of GenAI patents has increased by over 800%",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text does not mention the specific metric 'distinct_gan_patent_family_count', the years 2017-2023, or the pattern behavior of a steady increase from 2017 to 2022 with a slight decrease in 2023. It also does not mention any entities, turning points, or comparisons."
+          },
+          {
+            "candidate": {
+              "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type, with 2,400 patent families published in 2023 alone.",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric",
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match any of the conditions specified in the TabSignal. It mentions different years (2014-2023), a different metric (total patent families), and a different pattern behavior (total count over a period vs. yearly trend)."
+          },
+          {
+            "candidate": {
+              "excerpt": "patent families",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'patent families' does not describe any of the observed compact table evidence. It lacks specific details about the entities, metric, years or interval, trend, and pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "GANs",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'GANs' does not mention any entities, metrics, years or intervals, trends, or pattern behaviors. It does not describe the observed compact table evidence at all."
+          },
+          {
+            "candidate": {
+              "excerpt": "Between 2014 and 2023, there were almost 9,700 publications of\npatent families in this model type with almost 2,400 patent families published in 2023 alone.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match any of the conditions specified in the TabSignal. It mentions a different time interval (2014-2023), a different metric (publications of patent families), and a different pattern behavior (almost 2,400 patent families published in 2023 alone)."
+          },
+          {
+            "candidate": {
+              "excerpt": "generative adversarial networks (GAN)",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the required conditions such as the entity (GAN), the metric (distinct_gan_patent_family_count), the years or interval (2017-2023), the trend (increasing), or the pattern behavior (steady increase with a slight decrease in 2023)."
+          },
+          {
+            "candidate": {
+              "excerpt": "Generative\nAdversarial Networks",
+              "chunk_id": "chunk-0013",
+              "local_score": 1,
+              "matched_constraints": [
+                "entities"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the required conditions such as entity, metric, year/interval, trend, or pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "The largest number of patents were published in the area of GANs.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any specific entity, metric, year or interval, trend, or pattern behavior related to the table data. It only provides a general statement about the number of patents published in the area of GANs."
+          },
+          {
+            "candidate": {
+              "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the key elements present in the table or the internal signal. It discusses a different metric (total results for a base query) and does not provide any information about the distinct GAN patent family count or its trend over the years."
+          },
+          {
+            "candidate": {
+              "excerpt": "generative adversarial network generator model",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "E.tab",
+                "TabSignal",
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data."
+          },
+          {
+            "candidate": {
+              "excerpt": "2023",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": [
+                "TabSignal",
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text '2023' does not describe any of the observed table evidence, including entities, metric, years or interval, trend, or pattern behavior."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0000"
+  ]
+}

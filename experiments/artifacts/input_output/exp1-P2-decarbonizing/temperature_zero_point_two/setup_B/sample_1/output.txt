@@ -1,0 +1,22 @@
+{
+  "task_id": "exp1-P2-decarbonizing",
+  "experiment": "1",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-decarbonizing",
+  "errors": [],
+  "raw_output": "{\"examples\":[{\"excerpt\":\"The different types of low emission truck options\"},{\"excerpt\":\"The decarbonization of the road transportation sector will require a systematic approach that leverages measures that include vehicle energy efficiency improvement, renewable energy-based electrification, better urban planning, and making public transport more accessible among others.\"},{\"excerpt\":\"The decarbonization of the road transportation sector will require a systematic approach that leverages measures that include vehicle energy efficiency improvement, renewable energy-based electrification, better urban planning, and making public transport more accessible among others.\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The different types of low emission truck options"
+      },
+      {
+        "excerpt": "The decarbonization of the road transportation sector will require a systematic approach that leverages measures that include vehicle energy efficiency improvement, renewable energy-based electrification, better urban planning, and making public transport more accessible among others."
+      },
+      {
+        "excerpt": "The decarbonization of the road transportation sector will require a systematic approach that leverages measures that include vehicle energy efficiency improvement, renewable energy-based electrification, better urban planning, and making public transport more accessible among others."
+      }
+    ]
+  }
+}

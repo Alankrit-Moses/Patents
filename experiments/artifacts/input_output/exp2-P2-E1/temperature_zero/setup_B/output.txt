@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P2-E1",
+  "experiment": "2",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "P2-E1",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"entity,start_year,end_year,cagr_percent\\n\\\"GAN, Generative Adversarial Networks\\\",2020,2023,14.4\\n\\\"Variational Autoencoder,VAE\\\",2020,2023,33.4\\nAutoregressiv Models,2020,2023,42.0\\nDiffusion Models,2020,2023,190.4\\n\\\"Large Language Models,LLM\\\",2020,2023,155.2\"}",
+  "parsed_output": {
+    "excerpt": "entity,start_year,end_year,cagr_percent\n\"GAN, Generative Adversarial Networks\",2020,2023,14.4\n\"Variational Autoencoder,VAE\",2020,2023,33.4\nAutoregressiv Models,2020,2023,42.0\nDiffusion Models,2020,2023,190.4\n\"Large Language Models,LLM\",2020,2023,155.2"
+  }
+}

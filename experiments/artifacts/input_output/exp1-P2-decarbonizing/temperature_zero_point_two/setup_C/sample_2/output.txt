@@ -1,0 +1,1469 @@
+{
+  "task_id": "exp1-P2-decarbonizing",
+  "experiment": "1",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-decarbonizing",
+  "errors": [],
+  "raw_output": "{\"examples\": [{\"excerpt\": \"The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in\\npercentages.\"}, {\"excerpt\": \"Over the past five years, India has shown a remarkable surge in patenting activity related\\nto heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This\\ncorresponds to a compound annual growth rate of more than 60%, making India by far the\\nfastest-growing innovation location in this field.\"}, {\"excerpt\": \"Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\\ntransport digitalization over the past five years, at a compound rate of 27% per annum\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in\npercentages."
+      },
+      {
+        "excerpt": "Over the past five years, India has shown a remarkable surge in patenting activity related\nto heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This\ncorresponds to a compound annual growth rate of more than 60%, making India by far the\nfastest-growing innovation location in this field."
+      },
+      {
+        "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum"
+      }
+    ]
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "known",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "irrelevant"
+          },
+          "requested_count": 3,
+          "known": [
+            "D.text",
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "DescriptionInductionAgent(optional T_hat)",
+          "TextEvidenceAgent(map-reduce)",
+          "TextPatternVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "M"
+      ],
+      "output": {
+        "T_hat": "A comparative growth pattern exists among a set of entities E with attribute m over a shared interval [t_start, t_end] if there are two entities ei and ej where the difference in their Compound Annual Growth Rates (CAGR) exceeds a threshold epsilon. An entity ei is identified as a growth leader if its CAGR is the maximum among all entities in E. All entities must have non-zero, non-missing starting values for the attribute m.",
+        "raw_output": "{\n  \"T_hat\": \"A comparative growth pattern exists among a set of entities E with attribute m over a shared interval [t_start, t_end] if there are two entities ei and ej where the difference in their Compound Annual Growth Rates (CAGR) exceeds a threshold epsilon. An entity ei is identified as a growth leader if its CAGR is the maximum among all entities in E. All entities must have non-zero, non-missing starting values for the attribute m.\"\n}",
+        "usage": {
+          "prompt_tokens": 368,
+          "total_tokens": 470,
+          "completion_tokens": 102,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "M",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 23,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4317,
+              "total_tokens": 4324,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "IRENA (2026). Near-700 GW Surge in 2025 Proves Renewable Energy Resilience Abu Dhabi: International\nRenewable Energy Agency. Available at: https://www.irena.org/News/pressreleases/2026/Apr/\nNear-700-GW-Surge-in-2025-Proves-Renewable-Energy-Resilience",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable\nEnergy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency,\nCOP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/Publications/2025/Oct/\nUAE-Consensus-2030-tripling-renewables-doubling-efficiency.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"IRENA (2026). Near-700 GW Surge in 2025 Proves Renewable Energy Resilience Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/News/pressreleases/2026/Apr/ Near-700-GW-Surge-in-2025-Proves-Renewable-Energy-Resilience\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable Energy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency, COP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/Publications/2025/Oct/ UAE-Consensus-2030-tripling-renewables-doubling-efficiency.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IEA, IRENA, UNSD, World Bank and WHO (2025). Tracking SDG7: The Energy Progress Report 2025. Washington, DC: World Bank, International Energy Agency, International Renewable Energy Agency, United Nations Statistics Division and World Health Organization. Available at: https://www.irena.org/Publications/2025/Jun/TrackingSDG-7-The-Energy-Progress-Report-2025; IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable Energy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency, COP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/ Publications/2025/Oct/UAE-Consensus-2030-tripling-renewables-doubling-efficiency\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable Energy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency, COP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/Publications/2025/Oct/ UAE-Consensus-2030-tripling-renewables-doubling-efficiency.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2024a). Critical Materials: Batteries for Electric Vehicles. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2024/Sep/Critical-materials-Batteries-for-electricvehicles; IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2023). Innovation Landscape for Smart Electrification: Decarbonising End-use Sectors with Renewable Power. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2023/Jun/ Innovation-landscape-for-smart-electrification; IRENA (2024d). Decarbonising hard-to-abate sectors with renewables: Perspectives for the G7, International Renewable Energy Agency, Abu Dhabi; Available at: https://www.irena.org/-/media/Files/IRENA/Agency/Publication/2024/Apr/IRENA_G7_Decarbonising_ hard_to_abate_sectors_2024.pdf; IRENA (2024a). Critical Materials: Batteries for Electric Vehicles. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2024/Sep/Criticalmaterials-Batteries-for-electric-vehicles; IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/ Publications/2025/Jun/Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"IRENA (2025). Policies for Advancing the Renewables-based Electrification of Road Transport. Abu Dhabi: International Renewable Energy Agency. Available at: https://www.irena.org/Publications/2025/Jun/ Policies-for-advancing-the-renewables-based-electrification-of-road-transport.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"WIPO (2025). WIPO Technology Trends Report 2025: The Future of Transportation. Geneva: World Intellectual Property Organization. Available at: https://www.wipo.int/web-publications/wipo-technology-trends-future-of-transportation/en/index.html.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4260,
+              "total_tokens": 6065,
+              "completion_tokens": 1805,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "Each field accounted for roughly\n5,000–6,000 published patent families in 2024.",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy sources – currently show comparable patenting activity.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Each field accounted for roughly 5,000–6,000 published patent families in 2024.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4369,
+              "total_tokens": 4482,
+              "completion_tokens": 113,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "patent growth",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "patent growth",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"patent growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"patent growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4158,
+              "total_tokens": 4227,
+              "completion_tokens": 69,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "The number of published patent families in this field jumped from\n137 in 2000 to 3,511 in 2024.",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "the number of patent families increasing threefold over the last 10 years\n(from 339 in 2015 to 1,065 in 2024).",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The number of published patent families in this field jumped from 137 in 2000 to 3,511 in 2024.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"the number of patent families increasing threefold over the last 10 years (from 339 in 2015 to 1,065 in 2024).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4514,
+              "total_tokens": 4652,
+              "completion_tokens": 138,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "compound annual growth rate",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"compound annual growth rate of 38% per year\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"compound annual growth rate, 2019–2024 (% p.a.)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in percentages\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4442,
+              "total_tokens": 4659,
+              "completion_tokens": 217,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in\npercentages.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in percentages.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5205,
+              "total_tokens": 5272,
+              "completion_tokens": 67,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "Tsinghua University in China is the first university on the list (ranked 51st), having published\n131 patent families since 2000.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "Tata Motors is the first Indian\ncompany in the ranking, coming in at 30th place with 234 published patent families and\nsignificant patent growth in recent years.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Tsinghua University in China is the first university on the list (ranked 51st), having published 131 patent families since 2000.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"Tata Motors is the first Indian company in the ranking, coming in at 30th place with 234 published patent families and significant patent growth in recent years.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4073,
+              "total_tokens": 4207,
+              "completion_tokens": 134,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "compound annual growth rates of 12% for low-emission energy sources\nand 14% for energy infrastructure over the past 25 years",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rates of 12% for low-emission energy sources and 14% for energy infrastructure over the past 25 years\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4326,
+              "total_tokens": 4394,
+              "completion_tokens": 68,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "Over the past five years, India has shown a remarkable surge in patenting activity related\nto heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This\ncorresponds to a compound annual growth rate of more than 60%, making India by far the\nfastest-growing innovation location in this field.",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Over the past five years, India has shown a remarkable surge in patenting activity related to heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This corresponds to a compound annual growth rate of more than 60%, making India by far the fastest-growing innovation location in this field.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4603,
+              "total_tokens": 4715,
+              "completion_tokens": 112,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "compound annual growth rate",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "CAGR",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4436,
+              "total_tokens": 4507,
+              "completion_tokens": 71,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "This trend represents a compound annual growth\nrate (CAGR) of more than 11%.",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"This trend represents a compound annual growth rate (CAGR) of more than 11%.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4428,
+              "total_tokens": 4485,
+              "completion_tokens": 57,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [
+              {
+                "excerpt": "CAGR (%",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR (%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4915,
+              "total_tokens": 4956,
+              "completion_tokens": 41,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [
+              {
+                "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum",
+                "chunk_id": "chunk-0013",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Sweden has achieved the highest patent growth rate in the area of green heavy-duty road transport digitalization over the past five years, at a compound rate of 27% per annum\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4386,
+              "total_tokens": 4462,
+              "completion_tokens": 76,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "compound annual growth rate",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "compound annual\ngrowth rate (CAGR)",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4610,
+              "total_tokens": 4687,
+              "completion_tokens": 77,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "representing a year-on-year growth of 80%",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "representing a year-on-year growth of\n30%",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"representing a year-on-year growth of 80%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"representing a year-on-year growth of 30%\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4500,
+              "total_tokens": 4585,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4471,
+              "total_tokens": 4598,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "Battery electric, Fuel cells, and sustainable biofuels are technical options available for\nheavy duty road transportation decarbonization",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Battery electric, Fuel cells, and sustainable biofuels are technical options available for heavy duty road transportation decarbonization\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4100,
+              "total_tokens": 4162,
+              "completion_tokens": 62,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4415,
+              "total_tokens": 4422,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0019",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4034,
+              "total_tokens": 4041,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0020",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3575,
+              "total_tokens": 3702,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0021",
+            "candidates": [
+              {
+                "excerpt": "compound annual growth rate (CAGR) of patent families for each\ncombination over the same period",
+                "chunk_id": "chunk-0021",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate (CAGR) of patent families for each combination over the same period\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3645,
+              "total_tokens": 3702,
+              "completion_tokens": 57,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0022",
+            "candidates": [
+              {
+                "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+                "chunk_id": "chunk-0022",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Determine the compound annual growth rate (CAGR) of patent families for each combination over the same period.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 1487,
+              "total_tokens": 1546,
+              "completion_tokens": 59,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "IRENA (2026). Near-700 GW Surge in 2025 Proves Renewable Energy Resilience Abu Dhabi: International\nRenewable Energy Agency. Available at: https://www.irena.org/News/pressreleases/2026/Apr/\nNear-700-GW-Surge-in-2025-Proves-Renewable-Energy-Resilience",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable\nEnergy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency,\nCOP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/Publications/2025/Oct/\nUAE-Consensus-2030-tripling-renewables-doubling-efficiency.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Each field accounted for roughly\n5,000–6,000 published patent families in 2024.",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "patent growth",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of published patent families in this field jumped from\n137 in 2000 to 3,511 in 2024.",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "the number of patent families increasing threefold over the last 10 years\n(from 339 in 2015 to 1,065 in 2024).",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "compound annual growth rate",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in\npercentages.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Tsinghua University in China is the first university on the list (ranked 51st), having published\n131 patent families since 2000.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Tata Motors is the first Indian\ncompany in the ranking, coming in at 30th place with 234 published patent families and\nsignificant patent growth in recent years.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "compound annual growth rates of 12% for low-emission energy sources\nand 14% for energy infrastructure over the past 25 years",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Over the past five years, India has shown a remarkable surge in patenting activity related\nto heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This\ncorresponds to a compound annual growth rate of more than 60%, making India by far the\nfastest-growing innovation location in this field.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "CAGR",
+            "chunk_id": "chunk-0010",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "This trend represents a compound annual growth\nrate (CAGR) of more than 11%.",
+            "chunk_id": "chunk-0011",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "CAGR (%",
+            "chunk_id": "chunk-0012",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum",
+            "chunk_id": "chunk-0013",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "compound annual\ngrowth rate (CAGR)",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "representing a year-on-year growth of 80%",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "representing a year-on-year growth of\n30%",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Battery electric, Fuel cells, and sustainable biofuels are technical options available for\nheavy duty road transportation decarbonization",
+            "chunk_id": "chunk-0017",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "compound annual growth rate (CAGR) of patent families for each\ncombination over the same period",
+            "chunk_id": "chunk-0021",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+            "chunk_id": "chunk-0022",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextPatternVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "M",
+        "T_hat"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention the set of comparable entities E, the attribute m, the shared interval [t_start, t_end], the definition of CAGR, the comparative growth pattern, the growth leader, or the threshold epsilon. It only briefly mentions CAGR and the time interval.",
+            "candidate": {
+              "excerpt": "The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in\npercentages.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention the set of comparable entities E, the attribute m, the shared interval [t_start, t_end], the definition of CAGR, the comparative growth pattern, the growth leader, or the threshold epsilon. It only briefly mentions CAGR and the time interval.\"\n}",
+            "usage": {
+              "prompt_tokens": 508,
+              "total_tokens": 605,
+              "completion_tokens": 97,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not satisfy the pattern constraints. It mentions a specific entity (India) and its growth rate but does not provide a comparative analysis with other entities, nor does it define the Compound Annual Growth Rate (CAGR) or discuss a threshold epsilon. It also does not identify a growth leader or ensure all compared entities have non-zero, non-missing starting values.",
+            "candidate": {
+              "excerpt": "Over the past five years, India has shown a remarkable surge in patenting activity related\nto heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This\ncorresponds to a compound annual growth rate of more than 60%, making India by far the\nfastest-growing innovation location in this field.",
+              "chunk_id": "chunk-0009",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not satisfy the pattern constraints. It mentions a specific entity (India) and its growth rate but does not provide a comparative analysis with other entities, nor does it define the Compound Annual Growth Rate (CAGR) or discuss a threshold epsilon. It also does not identify a growth leader or ensure all compared entities have non-zero, non-missing starting values.\"\n}",
+            "usage": {
+              "prompt_tokens": 557,
+              "total_tokens": 674,
+              "completion_tokens": 117,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not provide a set of comparable entities, a specific attribute measured over time, or a shared interval. It also does not mention a threshold epsilon or compare growth rates between two entities. Additionally, it does not discuss the exclusion of entities with zero or missing starting values.",
+            "candidate": {
+              "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum",
+              "chunk_id": "chunk-0013",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not provide a set of comparable entities, a specific attribute measured over time, or a shared interval. It also does not mention a threshold epsilon or compare growth rates between two entities. Additionally, it does not discuss the exclusion of entities with zero or missing starting values.\"\n}",
+            "usage": {
+              "prompt_tokens": 516,
+              "total_tokens": 610,
+              "completion_tokens": 94,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not fully satisfy the pattern constraints. It mentions the compound annual growth rate (CAGR) of patent families but does not provide the detailed mathematical definition, the conditions for a comparative growth pattern, or the criteria for identifying a growth leader as required by the pattern constraints.",
+            "candidate": {
+              "excerpt": "compound annual growth rate (CAGR) of patent families for each\ncombination over the same period",
+              "chunk_id": "chunk-0021",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not fully satisfy the pattern constraints. It mentions the compound annual growth rate (CAGR) of patent families but does not provide the detailed mathematical definition, the conditions for a comparative growth pattern, or the criteria for identifying a growth leader as required by the pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 498,
+              "total_tokens": 593,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 2,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention comparable entities, a shared interval, or the specific formula for CAGR. It also does not discuss the comparison of growth rates between entities or the identification of a growth leader.",
+            "candidate": {
+              "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+              "chunk_id": "chunk-0022",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 2,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention comparable entities, a shared interval, or the specific formula for CAGR. It also does not discuss the comparison of growth rates between entities or the identification of a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 500,
+              "total_tokens": 579,
+              "completion_tokens": 79,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It is a reference to a publication and does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders among a set of entities.",
+            "candidate": {
+              "excerpt": "IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable\nEnergy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency,\nCOP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/Publications/2025/Oct/\nUAE-Consensus-2030-tripling-renewables-doubling-efficiency.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It is a reference to a publication and does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders among a set of entities.\"\n}",
+            "usage": {
+              "prompt_tokens": 586,
+              "total_tokens": 667,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It is a simple reference to a report and does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders among a set of entities.",
+            "candidate": {
+              "excerpt": "IRENA (2026). Near-700 GW Surge in 2025 Proves Renewable Energy Resilience Abu Dhabi: International\nRenewable Energy Agency. Available at: https://www.irena.org/News/pressreleases/2026/Apr/\nNear-700-GW-Surge-in-2025-Proves-Renewable-Energy-Resilience",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It is a simple reference to a report and does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders among a set of entities.\"\n}",
+            "usage": {
+              "prompt_tokens": 569,
+              "total_tokens": 651,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any of the key concepts required by the pattern constraints, such as comparable entities, attribute measured over time, Compound Annual Growth Rate (CAGR), threshold epsilon, or growth leader.",
+            "candidate": {
+              "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any of the key concepts required by the pattern constraints, such as comparable entities, attribute measured over time, Compound Annual Growth Rate (CAGR), threshold epsilon, or growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 502,
+              "total_tokens": 582,
+              "completion_tokens": 80,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any of the key concepts required by the pattern constraints, such as sets of entities, attributes measured over time, Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders. It merely provides a numerical range for patent families in a specific year without any context of growth, comparison, or analysis over time.",
+            "candidate": {
+              "excerpt": "Each field accounted for roughly\n5,000–6,000 published patent families in 2024.",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any of the key concepts required by the pattern constraints, such as sets of entities, attributes measured over time, Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders. It merely provides a numerical range for patent families in a specific year without any context of growth, comparison, or analysis over time.\"\n}",
+            "usage": {
+              "prompt_tokens": 502,
+              "total_tokens": 610,
+              "completion_tokens": 108,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'patent growth' does not match the pattern constraints. It does not discuss a set of comparable entities, an attribute measured over time, or any mathematical definitions related to CAGR. It also does not mention a comparative growth pattern or a growth leader.",
+            "candidate": {
+              "excerpt": "patent growth",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'patent growth' does not match the pattern constraints. It does not discuss a set of comparable entities, an attribute measured over time, or any mathematical definitions related to CAGR. It also does not mention a comparative growth pattern or a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 479,
+              "total_tokens": 571,
+              "completion_tokens": 92,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any set of comparable entities, an attribute measured over time, or any growth rate comparison. It only provides a single data point for one entity without any context of comparison or growth rate calculation.",
+            "candidate": {
+              "excerpt": "The number of published patent families in this field jumped from\n137 in 2000 to 3,511 in 2024.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\", \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention any set of comparable entities, an attribute measured over time, or any growth rate comparison. It only provides a single data point for one entity without any context of comparison or growth rate calculation.\"\n}",
+            "usage": {
+              "prompt_tokens": 510,
+              "total_tokens": 595,
+              "completion_tokens": 85,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention a set of comparable entities, a specific attribute measured over time, or the concept of Compound Annual Growth Rate (CAGR). It also does not discuss a threshold epsilon or the requirement for non-zero, non-missing starting values.",
+            "candidate": {
+              "excerpt": "the number of patent families increasing threefold over the last 10 years\n(from 339 in 2015 to 1,065 in 2024).",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention a set of comparable entities, a specific attribute measured over time, or the concept of Compound Annual Growth Rate (CAGR). It also does not discuss a threshold epsilon or the requirement for non-zero, non-missing starting values.\"\n}",
+            "usage": {
+              "prompt_tokens": 516,
+              "total_tokens": 606,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'compound annual growth rate' does not match the detailed description and conditions provided in the pattern constraints. It is too short and lacks the necessary context and specifics about the entities, attributes, time intervals, and growth rate comparisons.",
+            "candidate": {
+              "excerpt": "compound annual growth rate",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'compound annual growth rate' does not match the detailed description and conditions provided in the pattern constraints. It is too short and lacks the necessary context and specifics about the entities, attributes, time intervals, and growth rate comparisons.\"\n}",
+            "usage": {
+              "prompt_tokens": 481,
+              "total_tokens": 567,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or any of the other key elements required by the pattern constraints. It merely states a fact about Tsinghua University's patent publications without any context of growth rates, comparisons, or thresholds.",
+            "candidate": {
+              "excerpt": "Tsinghua University in China is the first university on the list (ranked 51st), having published\n131 patent families since 2000.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or any of the other key elements required by the pattern constraints. It merely states a fact about Tsinghua University's patent publications without any context of growth rates, comparisons, or thresholds.\"\n}",
+            "usage": {
+              "prompt_tokens": 512,
+              "total_tokens": 608,
+              "completion_tokens": 96,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any set of comparable entities, a specific attribute measured over time, a shared interval, or any calculation or comparison of growth rates. It also does not define or discuss the Compound Annual Growth Rate (CAGR) or a threshold epsilon. Therefore, it does not satisfy the given pattern constraints.",
+            "candidate": {
+              "excerpt": "Tata Motors is the first Indian\ncompany in the ranking, coming in at 30th place with 234 published patent families and\nsignificant patent growth in recent years.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any set of comparable entities, a specific attribute measured over time, a shared interval, or any calculation or comparison of growth rates. It also does not define or discuss the Compound Annual Growth Rate (CAGR) or a threshold epsilon. Therefore, it does not satisfy the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 514,
+              "total_tokens": 616,
+              "completion_tokens": 102,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention a set of comparable entities, a specific attribute measured over time, or a shared interval. It also does not discuss the comparison of growth rates between entities or the identification of a growth leader. The text only provides growth rates for two categories without context or comparison.",
+            "candidate": {
+              "excerpt": "compound annual growth rates of 12% for low-emission energy sources\nand 14% for energy infrastructure over the past 25 years",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\",\n    \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention a set of comparable entities, a specific attribute measured over time, or a shared interval. It also does not discuss the comparison of growth rates between entities or the identification of a growth leader. The text only provides growth rates for two categories without context or comparison.\"\n}",
+            "usage": {
+              "prompt_tokens": 508,
+              "total_tokens": 608,
+              "completion_tokens": 100,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'CAGR' does not match either of the provided patterns. It is too short and lacks the necessary details and structure required by both patterns.",
+            "candidate": {
+              "excerpt": "CAGR",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'CAGR' does not match either of the provided patterns. It is too short and lacks the necessary details and structure required by both patterns.\"\n}",
+            "usage": {
+              "prompt_tokens": 479,
+              "total_tokens": 549,
+              "completion_tokens": 70,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention a set of comparable entities, a shared interval, or a comparison between entities. It also does not discuss a threshold epsilon or the concept of a growth leader.",
+            "candidate": {
+              "excerpt": "This trend represents a compound annual growth\nrate (CAGR) of more than 11%.",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"M\",\n    \"T_hat\"\n  ],\n  \"rationale\": \"The candidate text does not mention a set of comparable entities, a shared interval, or a comparison between entities. It also does not discuss a threshold epsilon or the concept of a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 496,
+              "total_tokens": 576,
+              "completion_tokens": 80,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text 'CAGR (%)' does not match the pattern constraints. It is too short and does not contain any of the required elements such as the definition of CAGR, the comparative growth pattern, or the conditions for a growth leader.",
+            "candidate": {
+              "excerpt": "CAGR (%",
+              "chunk_id": "chunk-0012",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text 'CAGR (%)' does not match the pattern constraints. It is too short and does not contain any of the required elements such as the definition of CAGR, the comparative growth pattern, or the conditions for a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 480,
+              "total_tokens": 568,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It only mentions 'compound annual growth rate (CAGR)' without any context, definitions, or comparisons as required by the constraints.",
+            "candidate": {
+              "excerpt": "compound annual\ngrowth rate (CAGR)",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It only mentions 'compound annual growth rate (CAGR)' without any context, definitions, or comparisons as required by the constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 486,
+              "total_tokens": 561,
+              "completion_tokens": 75,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It does not define a set of comparable entities, a shared interval, or discuss Compound Annual Growth Rates (CAGR) and their differences. It simply states a growth percentage without context or comparison.",
+            "candidate": {
+              "excerpt": "representing a year-on-year growth of 80%",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It does not define a set of comparable entities, a shared interval, or discuss Compound Annual Growth Rates (CAGR) and their differences. It simply states a growth percentage without context or comparison.\"\n}",
+            "usage": {
+              "prompt_tokens": 487,
+              "total_tokens": 574,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not match the pattern constraints. It does not discuss a set of comparable entities, a shared interval, or the calculation of Compound Annual Growth Rate (CAGR). It also does not mention any threshold epsilon or the identification of a growth leader.",
+            "candidate": {
+              "excerpt": "representing a year-on-year growth of\n30%",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not match the pattern constraints. It does not discuss a set of comparable entities, a shared interval, or the calculation of Compound Annual Growth Rate (CAGR). It also does not mention any threshold epsilon or the identification of a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 487,
+              "total_tokens": 577,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any of the elements required by the pattern constraints, such as a set of comparable entities, an attribute measured over time, Compound Annual Growth Rate (CAGR), or a comparative growth pattern.",
+            "candidate": {
+              "excerpt": "Battery electric, Fuel cells, and sustainable biofuels are technical options available for\nheavy duty road transportation decarbonization",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any of the elements required by the pattern constraints, such as a set of comparable entities, an attribute measured over time, Compound Annual Growth Rate (CAGR), or a comparative growth pattern.\"\n}",
+            "usage": {
+              "prompt_tokens": 503,
+              "total_tokens": 585,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "The compound annual growth rate (CAGR) measures the average annual patent growth between 2019 and 2024 in\npercentages.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Over the past five years, India has shown a remarkable surge in patenting activity related\nto heavy-duty energy infrastructure, rising from 39 publications in 2019 to 449 in 2024. This\ncorresponds to a compound annual growth rate of more than 60%, making India by far the\nfastest-growing innovation location in this field.",
+            "chunk_id": "chunk-0009",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Sweden has achieved the highest patent growth rate in the area of green heavy-duty road\ntransport digitalization over the past five years, at a compound rate of 27% per annum",
+            "chunk_id": "chunk-0013",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "compound annual growth rate (CAGR) of patent families for each\ncombination over the same period",
+              "chunk_id": "chunk-0021",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 2,
+            "reason": "The candidate text does not fully satisfy the pattern constraints. It mentions the compound annual growth rate (CAGR) of patent families but does not provide the detailed mathematical definition, the conditions for a comparative growth pattern, or the criteria for identifying a growth leader as required by the pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "Determine the compound annual growth rate (CAGR) of patent families for each\ncombination over the same period.",
+              "chunk_id": "chunk-0022",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 2,
+            "reason": "The candidate text does not mention comparable entities, a shared interval, or the specific formula for CAGR. It also does not discuss the comparison of growth rates between entities or the identification of a growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "IRENA, COP30 and GRA (2025). Delivering on the UAE Consensus: Tracking Progress Toward Tripling Renewable\nEnergy Capacity and Doubling Energy Efficiency by 2030. Abu Dhabi: International Renewable Energy Agency,\nCOP30 Presidency and Global Renewables Alliance. Available at: https://www.irena.org/Publications/2025/Oct/\nUAE-Consensus-2030-tripling-renewables-doubling-efficiency.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It is a reference to a publication and does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders among a set of entities."
+          },
+          {
+            "candidate": {
+              "excerpt": "IRENA (2026). Near-700 GW Surge in 2025 Proves Renewable Energy Resilience Abu Dhabi: International\nRenewable Energy Agency. Available at: https://www.irena.org/News/pressreleases/2026/Apr/\nNear-700-GW-Surge-in-2025-Proves-Renewable-Energy-Resilience",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It is a simple reference to a report and does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders among a set of entities."
+          },
+          {
+            "candidate": {
+              "excerpt": "The main research fields – energy infrastructure, vehicle efficiency, and low-emission energy\nsources – currently show comparable patenting activity.",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the key concepts required by the pattern constraints, such as comparable entities, attribute measured over time, Compound Annual Growth Rate (CAGR), threshold epsilon, or growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "Each field accounted for roughly\n5,000–6,000 published patent families in 2024.",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any of the key concepts required by the pattern constraints, such as sets of entities, attributes measured over time, Compound Annual Growth Rate (CAGR), comparative growth patterns, or growth leaders. It merely provides a numerical range for patent families in a specific year without any context of growth, comparison, or analysis over time."
+          },
+          {
+            "candidate": {
+              "excerpt": "patent growth",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'patent growth' does not match the pattern constraints. It does not discuss a set of comparable entities, an attribute measured over time, or any mathematical definitions related to CAGR. It also does not mention a comparative growth pattern or a growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "The number of published patent families in this field jumped from\n137 in 2000 to 3,511 in 2024.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any set of comparable entities, an attribute measured over time, or any growth rate comparison. It only provides a single data point for one entity without any context of comparison or growth rate calculation."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of patent families increasing threefold over the last 10 years\n(from 339 in 2015 to 1,065 in 2024).",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention a set of comparable entities, a specific attribute measured over time, or the concept of Compound Annual Growth Rate (CAGR). It also does not discuss a threshold epsilon or the requirement for non-zero, non-missing starting values."
+          },
+          {
+            "candidate": {
+              "excerpt": "compound annual growth rate",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'compound annual growth rate' does not match the detailed description and conditions provided in the pattern constraints. It is too short and lacks the necessary context and specifics about the entities, attributes, time intervals, and growth rate comparisons."
+          },
+          {
+            "candidate": {
+              "excerpt": "Tsinghua University in China is the first university on the list (ranked 51st), having published\n131 patent families since 2000.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss the Compound Annual Growth Rate (CAGR), comparative growth patterns, or any of the other key elements required by the pattern constraints. It merely states a fact about Tsinghua University's patent publications without any context of growth rates, comparisons, or thresholds."
+          },
+          {
+            "candidate": {
+              "excerpt": "Tata Motors is the first Indian\ncompany in the ranking, coming in at 30th place with 234 published patent families and\nsignificant patent growth in recent years.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any set of comparable entities, a specific attribute measured over time, a shared interval, or any calculation or comparison of growth rates. It also does not define or discuss the Compound Annual Growth Rate (CAGR) or a threshold epsilon. Therefore, it does not satisfy the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "compound annual growth rates of 12% for low-emission energy sources\nand 14% for energy infrastructure over the past 25 years",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention a set of comparable entities, a specific attribute measured over time, or a shared interval. It also does not discuss the comparison of growth rates between entities or the identification of a growth leader. The text only provides growth rates for two categories without context or comparison."
+          },
+          {
+            "candidate": {
+              "excerpt": "CAGR",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'CAGR' does not match either of the provided patterns. It is too short and lacks the necessary details and structure required by both patterns."
+          },
+          {
+            "candidate": {
+              "excerpt": "This trend represents a compound annual growth\nrate (CAGR) of more than 11%.",
+              "chunk_id": "chunk-0011",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention a set of comparable entities, a shared interval, or a comparison between entities. It also does not discuss a threshold epsilon or the concept of a growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "CAGR (%",
+              "chunk_id": "chunk-0012",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text 'CAGR (%)' does not match the pattern constraints. It is too short and does not contain any of the required elements such as the definition of CAGR, the comparative growth pattern, or the conditions for a growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "compound annual\ngrowth rate (CAGR)",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It only mentions 'compound annual growth rate (CAGR)' without any context, definitions, or comparisons as required by the constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "representing a year-on-year growth of 80%",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It does not define a set of comparable entities, a shared interval, or discuss Compound Annual Growth Rates (CAGR) and their differences. It simply states a growth percentage without context or comparison."
+          },
+          {
+            "candidate": {
+              "excerpt": "representing a year-on-year growth of\n30%",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the pattern constraints. It does not discuss a set of comparable entities, a shared interval, or the calculation of Compound Annual Growth Rate (CAGR). It also does not mention any threshold epsilon or the identification of a growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "Battery electric, Fuel cells, and sustainable biofuels are technical options available for\nheavy duty road transportation decarbonization",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any of the elements required by the pattern constraints, such as a set of comparable entities, an attribute measured over time, Compound Annual Growth Rate (CAGR), or a comparative growth pattern."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0006",
+    "chunk-0009",
+    "chunk-0013"
+  ]
+}

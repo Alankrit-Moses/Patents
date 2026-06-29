@@ -1,0 +1,14 @@
+{
+  "task_id": "exp1-P1-ilmenite",
+  "experiment": "1",
+  "setup": "A",
+  "pattern_id": "P1",
+  "metrics": {
+    "E_text_alignment_scores": [
+      3,
+      3,
+      1
+    ]
+  },
+  "errors": []
+}

@@ -1,0 +1,22 @@
+{
+  "task_id": "exp1-P2-ilmenite",
+  "experiment": "1",
+  "setup": "B",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-ilmenite",
+  "errors": [],
+  "raw_output": "{\"examples\":[{\"excerpt\":\"Between 2002 and 2022, there have been 459 patent families that describe the production of titanium dioxide from ilmenite, and this number is growing rapidly.\"},{\"excerpt\":\"The sulfate process represents 40 percent of the world’s titanium dioxide production and is protected in 23 percent of patent families.\"},{\"excerpt\":\"The chloride process is only mentioned in 8 percent of patent families, although it provides 60 percent of the worldwide industrial production of titanium dioxide.\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "Between 2002 and 2022, there have been 459 patent families that describe the production of titanium dioxide from ilmenite, and this number is growing rapidly."
+      },
+      {
+        "excerpt": "The sulfate process represents 40 percent of the world’s titanium dioxide production and is protected in 23 percent of patent families."
+      },
+      {
+        "excerpt": "The chloride process is only mentioned in 8 percent of patent families, although it provides 60 percent of the worldwide industrial production of titanium dioxide."
+      }
+    ]
+  }
+}

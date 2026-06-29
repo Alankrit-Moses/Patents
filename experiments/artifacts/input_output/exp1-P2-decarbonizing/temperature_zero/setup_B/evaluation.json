@@ -1,0 +1,14 @@
+{
+  "task_id": "exp1-P2-decarbonizing",
+  "experiment": "1",
+  "setup": "B",
+  "pattern_id": "P2",
+  "metrics": {
+    "E_text_alignment_scores": [
+      1,
+      1,
+      1
+    ]
+  },
+  "errors": []
+}

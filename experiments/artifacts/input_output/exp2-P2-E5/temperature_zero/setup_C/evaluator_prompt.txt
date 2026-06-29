@@ -1,0 +1,29 @@
+===== EVALUATOR CALL 1 / EXPERIMENT 2 =====
+===== MESSAGE 1: SYSTEM =====
+You are an evaluation judge blind to the generation setup. Reason internally, apply the alignment rubric strictly, and output only the requested JSON score.
+
+===== MESSAGE 2: USER =====
+Score how well the candidate exact report excerpt describes the same evidence as the provided compact table. The paired reference excerpt is diagnostic evidence showing the intended table-text correspondence, not a wording template. A different exact report passage can receive full credit if it expresses the same entities, metric, interval, values or trend, and pattern behavior.
+
+Provided compact E.tab:
+entity,start_year,end_year,cagr_percent
+Energy management,2021,2023,78.4
+Agriculture,2021,2023,53.5
+Life sciences,2021,2023,28.7
+Security,2021,2023,27.6
+Physical sciences and engineering,2021,2023,10.2
+Telecommunications,2021,2023,-4.0
+Military,2021,2023,6.9
+Arts and humanities,2021,2023,-15.1
+"Industrial property, law, social and behavioral sciences",2021,2023,-7.6
+
+
+Paired reference E.text:
+In general, patent growth has been high in all applications since 2014. However, over the last three years there have been diverging growth trends with very high growth rates in both smaller application areas such as agriculture and energy management and large fields such as life sciences, security and physical sciences/engineering. In contrast, the number of patent families has stagnated or even declined in certain application areas such as telecommunications, military, arts and humanities or industrial property/law/social and behavioral sciences (Figure 27).
+
+Candidate exact report excerpt:
+Telecommunications
+
+Use this alignment scale: 5 = describes the same evidence clearly and completely; 4 = same evidence with a minor omission or ambiguity; 3 = partially aligned evidence; 2 = only weakly related evidence; 1 = unrelated to the table evidence. Judge semantic evidence alignment, not lexical overlap with the reference excerpt.
+
+Return only a JSON object with exactly one key named "score", whose value is the integer from 1 to 5 that you selected. Do not return a rationale.

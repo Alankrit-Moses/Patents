@@ -1,0 +1,1236 @@
+{
+  "task_id": "exp2-P1-E5",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P1",
+  "example_id": "P1-E5",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"2014–2023\"}",
+  "parsed_output": {
+    "excerpt": "2014–2023"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "distinct_diffusion_model_patent_family_count"
+          ],
+          "metric": "distinct_diffusion_model_patent_family_count",
+          "years_or_interval": "2014-2023",
+          "trend": "increasing",
+          "turning_point": 2022,
+          "comparison": null,
+          "likely_pattern_behavior": "exponential growth"
+        },
+        "raw_output": "{\n  \"entities\": [\"distinct_diffusion_model_patent_family_count\"],\n  \"metric\": \"distinct_diffusion_model_patent_family_count\",\n  \"years_or_interval\": \"2014-2023\",\n  \"trend\": \"increasing\",\n  \"turning_point\": 2022,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"exponential growth\"\n}",
+        "usage": {
+          "prompt_tokens": 176,
+          "total_tokens": 268,
+          "completion_tokens": 92,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "The number of distinct diffusion model patent families has been increasing exponentially from 2014 to 2023, with a notable turning point in 2022.",
+        "raw_output": "{\n  \"T_hat\": \"The number of distinct diffusion model patent families has been increasing exponentially from 2014 to 2023, with a notable turning point in 2022.\"\n}",
+        "usage": {
+          "prompt_tokens": 165,
+          "total_tokens": 212,
+          "completion_tokens": 47,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "the number of patent families in GenAI has grown from just only 733 in\n2014 to more than 14,000 in 2023",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years"
+                ]
+              },
+              {
+                "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of patent families in GenAI has grown from just only 733 in 2014 to more than 14,000 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\"]\n    },\n    {\n      \"excerpt\": \"the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4247,
+              "total_tokens": 4395,
+              "completion_tokens": 148,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"diffusion models and LLMs show much higher growth rates over the last three years, with the number of patent families for diffusion models increasing from 18 in 2020 to 441 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4150,
+              "total_tokens": 4254,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [
+              {
+                "excerpt": "diffusion models",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              },
+              {
+                "excerpt": "2014",
+                "chunk_id": "chunk-0002",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"2014\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3777,
+              "total_tokens": 3884,
+              "completion_tokens": 107,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [
+              {
+                "excerpt": "diffusion model",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              },
+              {
+                "excerpt": "diffusion models",
+                "chunk_id": "chunk-0003",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"diffusion model\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"diffusion models have made considerable progress in recent years\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"diffusion models can produce impressive high-resolution images from short textual description, as illustrated by Stable Diffusion, released in 2022\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\", \"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2022\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3764,
+              "total_tokens": 4003,
+              "completion_tokens": 239,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend"
+                ]
+              },
+              {
+                "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend",
+                  "behavior"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of published patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\"\n      ]\n    },\n    {\n      \"excerpt\": \"There has been a big surge in patent activity beginning in 2017, with an average annual growth of around 45% since then.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4608,
+              "total_tokens": 4773,
+              "completion_tokens": 165,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct diffusion model patent family count\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"exponential growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4418,
+              "total_tokens": 4567,
+              "completion_tokens": 149,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "diffusion models",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"exponential growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4981,
+              "total_tokens": 5127,
+              "completion_tokens": 146,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              },
+              {
+                "excerpt": "Diffusion\nmodels",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"Diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"distinct diffusion model patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"exponential growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5472,
+              "total_tokens": 5648,
+              "completion_tokens": 176,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "Diffusion Models",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "known"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"known\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4786,
+              "total_tokens": 4867,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "Diffusion Models",
+                "chunk_id": "chunk-0009",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4462,
+              "total_tokens": 4543,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              },
+              {
+                "excerpt": "increasing",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3683,
+              "total_tokens": 3762,
+              "completion_tokens": 79,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [
+              {
+                "excerpt": "Diffusion Models",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              },
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0011",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Diffusion Models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4497,
+              "total_tokens": 4578,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [
+              {
+                "excerpt": "2014–2023",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years"
+                ]
+              },
+              {
+                "excerpt": "DIFFUSION MODELS",
+                "chunk_id": "chunk-0012",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"DIFFUSION MODELS\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"DIFFUSION NEAR5 MODEL* OR PROBALISTIC NEAR3 MODEL* OR (STABLE* OR DENOISING) NEAR3 DIFFUSION* OR (DIFFUSION NEAR3 MODEL* OR (PROGAGATION OR DIFFUSION ) SEQ2 (STOCHASTIC* OR PROBALISTIC* OR PROBABILITY) SEQ2 MODEL* OR PROPAGATION SEQ2 STOCHASTIC SEQ2 MODEL* OR DISPERSION SEQ2 STOCHASTIC SEQ2 MODEL* OR SCORE_BASED SEQ2 GENERATIVE SEQ2 MODEL*)\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9767,
+              "total_tokens": 10018,
+              "completion_tokens": 251,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [
+              {
+                "excerpt": "diffusion modeling",
+                "chunk_id": "chunk-0013",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"diffusion modeling\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\"\n      ]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"years_or_interval\"\n      ]\n    },\n    {\n      \"excerpt\": \"exponential growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"likely_pattern_behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5326,
+              "total_tokens": 5457,
+              "completion_tokens": 131,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "2010-2023",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "diffusion models",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entities"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2010-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"diffusion models\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entities\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3949,
+              "total_tokens": 4030,
+              "completion_tokens": 81,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "increasing",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"exponential growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3522,
+              "total_tokens": 3637,
+              "completion_tokens": 115,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3618,
+              "total_tokens": 3627,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct_diffusion_model_patent_family_count\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\"]\n    },\n    {\n      \"excerpt\": \"2014-2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"exponential growth\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4412,
+              "total_tokens": 4564,
+              "completion_tokens": 152,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5940,
+              "total_tokens": 5949,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "the number of patent families in GenAI has grown from just only 733 in\n2014 to more than 14,000 in 2023",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years"
+            ]
+          },
+          {
+            "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years"
+            ]
+          },
+          {
+            "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "diffusion models",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "entities"
+            ]
+          },
+          {
+            "excerpt": "2014",
+            "chunk_id": "chunk-0002",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "diffusion model",
+            "chunk_id": "chunk-0003",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity"
+            ]
+          },
+          {
+            "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend",
+              "behavior"
+            ]
+          },
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "years"
+            ]
+          },
+          {
+            "excerpt": "increasing",
+            "chunk_id": "chunk-0010",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "diffusion modeling",
+            "chunk_id": "chunk-0013",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "2010-2023",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": [
+              "years_or_interval"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 5,
+            "matched_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "failed_conditions": [],
+            "rationale": "The candidate text '2014–2023' accurately reflects the entity 'distinct_diffusion_model_patent_family_count', the metric, the time interval from 2014 to 2023, the increasing trend, and the exponential growth pattern observed in the table.",
+            "candidate": {
+              "excerpt": "2014–2023",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 5,\n  \"matched_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"failed_conditions\": [],\n  \"rationale\": \"The candidate text '2014–2023' accurately reflects the entity 'distinct_diffusion_model_patent_family_count', the metric, the time interval from 2014 to 2023, the increasing trend, and the exponential growth pattern observed in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 286,
+              "total_tokens": 405,
+              "completion_tokens": 119,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 4,
+            "matched_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "failed_conditions": [],
+            "rationale": "The candidate text correctly identifies the entity (diffusion models), metric (number of patent families), and the time interval (2020-2023). It also accurately describes the trend as increasing and the pattern behavior as exponential growth. However, it does not mention the turning point in 2022, which is a minor omission.",
+            "candidate": {
+              "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 4,\n  \"matched_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"failed_conditions\": [],\n  \"rationale\": \"The candidate text correctly identifies the entity (diffusion models), metric (number of patent families), and the time interval (2020-2023). It also accurately describes the trend as increasing and the pattern behavior as exponential growth. However, it does not mention the turning point in 2022, which is a minor omission.\"\n}",
+            "usage": {
+              "prompt_tokens": 328,
+              "total_tokens": 456,
+              "completion_tokens": 128,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend"
+            ],
+            "failed_conditions": [
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text correctly identifies the entity, metric, year interval, and trend. However, it does not mention the exponential growth pattern, which is a key aspect of the internal tab signal.",
+            "candidate": {
+              "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\"\n  ],\n  \"failed_conditions\": [\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text correctly identifies the entity, metric, year interval, and trend. However, it does not mention the exponential growth pattern, which is a key aspect of the internal tab signal.\"\n}",
+            "usage": {
+              "prompt_tokens": 308,
+              "total_tokens": 404,
+              "completion_tokens": 96,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entities",
+              "metric",
+              "years_or_interval",
+              "trend"
+            ],
+            "failed_conditions": [
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions a big surge starting in 2017 and an average annual growth of around 45%, which aligns with the increasing trend and the years 2014-2023. However, it does not mention the exponential growth pattern or the turning point in 2022.",
+            "candidate": {
+              "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend",
+                "behavior"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entities\", \"metric\", \"years_or_interval\", \"trend\"],\n  \"failed_conditions\": [\"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text mentions a big surge starting in 2017 and an average annual growth of around 45%, which aligns with the increasing trend and the years 2014-2023. However, it does not mention the exponential growth pattern or the turning point in 2022.\"\n}",
+            "usage": {
+              "prompt_tokens": 309,
+              "total_tokens": 425,
+              "completion_tokens": 116,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "trend"
+            ],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "years_or_interval",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text only mentions the trend, which is correct. However, it fails to mention the entity, metric, years or interval, and likely pattern behavior, which are all important aspects of the table.",
+            "candidate": {
+              "excerpt": "increasing",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"trend\"],\n  \"failed_conditions\": [\"entity\", \"metric\", \"years_or_interval\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text only mentions the trend, which is correct. However, it fails to mention the entity, metric, years or interval, and likely pattern behavior, which are all important aspects of the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 279,
+              "total_tokens": 369,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entities",
+              "metric",
+              "years_or_interval"
+            ],
+            "failed_conditions": [
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text does not mention the increasing trend or the exponential growth pattern behavior, which are present in the tab signal.",
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entities\", \"metric\", \"years_or_interval\"],\n  \"failed_conditions\": [\"trend\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text does not mention the increasing trend or the exponential growth pattern behavior, which are present in the tab signal.\"\n}",
+            "usage": {
+              "prompt_tokens": 286,
+              "total_tokens": 359,
+              "completion_tokens": 73,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not match the table data in any aspect. The entity and metric are different, the years and values mentioned do not align with the table, and the trend and pattern behavior are not consistent with the table data.",
+            "candidate": {
+              "excerpt": "the number of patent families in GenAI has grown from just only 733 in\n2014 to more than 14,000 in 2023",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match the table data in any aspect. The entity and metric are different, the years and values mentioned do not align with the table, and the trend and pattern behavior are not consistent with the table data.\"\n}",
+            "usage": {
+              "prompt_tokens": 316,
+              "total_tokens": 418,
+              "completion_tokens": 102,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'diffusion models' does not describe any of the observed compact table evidence. It lacks specific details about the entity, metric, year/interval, trend, and pattern behavior.",
+            "candidate": {
+              "excerpt": "diffusion models",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entities"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text 'diffusion models' does not describe any of the observed compact table evidence. It lacks specific details about the entity, metric, year/interval, trend, and pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 280,
+              "total_tokens": 375,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text only provides a single year, 2014, without any reference to the entity, metric, trend, or pattern behavior described in the TabSignal.",
+            "candidate": {
+              "excerpt": "2014",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text only provides a single year, 2014, without any reference to the entity, metric, trend, or pattern behavior described in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 281,
+              "total_tokens": 372,
+              "completion_tokens": 91,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'diffusion model' does not describe any of the observed compact table evidence. It lacks specific details about the entity, metric, year/interval, trend, and pattern behavior.",
+            "candidate": {
+              "excerpt": "diffusion model",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text 'diffusion model' does not describe any of the observed compact table evidence. It lacks specific details about the entity, metric, year/interval, trend, and pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 280,
+              "total_tokens": 375,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not match the observed table data. The entity and metric are incorrect, the years and values do not align, and the trend and pattern behavior are not consistent with the table data.",
+            "candidate": {
+              "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not match the observed table data. The entity and metric are incorrect, the years and values do not align, and the trend and pattern behavior are not consistent with the table data.\"\n}",
+            "usage": {
+              "prompt_tokens": 321,
+              "total_tokens": 417,
+              "completion_tokens": 96,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text 'diffusion modeling' does not describe any of the observed compact table evidence. It does not mention the entity 'distinct_diffusion_model_patent_family_count', the metric, the years or interval, the trend, or the pattern behavior.",
+            "candidate": {
+              "excerpt": "diffusion modeling",
+              "chunk_id": "chunk-0013",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text 'diffusion modeling' does not describe any of the observed compact table evidence. It does not mention the entity 'distinct_diffusion_model_patent_family_count', the metric, the years or interval, the trend, or the pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 280,
+              "total_tokens": 389,
+              "completion_tokens": 109,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "2014–2023",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "years"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years, with the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "score": 4,
+            "reason": "The candidate text correctly identifies the entity (diffusion models), metric (number of patent families), and the time interval (2020-2023). It also accurately describes the trend as increasing and the pattern behavior as exponential growth. However, it does not mention the turning point in 2022, which is a minor omission."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of patent families for diffusion\nmodels increasing from 18 in 2020 to 441 in 2023",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text correctly identifies the entity, metric, year interval, and trend. However, it does not mention the exponential growth pattern, which is a key aspect of the internal tab signal."
+          },
+          {
+            "candidate": {
+              "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend",
+                "behavior"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text mentions a big surge starting in 2017 and an average annual growth of around 45%, which aligns with the increasing trend and the years 2014-2023. However, it does not mention the exponential growth pattern or the turning point in 2022."
+          },
+          {
+            "candidate": {
+              "excerpt": "increasing",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text only mentions the trend, which is correct. However, it fails to mention the entity, metric, years or interval, and likely pattern behavior, which are all important aspects of the table."
+          },
+          {
+            "candidate": {
+              "excerpt": "2010-2023",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text does not mention the increasing trend or the exponential growth pattern behavior, which are present in the tab signal."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of patent families in GenAI has grown from just only 733 in\n2014 to more than 14,000 in 2023",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the table data in any aspect. The entity and metric are different, the years and values mentioned do not align with the table, and the trend and pattern behavior are not consistent with the table data."
+          },
+          {
+            "candidate": {
+              "excerpt": "diffusion models",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "entities"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'diffusion models' does not describe any of the observed compact table evidence. It lacks specific details about the entity, metric, year/interval, trend, and pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "2014",
+              "chunk_id": "chunk-0002",
+              "local_score": 1,
+              "matched_constraints": [
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text only provides a single year, 2014, without any reference to the entity, metric, trend, or pattern behavior described in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "diffusion model",
+              "chunk_id": "chunk-0003",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'diffusion model' does not describe any of the observed compact table evidence. It lacks specific details about the entity, metric, year/interval, trend, and pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not match the observed table data. The entity and metric are incorrect, the years and values do not align, and the trend and pattern behavior are not consistent with the table data."
+          },
+          {
+            "candidate": {
+              "excerpt": "diffusion modeling",
+              "chunk_id": "chunk-0013",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text 'diffusion modeling' does not describe any of the observed compact table evidence. It does not mention the entity 'distinct_diffusion_model_patent_family_count', the metric, the years or interval, the trend, or the pattern behavior."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0007"
+  ]
+}

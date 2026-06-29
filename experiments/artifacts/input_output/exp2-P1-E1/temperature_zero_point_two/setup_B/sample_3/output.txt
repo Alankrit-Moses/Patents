@@ -1,0 +1,12 @@
+{
+  "task_id": "exp2-P1-E1",
+  "experiment": "2",
+  "setup": "B",
+  "pattern_id": "P1",
+  "example_id": "P1-E1",
+  "errors": [],
+  "raw_output": "{\"excerpt\":\"year,distinct_gan_patent_family_count\\n2017,38\\n2018,237\\n2019,851\\n2020,1585\\n2021,2102\\n2022,2504\\n2023,2370\"}",
+  "parsed_output": {
+    "excerpt": "year,distinct_gan_patent_family_count\n2017,38\n2018,237\n2019,851\n2020,1585\n2021,2102\n2022,2504\n2023,2370"
+  }
+}

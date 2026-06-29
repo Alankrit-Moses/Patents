@@ -1,0 +1,1041 @@
+{
+  "task_id": "exp2-P1-E4",
+  "experiment": "2",
+  "setup": "C",
+  "pattern_id": "P1",
+  "example_id": "P1-E4",
+  "errors": [],
+  "raw_output": "{\"excerpt\": \"the number of published\\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\\nin 2023\"}",
+  "parsed_output": {
+    "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023"
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "irrelevant",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "known"
+          },
+          "requested_count": 1,
+          "known": [
+            "D.text",
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "E.tab"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "M",
+            "T"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "TabSignalAgent",
+          "DescriptionInductionAgent",
+          "TextEvidenceAgent(map-reduce)",
+          "TabTextVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "TabSignalAgent",
+      "input_refs": [
+        "E.tab"
+      ],
+      "output": {
+        "parsed": {
+          "entities": [
+            "distinct_global_genai_patent_family_count"
+          ],
+          "metric": "count",
+          "years_or_interval": "year",
+          "trend": "increasing",
+          "turning_point": null,
+          "comparison": null,
+          "likely_pattern_behavior": "The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023."
+        },
+        "raw_output": "{\n  \"entities\": [\"distinct_global_genai_patent_family_count\"],\n  \"metric\": \"count\",\n  \"years_or_interval\": \"year\",\n  \"trend\": \"increasing\",\n  \"turning_point\": null,\n  \"comparison\": null,\n  \"likely_pattern_behavior\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\"\n}",
+        "usage": {
+          "prompt_tokens": 200,
+          "total_tokens": 294,
+          "completion_tokens": 94,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "TabSignal"
+      ],
+      "output": {
+        "T_hat": "The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.",
+        "raw_output": "{\"T_hat\":\"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\"}",
+        "usage": {
+          "prompt_tokens": 167,
+          "total_tokens": 201,
+          "completion_tokens": 34,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "TabSignal",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [
+              {
+                "excerpt": "the number of GenAI patents has increased by over 800%",
+                "chunk_id": "chunk-0000",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of patent families in GenAI has increased by over 800%\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\", \"trend\"]\n    },\n    {\n      \"excerpt\": \"the number of GenAI patents has increased by over 800%\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\", \"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4239,
+              "total_tokens": 4356,
+              "completion_tokens": 117,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years_or_interval"
+                ]
+              },
+              {
+                "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"Between 2014 and 2023, there were 9,700 patent families of this model type\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"In terms of patent growth, GAN patents show the strongest increase over the past decade.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4142,
+              "total_tokens": 4262,
+              "completion_tokens": 120,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3769,
+              "total_tokens": 3856,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3756,
+              "total_tokens": 3765,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [
+              {
+                "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend"
+                ]
+              },
+              {
+                "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+                "chunk_id": "chunk-0004",
+                "local_score": 1,
+                "matched_constraints": [
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of published patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\"\n      ]\n    },\n    {\n      \"excerpt\": \"There has been a big surge in patent activity beginning in 2017, with an average annual growth of around 45% since then.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"trend\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4600,
+              "total_tokens": 4760,
+              "completion_tokens": 160,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years",
+                  "trend"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"the number of published patent families in GenAI models has increased from less than 800 in 2014 to more than 14,000 in 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\"\n      ]\n    },\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4410,
+              "total_tokens": 4583,
+              "completion_tokens": 173,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4973,
+              "total_tokens": 5036,
+              "completion_tokens": 63,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "The table shows published GenAI patent families between 2014 and 2023.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": [
+                  "entity",
+                  "metric",
+                  "years"
+                ]
+              },
+              {
+                "excerpt": "A large proportion of GenAI patents does\nnot fit into any of the specific models, as these patents do not contain keywords relating to the specific model used in the\npatent abstract, claims or title.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The table shows published GenAI patent families between 2014 and 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\", \"metric\", \"years\"]\n    },\n    {\n      \"excerpt\": \"A large proportion of GenAI patents does not fit into any of the specific models, as these patents do not contain keywords relating to the specific model used in the patent abstract, claims or title.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5464,
+              "total_tokens": 5593,
+              "completion_tokens": 129,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "count",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct global GenAI patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"count\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2014 to 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4778,
+              "total_tokens": 4977,
+              "completion_tokens": 199,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4454,
+              "total_tokens": 4517,
+              "completion_tokens": 63,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "count",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": [
+                  "metric"
+                ]
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct global GenAI patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"count\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"2014–2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3675,
+              "total_tokens": 3873,
+              "completion_tokens": 198,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4489,
+              "total_tokens": 4576,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 9759,
+              "total_tokens": 9846,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\n        \"entity\",\n        \"metric\",\n        \"years\",\n        \"trend\",\n        \"behavior\"\n      ]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5318,
+              "total_tokens": 5405,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [
+              {
+                "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+                "chunk_id": "chunk-0014",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The number of total results for the base query is 75,870 deduplicated scientific publications, as executed on January 20, 2024 with The Lens.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3941,
+              "total_tokens": 4016,
+              "completion_tokens": 75,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 3514,
+              "total_tokens": 3523,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [
+              {
+                "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GenAI is expected to have an impact on various engineering and physical sciences disciplines, with the potential to enhance research, design and innovation.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"GenAI models are trained to replicate the patterns and characteristics of a given dataset.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3610,
+              "total_tokens": 3714,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"distinct global GenAI patent families\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"entity\"]\n    },\n    {\n      \"excerpt\": \"count\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"metric\"]\n    },\n    {\n      \"excerpt\": \"year\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"years_or_interval\"]\n    },\n    {\n      \"excerpt\": \"increasing\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"trend\"]\n    },\n    {\n      \"excerpt\": \"The count of distinct global GenAI patent families is consistently increasing each year from 2014 to 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": [\"likely_pattern_behavior\"]\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4404,
+              "total_tokens": 4598,
+              "completion_tokens": 194,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": []\n}",
+            "usage": {
+              "prompt_tokens": 5932,
+              "total_tokens": 5941,
+              "completion_tokens": 9,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "the number of GenAI patents has increased by over 800%",
+            "chunk_id": "chunk-0000",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years_or_interval"
+            ]
+          },
+          {
+            "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": [
+              "trend"
+            ]
+          },
+          {
+            "excerpt": "The table shows published GenAI patent families between 2014 and 2023.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years"
+            ]
+          },
+          {
+            "excerpt": "A large proportion of GenAI patents does\nnot fit into any of the specific models, as these patents do not contain keywords relating to the specific model used in the\npatent abstract, claims or title.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "count",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": [
+              "metric"
+            ]
+          },
+          {
+            "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+            "chunk_id": "chunk-0014",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+            "chunk_id": "chunk-0016",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+            "chunk_id": "chunk-0016",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "TabTextVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "E.tab",
+        "TabSignal"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 5,
+            "matched_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "failed_conditions": [],
+            "rationale": "The candidate text accurately describes the observed table evidence. It correctly identifies the entity (patent families in GenAI models), the metric (count), the years (2014 to 2023), the trend (increasing), and the pattern behavior (consistently increasing). The numbers provided in the text (less than 800 in 2014 and more than 14,000 in 2023) are consistent with the data in the table.",
+            "candidate": {
+              "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 5,\n  \"matched_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"failed_conditions\": [],\n  \"rationale\": \"The candidate text accurately describes the observed table evidence. It correctly identifies the entity (patent families in GenAI models), the metric (count), the years (2014 to 2023), the trend (increasing), and the pattern behavior (consistently increasing). The numbers provided in the text (less than 800 in 2014 and more than 14,000 in 2023) are consistent with the data in the table.\"\n}",
+            "usage": {
+              "prompt_tokens": 347,
+              "total_tokens": 507,
+              "completion_tokens": 160,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entities",
+              "metric",
+              "trend"
+            ],
+            "failed_conditions": [
+              "years_or_interval",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions the entity 'GenAI patents' and the metric 'number' (implied count). It also correctly identifies the trend as increasing. However, it does not specify the years or intervals, and the pattern behavior is not accurately described as the text only mentions an 800% increase without detailing the consistent yearly increase.",
+            "candidate": {
+              "excerpt": "the number of GenAI patents has increased by over 800%",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\n    \"entities\",\n    \"metric\",\n    \"trend\"\n  ],\n  \"failed_conditions\": [\n    \"years_or_interval\",\n    \"likely_pattern_behavior\"\n  ],\n  \"rationale\": \"The candidate text mentions the entity 'GenAI patents' and the metric 'number' (implied count). It also correctly identifies the trend as increasing. However, it does not specify the years or intervals, and the pattern behavior is not accurately described as the text only mentions an 800% increase without detailing the consistent yearly increase.\"\n}",
+            "usage": {
+              "prompt_tokens": 317,
+              "total_tokens": 446,
+              "completion_tokens": 129,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entities",
+              "metric",
+              "years_or_interval",
+              "trend"
+            ],
+            "failed_conditions": [
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions a surge starting in 2017 and an average annual growth of around 45% since then, which does not fully capture the consistent yearly increase from 2014 to 2023 as described in the TabSignal.",
+            "candidate": {
+              "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entities\", \"metric\", \"years_or_interval\", \"trend\"],\n  \"failed_conditions\": [\"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text mentions a surge starting in 2017 and an average annual growth of around 45% since then, which does not fully capture the consistent yearly increase from 2014 to 2023 as described in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 335,
+              "total_tokens": 439,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 3,
+            "matched_conditions": [
+              "entities",
+              "years_or_interval"
+            ],
+            "failed_conditions": [
+              "metric",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate text mentions the correct entity and time interval but fails to specify the metric (count), the trend (increasing), and the likely pattern behavior (consistently increasing each year). It also does not mention the specific metric 'distinct_global_genai_patent_family_count'.",
+            "candidate": {
+              "excerpt": "The table shows published GenAI patent families between 2014 and 2023.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 3,\n  \"matched_conditions\": [\"entities\", \"years_or_interval\"],\n  \"failed_conditions\": [\"metric\", \"trend\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate text mentions the correct entity and time interval but fails to specify the metric (count), the trend (increasing), and the likely pattern behavior (consistently increasing each year). It also does not mention the specific metric 'distinct_global_genai_patent_family_count'.\"\n}",
+            "usage": {
+              "prompt_tokens": 323,
+              "total_tokens": 431,
+              "completion_tokens": 108,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', does not specify the metric as 'count', does not provide a year-by-year breakdown or interval, does not indicate an increasing trend, and does not match the likely pattern behavior described in the TabSignal.",
+            "candidate": {
+              "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', does not specify the metric as 'count', does not provide a year-by-year breakdown or interval, does not indicate an increasing trend, and does not match the likely pattern behavior described in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 330,
+              "total_tokens": 447,
+              "completion_tokens": 117,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', the metric 'count', the specific years or intervals, the trend 'increasing', or the pattern behavior described in the TabSignal. Additionally, it refers to 'GAN patents' instead of 'GenAI patent families'.",
+            "candidate": {
+              "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', the metric 'count', the specific years or intervals, the trend 'increasing', or the pattern behavior described in the TabSignal. Additionally, it refers to 'GAN patents' instead of 'GenAI patent families'.\"\n}",
+            "usage": {
+              "prompt_tokens": 320,
+              "total_tokens": 442,
+              "completion_tokens": 122,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', the metric 'count', the years or intervals, the trend, or the pattern behavior described in the TabSignal.",
+            "candidate": {
+              "excerpt": "A large proportion of GenAI patents does\nnot fit into any of the specific models, as these patents do not contain keywords relating to the specific model used in the\npatent abstract, claims or title.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', the metric 'count', the years or intervals, the trend, or the pattern behavior described in the TabSignal.\"\n}",
+            "usage": {
+              "prompt_tokens": 344,
+              "total_tokens": 443,
+              "completion_tokens": 99,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entities",
+              "metric",
+              "years_or_interval",
+              "trend",
+              "likely_pattern_behavior"
+            ],
+            "rationale": "The candidate excerpt 'count' does not describe any of the observed compact table evidence. It lacks information about the entities, metric, years or interval, trend, and likely pattern behavior.",
+            "candidate": {
+              "excerpt": "count",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"entities\", \"metric\", \"years_or_interval\", \"trend\", \"likely_pattern_behavior\"],\n  \"rationale\": \"The candidate excerpt 'count' does not describe any of the observed compact table evidence. It lacks information about the entities, metric, years or interval, trend, and likely pattern behavior.\"\n}",
+            "usage": {
+              "prompt_tokens": 304,
+              "total_tokens": 391,
+              "completion_tokens": 87,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metrics, years or intervals, trends, or pattern behaviors described in the TabSignal. It discusses a different topic entirely, focusing on the number of scientific publications rather than patent families.",
+            "candidate": {
+              "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metrics, years or intervals, trends, or pattern behaviors described in the TabSignal. It discusses a different topic entirely, focusing on the number of scientific publications rather than patent families.\"\n}",
+            "usage": {
+              "prompt_tokens": 343,
+              "total_tokens": 446,
+              "completion_tokens": 103,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data. It only discusses the potential impact of GenAI on various disciplines.",
+            "candidate": {
+              "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data. It only discusses the potential impact of GenAI on various disciplines.\"\n}",
+            "usage": {
+              "prompt_tokens": 329,
+              "total_tokens": 424,
+              "completion_tokens": 95,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "entity",
+              "metric",
+              "year/interval",
+              "trend",
+              "pattern behavior"
+            ],
+            "rationale": "The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the TabSignal. It is completely unrelated to the table content.",
+            "candidate": {
+              "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\n    \"entity\",\n    \"metric\",\n    \"year/interval\",\n    \"trend\",\n    \"pattern behavior\"\n  ],\n  \"rationale\": \"The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the TabSignal. It is completely unrelated to the table content.\"\n}",
+            "usage": {
+              "prompt_tokens": 319,
+              "total_tokens": 410,
+              "completion_tokens": 91,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 6,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "the number of published\npatent families in GenAI models has increased from less than 800 in 2014 to more than 14,000\nin 2023",
+            "chunk_id": "chunk-0004",
+            "local_score": 1,
+            "matched_constraints": [
+              "entity",
+              "metric",
+              "years",
+              "trend"
+            ]
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "the number of GenAI patents has increased by over 800%",
+              "chunk_id": "chunk-0000",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years",
+                "trend"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text mentions the entity 'GenAI patents' and the metric 'number' (implied count). It also correctly identifies the trend as increasing. However, it does not specify the years or intervals, and the pattern behavior is not accurately described as the text only mentions an 800% increase without detailing the consistent yearly increase."
+          },
+          {
+            "candidate": {
+              "excerpt": "There has been a big surge in patent activity beginning in 2017, with an average\nannual growth of around 45% since then.",
+              "chunk_id": "chunk-0004",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text mentions a surge starting in 2017 and an average annual growth of around 45% since then, which does not fully capture the consistent yearly increase from 2014 to 2023 as described in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "The table shows published GenAI patent families between 2014 and 2023.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years"
+              ]
+            },
+            "score": 3,
+            "reason": "The candidate text mentions the correct entity and time interval but fails to specify the metric (count), the trend (increasing), and the likely pattern behavior (consistently increasing each year). It also does not mention the specific metric 'distinct_global_genai_patent_family_count'."
+          },
+          {
+            "candidate": {
+              "excerpt": "Between 2014 and 2023, there were\n9,700 patent families of this model type",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "entity",
+                "metric",
+                "years_or_interval"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', does not specify the metric as 'count', does not provide a year-by-year breakdown or interval, does not indicate an increasing trend, and does not match the likely pattern behavior described in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "In terms of patent growth, GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": [
+                "trend"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', the metric 'count', the specific years or intervals, the trend 'increasing', or the pattern behavior described in the TabSignal. Additionally, it refers to 'GAN patents' instead of 'GenAI patent families'."
+          },
+          {
+            "candidate": {
+              "excerpt": "A large proportion of GenAI patents does\nnot fit into any of the specific models, as these patents do not contain keywords relating to the specific model used in the\npatent abstract, claims or title.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention the entity 'distinct_global_genai_patent_family_count', the metric 'count', the years or intervals, the trend, or the pattern behavior described in the TabSignal."
+          },
+          {
+            "candidate": {
+              "excerpt": "count",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": [
+                "metric"
+              ]
+            },
+            "score": 1,
+            "reason": "The candidate excerpt 'count' does not describe any of the observed compact table evidence. It lacks information about the entities, metric, years or interval, trend, and likely pattern behavior."
+          },
+          {
+            "candidate": {
+              "excerpt": "The number of total results for the base query is 75,870 deduplicated scientific publications, as\nexecuted on January 20, 2024 with The Lens.",
+              "chunk_id": "chunk-0014",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metrics, years or intervals, trends, or pattern behaviors described in the TabSignal. It discusses a different topic entirely, focusing on the number of scientific publications rather than patent families."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI is expected to have an impact on various engineering and physical sciences disciplines,\nwith the potential to enhance research, design and innovation.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any entities, metrics, years or intervals, trends, or pattern behaviors related to the table data. It only discusses the potential impact of GenAI on various disciplines."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the entities, metrics, years, trends, or pattern behaviors described in the TabSignal. It is completely unrelated to the table content."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0004"
+  ]
+}

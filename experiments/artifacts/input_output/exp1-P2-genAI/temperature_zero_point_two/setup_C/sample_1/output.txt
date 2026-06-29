@@ -1,0 +1,959 @@
+{
+  "task_id": "exp1-P2-genAI",
+  "experiment": "1",
+  "setup": "C",
+  "pattern_id": "P2",
+  "example_id": "exp1-P2-genAI",
+  "errors": [],
+  "raw_output": "{\"examples\": [{\"excerpt\": \"GAN patents show the strongest increase over the past decade.\"}, {\"excerpt\": \"diffusion models and LLMs show much\\nhigher growth rates over the last three years\"}, {\"excerpt\": \"The number of scientific publications has risen even more over the same period, from only\\naround 100 in 2014 to more than 34,000 in 2023.\"}]}",
+  "parsed_output": {
+    "examples": [
+      {
+        "excerpt": "GAN patents show the strongest increase over the past decade."
+      },
+      {
+        "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years"
+      },
+      {
+        "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023."
+      }
+    ]
+  },
+  "agent_trace": [
+    {
+      "step": 1,
+      "action": "FrameworkOrchestrator.parse",
+      "input_refs": [
+        "framework_query"
+      ],
+      "output": {
+        "parsed_query": {
+          "slots": {
+            "D.text": "known",
+            "D.tab": "irrelevant",
+            "M": "known",
+            "T": "irrelevant",
+            "E.text": "target",
+            "E.tab": "irrelevant"
+          },
+          "requested_count": 3,
+          "known": [
+            "D.text",
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ]
+        },
+        "blackboard": {
+          "known_components": [
+            "M"
+          ],
+          "targets": [
+            "E.text"
+          ],
+          "irrelevant": [
+            "D.tab",
+            "T",
+            "E.tab"
+          ],
+          "available_data": [
+            "D.text"
+          ],
+          "internal_helper_components": {
+            "M_hat": "unset",
+            "T_hat": "unset",
+            "TabSignal": "unset",
+            "Candidate_E_text": "unset",
+            "verification_scores": "unset"
+          }
+        },
+        "compiled_plan": [
+          "FrameworkOrchestrator.parse",
+          "DescriptionInductionAgent(optional T_hat)",
+          "TextEvidenceAgent(map-reduce)",
+          "TextPatternVerifier",
+          "ReducerRanker"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": "DescriptionInductionAgent",
+      "input_refs": [
+        "M"
+      ],
+      "output": {
+        "T_hat": "A comparative growth pattern is observed when, for a set of comparable entities E with a shared interval [t_start, t_end] and a measured attribute m, there exist two entities ei and ej such that the difference in their compound annual growth rates (CAGR) exceeds a threshold epsilon. An entity ei is identified as a growth leader within E if its CAGR is the maximum among all entities in E. All entities must have a non-zero starting value for the attribute m to be included in the comparison.",
+        "raw_output": "{\n  \"T_hat\": \"A comparative growth pattern is observed when, for a set of comparable entities E with a shared interval [t_start, t_end] and a measured attribute m, there exist two entities ei and ej such that the difference in their compound annual growth rates (CAGR) exceeds a threshold epsilon. An entity ei is identified as a growth leader within E if its CAGR is the maximum among all entities in E. All entities must have a non-zero starting value for the attribute m to be included in the comparison.\"\n}",
+        "usage": {
+          "prompt_tokens": 368,
+          "total_tokens": 482,
+          "completion_tokens": 114,
+          "prompt_tokens_details": null
+        }
+      }
+    },
+    {
+      "step": 3,
+      "action": "TextEvidenceAgent",
+      "input_refs": [
+        "D.text",
+        "known",
+        "M",
+        "T_hat",
+        "instruction"
+      ],
+      "output": {
+        "chunk_count": 19,
+        "chunk_results": [
+          {
+            "chunk_id": "chunk-0000",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4515,
+              "total_tokens": 4642,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0001",
+            "candidates": [
+              {
+                "excerpt": "GAN patents show the strongest increase over the past decade.",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years",
+                "chunk_id": "chunk-0001",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GAN patents show the strongest increase over the past decade.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"diffusion models and LLMs show much higher growth rates over the last three years\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4418,
+              "total_tokens": 4508,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0002",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"generative tasks involve the creation of new data samples given some input data.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"generative models are models adapted and trained to create such new data.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4045,
+              "total_tokens": 4135,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0003",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"compound annual growth rate\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"compound annual growth rates\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4032,
+              "total_tokens": 4105,
+              "completion_tokens": 73,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0004",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 4876,
+              "total_tokens": 4883,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0005",
+            "candidates": [
+              {
+                "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+                "chunk_id": "chunk-0005",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The number of scientific publications has risen even more over the same period, from only around 100 in 2014 to more than 34,000 in 2023.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4686,
+              "total_tokens": 4766,
+              "completion_tokens": 80,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0006",
+            "candidates": [
+              {
+                "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+                "chunk_id": "chunk-0006",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"China has also reached very high average growth rates of patent family publications (50% per year, X-axis) in that period among the top inventor locations despite its already large GenAI patent portfolio.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"India had even higher growth rates in GenAI patent family publications (56% per year).\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5249,
+              "total_tokens": 5370,
+              "completion_tokens": 121,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0007",
+            "candidates": [
+              {
+                "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years.",
+                "chunk_id": "chunk-0007",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\"candidates\": [\n    {\"excerpt\": \"the highest growth since 2018 has been in patent publications related to molecules/genes/and proteins, including in the last three years since 2021.\", \"local_score\": 1, \"matched_constraints\": []},\n    {\"excerpt\": \"Molecules/genes/proteins GenAI patent families have also been the growth leaders in recent years.\", \"local_score\": 1, \"matched_constraints\": []}\n]}",
+            "usage": {
+              "prompt_tokens": 5740,
+              "total_tokens": 5844,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0008",
+            "candidates": [
+              {
+                "excerpt": "annual growth of 64% between 2021 and 2023",
+                "chunk_id": "chunk-0008",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"annual growth of 64% between 2021 and 2023\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 5054,
+              "total_tokens": 5111,
+              "completion_tokens": 57,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0009",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4730,
+              "total_tokens": 4857,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0010",
+            "candidates": [
+              {
+                "excerpt": "The emergence of GenAI will have a significant impact on various industries, providing\ncompanies, organizations and individuals with unprecedented capabilities to create,\nsynthesize and manipulate data.",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "The emergence of GenAI will have a significant impact on various industries, providing\ncompanies, organizations and individuals with unprecedented capabilities to create,\nsynthesize and manipulate data.",
+                "chunk_id": "chunk-0010",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"The emergence of GenAI will have a significant impact on various industries, providing companies, organizations and individuals with unprecedented capabilities to create, synthesize and manipulate data.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"The emergence of GenAI will have a significant impact on various industries, providing companies, organizations and individuals with unprecedented capabilities to create, synthesize and manipulate data.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3951,
+              "total_tokens": 4074,
+              "completion_tokens": 123,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0011",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4765,
+              "total_tokens": 4853,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0012",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 10035,
+              "total_tokens": 10162,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0013",
+            "candidates": [],
+            "raw_output": "{\"candidates\": []}",
+            "usage": {
+              "prompt_tokens": 5594,
+              "total_tokens": 5601,
+              "completion_tokens": 7,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0014",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) - CAGR(ej, m; t_start, t_end) > epsilon\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"CAGR(ei, m; t_start, t_end) = max over e in E of CAGR(e, m; t_start, t_end)\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4217,
+              "total_tokens": 4344,
+              "completion_tokens": 127,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0015",
+            "candidates": [
+              {
+                "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+                "chunk_id": "chunk-0015",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"GenAI can also improve the way banks manage their back-office operations. For example, GenAI tools can assist customer service representatives by transcribing conversations, extracting relevant information and generating notes during phone calls, allowing the human agent to concentrate on providing better customer service.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3790,
+              "total_tokens": 3878,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0016",
+            "candidates": [
+              {
+                "excerpt": "For example, by analyzing vast\namounts of data on material properties and structures, AI algorithms can identify patterns and\nrelationships that lead to the design of new materials with desired properties such as strength,\nconductivity and durability.",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+                "chunk_id": "chunk-0016",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"For example, by analyzing vast amounts of data on material properties and structures, AI algorithms can identify patterns and relationships that lead to the design of new materials with desired properties such as strength, conductivity and durability.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"GenAI models are trained to replicate the patterns and characteristics of a given dataset.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 3886,
+              "total_tokens": 4004,
+              "completion_tokens": 118,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0017",
+            "candidates": [
+              {
+                "excerpt": "receiving signal image\ninformation of the underground facility; performing machine learning by using generative\nadversarial networks and generating information of a mine by using the machine-learned\nneural network on the basis of the input data of the mine.",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": []
+              },
+              {
+                "excerpt": "training a generative adversarial network\ncomprising a generator and a discriminator; and generating, by the generator, from input\nimages, output images with feeder metadata that represents predicted locations of feeder\nassets, including receiving by the generator a first input image and generating by the generator\na corresponding first output image with first feeder data that identifies one or more feeder\nassets and their respective locations, wherein the one or more feeder assets had not been\nidentified in any input to the generator.",
+                "chunk_id": "chunk-0017",
+                "local_score": 1,
+                "matched_constraints": []
+              }
+            ],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"receiving signal image information of the underground facility; performing machine learning by using generative adversarial networks and generating information of a mine by using the machine-learned neural network on the basis of the input data of the mine.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"training a generative adversarial network comprising a generator and a discriminator; and generating, by the generator, from input images, output images with feeder metadata that represents predicted locations of feeder assets, including receiving by the generator a first input image and generating by the generator a corresponding first output image with first feeder data that identifies one or more feeder assets and their respective locations, wherein the one or more feeder assets had not been identified in any input to the generator.\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 4680,
+              "total_tokens": 4879,
+              "completion_tokens": 199,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          },
+          {
+            "chunk_id": "chunk-0018",
+            "candidates": [],
+            "raw_output": "{\n  \"candidates\": [\n    {\n      \"excerpt\": \"For a shared interval [t_start, t_end], where n = t_end - t_start and v(e, m, t_start) > 0, define the compound annual growth rate of e as:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"A comparative growth pattern holds when there exist two entities ei and ej such that:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    },\n    {\n      \"excerpt\": \"An entity ei is a growth leader within E when:\",\n      \"local_score\": 1,\n      \"matched_constraints\": []\n    }\n  ]\n}",
+            "usage": {
+              "prompt_tokens": 6208,
+              "total_tokens": 6366,
+              "completion_tokens": 158,
+              "prompt_tokens_details": null
+            },
+            "error": null
+          }
+        ],
+        "deduplicated_candidates": [
+          {
+            "excerpt": "GAN patents show the strongest increase over the past decade.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+            "chunk_id": "chunk-0006",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years.",
+            "chunk_id": "chunk-0007",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "annual growth of 64% between 2021 and 2023",
+            "chunk_id": "chunk-0008",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The emergence of GenAI will have a significant impact on various industries, providing\ncompanies, organizations and individuals with unprecedented capabilities to create,\nsynthesize and manipulate data.",
+            "chunk_id": "chunk-0010",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+            "chunk_id": "chunk-0015",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "For example, by analyzing vast\namounts of data on material properties and structures, AI algorithms can identify patterns and\nrelationships that lead to the design of new materials with desired properties such as strength,\nconductivity and durability.",
+            "chunk_id": "chunk-0016",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+            "chunk_id": "chunk-0016",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "receiving signal image\ninformation of the underground facility; performing machine learning by using generative\nadversarial networks and generating information of a mine by using the machine-learned\nneural network on the basis of the input data of the mine.",
+            "chunk_id": "chunk-0017",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "training a generative adversarial network\ncomprising a generator and a discriminator; and generating, by the generator, from input\nimages, output images with feeder metadata that represents predicted locations of feeder\nassets, including receiving by the generator a first input image and generating by the generator\na corresponding first output image with first feeder data that identifies one or more feeder\nassets and their respective locations, wherein the one or more feeder assets had not been\nidentified in any input to the generator.",
+            "chunk_id": "chunk-0017",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ]
+      }
+    },
+    {
+      "step": 4,
+      "action": "TextPatternVerifier",
+      "input_refs": [
+        "Candidate_E_text",
+        "M",
+        "T_hat"
+      ],
+      "output": {
+        "verdicts": [
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any of the key elements required by the pattern constraints, such as the set of comparable entities E, the attribute m, the time interval [t_start, t_end], the compound annual growth rate (CAGR), or the threshold epsilon. It also does not provide any comparative analysis or identify a growth leader.",
+            "candidate": {
+              "excerpt": "GAN patents show the strongest increase over the past decade.",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any of the key elements required by the pattern constraints, such as the set of comparable entities E, the attribute m, the time interval [t_start, t_end], the compound annual growth rate (CAGR), or the threshold epsilon. It also does not provide any comparative analysis or identify a growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 499,
+              "total_tokens": 605,
+              "completion_tokens": 106,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any of the key elements required by the pattern constraints, such as the set of comparable entities E, the attribute m, the time interval [t_start, t_end], the compound annual growth rate (CAGR), the threshold epsilon, or the growth leader. It also does not provide a clear comparative growth pattern or any specific details that align with the given constraints.",
+            "candidate": {
+              "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years",
+              "chunk_id": "chunk-0001",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any of the key elements required by the pattern constraints, such as the set of comparable entities E, the attribute m, the time interval [t_start, t_end], the compound annual growth rate (CAGR), the threshold epsilon, or the growth leader. It also does not provide a clear comparative growth pattern or any specific details that align with the given constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 506,
+              "total_tokens": 623,
+              "completion_tokens": 117,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any set of comparable entities, a measured attribute over time, compound annual growth rate (CAGR), or any comparison between entities. It only provides a single entity's data points for a specific attribute at two different times.",
+            "candidate": {
+              "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+              "chunk_id": "chunk-0005",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any set of comparable entities, a measured attribute over time, compound annual growth rate (CAGR), or any comparison between entities. It only provides a single entity's data points for a specific attribute at two different times.\"\n}",
+            "usage": {
+              "prompt_tokens": 532,
+              "total_tokens": 620,
+              "completion_tokens": 88,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any of the key concepts required by the pattern constraints, such as set of entities, attribute measured over time, compound annual growth rate (CAGR), shared interval, threshold epsilon, or growth leader. It also does not provide a comparative analysis or discuss the conditions under which a comparative growth pattern holds.",
+            "candidate": {
+              "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any of the key concepts required by the pattern constraints, such as set of entities, attribute measured over time, compound annual growth rate (CAGR), shared interval, threshold epsilon, or growth leader. It also does not provide a comparative analysis or discuss the conditions under which a comparative growth pattern holds.\"\n}",
+            "usage": {
+              "prompt_tokens": 529,
+              "total_tokens": 633,
+              "completion_tokens": 104,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any set of comparable entities, a shared interval, an attribute measured over time, or the calculation of compound annual growth rate (CAGR). It also does not discuss any threshold for meaningful growth-rate difference or identify any growth leader.",
+            "candidate": {
+              "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any set of comparable entities, a shared interval, an attribute measured over time, or the calculation of compound annual growth rate (CAGR). It also does not discuss any threshold for meaningful growth-rate difference or identify any growth leader.\"\n}",
+            "usage": {
+              "prompt_tokens": 507,
+              "total_tokens": 597,
+              "completion_tokens": 90,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention any of the key concepts required by the pattern constraints, such as set of entities, attribute measured over time, compound annual growth rate (CAGR), shared interval, or threshold epsilon. It also does not provide any specific data or context to support the claim of growth leadership.",
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention any of the key concepts required by the pattern constraints, such as set of entities, attribute measured over time, compound annual growth rate (CAGR), shared interval, or threshold epsilon. It also does not provide any specific data or context to support the claim of growth leadership.\"\n}",
+            "usage": {
+              "prompt_tokens": 509,
+              "total_tokens": 608,
+              "completion_tokens": 99,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not mention a set of comparable entities, a measured attribute, a shared interval, or any comparison between entities. It only states the annual growth of a single entity.",
+            "candidate": {
+              "excerpt": "annual growth of 64% between 2021 and 2023",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not mention a set of comparable entities, a measured attribute, a shared interval, or any comparison between entities. It only states the annual growth of a single entity.\"\n}",
+            "usage": {
+              "prompt_tokens": 508,
+              "total_tokens": 582,
+              "completion_tokens": 74,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or any growth rates. It merely states a general impact of GenAI on various industries without any specific data, comparisons, or calculations related to growth rates.",
+            "candidate": {
+              "excerpt": "The emergence of GenAI will have a significant impact on various industries, providing\ncompanies, organizations and individuals with unprecedented capabilities to create,\nsynthesize and manipulate data.",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, a measured attribute over time, or any growth rates. It merely states a general impact of GenAI on various industries without any specific data, comparisons, or calculations related to growth rates.\"\n}",
+            "usage": {
+              "prompt_tokens": 522,
+              "total_tokens": 608,
+              "completion_tokens": 86,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or any growth rates. It merely describes a potential use case for GenAI in banks.",
+            "candidate": {
+              "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, a measured attribute over time, or any growth rates. It merely describes a potential use case for GenAI in banks.\"\n}",
+            "usage": {
+              "prompt_tokens": 541,
+              "total_tokens": 614,
+              "completion_tokens": 73,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss compound annual growth rate (CAGR), comparative growth patterns, or growth leaders. It focuses on AI algorithms identifying patterns in material properties and structures, which is unrelated to the given pattern constraints.",
+            "candidate": {
+              "excerpt": "For example, by analyzing vast\namounts of data on material properties and structures, AI algorithms can identify patterns and\nrelationships that lead to the design of new materials with desired properties such as strength,\nconductivity and durability.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss compound annual growth rate (CAGR), comparative growth patterns, or growth leaders. It focuses on AI algorithms identifying patterns in material properties and structures, which is unrelated to the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 533,
+              "total_tokens": 615,
+              "completion_tokens": 82,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss compound annual growth rate, comparative growth patterns, or growth leaders. It is unrelated to the given pattern constraints.",
+            "candidate": {
+              "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss compound annual growth rate, comparative growth patterns, or growth leaders. It is unrelated to the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 504,
+              "total_tokens": 569,
+              "completion_tokens": 65,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or compound annual growth rates. It is unrelated to the given pattern constraints.",
+            "candidate": {
+              "excerpt": "receiving signal image\ninformation of the underground facility; performing machine learning by using generative\nadversarial networks and generating information of a mine by using the machine-learned\nneural network on the basis of the input data of the mine.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, a measured attribute over time, or compound annual growth rates. It is unrelated to the given pattern constraints.\"\n}",
+            "usage": {
+              "prompt_tokens": 538,
+              "total_tokens": 608,
+              "completion_tokens": 70,
+              "prompt_tokens_details": null
+            }
+          },
+          {
+            "score": 1,
+            "matched_conditions": [],
+            "failed_conditions": [
+              "M",
+              "T_hat"
+            ],
+            "rationale": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or compound annual growth rates. It is about training a generative adversarial network and generating output images with feeder metadata.",
+            "candidate": {
+              "excerpt": "training a generative adversarial network\ncomprising a generator and a discriminator; and generating, by the generator, from input\nimages, output images with feeder metadata that represents predicted locations of feeder\nassets, including receiving by the generator a first input image and generating by the generator\na corresponding first output image with first feeder data that identifies one or more feeder\nassets and their respective locations, wherein the one or more feeder assets had not been\nidentified in any input to the generator.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "raw_output": "{\n  \"score\": 1,\n  \"matched_conditions\": [],\n  \"failed_conditions\": [\"M\", \"T_hat\"],\n  \"rationale\": \"The candidate text does not discuss any set of comparable entities, a measured attribute over time, or compound annual growth rates. It is about training a generative adversarial network and generating output images with feeder metadata.\"\n}",
+            "usage": {
+              "prompt_tokens": 586,
+              "total_tokens": 665,
+              "completion_tokens": 79,
+              "prompt_tokens_details": null
+            }
+          }
+        ]
+      }
+    },
+    {
+      "step": 5,
+      "action": "ReducerRanker",
+      "input_refs": [
+        "Candidate_E_text",
+        "verification_scores"
+      ],
+      "output": {
+        "selected": [
+          {
+            "excerpt": "GAN patents show the strongest increase over the past decade.",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "diffusion models and LLMs show much\nhigher growth rates over the last three years",
+            "chunk_id": "chunk-0001",
+            "local_score": 1,
+            "matched_constraints": []
+          },
+          {
+            "excerpt": "The number of scientific publications has risen even more over the same period, from only\naround 100 in 2014 to more than 34,000 in 2023.",
+            "chunk_id": "chunk-0005",
+            "local_score": 1,
+            "matched_constraints": []
+          }
+        ],
+        "rejected": [
+          {
+            "candidate": {
+              "excerpt": "China has also reached very\nhigh average growth rates of patent family publications (50% per year, X-axis) in that period\namong the top inventor locations despite its already large GenAI patent portfolio.",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the key concepts required by the pattern constraints, such as set of entities, attribute measured over time, compound annual growth rate (CAGR), shared interval, threshold epsilon, or growth leader. It also does not provide a comparative analysis or discuss the conditions under which a comparative growth pattern holds."
+          },
+          {
+            "candidate": {
+              "excerpt": "India\nhad even higher growth rates in GenAI patent family publications (56% per year).",
+              "chunk_id": "chunk-0006",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any set of comparable entities, a shared interval, an attribute measured over time, or the calculation of compound annual growth rate (CAGR). It also does not discuss any threshold for meaningful growth-rate difference or identify any growth leader."
+          },
+          {
+            "candidate": {
+              "excerpt": "Molecules/genes/proteins GenAI patent families have also\nbeen the growth leaders in recent years.",
+              "chunk_id": "chunk-0007",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention any of the key concepts required by the pattern constraints, such as set of entities, attribute measured over time, compound annual growth rate (CAGR), shared interval, or threshold epsilon. It also does not provide any specific data or context to support the claim of growth leadership."
+          },
+          {
+            "candidate": {
+              "excerpt": "annual growth of 64% between 2021 and 2023",
+              "chunk_id": "chunk-0008",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not mention a set of comparable entities, a measured attribute, a shared interval, or any comparison between entities. It only states the annual growth of a single entity."
+          },
+          {
+            "candidate": {
+              "excerpt": "The emergence of GenAI will have a significant impact on various industries, providing\ncompanies, organizations and individuals with unprecedented capabilities to create,\nsynthesize and manipulate data.",
+              "chunk_id": "chunk-0010",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or any growth rates. It merely states a general impact of GenAI on various industries without any specific data, comparisons, or calculations related to growth rates."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI can also improve the way banks manage their back-office operations. For example,\nGenAI tools can assist customer service representatives by transcribing conversations,\nextracting relevant information and generating notes during phone calls, allowing the human\nagent to concentrate on providing better customer service.",
+              "chunk_id": "chunk-0015",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or any growth rates. It merely describes a potential use case for GenAI in banks."
+          },
+          {
+            "candidate": {
+              "excerpt": "For example, by analyzing vast\namounts of data on material properties and structures, AI algorithms can identify patterns and\nrelationships that lead to the design of new materials with desired properties such as strength,\nconductivity and durability.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss compound annual growth rate (CAGR), comparative growth patterns, or growth leaders. It focuses on AI algorithms identifying patterns in material properties and structures, which is unrelated to the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "GenAI models are trained\nto replicate the patterns and characteristics of a given dataset.",
+              "chunk_id": "chunk-0016",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss compound annual growth rate, comparative growth patterns, or growth leaders. It is unrelated to the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "receiving signal image\ninformation of the underground facility; performing machine learning by using generative\nadversarial networks and generating information of a mine by using the machine-learned\nneural network on the basis of the input data of the mine.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or compound annual growth rates. It is unrelated to the given pattern constraints."
+          },
+          {
+            "candidate": {
+              "excerpt": "training a generative adversarial network\ncomprising a generator and a discriminator; and generating, by the generator, from input\nimages, output images with feeder metadata that represents predicted locations of feeder\nassets, including receiving by the generator a first input image and generating by the generator\na corresponding first output image with first feeder data that identifies one or more feeder\nassets and their respective locations, wherein the one or more feeder assets had not been\nidentified in any input to the generator.",
+              "chunk_id": "chunk-0017",
+              "local_score": 1,
+              "matched_constraints": []
+            },
+            "score": 1,
+            "reason": "The candidate text does not discuss any set of comparable entities, a measured attribute over time, or compound annual growth rates. It is about training a generative adversarial network and generating output images with feeder metadata."
+          }
+        ],
+        "reason": "Ranked by verifier score, then chunk-local score."
+      }
+    }
+  ],
+  "selected_chunks": [
+    "chunk-0001",
+    "chunk-0005"
+  ]
+}
