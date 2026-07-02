@@ -6,7 +6,7 @@
     "model": "meta-llama/llama-3.3-70b-instruct",
     "api_key_env": "OPENROUTER_API_KEY",
     "temperature": 0.0,
-    "max_output_tokens": 2048,
+    "max_output_tokens": 4096,
     "timeout_seconds": 300,
     "response_format": {
       "type": "json_object"
@@ -27,7 +27,7 @@
     "max_output_tokens": 2048,
     "timeout_seconds": 300
   },
-  "context_limit_tokens": 98304,
+  "context_limit_tokens": 131072,
   "chars_per_token_estimate": 3.5,
   "chunk_chars": 16000,
   "chunk_overlap_chars": 2000,

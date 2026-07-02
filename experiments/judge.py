@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import threading
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from statistics import mean
 from typing import Any
@@ -178,60 +180,87 @@ Use this alignment scale: 5 = equivalent clear description; 4 = substantially al
     return {"M_alignment_score": m_score, "T_alignment_score": t_score}
 
 
+def _judge_one(
+    result: dict[str, Any],
+    tasks: dict[str, dict[str, Any]],
+    client: OpenAICompatibleClient,
+    config: HarnessConfig,
+) -> dict[str, Any]:
+    base = {
+        "task_id": result.get("task_id", result.get("example_id")),
+        "experiment": result.get("experiment"),
+        "setup": result.get("setup"),
+        "pattern_id": result.get("pattern_id"),
+        "metrics": {},
+        "errors": [],
+    }
+    # Preserve optional sampling metadata so robustness evaluations can be
+    # grouped without changing deterministic result records.
+    for name in (
+        "run_type",
+        "robustness_run_id",
+        "robustness_prompt_version",
+        "b_variant",
+        "context_limit_tokens",
+        "generator_model",
+        "temperature",
+        "samples_per_condition",
+        "sample_index",
+        "sample_id",
+        "max_attempts",
+        "attempt_count",
+        "failed_attempts",
+    ):
+        if name in result:
+            base[name] = result[name]
+    try:
+        task = _find_task(tasks, result)
+        experiment = str(result["experiment"])
+        if result.get("errors"):
+            raise ValueError("Generator run failed: " + "; ".join(result["errors"]))
+        if experiment == "1":
+            base["metrics"] = _evaluate_exp1(client, config, task, result)
+        elif experiment == "2":
+            base["metrics"] = _evaluate_exp2(client, config, task, result)
+        elif experiment == "3":
+            base["metrics"] = _evaluate_exp3(client, config, task, result)
+        else:
+            raise ValueError(f"Unknown experiment: {experiment}")
+    except Exception as error:
+        base["errors"].append(str(error))
+    return base
+
+
 def evaluate_results(
     results_path: Path,
     tasks_path: Path,
     output_path: Path,
     config: HarnessConfig,
+    concurrency: int = 8,
 ) -> list[dict[str, Any]]:
     tasks = {task["task_id"]: task for task in load_jsonl(tasks_path)}
     client = OpenAICompatibleClient(config.judge)
+    results = list(load_jsonl(results_path))
+
+    # Each record makes several independent judge API calls; the judge client is
+    # stateless per call, so records can be scored concurrently. Only the JSONL
+    # append needs a lock. Output order is irrelevant to summarize (it groups by
+    # experiment/setup), so records are written as they complete.
+    if concurrency <= 1:
+        evaluations = [_judge_one(result, tasks, client, config) for result in results]
+        for base in evaluations:
+            append_jsonl(output_path, base)
+        return evaluations
+
     evaluations: list[dict[str, Any]] = []
-    for result in load_jsonl(results_path):
-        base = {
-            "task_id": result.get("task_id", result.get("example_id")),
-            "experiment": result.get("experiment"),
-            "setup": result.get("setup"),
-            "pattern_id": result.get("pattern_id"),
-            "metrics": {},
-            "errors": [],
-        }
-        # Preserve optional sampling metadata so robustness evaluations can be
-        # grouped without changing deterministic result records.
-        for name in (
-            "run_type",
-            "robustness_run_id",
-            "robustness_prompt_version",
-            "b_variant",
-            "context_limit_tokens",
-            "generator_model",
-            "temperature",
-            "samples_per_condition",
-            "sample_index",
-            "sample_id",
-            "max_attempts",
-            "attempt_count",
-            "failed_attempts",
-        ):
-            if name in result:
-                base[name] = result[name]
-        try:
-            task = _find_task(tasks, result)
-            experiment = str(result["experiment"])
-            if result.get("errors"):
-                raise ValueError("Generator run failed: " + "; ".join(result["errors"]))
-            if experiment == "1":
-                base["metrics"] = _evaluate_exp1(client, config, task, result)
-            elif experiment == "2":
-                base["metrics"] = _evaluate_exp2(client, config, task, result)
-            elif experiment == "3":
-                base["metrics"] = _evaluate_exp3(client, config, task, result)
-            else:
-                raise ValueError(f"Unknown experiment: {experiment}")
-        except Exception as error:
-            base["errors"].append(str(error))
-        append_jsonl(output_path, base)
-        evaluations.append(base)
+    write_lock = threading.Lock()
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
+        futures = [executor.submit(_judge_one, result, tasks, client, config) for result in results]
+        for future in as_completed(futures):
+            base = future.result()
+            with write_lock:
+                append_jsonl(output_path, base)
+                evaluations.append(base)
     return evaluations
 
 

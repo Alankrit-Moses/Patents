@@ -1,0 +1,7 @@
+Snapshot of qwen3-32B results generated WITHOUT a provider allow-list.
+OpenRouter free-routed qwen/qwen3-32b across providers, some of which
+(e.g. Nebius) inconsistently served NON-reasoning responses despite
+reasoning:{enabled:true}. ~26% of all model calls had reasoning_tokens=0
+(C map-reduce ~32%, C-full ~31%). Retained for mixed-vs-clean comparison.
+The clean rerun (providers pinned to alibaba+siliconflow) lives in
+../qwen3-32B/.

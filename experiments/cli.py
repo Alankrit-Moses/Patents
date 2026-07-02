@@ -41,7 +41,7 @@ def command_judge(args: argparse.Namespace, config: HarnessConfig) -> int:
         if args.output
         else config.output_dir / "evaluations" / f"evaluations-{_timestamp()}.jsonl"
     )
-    evaluate_results(results_path, tasks_path, output_path, config)
+    evaluate_results(results_path, tasks_path, output_path, config, concurrency=args.concurrency)
     print(f"Evaluations: {output_path}")
     return 0
 
@@ -69,6 +69,12 @@ def build_parser() -> argparse.ArgumentParser:
     judge_parser.add_argument("--results", required=True, help="Generator result JSONL")
     judge_parser.add_argument("--tasks", help="Task JSONL; defaults to artifacts/tasks.jsonl")
     judge_parser.add_argument("--output", help="Evaluation JSONL path")
+    judge_parser.add_argument(
+        "--concurrency",
+        type=int,
+        default=12,
+        help="Number of records to judge in parallel (default 12)",
+    )
 
     summary_parser = subparsers.add_parser("summarize", help="Aggregate evaluation metrics")
     summary_parser.add_argument("--evaluations", required=True, help="Evaluation JSONL")

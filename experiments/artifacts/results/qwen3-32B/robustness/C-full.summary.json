@@ -2,62 +2,62 @@
   "success_threshold": 4.0,
   "groups": {
     "experiment_1/setup_C/pattern_P1/E_text_alignment_scores": {
-      "observations": 27,
-      "mean": 2.3333333333333335,
-      "population_stddev": 1.6101529717988265,
-      "best_of_k_mean": 3.111111111111111,
+      "observations": 15,
+      "mean": 2.8666666666666667,
+      "population_stddev": 1.0873004286866728,
+      "best_of_k_mean": 3.3333333333333335,
       "success_at_k": 0.5555555555555556,
-      "exact_excerpt_retention_rate": 0.7037037037037037
+      "exact_excerpt_retention_rate": 0.9333333333333333
     },
     "experiment_1/setup_C/pattern_P2/E_text_alignment_scores": {
-      "observations": 27,
-      "mean": 1.2222222222222223,
-      "population_stddev": 1.4229164972072996,
-      "best_of_k_mean": 1.8888888888888888,
+      "observations": 21,
+      "mean": 1.2380952380952381,
+      "population_stddev": 1.3058389715049608,
+      "best_of_k_mean": 1.6666666666666667,
       "success_at_k": 0.1111111111111111,
-      "exact_excerpt_retention_rate": 0.5185185185185185
+      "exact_excerpt_retention_rate": 0.5238095238095238
     },
     "experiment_2/setup_C/pattern_P1/E_text_alignment_score": {
-      "observations": 17,
-      "mean": 3.0588235294117645,
-      "population_stddev": 1.6967300119830537,
-      "best_of_k_mean": 3.5,
-      "success_at_k": 0.6666666666666666,
-      "exact_excerpt_retention_rate": 0.8235294117647058
+      "observations": 13,
+      "mean": 3.0,
+      "population_stddev": 1.5689290811054724,
+      "best_of_k_mean": 2.6666666666666665,
+      "success_at_k": 0.5,
+      "exact_excerpt_retention_rate": 0.8461538461538461
     },
     "experiment_2/setup_C/pattern_P2/E_text_alignment_score": {
-      "observations": 18,
-      "mean": 1.0,
-      "population_stddev": 1.1547005383792515,
-      "best_of_k_mean": 1.6666666666666667,
+      "observations": 12,
+      "mean": 1.75,
+      "population_stddev": 0.9242113755341181,
+      "best_of_k_mean": 2.0,
       "success_at_k": 0.0,
-      "exact_excerpt_retention_rate": 0.5
+      "exact_excerpt_retention_rate": 0.9166666666666666
     },
     "experiment_3/setup_C/pattern_P1/M_alignment_score": {
       "observations": 9,
-      "mean": 2.3333333333333335,
-      "population_stddev": 0.6666666666666666,
+      "mean": 2.6666666666666665,
+      "population_stddev": 0.4714045207910317,
       "best_of_k_mean": 2.6666666666666665,
       "success_at_k": 0.0
     },
     "experiment_3/setup_C/pattern_P1/T_alignment_score": {
       "observations": 9,
-      "mean": 3.0,
-      "population_stddev": 0.6666666666666666,
+      "mean": 3.2222222222222223,
+      "population_stddev": 0.6285393610547089,
       "best_of_k_mean": 3.6666666666666665,
       "success_at_k": 0.6666666666666666
     },
     "experiment_3/setup_C/pattern_P2/M_alignment_score": {
       "observations": 9,
-      "mean": 2.7777777777777777,
-      "population_stddev": 0.41573970964154905,
+      "mean": 2.888888888888889,
+      "population_stddev": 0.31426968052735443,
       "best_of_k_mean": 3.0,
       "success_at_k": 0.0
     },
     "experiment_3/setup_C/pattern_P2/T_alignment_score": {
       "observations": 9,
-      "mean": 3.7777777777777777,
-      "population_stddev": 0.41573970964154905,
+      "mean": 3.6666666666666665,
+      "population_stddev": 0.4714045207910317,
       "best_of_k_mean": 4.0,
       "success_at_k": 1.0
     }
