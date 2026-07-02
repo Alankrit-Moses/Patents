@@ -4,9 +4,8 @@ import unittest
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
-from experiments.agent import FrameworkQueryParser, setup_c_plan_preview
-from experiments.agent import FrameworkAgent
-from experiments.agent_v2 import FrameworkAgentV2, FrameworkQueryParserV2
+from experiments.agent_v2 import BlackboardV2, FrameworkAgentV2, FrameworkQueryParserV2
+from experiments.agent_v2_full import FrameworkAgentV2FullContext
 from experiments.client import LLMResponse
 from experiments.config import HarnessConfig
 from experiments.manifest import build_manifest, build_tasks, manifest_counts
@@ -16,30 +15,14 @@ from experiments.reports import recover_exact_span
 from experiments.manifest import extract_saved_excerpt, extract_saved_excerpts
 from experiments.io_utils import read_text
 from experiments.judge import _evaluate_exp1, _evaluate_exp2, _evaluate_exp3
-from experiments.prompts import build_prompt
 from experiments.robustness import build_parser as build_robustness_parser
 from experiments.robustness import summarize_robustness
+from experiments.robustness import _completed_key, _load_resume_state
+from experiments.runner_v2 import prompt_version_for
 from experiments.io_utils import write_jsonl
 
 
 ROOT = Path(__file__).resolve().parents[2]
-
-
-class FakeClient:
-    def complete(self, messages, **_kwargs):
-        system = messages[0]["content"]
-        if "DescriptionInductionAgent" in system:
-            text = '{"T_hat":"a concrete before/after trajectory shift"}'
-        elif "TextEvidenceAgent" in system:
-            text = (
-                '{"candidates":[{"excerpt":"Activity rose slowly before 2020 and declined after 2020.",'
-                '"local_score":5,"matched_constraints":["explicit change point"]}]}'
-            )
-        elif "TextPatternVerifier" in system:
-            text = '{"score":5,"matched_conditions":["before/after"],"failed_conditions":[],"rationale":"clear"}'
-        else:
-            text = "{}"
-        return LLMResponse(text=text, raw={}, usage={})
 
 
 class RecordingScoreClient:
@@ -51,22 +34,6 @@ class RecordingScoreClient:
         self.messages.append(messages)
         score = next(self.scores)
         return LLMResponse(text=f'{{"score":{score}}}', raw={}, usage={})
-
-
-class SynthesisRecordingClient:
-    def __init__(self):
-        self.messages = []
-
-    def complete(self, messages, **_kwargs):
-        self.messages.append(messages)
-        system = messages[0]["content"]
-        if "PatternSynthesisAgent" in system:
-            text = '{"M":"shared rule","T":"shared description"}'
-        elif "DefinitionVerifier" in system:
-            text = '{"score":5,"M_score":5,"T_score":5,"operationalizability":5,"matched_conditions":[],"failed_conditions":[],"rationale":""}'
-        else:
-            text = "{}"
-        return LLMResponse(text=text, raw={}, usage={})
 
 
 class AgenticV2Client:
@@ -86,18 +53,8 @@ class AgenticV2Client:
                     '"framework_query":"D:(D.text,_) P:(M,_,{(?,_)[3]})",'
                     '"active_pattern_ids":["P"],'
                     '"variable_slots":["P.E[1].E.text","P.E[2].E.text","P.E[3].E.text"],'
-                    '"concrete_slots":["P.M","D.text"],"irrelevant_slots":["D.tab","P.T","P.E[1].E.tab"]},'
+                    '"concrete_slots":["P.M","D.text"],"not_provided_slots":["D.tab","P.T","P.E[1].E.tab"]},'
                     '"materials_needed":["D.text","M"],"working_memory_inputs":[],"constraints":[]}}'
-                )
-            elif self.framework_calls == 2:
-                text = (
-                    '{"action":"invoke_agent","agent":"Verifier","reason":"verify candidates",'
-                    '"task_packet":{"goal":"verify E.text","query_context":{'
-                    '"framework_query":"D:(D.text,_) P:(M,_,{(?,_)[3]})",'
-                    '"active_pattern_ids":["P"],'
-                    '"variable_slots":["P.E[1].E.text","P.E[2].E.text","P.E[3].E.text"],'
-                    '"concrete_slots":["P.M","D.text"],"irrelevant_slots":["D.tab","P.T","P.E[1].E.tab"]},'
-                    '"materials_needed":["D.text","M"],"working_memory_inputs":["candidate_assignments"],"constraints":[]}}'
                 )
             else:
                 text = (
@@ -105,7 +62,7 @@ class AgenticV2Client:
                     '"P.E[1].E.text":"Activity rose slowly before 2020 and declined after 2020.",'
                     '"P.E[2].E.text":"Activity rose slowly before 2020 and declined after 2020.",'
                     '"P.E[3].E.text":"Activity rose slowly before 2020 and declined after 2020."},'
-                    '"reason":"verified"}'
+                    '"reason":"all ? slots have candidate assignments"}'
                 )
         elif "E.text-Finder agent" in system:
             text = (
@@ -116,14 +73,6 @@ class AgenticV2Client:
                 '"confidence":0.9,"match_basis":["pattern_behavior"],"notes":""}],'
                 '"P.E[3].E.text":[{"excerpt":"Activity rose slowly before 2020 and declined after 2020.",'
                 '"confidence":0.9,"match_basis":["pattern_behavior"],"notes":""}]}}'
-            )
-        elif "Verifier agent" in system:
-            text = (
-                '{"agent":"Verifier","status":"complete","overall_verdict":"accept","slot_verdicts":{'
-                '"P.E[1].E.text":{"verdict":"accept","compliance":"pass","support":"strong","score":1.0,"issues":[],"suggested_next_step":"accept"},'
-                '"P.E[2].E.text":{"verdict":"accept","compliance":"pass","support":"strong","score":1.0,"issues":[],"suggested_next_step":"accept"},'
-                '"P.E[3].E.text":{"verdict":"accept","compliance":"pass","support":"strong","score":1.0,"issues":[],"suggested_next_step":"accept"}},'
-                '"global_issues":[],"notes":"ok"}'
             )
         else:
             text = "{}"
@@ -145,22 +94,6 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(counts["paired_examples"], 12)
         self.assertEqual(counts["tasks"], {"1": 6, "2": 12, "3": 6})
 
-    def test_query_parser(self):
-        parsed = FrameworkQueryParser().parse("D:(D.text,_)\nP:(M,_,{(?,_)[3]})")
-        self.assertEqual(parsed["requested_count"], 3)
-        self.assertIn("E.text", parsed["targets"])
-        self.assertIn("M", parsed["known"])
-        self.assertIn("D.tab", parsed["irrelevant"])
-        exp2 = FrameworkQueryParser().parse("D:(D.text,_)\nP:(_,_,{(?,E.tab)})")
-        self.assertIn("E.tab", exp2["known"])
-        self.assertIn("E.text", exp2["targets"])
-        exp3 = FrameworkQueryParser().parse(
-            "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),(E2.text,E2.tab),...})"
-        )
-        self.assertEqual(set(exp3["targets"]), {"M", "T"})
-        self.assertIn("E.text", exp3["known"])
-        self.assertIn("E.tab", exp3["known"])
-
     def test_query_parser_v2_preserves_variable_pair_slots(self):
         parsed = FrameworkQueryParserV2().parse(
             "D:(D.text,_)\nP1:(_,_,{(?,E.tab_1),(?,E.tab_2),(?,E.tab_3)})"
@@ -170,7 +103,7 @@ class HarnessTests(unittest.TestCase):
             ["P1.E[1].E.text", "P1.E[2].E.text", "P1.E[3].E.text"],
         )
         self.assertIn("P1.E[1].E.tab", parsed.concrete_slots)
-        self.assertIn("P1.M", parsed.irrelevant_slots)
+        self.assertIn("P1.M", parsed.not_provided_slots)
 
     def test_experiment_two_materializer_has_no_explicit_gold_input(self):
         task = next(task for task in self.tasks if task["experiment"] == "2")
@@ -181,59 +114,6 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn("gold_e_text_path", refs)
         self.assertNotIn("E_tab_code", str(refs))
         self.assertNotIn(".xlsx", str(refs))
-
-    def test_setup_a_is_minimal_prose_and_setup_b_is_tagged_framework_prompt(self):
-        task = {
-            "experiment": "1",
-            "framework_query": "D:(D.text,_)\nP:(M,_,{(?,_)[3]})",
-        }
-        inputs = {"M": "PATTERN_SENTINEL", "D.text": "REPORT_SENTINEL"}
-        prompt_a = build_prompt("A", task, inputs)[-1]["content"]
-        self.assertNotIn("D:(D.text,_)", prompt_a)
-        self.assertNotIn("<known_components>", prompt_a)
-        self.assertNotIn("E.text", prompt_a)
-        self.assertNotIn('"M"', prompt_a)
-        self.assertNotIn('"T"', prompt_a)
-        self.assertIn("Do not paraphrase or return the criterion itself", prompt_a)
-        self.assertNotIn("boundary conditions", prompt_a.casefold())
-        self.assertNotIn("operational", prompt_a.casefold())
-        prompt_b = build_prompt("B", task, inputs)[-1]["content"]
-        self.assertIn("<framework_guide>", prompt_b)
-        self.assertIn("<framework_query>", prompt_b)
-        self.assertIn("<known_components>", prompt_b)
-        self.assertIn("<M>\nPATTERN_SENTINEL\n</M>", prompt_b)
-        self.assertIn("<D_text>\nREPORT_SENTINEL\n</D_text>", prompt_b)
-        self.assertIn("summarize the provided E.tab internally", prompt_b)
-        self.assertIn("vague description", prompt_b)
-        exp3_a = build_prompt(
-            "A",
-            {
-                "experiment": "3",
-                "framework_query": "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),...})",
-            },
-            {
-                "paired_examples": [
-                    {
-                        "example_id": "P1-E1",
-                        "E.text": "Example passage.",
-                        "E.tab": "year,value\n2020,1",
-                    }
-                ]
-            },
-        )[-1]["content"]
-        self.assertNotIn('"M"', exp3_a)
-        self.assertNotIn('"T"', exp3_a)
-        self.assertIn('"mathematical_definition"', exp3_a)
-        self.assertNotIn("excluding superficially", exp3_a)
-        self.assertNotIn("accept the examples", exp3_a)
-        exp2_a = build_prompt(
-            "A",
-            {"experiment": "2", "framework_query": "unused"},
-            {"E.tab": "year,value\n2020,1", "D.text": "Example report passage."},
-        )[-1]["content"]
-        self.assertNotIn("entities, metric", exp2_a)
-        self.assertNotIn("E.tab", exp2_a)
-        self.assertIn("describes the same evidence as the table", exp2_a)
 
     def test_exp1_scores_each_requested_excerpt_and_hard_zeros_non_excerpts(self):
         with TemporaryDirectory(dir=ROOT) as temp_dir:
@@ -295,33 +175,6 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn("Held-out", prompts)
         self.assertNotIn("Hard negative", prompts)
 
-    def test_setup_c_is_action_compiled(self):
-        plans = {task["experiment"]: setup_c_plan_preview(task) for task in self.tasks}
-        self.assertIn("TextEvidenceAgent(map-reduce)", plans["1"])
-        self.assertIn("TabSignalAgent", plans["2"])
-        self.assertIn("PatternSynthesisAgent", plans["3"])
-
-    def test_setup_c_executes_generic_text_plan_with_fake_client(self):
-        config = HarnessConfig(project_root=ROOT, chunk_chars=1000, chunk_overlap_chars=50)
-        task = {
-            "task_id": "synthetic",
-            "experiment": "1",
-            "pattern_id": "P1",
-            "framework_query": "D:(D.text,_)\nP:(M,_,{(?,_)[3]})",
-        }
-        inputs = {
-            "M": "A trajectory differs before and after a concrete tau.",
-            "D.text": "Activity rose slowly before 2020 and declined after 2020.",
-        }
-        result = FrameworkAgent(config, FakeClient()).run(task, inputs)
-        self.assertEqual(
-            result["parsed_output"]["examples"][0]["excerpt"], inputs["D.text"]
-        )
-        actions = [step["action"] for step in result["agent_trace"]]
-        self.assertIn("TextEvidenceAgent", actions)
-        self.assertIn("TextPatternVerifier", actions)
-        self.assertIn("ReducerRanker", actions)
-
     def test_setup_c_v2_executes_framework_agent_control_loop(self):
         config = HarnessConfig(project_root=ROOT, chunk_chars=1000, chunk_overlap_chars=50)
         task = {
@@ -340,43 +193,103 @@ class HarnessTests(unittest.TestCase):
         actions = [step["action"] for step in result["agent_trace"]]
         self.assertIn("FrameworkAgent", actions)
         self.assertIn("E.text-Finder", actions)
-        self.assertIn("Verifier", actions)
+        # The Verifier has been removed: specialist outputs are used directly.
+        self.assertNotIn("Verifier", actions)
+        self.assertEqual(
+            result["parsed_output"]["examples"][0]["excerpt"],
+            inputs["D.text"],
+        )
 
-    def test_setup_c_definition_verifier_uses_only_visible_induction_pairs(self):
-        client = SynthesisRecordingClient()
+    def test_setup_c_v2_full_context_finder_reads_whole_report_in_one_call(self):
+        # chunk_chars is small enough that the map-reduce variant would split
+        # this report; the full-context variant must still make exactly one
+        # finder call containing the entire report.
+        config = HarnessConfig(project_root=ROOT, chunk_chars=100, chunk_overlap_chars=10)
+        span = "Filings rose slowly before 2019 and accelerated sharply after 2019."
+        report = ("Background paragraph about unrelated matters. " * 5) + span
+        self.assertGreater(len(report), config.chunk_chars)
         task = {
-            "task_id": "synthetic-exp3",
-            "experiment": "3",
-            "framework_query": "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),...})",
-            "heldout_examples": [
-                {
-                    "example_id": "LEAK_SENTINEL",
-                    "e_text_path": "does/not/exist.txt",
-                    "e_tab_path": "does/not/exist.csv",
-                }
-            ],
+            "task_id": "synthetic-v2-full",
+            "experiment": "2",
+            "pattern_id": "P1",
+            "framework_query": "D:(D.text,_)\nP:(_,_,{(?,E.tab)})",
+            "target_count": 1,
         }
         inputs = {
-            "paired_examples": [
-                {
-                    "example_id": "VISIBLE_SENTINEL",
-                    "E.text": "Visible report evidence.",
-                    "E.tab": "year,value\n2020,1",
-                }
-            ]
+            "E.tab": "entity,metric,2018,2020\nfilings,count,10,90",
+            "D.text": report,
         }
-        result = FrameworkAgent(self.config, client).run(task, inputs)
-        self.assertEqual(result["parsed_output"]["M"], "shared rule")
-        all_prompts = "\n".join(
-            message["content"] for call in client.messages for message in call
+
+        class FullContextClient:
+            def __init__(self):
+                self.finder_calls = 0
+                self.finder_messages = []
+                self.framework_calls = 0
+
+            def complete(self, messages, **_kwargs):
+                system = messages[0]["content"]
+                if "Framework Agent" in system:
+                    self.framework_calls += 1
+                    if self.framework_calls == 1:
+                        text = (
+                            '{"action":"invoke_agent","agent":"E.text-Finder","reason":"find span",'
+                            '"task_packet":{"goal":"locate E.text","query_context":{'
+                            '"framework_query":"D:(D.text,_) P:(_,_,{(?,E.tab)})",'
+                            '"active_pattern_ids":["P"],'
+                            '"variable_slots":["P.E[1].E.text"],'
+                            '"concrete_slots":["D.text","P.E[1].E.tab"],'
+                            '"not_provided_slots":["D.tab","P.M","P.T"]},'
+                            '"materials_needed":["D.text","P.E[1].E.tab"],'
+                            '"working_memory_inputs":[],"constraints":[]}}'
+                        )
+                    else:
+                        text = (
+                            '{"action":"return_final","final_assignments":{'
+                            f'"P.E[1].E.text":"{span}"}},'
+                            '"reason":"the ? slot has a candidate assignment"}'
+                        )
+                elif "ENTIRE report" in system:
+                    self.finder_calls += 1
+                    self.finder_messages.append(messages)
+                    text = (
+                        '{"agent":"E.text-Finder","status":"success","selected":['
+                        f'{{"excerpt":"{span}","confidence":0.9,'
+                        '"match_basis":["trend"],"notes":""}]}'
+                    )
+                else:
+                    text = "{}"
+                return LLMResponse(text=text, raw={}, usage={})
+
+        client = FullContextClient()
+        result = FrameworkAgentV2FullContext(config, client).run(task, inputs)
+        self.assertEqual(client.finder_calls, 1)
+        self.assertIn(report, client.finder_messages[0][-1]["content"])
+        self.assertEqual(result["parsed_output"], {"excerpt": span})
+        self.assertEqual(result["selected_chunks"], ["full-report"])
+
+    def test_setup_c_v2_full_context_finder_errors_instead_of_truncating(self):
+        config = HarnessConfig(
+            project_root=ROOT,
+            chunk_chars=100,
+            chunk_overlap_chars=10,
+            context_limit_tokens=64,
         )
-        self.assertIn("VISIBLE_SENTINEL", all_prompts)
-        self.assertNotIn("LEAK_SENTINEL", all_prompts)
-        self.assertNotIn("Held-out positive", all_prompts)
-        verifier = next(
-            step for step in result["agent_trace"] if step["action"] == "DefinitionVerifier"
-        )
-        self.assertEqual(verifier["input_refs"], ["M", "T", "paired_examples"])
+        task = {
+            "task_id": "synthetic-v2-full-overflow",
+            "experiment": "2",
+            "pattern_id": "P1",
+            "framework_query": "D:(D.text,_)\nP:(_,_,{(?,E.tab)})",
+            "target_count": 1,
+        }
+        inputs = {"E.tab": "a,b\n1,2", "D.text": "words " * 500}
+        agent = FrameworkAgentV2FullContext(config, object())
+        agent.etext_slots = ["P.E[1].E.text"]
+        with self.assertRaises(ValueError):
+            agent._invoke_e_text_finder(
+                {"materials_needed": ["D.text"], "query_context": {}},
+                inputs,
+                BlackboardV2(),
+            )
 
     def test_chunks_overlap(self):
         chunks = chunk_report("a" * 100, chunk_chars=40, overlap_chars=10)
@@ -437,6 +350,52 @@ class HarnessTests(unittest.TestCase):
     def test_robustness_defaults_to_three_total_attempts_per_sample(self):
         args = build_robustness_parser().parse_args(["run"])
         self.assertEqual(args.max_attempts, 3)
+
+    def test_prompt_version_distinguishes_every_setup_variant(self):
+        versions = {
+            prompt_version_for("A", "query-only", "map-reduce"),
+            prompt_version_for("B", "query-only", "map-reduce"),
+            prompt_version_for("B", "resolved", "map-reduce"),
+            prompt_version_for("C", "query-only", "map-reduce"),
+            prompt_version_for("C", "query-only", "full-context"),
+        }
+        # All five runnable configurations must map to distinct tags so resume
+        # never conflates them in a shared output file.
+        self.assertEqual(len(versions), 5)
+        self.assertEqual(prompt_version_for("C", "query-only", "map-reduce"), "v2-agentic")
+        self.assertEqual(prompt_version_for("C", "query-only", "full-context"), "v2-agentic-full")
+
+    def test_robustness_resume_keeps_c_variants_distinct(self):
+        # A file containing completed map-reduce C samples must NOT cause the
+        # full-context C samples to be skipped on resume, and vice versa.
+        records = [
+            {
+                "task_id": "exp1-P1-genAI",
+                "prompt_version": "v2-agentic",
+                "sample_index": 0,
+                "robustness_run_id": "run-xyz",
+                "errors": [],
+            },
+            {
+                "task_id": "exp1-P1-genAI",
+                "prompt_version": "v2-agentic",
+                "sample_index": 1,
+                "robustness_run_id": "run-xyz",
+                "errors": [],
+            },
+        ]
+        with TemporaryDirectory(dir=ROOT) as temp_dir:
+            path = Path(temp_dir) / "results.jsonl"
+            write_jsonl(path, records)
+            _run_id, completed = _load_resume_state(path)
+        # map-reduce sample already present -> completed
+        self.assertIn(
+            _completed_key("exp1-P1-genAI", "v2-agentic", 0), completed
+        )
+        # full-context sample for the same task/index -> NOT completed
+        self.assertNotIn(
+            _completed_key("exp1-P1-genAI", "v2-agentic-full", 0), completed
+        )
 
 
 if __name__ == "__main__":

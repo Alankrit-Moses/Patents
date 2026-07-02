@@ -1,4 +1,0 @@
-No LLM judge call was issued. The candidate failed exact membership recovery against the report, so the assigned score is 0.
-
-Candidate text:
-The release of OpenAI’s ChatGPT in November 2022 has greatly increased public enthusiasm for generative AI (GenAI). It has been described by many, including Nvidia CEO JenHsun Huang, as an “iPhone moment” for GenAI. This is because the OpenAI platform has made it easier for all users to access advanced GenAI programs, particularly large language models (LLMs). These models have reached new levels of performance, demonstrating the potential for various real-world applications, triggering a wave of research and development, and large corporate investments in GenAI.

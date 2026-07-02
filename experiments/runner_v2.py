@@ -2,14 +2,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import threading
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
 from .agent_v2 import FrameworkAgentV2
+from .agent_v2_full import FrameworkAgentV2FullContext
 from .client import OpenAICompatibleClient
 from .config import HarnessConfig, load_config
-from .io_utils import append_jsonl, extract_json
+from .io_utils import append_jsonl, extract_json, load_jsonl
 from .manifest import build_manifest, build_tasks, save_manifest_and_tasks
 from .prompts import generator_input_refs, materialize_generator_inputs
 from .prompts_v2 import (
@@ -21,6 +24,25 @@ from .prompts_v2 import (
 
 def _timestamp() -> str:
     return datetime.now().strftime("%Y%m%d-%H%M%S")
+
+
+def prompt_version_for(setup: str, b_variant: str, c_variant: str) -> str:
+    """Canonical prompt-version tag for a (setup, variant) combination.
+
+    This is the single source of truth used both to stamp result records and to
+    key resume: it must uniquely identify each runnable configuration. The two
+    Setup B variants and the two Setup C variants share a setup label but differ
+    here (``v2-agentic`` vs ``v2-agentic-full``), so resuming keys on this rather
+    than on ``setup`` to keep map-reduce and full-context runs distinct.
+    """
+    setup = setup.upper()
+    if setup == "A":
+        return "v2"
+    if setup == "B":
+        return f"v2-{b_variant}"
+    if setup == "C":
+        return "v2-agentic" if c_variant == "map-reduce" else "v2-agentic-full"
+    return "v2"
 
 
 def _estimated_tokens(messages: list[dict[str, str]], chars_per_token: float) -> int:
@@ -85,22 +107,28 @@ def run_task_v2(
     config: HarnessConfig,
     client: OpenAICompatibleClient,
     b_variant: str = "query-only",
+    c_variant: str = "map-reduce",
 ) -> dict[str, Any]:
     setup = setup.upper()
-    if setup == "A":
-        prompt_version = "v2"
-    elif setup == "B":
-        prompt_version = f"v2-{b_variant}"
-    elif setup == "C":
-        prompt_version = "v2-agentic"
-    else:
-        prompt_version = "v2"
+    prompt_version = prompt_version_for(setup, b_variant, c_variant)
     record = _base_record(task, setup, prompt_version)
     try:
         inputs = materialize_generator_inputs(config.project_root, task)
         if setup == "C":
-            result = FrameworkAgentV2(config, client).run(task, inputs)
-            record.update(result)
+            agent_class = (
+                FrameworkAgentV2 if c_variant == "map-reduce" else FrameworkAgentV2FullContext
+            )
+            agent = agent_class(config, client)
+            try:
+                result = agent.run(task, inputs)
+                record.update(result)
+            except Exception:
+                # Preserve the partial trace on failure (e.g. max_steps) so the
+                # control loop is debuggable instead of being discarded.
+                if not record.get("agent_trace"):
+                    record["agent_trace"] = agent.trace
+                    record["selected_chunks"] = agent.selected_chunks
+                raise
             parsed = record["parsed_output"]
         elif setup in {"A", "B"}:
             messages = _build_prompt_v2(setup, task, inputs, b_variant)
@@ -140,6 +168,7 @@ def run_task_v2_with_retries(
     client: OpenAICompatibleClient,
     b_variant: str = "query-only",
     max_attempts: int = 3,
+    c_variant: str = "map-reduce",
 ) -> dict[str, Any]:
     if max_attempts < 1:
         raise ValueError("max_attempts must be at least 1")
@@ -147,7 +176,7 @@ def run_task_v2_with_retries(
     failed_attempts: list[dict[str, Any]] = []
     record: dict[str, Any] | None = None
     for attempt_index in range(max_attempts):
-        attempted = run_task_v2(task, setup, config, client, b_variant)
+        attempted = run_task_v2(task, setup, config, client, b_variant, c_variant)
         if not attempted["errors"]:
             record = attempted
             break
@@ -179,23 +208,48 @@ def run_tasks_v2(
     output_path: Path,
     b_variant: str = "query-only",
     max_attempts: int = 3,
+    concurrency: int = 1,
+    c_variant: str = "map-reduce",
 ) -> list[dict[str, Any]]:
     client = OpenAICompatibleClient(config.generator)
+    setups = list(setups)
+    pairs = [(task, setup) for task in tasks for setup in setups]
     records: list[dict[str, Any]] = []
-    for task in tasks:
-        for setup in setups:
-            record = run_task_v2_with_retries(
-                task,
-                setup,
-                config,
-                client,
-                b_variant,
-                max_attempts,
-            )
+
+    def _run_pair(task: dict[str, Any], setup: str) -> dict[str, Any]:
+        return run_task_v2_with_retries(
+            task,
+            setup,
+            config,
+            client,
+            b_variant,
+            max_attempts,
+            c_variant,
+        )
+
+    if concurrency <= 1:
+        for task, setup in pairs:
+            record = _run_pair(task, setup)
             append_jsonl(output_path, record)
             records.append(record)
             status = "error" if record["errors"] else "ok"
             print(f"{task['task_id']} setup={setup.upper()} prompt={record['prompt_version']} {status}")
+        return records
+
+    # Task-level parallelism: each (task, setup) pair runs on its own thread. The
+    # client is stateless per call, so it is safe to share; only the JSONL append
+    # and the shared records list need a lock.
+    write_lock = threading.Lock()
+    with ThreadPoolExecutor(max_workers=concurrency) as executor:
+        futures = {executor.submit(_run_pair, task, setup): (task, setup) for task, setup in pairs}
+        for future in as_completed(futures):
+            task, setup = futures[future]
+            record = future.result()
+            with write_lock:
+                append_jsonl(output_path, record)
+                records.append(record)
+                status = "error" if record["errors"] else "ok"
+                print(f"{task['task_id']} setup={setup.upper()} prompt={record['prompt_version']} {status}")
     return records
 
 
@@ -223,12 +277,49 @@ def command_run(args: argparse.Namespace, config: HarnessConfig) -> int:
         print("No matching tasks.")
         return 1
     setups = ["A", "B", "C"] if args.setup == "all" else [args.setup.upper()]
+    default_tag = "-".join(
+        sorted({prompt_version_for(setup, args.b_variant, args.c_variant) for setup in setups})
+    )
     output_path = (
         Path(args.output).resolve()
         if args.output
-        else config.output_dir / "runs" / f"results-v2-query-only-{_timestamp()}.jsonl"
+        else config.output_dir / "runs" / f"results-{default_tag}-{_timestamp()}.jsonl"
     )
-    run_tasks_v2(tasks, setups, config, output_path, args.b_variant, args.max_attempts)
+    if args.resume and output_path.exists():
+        # Key resume on (task_id, prompt_version) rather than (task_id, setup) so
+        # that the two Setup C variants (map-reduce vs full-context) and the two
+        # Setup B variants are never conflated when they share an output file.
+        # prompt_version has always been written to records, so this stays
+        # backward compatible with result files from earlier runs.
+        done = {
+            (record.get("task_id"), record.get("prompt_version"))
+            for record in load_jsonl(output_path)
+            if not record.get("errors")
+        }
+        if done:
+            before = len(tasks)
+            expected_versions = [
+                prompt_version_for(setup, args.b_variant, args.c_variant) for setup in setups
+            ]
+            tasks = [
+                task
+                for task in tasks
+                if not all((task["task_id"], version) in done for version in expected_versions)
+            ]
+            print(
+                f"Resume: {len(done)} task/prompt-version records already complete; "
+                f"{before - len(tasks)} tasks skipped."
+            )
+    run_tasks_v2(
+        tasks,
+        setups,
+        config,
+        output_path,
+        args.b_variant,
+        args.max_attempts,
+        concurrency=args.concurrency,
+        c_variant=args.c_variant,
+    )
     print(f"Results: {output_path}")
     return 0
 
@@ -245,6 +336,16 @@ def build_parser() -> argparse.ArgumentParser:
         default="query-only",
         help="Setup B v2 prompt variant; ignored for setup A",
     )
+    run_parser.add_argument(
+        "--c-variant",
+        choices=["map-reduce", "full-context"],
+        default="map-reduce",
+        help=(
+            "Setup C E.text-Finder variant: map-reduce searches overlapping report "
+            "chunks then reduces; full-context reads the whole report in one call. "
+            "Ignored for setups A and B"
+        ),
+    )
     run_parser.add_argument("--experiment", choices=["1", "2", "3", "all"], default="all")
     run_parser.add_argument("--pattern", help="Filter by pattern ID, e.g. P1")
     run_parser.add_argument("--task-id", help="Run one task ID")
@@ -256,6 +357,17 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum total attempts for each task/setup before recording an error",
     )
     run_parser.add_argument("--output", help="Result JSONL path")
+    run_parser.add_argument(
+        "--concurrency",
+        type=int,
+        default=1,
+        help="Number of task/setup pairs to run in parallel (default 1 = sequential)",
+    )
+    run_parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Skip task/setup records already present (without errors) in --output and append the rest",
+    )
     return parser
 
 

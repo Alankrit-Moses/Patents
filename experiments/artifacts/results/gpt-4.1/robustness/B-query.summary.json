@@ -1,0 +1,65 @@
+{
+  "success_threshold": 4.0,
+  "groups": {
+    "experiment_1/setup_B/pattern_P1/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 3.4814814814814814,
+      "population_stddev": 0.9572479987644508,
+      "best_of_k_mean": 3.6666666666666665,
+      "success_at_k": 0.5555555555555556,
+      "exact_excerpt_retention_rate": 1.0
+    },
+    "experiment_1/setup_B/pattern_P2/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 2.111111111111111,
+      "population_stddev": 0.8748897637790901,
+      "best_of_k_mean": 2.6666666666666665,
+      "success_at_k": 0.1111111111111111,
+      "exact_excerpt_retention_rate": 1.0
+    },
+    "experiment_2/setup_B/pattern_P1/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 3.2777777777777777,
+      "population_stddev": 1.789026909789402,
+      "best_of_k_mean": 3.6666666666666665,
+      "success_at_k": 0.8333333333333334,
+      "exact_excerpt_retention_rate": 0.8333333333333334
+    },
+    "experiment_2/setup_B/pattern_P2/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 1.3888888888888888,
+      "population_stddev": 1.1613636089092707,
+      "best_of_k_mean": 1.6666666666666667,
+      "success_at_k": 0.0,
+      "exact_excerpt_retention_rate": 0.7222222222222222
+    },
+    "experiment_3/setup_B/pattern_P1/M_alignment_score": {
+      "observations": 9,
+      "mean": 1.0,
+      "population_stddev": 0.0,
+      "best_of_k_mean": 1.0,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_B/pattern_P1/T_alignment_score": {
+      "observations": 9,
+      "mean": 1.5555555555555556,
+      "population_stddev": 0.6849348892187752,
+      "best_of_k_mean": 2.0,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_B/pattern_P2/M_alignment_score": {
+      "observations": 9,
+      "mean": 2.7777777777777777,
+      "population_stddev": 0.6285393610547089,
+      "best_of_k_mean": 3.0,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_B/pattern_P2/T_alignment_score": {
+      "observations": 9,
+      "mean": 3.7777777777777777,
+      "population_stddev": 0.41573970964154905,
+      "best_of_k_mean": 4.0,
+      "success_at_k": 1.0
+    }
+  }
+}

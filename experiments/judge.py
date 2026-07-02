@@ -9,7 +9,21 @@ from .client import OpenAICompatibleClient
 from .config import HarnessConfig
 from .io_utils import append_jsonl, extract_json, load_jsonl, read_text, resolve_safe_input
 from .manifest import extract_saved_excerpt
-from .reports import recover_exact_span
+import os
+
+from .reports import recover_span_canonical, snap_to_source
+
+
+def _recover_or_snap(excerpt: str, report: str) -> str | None:
+    """Canonical verbatim recovery; if that fails and GROUNDING_SNAP_THRESHOLD is
+    set, fuzzy-snap the excerpt to the real report passage it matches."""
+    recovered = recover_span_canonical(excerpt, report)
+    if recovered is not None:
+        return recovered
+    threshold = os.getenv("GROUNDING_SNAP_THRESHOLD")
+    if threshold:
+        return snap_to_source(excerpt, report, float(threshold))
+    return None
 
 
 def _judge_call(client: OpenAICompatibleClient, user: str) -> dict[str, Any]:
@@ -71,7 +85,7 @@ def _evaluate_exp1(
     scores: list[int] = []
     for index in range(max(target_count, len(excerpts))):
         excerpt = excerpts[index] if index < len(excerpts) else ""
-        recovered = recover_exact_span(excerpt, report)
+        recovered = _recover_or_snap(excerpt, report)
         if recovered is None:
             scores.append(0)
             continue
@@ -105,7 +119,7 @@ def _evaluate_exp2(
     gold_text = extract_saved_excerpt(gold_path)
     csv_text = read_text(tab_path)
     report = read_text(report_path)
-    recovered = recover_exact_span(predicted, report)
+    recovered = _recover_or_snap(predicted, report)
     if recovered is None:
         return {"E_text_alignment_score": 0}
     score = _alignment_score(

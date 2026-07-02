@@ -1,6 +1,0 @@
-No LLM judge call was issued. The candidate failed exact membership recovery against the report, so the assigned score is 0.
-
-Candidate text:
-entity,start_year,end_year,cagr_percent
-Japan,2021,2023,-14.7
-Republic of Korea,2021,2023,13.7

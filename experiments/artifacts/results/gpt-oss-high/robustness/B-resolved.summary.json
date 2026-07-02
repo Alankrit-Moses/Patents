@@ -1,0 +1,65 @@
+{
+  "success_threshold": 4.0,
+  "groups": {
+    "experiment_1/setup_B/pattern_P1/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 2.888888888888889,
+      "population_stddev": 1.5234788000891208,
+      "best_of_k_mean": 3.5555555555555554,
+      "success_at_k": 0.5555555555555556,
+      "exact_excerpt_retention_rate": 0.8518518518518519
+    },
+    "experiment_1/setup_B/pattern_P2/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 1.7777777777777777,
+      "population_stddev": 1.4487116456005886,
+      "best_of_k_mean": 2.888888888888889,
+      "success_at_k": 0.2222222222222222,
+      "exact_excerpt_retention_rate": 0.7037037037037037
+    },
+    "experiment_2/setup_B/pattern_P1/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 2.888888888888889,
+      "population_stddev": 1.5234788000891208,
+      "best_of_k_mean": 3.5,
+      "success_at_k": 0.5,
+      "exact_excerpt_retention_rate": 0.8888888888888888
+    },
+    "experiment_2/setup_B/pattern_P2/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 0.9444444444444444,
+      "population_stddev": 0.9702360664762767,
+      "best_of_k_mean": 1.6666666666666667,
+      "success_at_k": 0.0,
+      "exact_excerpt_retention_rate": 0.5555555555555556
+    },
+    "experiment_3/setup_B/pattern_P1/M_alignment_score": {
+      "observations": 9,
+      "mean": 2.0,
+      "population_stddev": 0.816496580927726,
+      "best_of_k_mean": 2.3333333333333335,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_B/pattern_P1/T_alignment_score": {
+      "observations": 9,
+      "mean": 2.2222222222222223,
+      "population_stddev": 0.7856742013183862,
+      "best_of_k_mean": 2.6666666666666665,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_B/pattern_P2/M_alignment_score": {
+      "observations": 9,
+      "mean": 3.0,
+      "population_stddev": 0.0,
+      "best_of_k_mean": 3.0,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_B/pattern_P2/T_alignment_score": {
+      "observations": 9,
+      "mean": 3.0,
+      "population_stddev": 0.0,
+      "best_of_k_mean": 3.0,
+      "success_at_k": 0.0
+    }
+  }
+}

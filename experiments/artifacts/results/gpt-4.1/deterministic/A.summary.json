@@ -1,0 +1,21 @@
+{
+  "experiment_1/setup_A": {
+    "runs": 6,
+    "means": {
+      "E_text_alignment_scores": 2.6666666666666665
+    }
+  },
+  "experiment_2/setup_A": {
+    "runs": 12,
+    "means": {
+      "E_text_alignment_score": 2.3333333333333335
+    }
+  },
+  "experiment_3/setup_A": {
+    "runs": 6,
+    "means": {
+      "M_alignment_score": 2.8333333333333335,
+      "T_alignment_score": 3.5
+    }
+  }
+}

@@ -1,4 +1,0 @@
-No LLM judge call was issued. The candidate failed exact membership recovery against the report, so the assigned score is 0.
-
-Candidate text:
-Between 2002 and 2019, there have been 459 patent families that describe the production of titanium dioxide from ilmenite, and this number is growing rapidly. The majority of these patents describe pre-treatment processes, such as using smelting and magnetic separation to increase titanium concentration in low-grade ores, leading to titanium concentrates or slags. Other patents describe processes to obtain titanium dioxide, either by a direct hydrometallurgical process or through two industrially exploited processes, the sulfate process and the chloride process.
