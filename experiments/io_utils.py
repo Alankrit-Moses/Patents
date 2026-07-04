@@ -60,11 +60,19 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return records
 
 
-def extract_json(text: str) -> Any:
-    stripped = text.strip()
-    if stripped.startswith("```"):
-        stripped = re.sub(r"^```(?:json)?\s*", "", stripped, flags=re.IGNORECASE)
-        stripped = re.sub(r"\s*```$", "", stripped)
+# Curly/smart double quotes some small models emit instead of ASCII '"',
+# which breaks JSON parsing (e.g. a value closed with a curly quote). Mapped to
+# '"' only as a repair fallback, so well-formed output is never touched.
+_SMART_DOUBLE_QUOTES = "“”„‟″〃"
+
+
+def _repair_smart_quotes(text: str) -> str:
+    for ch in _SMART_DOUBLE_QUOTES:
+        text = text.replace(ch, '"')
+    return text
+
+
+def _extract_json_core(stripped: str) -> Any:
     try:
         return json.loads(stripped)
     except json.JSONDecodeError:
@@ -95,6 +103,23 @@ def extract_json(text: str) -> Any:
                 if depth == 0:
                     return json.loads(stripped[start : index + 1])
         raise json.JSONDecodeError("No complete JSON value", stripped, start)
+
+
+def extract_json(text: str) -> Any:
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        stripped = re.sub(r"^```(?:json)?\s*", "", stripped, flags=re.IGNORECASE)
+        stripped = re.sub(r"\s*```$", "", stripped)
+    try:
+        return _extract_json_core(stripped)
+    except json.JSONDecodeError:
+        # Repair fallback: some small models close strings with curly quotes.
+        # Only reached when strict parsing already failed, so clean output is
+        # unaffected. Re-raises the original error if the repair also fails.
+        repaired = _repair_smart_quotes(stripped)
+        if repaired == stripped:
+            raise
+        return _extract_json_core(repaired)
 
 
 def normalized_text(value: str) -> str:
