@@ -237,7 +237,7 @@ def build_tasks(manifest: Manifest, config: HarnessConfig) -> list[dict[str, Any
                     "3",
                     pattern,
                     f"exp3-{pattern.pattern_id}-fold{fold + 1}",
-                    "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),(E2.text,E2.tab),...})",
+                    "D:(_,_)\nP:(?,?,{(E1.text,E1.tab),(E2.text,E2.tab),(E3.text,E3.tab),(E4.text,E4.tab)})",
                 )
                 task.update(
                     {
