@@ -37,9 +37,17 @@ class OpenAICompatibleClient:
         payload = {
             "model": self.config.model,
             "messages": messages,
-            "temperature": self.config.temperature if temperature is None else temperature,
-            "max_tokens": self.config.max_output_tokens if max_tokens is None else max_tokens,
         }
+        if not self.config.omit_temperature:
+            payload["temperature"] = (
+                self.config.temperature if temperature is None else temperature
+            )
+        token_field = self.config.max_tokens_field
+        if token_field not in {"max_tokens", "max_completion_tokens"}:
+            raise ValueError(f"Unsupported max token field: {token_field}")
+        payload[token_field] = (
+            self.config.max_output_tokens if max_tokens is None else max_tokens
+        )
         if self.config.response_format is not None:
             payload["response_format"] = self.config.response_format
         payload.update(self.config.extra_body)

@@ -15,6 +15,8 @@ class EndpointConfig:
     api_key: str | None = None
     temperature: float = 0.0
     max_output_tokens: int = 2048
+    max_tokens_field: str = "max_tokens"
+    omit_temperature: bool = False
     timeout_seconds: int = 180
     response_format: dict[str, Any] | None = field(default_factory=lambda: {"type": "json_object"})
     extra_headers: dict[str, str] = field(default_factory=dict)
@@ -44,11 +46,18 @@ class HarnessConfig:
     induction_pairs: int = 4
     fold_count: int = 3
     seed: int = 17
-    results_dir: Path | None = None
+    task_directory: Path | None = None
+    run_directory: Path | None = None
 
     @property
-    def output_dir(self) -> Path:
-        return self.results_dir or (self.project_root / "experiments" / "artifacts")
+    def task_dir(self) -> Path:
+        """Directory containing the concrete task manifest released with the study."""
+        return self.task_directory or (self.project_root / "experiments" / "tasks")
+
+    @property
+    def run_dir(self) -> Path:
+        """Directory for newly generated, non-release execution files."""
+        return self.run_directory or (self.project_root / "experiments" / "runs")
 
 
 def _endpoint(data: dict[str, Any] | None, default: EndpointConfig) -> EndpointConfig:
@@ -91,7 +100,9 @@ def load_config(path: str | Path | None = None) -> HarnessConfig:
     ):
         if name in data:
             setattr(cfg, name, data[name])
-    if data.get("results_dir"):
-        value = Path(data["results_dir"])
-        cfg.results_dir = value if value.is_absolute() else (config_path.parent / value).resolve()
+    for key, attribute in (("task_dir", "task_directory"), ("run_dir", "run_directory")):
+        if data.get(key):
+            value = Path(data[key])
+            resolved = value if value.is_absolute() else (config_path.parent / value).resolve()
+            setattr(cfg, attribute, resolved)
     return cfg

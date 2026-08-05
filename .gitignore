@@ -2,3 +2,8 @@ __pycache__/
 *.pyc
 experiments/keys.local.env
 tmp_*.ps1
+tmp/
+*.log
+.env
+experiments/runs/*
+!experiments/runs/README.md
