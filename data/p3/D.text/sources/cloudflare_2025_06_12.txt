@@ -1,0 +1,55 @@
+SOURCE: https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/
+ORIGINAL REPORT PROSE (HTML text extracted; tables omitted from this text view)
+
+
+## Cloudflare service outage June 12, 2025
+
+Jeremy Hartman and CJ Desai
+
+On June 12, 2025, Cloudflare suffered a significant service outage that affected a large set of our critical services, including Workers KV, WARP, Access, Gateway, Images, Stream, Workers AI, Turnstile and Challenges, AutoRAG, Zaraz, and parts of the Cloudflare Dashboard.
+
+This outage lasted 2 hours and 28 minutes, and globally impacted all Cloudflare customers using the affected services. The cause of this outage was due to a failure in the underlying storage infrastructure used by our Workers KV service, which is a critical dependency for many Cloudflare products and relied upon for configuration, authentication and asset delivery across the affected services. Part of this infrastructure is backed by a third-party cloud provider, which experienced an outage today and directly impacted availability of our KV service.
+
+We’re deeply sorry for this outage: this was a failure on our part, and while the proximate cause (or trigger) for this outage was a third-party vendor failure, we are ultimately responsible for our chosen dependencies and how we choose to architect around them.
+
+This was not the result of an attack or other security event. No data was lost as a result of this incident. Cloudflare Magic Transit and Magic WAN, DNS, Cache, proxy, WAF and related services were not directly impacted by this incident.
+
+
+## What was impacted?
+
+As a rule, Cloudflare designs and builds our services on our own platform building blocks, and as such many of Cloudflare’s products are built to rely on the Workers KV service.
+
+The following table details the impacted services, including the user-facing impact, operation failures, and increases in error rates observed:
+
+
+## Background
+
+Workers KV is built as what we call a “coreless” service which means there should be no single point of failure as the service runs independently in each of our locations worldwide. However, Workers KV today relies on a central data store to provide a source of truth for data. A failure of that store caused a complete outage for cold reads and writes to the KV namespaces used by services across Cloudflare.
+
+Workers KV is in the process of being transitioned to significantly more resilient infrastructure for its central store: regrettably, we had a gap in coverage which was exposed during this incident. Workers KV removed a storage provider as we worked to re-architect KV’s backend, including migrating it to Cloudflare R2, to prevent data consistency issues (caused by the original data syncing architecture), and to improve support for data residency requirements.
+
+One of our principles is to build Cloudflare services on our own platform as much as possible, and Workers KV is no exception. Many of our internal and external services rely heavily on Workers KV, which under normal circumstances helps us deliver the most robust services possible, instead of service teams attempting to build their own storage services. In this case, the cascading impact from the failure from Workers KV exacerbated the issue and significantly broadened the blast radius.
+
+
+## Incident timeline and impact
+
+The incident timeline, including the initial impact, investigation, root cause, and remediation, are detailed below.
+
+Workers KV error rates to storage infrastructure. 91% of requests to KV failed during the incident window.
+
+Cloudflare Access percentage of successful requests. Cloudflare Access relies directly on Workers KV and serves as a good proxy to measure Workers KV availability over time.
+
+All timestamps referenced are in Coordinated Universal Time (UTC).
+
+
+## Remediation and follow-up steps
+
+We’re taking immediate steps to improve the resiliency of services that depend on Workers KV and our storage infrastructure. This includes existing planned work that we are accelerating as a result of this incident.
+
+This encompasses several workstreams, including efforts to avoid singular dependencies on storage infrastructure we do not own, improving the ability for us to recover critical services (including Access, Gateway and WARP)
+
+Specifically:
+
+This list is not exhaustive: our teams continue to revisit design decisions and assess the infrastructure changes we need to make in both the near (immediate) term and long term to mitigate the incidents like this going forward.
+
+This was a serious outage, and we understand that organizations and institutions that are large and small depend on us to protect and/or run their websites, applications, zero trust and network infrastructure.  Again we are deeply sorry for the impact and are working diligently to improve our service resiliency.

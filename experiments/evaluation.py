@@ -12,7 +12,7 @@ from .client import OpenAICompatibleClient
 from .config import HarnessConfig
 from .io_utils import append_jsonl, extract_json, load_jsonl, read_text, resolve_safe_input
 from .reports import recover_span_canonical, snap_to_source
-from .task_construction import extract_saved_excerpt
+from .task_inputs import materialize_generator_inputs
 
 
 def _recover_or_snap(excerpt: str, report: str) -> str | None:
@@ -45,13 +45,25 @@ def _judge_call(client: OpenAICompatibleClient, user: str) -> dict[str, Any]:
 
 
 def _alignment_score(client: OpenAICompatibleClient, prompt: str) -> int:
+    scale = os.getenv("EVALUATION_SCALE", "5")
+    if scale not in {"3", "5"}:
+        raise ValueError("EVALUATION_SCALE must be 3 or 5")
+    if scale == "5":
+        prompt += ("\n\nUse the following finer scale instead of the 1–3 labels above: "
+                   "5 = fully correct and clear; 4 = substantially correct with a minor omission or ambiguity; "
+                   "3 = partially correct with a material omission or uncertainty; "
+                   "2 = weakly related with major omissions or mismatch; 1 = incorrect or unrelated. "
+                   "Apply these levels to the same task-specific criteria above, including acceptance of qualitative prose.")
     judged = _judge_call(
         client,
         prompt
         + '\n\nReturn only a JSON object with exactly one key named "score", whose value '
-        "is the integer from 1 to 5 that you selected. Do not return a rationale.",
+        f"is the integer from 1 to {scale} that you selected. Do not return a rationale.",
     )
-    return max(1, min(5, int(judged.get("score", 1))))
+    score = judged.get("score")
+    if type(score) is not int or not 1 <= score <= int(scale):
+        raise ValueError(f"Judge must return an integer score from 1 to {scale}")
+    return score
 
 
 def _find_task(tasks: dict[str, dict[str, Any]], result: dict[str, Any]) -> dict[str, Any]:
@@ -93,15 +105,15 @@ def _evaluate_exp1(
         scores.append(
             _alignment_score(
                 client,
-                f"""Score how well this exact report excerpt instantiates the supplied mathematical pattern definition.
+                f"""Evaluate whether this source passage instantiates the mathematical pattern M.
 
-Mathematical pattern definition:
+Mathematical pattern M:
 {m_text}
 
-Candidate report excerpt:
+Candidate passage:
 {recovered}
 
-Use this alignment scale: 5 = clear and complete instantiation; 4 = valid instantiation with minor ambiguity or omitted context; 3 = partial or uncertain instantiation; 2 = weakly related but missing central conditions; 1 = not an instantiation. Judge semantic pattern alignment, not wording similarity. The saved example collection is non-exhaustive and must not be considered.""",
+Score 3 if the passage clearly supports the essential conditions of M; 2 if it supports some essential conditions but another is missing or uncertain; 1 if it does not meaningfully instantiate M. Accept clear qualitative prose as evidence: exact numbers are not required. Do not infer a widening absolute gap merely from different growth rates when the passage does not establish it. Judge the passage on its meaning and the supplied M.""",
             )
         )
     return {"E_text_alignment_scores": scores}
@@ -114,10 +126,8 @@ def _evaluate_exp2(
     result: dict[str, Any],
 ) -> dict[str, Any]:
     predicted = (_excerpts(result.get("parsed_output", {})) or [""])[0]
-    gold_path = resolve_safe_input(config.project_root, task["gold_e_text_path"], {".txt"})
     tab_path = resolve_safe_input(config.project_root, task["e_tab_path"], {".csv"})
     report_path = resolve_safe_input(config.project_root, task["report_path"], {".txt"})
-    gold_text = extract_saved_excerpt(gold_path)
     csv_text = read_text(tab_path)
     report = read_text(report_path)
     recovered = _recover_or_snap(predicted, report)
@@ -125,20 +135,44 @@ def _evaluate_exp2(
         return {"E_text_alignment_score": 0}
     score = _alignment_score(
         client,
-        f"""Score how well the candidate exact report excerpt describes the same evidence as the provided compact table. The paired reference excerpt is diagnostic evidence showing the intended table-text correspondence, not a wording template. A different exact report passage can receive full credit if it expresses the same entities, metric, interval, values or trend, and pattern behavior.
+        f"""Evaluate whether the source passage describes the same specific instance represented by the table.
 
-Provided compact E.tab:
+E.tab:
 {csv_text}
 
-Paired reference E.text:
-{gold_text}
-
-Candidate exact report excerpt:
+Candidate passage:
 {recovered}
 
-Use this alignment scale: 5 = describes the same evidence clearly and completely; 4 = same evidence with a minor omission or ambiguity; 3 = partially aligned evidence; 2 = only weakly related evidence; 1 = unrelated to the table evidence. Judge semantic evidence alignment, not lexical overlap with the reference excerpt.""",
+Score 3 if it clearly describes the same instance without material contradiction; 2 if it plausibly describes the same instance but a distinguishing feature is missing or uncertain; 1 if it describes another instance or is unrelated. Identify the instance using the relevant entities, metric, period and trend as needed. A clear qualitative description can receive full credit; it need not repeat every number or use the table's wording.""",
     )
     return {"E_text_alignment_score": score}
+
+
+def _moderate_m_score(client: OpenAICompatibleClient, examples: str, generated: str) -> int:
+    prompt = f"""Evaluate the generated pattern definition using the examples.
+
+Look for a meaningful structural relationship shared by the examples. The definition may use words, mathematical notation, or both. Different valid generalizations are acceptable.
+
+Focus on what the definition gets right. Do not lower the score solely because it omits incidental details, uses different terminology, or could be more general. However, consider whether its essential conditions are supported across the examples and whether it makes a material claim that conflicts with them.
+
+Examples:
+{examples}
+
+Generated M:
+{generated}
+
+Score:
+5 = clearly identifies a meaningful pattern supported across the examples;
+4 = identifies a largely supported shared pattern, with minor ambiguity or an unnecessary restriction;
+3 = identifies a relevant shared relationship, but has a material omission, overly restrictive condition, or mismatch with some examples;
+2 = has a limited meaningful connection to the examples;
+1 = does not identify a pattern related to the examples.
+
+Return only {{"score": <integer from 1 to 5>}}."""
+    score = _judge_call(client, prompt).get("score")
+    if type(score) is not int or not 1 <= score <= 5:
+        raise ValueError("Judge must return an integer score from 1 to 5")
+    return score
 
 
 def _evaluate_exp3(
@@ -148,34 +182,37 @@ def _evaluate_exp3(
     result: dict[str, Any],
 ) -> dict[str, Any]:
     generated = result.get("parsed_output", {})
-    canonical_m = read_text(resolve_safe_input(config.project_root, task["m_path"], {".txt"}))
-    canonical_t = read_text(resolve_safe_input(config.project_root, task["t_path"], {".txt"}))
-    generated_m = str(generated.get("M", ""))
-    generated_t = str(generated.get("T", ""))
-    m_score = _alignment_score(
-        client,
-        f"""Score the semantic and operational alignment of a generated mathematical pattern definition with the canonical mathematical definition. Equivalent notation and wording are acceptable; a specific example, CSV/table, or non-general rule is not a valid replacement.
+    pairs = materialize_generator_inputs(config.project_root, task)["paired_examples"]
+    examples = "\n\n".join(
+        f"Example {pair['example_id']}:\nE.text:\n{pair['E.text']}\nE.tab:\n{pair['E.tab']}"
+        for pair in pairs
+    )
+    generated_m = str(generated.get("M") or "").strip()
+    generated_t = str(generated.get("T") or "").strip()
+    common = """Evaluate the proposed shared pattern against the examples. Allow multiple valid generalizations. Consider whether it meaningfully explains the examples and is sufficiently specific, without requiring every detail of every example. Score 3 for a clear, meaningful shared pattern supported by the examples; 2 for a plausible pattern with a material omission, ambiguity or mismatch; 1 for an incorrect or non-meaningful shared pattern."""
+    if not generated_m:
+        m_score = 0
+    elif os.getenv("Q3_M_RUBRIC", "moderate") == "moderate" and os.getenv("EVALUATION_SCALE", "5") == "5":
+        m_score = _moderate_m_score(client, examples, generated_m)
+    elif os.getenv("Q3_M_RUBRIC", "moderate") in {"moderate", "original"}:
+        m_score = _alignment_score(client, f"""{common}
+For M, also require an operational mathematical rule; a single example or table alone is not a general rule.
 
-Canonical M:
-{canonical_m}
+Examples:
+{examples}
 
 Generated M:
-{generated_m}
+{generated_m}""")
+    else:
+        raise ValueError("Q3_M_RUBRIC must be moderate or original")
+    t_score = _alignment_score(client, f"""{common}
+For T, assess the clarity of the natural-language description.
 
-Use this alignment scale: 5 = equivalent operational rule; 4 = substantially aligned with a minor omission or ambiguity; 3 = captures part of the rule; 2 = weakly related; 1 = not aligned.""",
-    )
-    t_score = _alignment_score(
-        client,
-        f"""Score the semantic alignment of a generated natural-language pattern description with the canonical description. Equivalent wording is acceptable; a specific example or vague topical description is not a valid replacement.
-
-Canonical T:
-{canonical_t}
+Examples:
+{examples}
 
 Generated T:
-{generated_t}
-
-Use this alignment scale: 5 = equivalent clear description; 4 = substantially aligned with a minor omission or ambiguity; 3 = captures part of the pattern; 2 = weakly related; 1 = not aligned.""",
-    )
+{generated_t}""") if generated_t else 0
     return {"M_alignment_score": m_score, "T_alignment_score": t_score}
 
 
@@ -190,6 +227,8 @@ def _judge_one(
         "experiment": result.get("experiment"),
         "setup": result.get("setup"),
         "pattern_id": result.get("pattern_id"),
+        "evaluation_rubric": f"example_alignment_0_{os.getenv('EVALUATION_SCALE', '5')}_" + ("moderate_m_v2" if os.getenv("EVALUATION_SCALE", "5") == "5" and os.getenv("Q3_M_RUBRIC", "moderate") == "moderate" else "v1"),
+        "judge_model": config.judge.model,
         "metrics": {},
         "errors": [],
     }

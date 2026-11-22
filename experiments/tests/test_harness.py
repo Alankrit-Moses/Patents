@@ -13,7 +13,8 @@ from experiments.reports import chunk_report
 from experiments.reports import recover_exact_span
 from experiments.task_construction import extract_saved_excerpt, extract_saved_excerpts
 from experiments.io_utils import read_text
-from experiments.evaluation import _evaluate_exp1, _evaluate_exp2, _evaluate_exp3
+from experiments.evaluation import _evaluate_exp1, _evaluate_exp2, _evaluate_exp3, _alignment_score
+from unittest.mock import patch
 from experiments.sampling import build_parser as build_sampling_parser
 from experiments.sampling import summarize_samples
 from experiments.sampling import _completed_key, _load_resume_state
@@ -114,6 +115,12 @@ class HarnessTests(unittest.TestCase):
         self.assertNotIn("E_tab_code", str(refs))
         self.assertNotIn(".xlsx", str(refs))
 
+    def test_default_judge_scale_accepts_five(self):
+        client = RecordingScoreClient([5])
+        with patch.dict("os.environ", {}, clear=True):
+            self.assertEqual(_alignment_score(client, "Evaluate the answer."), 5)
+        self.assertIn("integer from 1 to 5", client.messages[0][-1]["content"])
+
     def test_exp1_scores_each_requested_excerpt_and_hard_zeros_non_excerpts(self):
         with TemporaryDirectory(dir=ROOT) as temp_dir:
             base = Path(temp_dir)
@@ -135,44 +142,72 @@ class HarnessTests(unittest.TestCase):
                     ]
                 }
             }
-            client = RecordingScoreClient([4])
+            client = RecordingScoreClient([3])
             metrics = _evaluate_exp1(client, self.config, task, result)
-            self.assertEqual(metrics, {"E_text_alignment_scores": [4, 0, 0]})
+            self.assertEqual(metrics, {"E_text_alignment_scores": [3, 0, 0]})
         self.assertEqual(len(client.messages), 1)
         self.assertNotIn('{"score":1}', client.messages[0][-1]["content"])
 
-    def test_exp2_uses_gold_pair_only_in_judge_and_returns_one_score(self):
+    def test_exp2_judges_table_without_reference_and_returns_one_score(self):
         task = next(task for task in self.tasks if task["experiment"] == "2")
         inputs = materialize_generator_inputs(ROOT, task)
         gold = extract_saved_excerpt(ROOT / task["gold_e_text_path"])
-        client = RecordingScoreClient([5])
+        client = RecordingScoreClient([3])
         metrics = _evaluate_exp2(
             client,
             self.config,
             task,
             {"parsed_output": {"excerpt": gold}},
         )
-        self.assertEqual(metrics, {"E_text_alignment_score": 5})
+        self.assertEqual(metrics, {"E_text_alignment_score": 3})
         judge_prompt = client.messages[0][-1]["content"]
         self.assertIn(inputs["E.tab"], judge_prompt)
-        self.assertIn(gold, judge_prompt)
+        self.assertNotIn("Paired reference", judge_prompt)
         self.assertNotIn("Comparison window used for E.tab", judge_prompt)
         self.assertIn("Do not return a rationale", judge_prompt)
 
     def test_exp3_scores_m_and_t_independently_without_heldouts(self):
         task = next(task for task in self.tasks if task["experiment"] == "3")
-        client = RecordingScoreClient([4, 3])
+        client = RecordingScoreClient([3, 2])
         metrics = _evaluate_exp3(
             client,
             self.config,
             task,
             {"parsed_output": {"M": "generated math", "T": "generated text"}},
         )
-        self.assertEqual(metrics, {"M_alignment_score": 4, "T_alignment_score": 3})
+        self.assertEqual(metrics, {"M_alignment_score": 3, "T_alignment_score": 2})
         self.assertEqual(len(client.messages), 2)
         prompts = "\n".join(call[-1]["content"] for call in client.messages)
+        for pair in materialize_generator_inputs(ROOT, task)["paired_examples"]:
+            self.assertIn(pair["E.tab"], prompts)
+            self.assertIn(pair["E.text"], prompts)
+        self.assertNotIn("Canonical M:", prompts)
         self.assertNotIn("Held-out", prompts)
         self.assertNotIn("Hard negative", prompts)
+
+    def test_submission_p3_tasks_load_and_q2_gold_is_grounded(self):
+        import json
+        path = ROOT / "experiments/tasks/p3.jsonl"
+        tasks = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()]
+        self.assertEqual({q: sum(t["experiment"] == q for t in tasks) for q in ("1", "2", "3")}, {"1": 3, "2": 6, "3": 3})
+        for task in tasks:
+            inputs = materialize_generator_inputs(ROOT, task)
+            if task["experiment"] == "2":
+                gold = extract_saved_excerpt(ROOT / task["gold_e_text_path"])
+                self.assertIsNotNone(recover_exact_span(gold, inputs["D.text"]))
+            elif task["experiment"] == "3":
+                self.assertEqual(len(inputs["paired_examples"]), 4)
+                self.assertTrue(all(pair["E.text"] and pair["E.tab"] for pair in inputs["paired_examples"]))
+
+    def test_default_q3_m_uses_moderate_rubric(self):
+        task = next(task for task in self.tasks if task["experiment"] == "3")
+        client = RecordingScoreClient([4, 3])
+        with patch.dict("os.environ", {}, clear=True):
+            _evaluate_exp3(client, self.config, task, {"parsed_output": {"M": "math", "T": "text"}})
+        m_prompt = client.messages[0][-1]["content"]
+        self.assertIn("essential conditions are supported across the examples", m_prompt)
+        self.assertIn("Return only", m_prompt)
+        self.assertNotIn("Canonical M:", m_prompt)
 
     def test_agentic_executor_runs_framework_control_loop(self):
         config = HarnessConfig(project_root=ROOT, chunk_chars=1000, chunk_overlap_chars=50)

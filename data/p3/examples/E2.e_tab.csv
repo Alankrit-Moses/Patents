@@ -1,0 +1,22 @@
+﻿record_id,record_type,source_section,time_utc,time_from_video_start,time_after_takeoff,activity_or_observation,source_comment
+ATSB-T1-09,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:32,1:11,Engine RPM fluctuating,Distinct rise and fall of engine RPM
+ATSB-T1-10,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:35,1:14,Large drop in engine RPM,
+ATSB-T1-13,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:48 & 4:51,1:27 & 1:30,Stall warning sounds,
+ATSB-T1-14,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:52,1:31,Engine stops,"Distinct ‘whomp’ sound from engine, usually heard when a piston engine stops"
+ATSB-T1-15,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:56,1:35,Undercarriage warning bell followed by stall warning,"‘Click’ sound, followed by a wind noise. Gear extension most likely set here."
+ATSB-T1-16,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:02,1:41,Pilot speaking,Radio call for return to runway
+ATSB-T1-17,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,"5:18, 5:20 & 5:24","1:57, 1:59, & 2:03",Stall warning sounds,
+ATSB-T1-18,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:25,2:04,WMM turns directly toward runway,
+ATSB-T1-19,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:26 to 5:40,2:05 to 2:19,Stall warning multiple sounds,
+ATSB-T1-20,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:40,2:19,Right wing drops,
+ATSB-T1-21,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:42,2:21,Right wing drops Electronic voice calls “stall” Aircraft stall warning remains on,Electronic voice is an alert from the Voice Alert System – heard only once
+ATSB-T1-22,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:45,2:24,Aircraft impacts water,
+ATSB-STALL-SYSTEM,published_investigative_observation,ATSB PDF p.9,,,,"On board video recorded the stall warning sounding 13 seconds after the engine experienced the 
+large drop in power. The stall warning continued sounding intermittently throughout the remainder 
+of the flight, indicating that the aircraft was only marginally maintaining airspeed above the stall 
+speed. The stall warning horn activated multiple times during the final approach until impact with 
+water. This indicates that the aircraft would have been within 3-4 kt of the straight and level 
+flapless stall speed of about 63 kt.",
+ATSB-IMPACT-CONFIG,published_investigative_observation,ATSB PDF p.10,,,,"The aircraft impacted the water on a heading of about 218° in an upright, 
+slight right-wing low, nose-down attitude, with the undercarriage in the extended position, and with 
+the wing flaps retracted.",

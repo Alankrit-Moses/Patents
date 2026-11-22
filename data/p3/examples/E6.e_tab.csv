@@ -1,0 +1,6 @@
+﻿record_id,record_type,source_section,time_utc,time_from_video_start,time_after_takeoff,activity_or_observation,source_comment
+E6-01,published_incident_timeline,Cloudflare 2025-09-12: Timeline,2025-09-12 16:32,,,"A new version of the Cloudflare Dashboard is released which contains a bug that will trigger many more calls to the /organizations endpoint, including retries in the event of failure.",
+E6-02,published_incident_timeline,Cloudflare 2025-09-12: Timeline,2025-09-12 17:50,,,A new version of the Tenant API Service is deployed.,
+E6-03,published_incident_timeline,Cloudflare 2025-09-12: Timeline,2025-09-12 17:57,,,The Tenant API Service becomes overwhelmed as new versions are deploying. Dashboard Availability begins to drop IMPACT START,
+E6-04,published_incident_timeline,Cloudflare 2025-09-12: Timeline,2025-09-12 18:17,,,"After providing more resources to the Tenant API Service, the Cloudflare API climbs to 98% availability, but the dashboard does not recover. IMPACT DECREASE",
+E6-05,published_incident_timeline,Cloudflare 2025-09-12: Timeline,2025-09-12 19:12,,,"The problematic changes to the Tenant API Service are reverted, and Dashboard Availability returns to 100%. IMPACT END",

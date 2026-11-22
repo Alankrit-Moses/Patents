@@ -1,0 +1,12 @@
+ID: P3-E1
+
+Analysis of CCTV imagery indicated it was likely that VH-WMM had a substantial quantity of fuel 
+in the right wing, and that the pilot would have been aware of the imbalance after physically using 
+a dipstick to check the aircraft fuel tanks during the pre-flight checks on the ground outside the 
+hangar. 
+The fuel selector was found to be on the left tank after the accident and there was no video 
+evidence of the pilot changing it during the flight. Therefore, the fuel selector was likely on the left 
+tank during take-off. Due to the fuel imbalance, the left tank likely had minimal fuel to sustain 
+engine operation during the climb out, which would result in the engine being starved of fuel, lose 
+power, and begin to surge, and eventually stop. This is consistent with no fuel being found in the 
+left tank after the accident.

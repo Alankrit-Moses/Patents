@@ -5,12 +5,22 @@ Formulation Framework and an Agentic Execution Pipeline for Pattern
 Engineering*. It contains the single blackboard-based agentic executor evaluated
 in the paper, the study tasks and data, and the reported outputs and evaluations.
 
+## Preliminary extension
+
+The original paper artifact remains in `results/`. The local preliminary extension
+adds P3 (causal chains), new GPT-6.1 Terra evaluations of P1/P2, and P3 runs for
+four generator settings. Its inputs are in [`data/p3/`](data/p3/), concrete
+queries are in [`experiments/tasks/p3.jsonl`](experiments/tasks/p3.jsonl), and
+results, rubric provenance, and limitations are in
+[`results/preliminary/`](results/preliminary/README.md). These results are
+exploratory and are not the original reported paper table.
+
 ## Repository contents
 
 - [`experiments/`](experiments/) contains the executor, prompts, task
   construction, experiment runners, and evaluation code.
-- [`results/`](results/) exposes the outputs, GPT-4.1 evaluations, and summaries
-  for the four model settings reported in the paper.
+- [`results/`](results/) contains the original GPT-4.1-judged results and a separately labeled preliminary extension.
+- [`data/p3/`](data/p3/) contains the preliminary P3 causal-chain task materials.
 - [`Patterns/`](Patterns/) contains the trajectory-shift (`P1`) and
   growth-divergence (`P2`) pattern cards. Each includes `M`, `T`, and six
   curated gold `(e.text,e.tab)` pairs.
@@ -49,7 +59,7 @@ python -m experiments.cli --config experiments/configs/gpt-4.1.json manifest
 python -m experiments.runner --config experiments/configs/gpt-4.1.json run --task-id exp1-P1-genAI
 ```
 
-Commands for reproducing the three-sample runs, judging, and summarization are
+Commands for reproducing the three-sample runs, judging, P3, and summarization are
 in [`experiments/README.md`](experiments/README.md).
 
 ## Released results
@@ -71,3 +81,7 @@ The report PDFs, extracted text, and companion workbooks were published by
 WIPO. The curated pattern cards and example pairs are research artifacts
 derived from those sources. Source files remain subject to their original
 terms; this repository does not relicense third-party WIPO material.
+
+P3 source materials include an ATSB investigation and Cloudflare postmortems;
+see [`data/p3/README.md`](data/p3/README.md) for attribution and redistribution
+notes. Check third-party reuse rights before distributing this extension.

@@ -1,0 +1,1 @@
+A causal chain is a sequence of events, states, actions, or conditions in which each element causes or contributes to the next. It can contain a single cause-and-effect link or several connected links. The pattern applies across domains and can describe beneficial, neutral, or adverse outcomes.

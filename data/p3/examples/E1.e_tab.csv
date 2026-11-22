@@ -1,0 +1,19 @@
+﻿record_id,record_type,source_section,time_utc,time_from_video_start,time_after_takeoff,activity_or_observation,source_comment
+ATSB-T1-01,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,1:50,,Stop at holding point,Discussing location of other traffic
+ATSB-T1-04,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,3:30,0:09,Undercarriage retracts,Motor heard during gear retraction
+ATSB-T1-06,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:05,0:44,Engine RPM decrease,Pilot reduces power after take-off
+ATSB-T1-08,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:15,0:54,Left turn,WMM now about 90° to runway heading
+ATSB-T1-09,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:32,1:11,Engine RPM fluctuating,Distinct rise and fall of engine RPM
+ATSB-T1-10,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:35,1:14,Large drop in engine RPM,
+ATSB-T1-11,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:38,1:17,Passenger asks pilot about fuel coming out of right-wing fuel cap,
+ATSB-T1-13,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:48 & 4:51,1:27 & 1:30,Stall warning sounds,
+ATSB-T1-14,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:52,1:31,Engine stops,"Distinct ‘whomp’ sound from engine, usually heard when a piston engine stops"
+ATSB-FUEL-SELECTOR,published_investigative_observation,ATSB PDF p.11,,,,"Examination of the aircraft fuel system was carried out and found that the fuel selector was set to 
+the LEFT tank at the time of the accident, and the auxiliary fuel pump was switched OFF.",
+ATSB-FUEL-TANK-CONTENTS,published_investigative_observation,ATSB PDF p.11,,,,"• right wing: about 85 L of AVGAS recovered, with no visible water 
+• left wing: about 25 L of water, with no visible AVGAS.",
+ATSB-FUEL-CCTV,published_investigative_observation,ATSB PDF p.8,,,,"CCTV at Redcliffe airfield showed that prior to the flight, the wings of VH-WMM were not level 
+while parked on the tarmac. The right wing at the tip was about 60 cm lower than the left, 
+indicating a fuel imbalance, where the right wing contained a greater fuel quantity than the left 
+wing. The right-wing low condition indicated that fuel crossflow from the left to right fuel tanks may 
+have occurred while VH-WMM was hangared.",

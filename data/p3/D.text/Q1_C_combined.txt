@@ -1,0 +1,977 @@
+D.text corpus: Q1_C — all three reports (E1–E6)
+Source passages retain their original wording; original PDF hard line breaks are preserved.
+
+
+==================== SOURCE: aviation_ao_2021_053.txt ====================
+
+Australian Transport Safety Bureau — AO-2021-053
+Fuel starvation and collision with water involving Rockwell International 114, VH-WMM
+ORIGINAL EXTRACTED REPORT PROSE — publisher PDF page order
+
+
+===== PDF PAGE 3 =====
+ 
+› i ‹ 
+Executive summary 
+What happened 
+On the morning of 19 December 2021, a Rockwell Commander 114, registered VH-WMM, 
+departed Redcliffe aircraft landing area, Queensland for a private flight. On board were a pilot and 
+3 passengers. Shortly after take-off, the engine lost power and the pilot elected to return to the 
+airfield. During the return, the aircraft lost altitude and impacted the ocean before becoming 
+inverted. The occupants were unable to escape the aircraft and were fatally injured, and the 
+aircraft was destroyed. 
+What the ATSB found 
+The ATSB found that during preparation for the flight, a perceived engine problem distracted the 
+pilot during the conduct of pre-take-off checks. After rectifying the issue, the pilot did not complete 
+the remaining pre-take-off checks (including fuel tank selection) before departure. Before take-off 
+when there was no time pressure (and during the inflight emergency when there was), checks and 
+action items were only done by memory rather than using the pilot operating handbook or 
+third-party checklists also on board. 
+While stored in the hangar, most of the fuel moved into the right wing tank. The pilot would have 
+been aware of the fuel imbalance from measuring fuel in both tanks via a dipstick before flight. 
+However, it was likely that the fuel tank selection prior to take-off was to the left fuel tank only, 
+which led to fuel starvation and engine stoppage soon after take-off. 
+The pilot, likely experiencing the effects of stress and time pressure following the engine power 
+reduction and then stoppage, did not conduct initial emergency actions and attempted to return to 
+the runway for landing. However, the pilot did not maintain glide speed, and the aircraft impacted 
+shallow water prior to reaching the airfield. During the return to the airfield, the pilot had extended 
+the undercarriage for the intended landing. This contributed to the aircraft inverting when it collided 
+with water. This likely resulted in occupant disorientation and added difficulty in operating the 
+exits, reducing their ability to escape. 
+It is very likely that the passengers did not receive information about the brace position or actions 
+to be taken in the event of a ditching as part of the pre-flight briefing. In the limited time available 
+inflight after the power loss, the pilot also did not provide an emergency briefing or any instructions 
+to passengers prior to impact with the water. 
+While the pilot was primarily responsible for the operation of the aircraft exits in an emergency, 
+seating a child, who may require assistance, adjacent to an exit instead of an adult meant that a 
+less suitable passenger was available to operate the exit. 
+Safety message 
+Use of the approved aircraft checklists, taken from the pilot operating handbook, provides pilots 
+with the appropriate checks to be conducted for the aircraft type. Having these readily available in 
+a written form, for the preparation and conduct of a flight, provides pilots with the detailed normal 
+and emergency checks specific to the aircraft type without having to rely on committing these to 
+memory. This ensures that aircraft are operated in a way that meets aircraft flight manual 
+requirements and limitations. 
+Distraction can impact proper procedural processes and lead to interruption and omission of 
+safety critical elements before take-off. The habit of restarting an interrupted checklist from the 
+beginning is a means of ensuring that all steps to be performed are done so in order and the 
+checklist is complete. 
+Proper fuel management will ensure fuel supply to the engine(s) remains uninterrupted at all 
+stages of flight. The ATSB publication, Avoidable Accidents No. 5 - Starved and exhausted: Fuel 
+
+
+
+===== PDF PAGE 4 =====
+ 
+› ii ‹ 
+management aviation accidents (AR-2011-112) outlines strategies and key messages for fuel 
+management. 
+Thorough pre-flight briefings of passengers on how to operate exits, the brace position and 
+actions that might be required in a ditching or other forced landing are essential to increase 
+post-impact survivability. Additionally, as supported by guidance, pilots should consider who might 
+be best to assist in the case of an emergency, and brief and seat them accordingly. 
+The ATSB SafetyWatch highlights the broad safety concerns that 
+come out of our investigation findings and from the occurrence 
+data reported to us by industry. One of the safety concerns is: 
+Reducing the severity of injuries in accidents involving small 
+aircraft. 
+
+
+
+===== PDF PAGE 5 =====
+ATSB – AO-2021-053 
+› 1 ‹ 
+The investigation 
+The occurrence 
+On the morning of 19 December 2021, at the Redcliffe aircraft landing area, Queensland, a 
+Rockwell International 114 aircraft, registered VH-WMM, was being prepared for a local private 
+flight under visual flight rules.1 On board for the flight were the pilot and 3 passengers. The 
+weather conditions and visibility were good, with light winds from the east. 
+Closed circuit television (CCTV) showed the pilot conducting a pre-flight inspection of the aircraft. 
+This included draining a small amount of fuel from each fuel tank drain to check for any water 
+contamination and using a dipstick to check the fuel tank quantity of each tank.  
+A passenger video (see Appendix - Sequence of events) was recovered from a mobile phone 
+which showed portions of the taxi, before take-off checks, and the accident flight. Several 
+witnesses at the airfield, in boats near the airfield, and in other aircraft also observed the flight of 
+VH-WMM (Figure 1). 
+Before the take-off, passenger video showed the pilot conducting before take-off checks (from 
+memory) and did not show the use of any written checklists. While conducting the engine run-ups, 
+the pilot perceived a technical difficulty with the aircraft, and the checks were paused. After 
+notifying a ground crew member by phone, the pilot taxied back toward the ground crew who was 
+walking towards the aircraft on the taxiway. The ground crew member recalled that through hand 
+signals, the pilot identified the issue as misidentification of the mixture control for the propeller 
+pitch control and communicated that they had identified and corrected the problem. 
+The pilot then taxied again for runway 07 without continuing or restarting the interrupted before 
+take-off checks and continued direct to the runway holding point. The occupants of VH-WMM then 
+discussed where other traffic was in the circuit, before entering and backtracking to the end of the 
+runway. VH-WMM then turned and commenced the take-off at 0908 local time. 
+After take-off from runway 07,2 the aircraft’s undercarriage and flaps were retracted, and 
+62 seconds later, while in a left climbing turn, the engine RPM started to fluctuate, followed by a 
+large drop in engine power 3 seconds later. The (adult) passenger, seated on the rear-right side of 
+the aircraft then asked the pilot about fuel coming out of the top of the right wing; however, the 
+pilot did not respond to the question. The video also did not indicate the pilot conducting any 
+engine troubleshooting activities. The pilot made 2 further left turns, which were consistent with 
+manoeuvring the aircraft back toward the western end of runway 07 (Figure 1), and the stall 
+warning sounded twice. About 17 seconds after the power reduction (1 minute 31 seconds after 
+take-off), the engine stopped.  
+Four seconds later, the video recorded the undercarriage warning bell followed by the stall 
+warning. Based on the recorded sounds, it is likely the pilot responded by lowering the landing 
+gear. Another pilot who was on final approach for runway 07 heard the pilot of VH-WMM 
+broadcast on the radio that they were returning to the airfield.3  
+ 
+1  
+Visual flight rules (VFR): a set of regulations that permit a pilot to operate an aircraft only in weather conditions 
+generally clear enough to allow the pilot to see where the aircraft is going. 
+2  
+Runway number: the number represents the magnetic heading of the runway. In this case, 07 equates to 70°. 
+3  
+Radio communications on the common traffic advisory frequency at Redcliffe Aerodrome were not recorded. 
+Decisions regarding whether to conduct an investigation, and the scope of an investigation, are based on 
+many factors, including the level of safety benefit likely to be obtained from an investigation. For this 
+occurrence, a limited-scope investigation was conducted in order to produce a short investigation report, 
+and allow for greater industry awareness of findings that affect safety and potential learning opportunities. 
+
+
+
+===== PDF PAGE 6 =====
+ATSB – AO-2021-053 
+› 2 ‹ 
+Figure 1: Redcliffe aircraft landing area and VH-WMM approximate flight path and 
+accident site 
+ 
+Source: Google Earth, annotated by the ATSB 
+Over 24 seconds, the stall warning sounded another three times, followed by a turn directly toward 
+the runway and then further stall warnings, two successive drops of the right wing and then the 
+sounding of the ‘stall’ voice alert. 
+Three seconds later, as the aircraft neared the mangrove tree line to the north of the airfield, it 
+contacted the water, about 170 m from the shoreline. The aircraft overturned and came to rest 
+inverted in about 2 m of water.  
+The pilot of another aircraft that was inbound to Redcliffe who had also heard the pilot of 
+VH-WMM make the returning to the airfield call, was alerted to the possibility of an accident from 
+an unknown person on the radio upon arrival. After observing an aircraft in the water, the pilot 
+contacted Brisbane air traffic control (ATC) to advise them of the accident. The pilot remained 
+overhead the accident site while boats arrived at the scene and continued relaying information to 
+ATC.  
+Witnesses at the airfield and on nearby boats contacted emergency services and the Australian 
+Volunteer Coast Guard. After being notified by a witness on a kayak, a nearby vessel made its 
+way to the aircraft, arriving about 5 minutes after the accident. Following the impact with water, the 
+inverted orientation of the aircraft meant that the door handles were submerged. First responders 
+reported that it was difficult to locate the handles to open the doors from the outside. When 
+inverted on the seabed in mud and silt, the upper door latches were also unable to be located. 
+The disturbance of the mud/silt further reduced visibility of the exits and their operating handles.   
+A coast guard vessel arrived onsite; however, the crew were also unable to gain access into the 
+aircraft’s cabin. Queensland Police Service divers arrived at the aircraft about 2 hours after the 
+accident. They observed the water to be about 1.5 m deep. Upon entering the water, police 
+observed that visibility was very poor. The pilot’s door was shut and could not be opened. The 
+right door was unlocked and slightly ajar, and police were able to open the door with some 
+difficulty. The pilot and 3 passengers were fatally injured, and the aircraft was destroyed.   
+
+
+
+===== PDF PAGE 7 =====
+ATSB – AO-2021-053 
+› 3 ‹ 
+Context 
+Pilot information 
+The pilot held a valid Private Pilot Licence (Aeroplane) and a Class 2 aviation medical certificate, 
+valid until February 2023. The pilot held single and multi-engine aeroplane ratings and 
+endorsements for manual propeller pitch control, retractable undercarriage, and formation flying. 
+At the time of the accident, the pilot had logged 334.3 hours in VH-WMM and had about 
+505 hours total aeronautical experience.  
+The flight instructor who conducted the pilot’s last flight review in July 2021 stated that the pilot 
+was assessed on engine failure after take-off. They also described that the assessed procedures 
+on that review were similar to the accident flight, insofar as location of engine power loss and the 
+actions that were to be taken as a result. During the flight review, the pilot had performed all 
+actions to a satisfactory level.   
+Pilot medical history 
+A review of the pilot’s Civil Aviation Safety Authority (CASA) medical file identified that the pilot 
+had disclosed a hypertension condition and that they had been prescribed medication for it but did 
+not list any other health issues or concerns. 
+Discussion with the pilot’s next-of-kin and general practitioner (GP) identified that the pilot was a 
+long term, type 2 non-insulin dependent diabetic. The pilot had been prescribed medication for at 
+least 10 years with medical records indicating tracked blood glucose readings back to 
+January 2003, and an immediate family history of non-insulin dependent diabetes. The pilot had 
+also been diagnosed with high cholesterol and had been prescribed medication for its treatment. 
+The GP was also aware of a family history of heart disease.  
+Of the last 3 CASA aviation medical examinations, the pilot had not declared their high 
+cholesterol, diabetic status, and diabetes medication to their CASA designated aviation medical 
+examiner (DAME), however had disclosed family history of both diabetes and heart disease to the 
+DAME. Regarding the question in relation to diabetes on the pilot’s pre-examination medical 
+history, the pilot indicated ‘unsure’, which was later changed by the DAME to ‘no’ during the 
+examination. 
+Toxicology reports showed that the pilot of VH-WMM had detectable quantities of several 
+substances, including a prescribed medication, paracetamol, and an over-the-counter sedating 
+antihistamine. A carbon monoxide concentration of less than 5% was also detected in the 
+analysis. 
+The ATSB sought advice from a specialist toxicologist regarding the potential effects the detected 
+substances may have had on the pilot during the accident flight. The advice indicated that the 
+level of antihistamine detected in the samples was low and suggested the drug had been used 
+between 12 and 24 hours prior to the accident. They also reported that although the medication 
+the pilot had been prescribed may have increased the sedating effects of the antihistamine, given 
+the low levels detected it was unlikely there was any significant impairment of the psychomotor 
+skills4 required to fly an aircraft. 
+The specialist toxicologist also identified that there may have been an interaction between the 
+multiple antihypertensive medications that the pilot had been prescribed5 to lower blood pressure. 
+However, from the passenger video it was noted that the pilot did not appear to be physically 
+ 
+4  
+Psychomotor skills refer to the co-ordination of perception and action and require either complex perceptual 
+discrimination or a complex motoric response (Chaiken and others, 2000). 
+5  
+Records showed that the pilot had been prescribed 4 antihypertensive medications and had regularly been dispensed 
+these medications in the months before the accident. Only 1 of these medications was detected in the toxicology 
+analysis, however the type of analysis conducted would not detect the other 3 medications.  
+
+
+
+===== PDF PAGE 8 =====
+ATSB – AO-2021-053 
+› 4 ‹ 
+incapacitated, so it is very unlikely the pilot experienced any form of incapacitation prior to the 
+accident.   
+Aircraft information  
+General information 
+The Rockwell International 114 is a 4-seat, single-engine aeroplane with fully retractable, trailing 
+link undercarriage. It is powered by a 6-cylinder Lycoming IO-540 fuel-injected engine and is fitted 
+with a 3-blade constant-speed propeller. Passenger and pilot access is by a door on each side of 
+the aircraft cabin (Figure 2). 
+VH-WMM was manufactured in the US in 1977 and was first registered in Australia in May 2013. 
+The last periodic inspection was conducted on 7 July 2021. At the time of the accident, VH-WMM 
+had accrued a total time in service of 3,431.4 hours and had flown about 11 hours since the last 
+inspection. 
+Figure 2: VH-WMM 
+ 
+Source: Nathen Sieben, annotated by the ATSB  
+Fuel system 
+The Rockwell 114 fuel system consists of 2 integral (wet wing)6 fuel tanks, 1 in each wing, with a 
+fuel gauge for each tank located in the cockpit. The fuel capacity is 132.5 L for each tank, with 
+128 L considered usable. Both fuel tanks supplied the engine through the fuel selector, 
+gascolator,7 electric fuel pump and an engine driven fuel pump. The fuel selector valve had 
+5 positions, which allowed the pilot to select OFF, LEFT, BOTH, RIGHT and OFF positions.  
+The last refuelling of VH-WMM occurred before a flight on 16 October with an uplift of about 120 L 
+of AVGAS, taking the total quantity to about full tanks. VH-WMM was then operated for about 
+2.2 hours over 2 flights, prior to the accident flight. On the day of the accident, the ATSB 
+calculated that about 115 L of fuel remained on board, equivalent to about half tanks.  
+CCTV at Redcliffe airfield showed that prior to the flight, the wings of VH-WMM were not level 
+while parked on the tarmac. The right wing at the tip was about 60 cm lower than the left, 
+indicating a fuel imbalance, where the right wing contained a greater fuel quantity than the left 
+wing. The right-wing low condition indicated that fuel crossflow from the left to right fuel tanks may 
+have occurred while VH-WMM was hangared.  
+ 
+6  
+Wet wing – the wing structure forms an integral fuel tank instead of a bladder or metal fuel tank.  
+7  
+Gascolator – a fuel filter fitted at the lowest point of the fuel system. 
+
+
+
+===== PDF PAGE 9 =====
+ATSB – AO-2021-053 
+› 5 ‹ 
+It is a known issue with the Rockwell International 114 that when the fuel selector is not placed in 
+the OFF position when parked, fuel can flow from one tank to the other. Once a crossflow has 
+started, the increasing fuel weight will also increase the lean of the aircraft, further promoting the 
+fuel crossflow. This results in further uneven fuel distribution, and sometimes an overflow of fuel 
+through the wing tank fuel vents when this imbalance fills one tank completely. The ‘local fix’ 
+amongst the Rockwell 114 community to prevent the crossflow was to set the fuel selector to OFF 
+when the aircraft was parked for an extended period of time. The possibility of fuel crossflow in 
+VH-WMM was also known to the pilot.  
+A review of the aircraft’s logbooks showed that in April 2011, a maintenance intervention was 
+performed on the fuel system due to a crossflow defect occurring when the fuel selector was set to 
+BOTH fuel tanks. The fuel selector position of VH-WMM was unknown prior to the day of the 
+accident, however it is likely that it was not selected to the OFF position. 
+Undercarriage system 
+The Rockwell 114 is equipped with a hydraulically operated undercarriage. The aircraft is fitted 
+with an undercarriage warning system. A switch is mounted on the throttle quadrant which 
+connects to an undercarriage warning bell, activating whenever the throttle is brought to idle while 
+the undercarriage is retracted.  
+Stall warning 
+The Rockwell International 114 is fitted with an aural stall warning system, that provides an 
+audible tone to indicate that the aircraft speed is slowing to a speed that it can no longer produce 
+lift in flight. 
+On board video recorded the stall warning sounding 13 seconds after the engine experienced the 
+large drop in power. The stall warning continued sounding intermittently throughout the remainder 
+of the flight, indicating that the aircraft was only marginally maintaining airspeed above the stall 
+speed. The stall warning horn activated multiple times during the final approach until impact with 
+water. This indicates that the aircraft would have been within 3-4 kt of the straight and level 
+flapless stall speed of about 63 kt. 
+VH-WMM was also fitted with a voice alert system. This unit was an electronic device which 
+detected the activation of the existing aircraft stall and undercarriage warning systems. It was 
+configured to place a voice warning directly into the pilot headset and through a built-in speaker in 
+the unit itself. In this situation, a pilot who may not hear the aircraft-generated stall warning horns 
+because of noise cancelling headsets, will have an electronic voice annunciation of the warning.  
+A witness who had flown with the pilot previously described the system as functional and that it 
+was an effective warning tool. The passenger video detected one annunciation of ‘stall’ from the 
+built-in speaker, just prior to impact. It is unknown if the system was alerting the pilot through the 
+headsets during the flight, however it is likely that the system was functioning, as other pilots who 
+had been on board for previous flights had observed its operation. 
+Engine information 
+The engine fitted to VH-WMM was last overhauled in July 1998 and had accrued about 988 flight 
+hours in operation. The overhaul schedule as listed in Lycoming Service Instruction SI 1009BE 
+was 12 years or 2,000 hours, whichever occurred first.   
+Although the engine had exceeded the calendar schedule of the manufacturer’s time between 
+overhaul, this was permissible when the engine was maintained in accordance with the CASA 
+on-condition8 requirements. At the last annual inspection in July 2021, the maintenance 
+organisation had completed a piston engine condition report verifying the engine serviceability, 
+which then permitted the engine to continue in service. 
+ 
+8  
+On-condition: Performed only when the condition of an item demands, instead of at scheduled intervals. 
+
+
+
+===== PDF PAGE 10 =====
+ATSB – AO-2021-053 
+› 6 ‹ 
+Site & wreckage information 
+Onsite examination 
+The wreckage was located about 1 km north of the Redcliffe airfield, on a tidal flat (Figure 3). The 
+accident occurred about 40 minutes before high tide, and the water depth at the time of the 
+accident was about 2 m. The aircraft impacted the water on a heading of about 218° in an upright, 
+slight right-wing low, nose-down attitude, with the undercarriage in the extended position, and with 
+the wing flaps retracted.  
+Ground scars observed on the tidal flat indicated that after entering the water, the aircraft nose 
+wheel and propeller contacted the seabed leading to the aircraft overturning, resulting in sudden 
+deacceleration and the aircraft coming to rest inverted. Witnesses described the water directly 
+around the aircraft to be murky due to the mud and silt seabed having been disturbed by the 
+aircraft impact. The left door (pilot door) was in a closed and latched condition when the ATSB 
+arrived onsite. The right door was found by police divers to be slightly ajar, and difficult to open 
+during the recovery operation.  
+Figure 3: VH-WMM accident site at low tide 
+ 
+Source: ATSB 
+The aircraft fuselage underside and right wing showed evidence of hydraulic9 compression from 
+impacting the water surface, and the engine had separated from the aircraft. The impact to the 
+fuselage underside damaged the fuselage skins forward and aft of the wing main spar 
+carry-through, resulting in a large hole. The engine firewall had been punctured by the engine and 
+the left rear side window was broken. The identified damage would have allowed water ingress 
+into the fuselage. Fuel was visibly leaking from the right underwing fuel vent, and a strong fuel 
+smell was evident at the site.  
+ 
+9  
+Hydraulic: in this context is the deformation of the aircraft skin around its structural members (such as ribs). This 
+deformation occurs by the action of water on the aircraft skin during the accident sequence. 
+
+
+
+===== PDF PAGE 11 =====
+ATSB – AO-2021-053 
+› 7 ‹ 
+Wreckage examination 
+The wreckage was recovered to a secure storage facility for a detailed examination. ATSB 
+investigators established flight control continuity before the rear of the fuselage and empennage 
+were separated to facilitate transport from the recovery point.   
+A further flight control examination was performed with no defects noted. All components of the 
+aircraft were identified and accounted for, and no pre-existing defects were noted with the 
+airframe or engine. 
+Fuel system examination 
+Examination of the aircraft fuel system was carried out and found that the fuel selector was set to 
+the LEFT tank at the time of the accident, and the auxiliary fuel pump was switched OFF. The 
+gascolator was disassembled and contained water. After recovery of the wreckage, the fuel tanks’ 
+contents were drained and consisted of:   
+• right wing: about 85 L of AVGAS recovered, with no visible water 
+• left wing: about 25 L of water, with no visible AVGAS. 
+Engine & propeller examination 
+The engine and propeller displayed no pre-existing damage. The propeller damage was indicative 
+of low rotational energy at the time of impact and exhibited damage to the blades and spinner due 
+to impact with the seabed. The engine was externally examined, all components were accounted 
+for, and the engine was able to be rotated. The engine was disassembled and examined at a 
+CASA-approved engine overhaul facility under the supervision of the ATSB. The engine showed 
+no evidence of pre-impact mechanical discontinuity or defects which would inhibit normal 
+operation.  
+Examination and testing of the engine fuel system was performed at a separate CASA-approved 
+overhaul facility under ATSB supervision. Some system components had internal corrosion; 
+however, this was most likely due to saltwater immersion. After removal of the corrosion, the 
+system components tested correctly for operation.  
+The fuel control unit (FCU) initially could not be tested. A disassembly of the FCU found internal 
+corrosion within the regulating system and the centre body seal was found to be separated. The 
+centre body seal was examined at the ATSB’s technical facilities in Canberra. ATSB determined 
+that the internal seal separation had occurred when the FCU was disassembled for examination 
+and was not a prior defect.   
+Rockwell 114 procedures 
+Before take-off checklist   
+At each critical phase of aircraft operation, pilots refer to checklists to guide them through specific 
+items to configure the aircraft for the next planned phase of the flight. The Rockwell 114 pilot’s 
+operating handbook (POH) 10 stated in 3 separate checklists,  ‘interior’, ‘before starting engine’, 
+and ‘before take-off’ checklists, that the fuel selector valve is to be set to the BOTH position before 
+the aircraft is ready for take-off. 
+Figure 4 shows the Rockwell 114 ‘before take-off’ checklist as detailed in the POH. Annotations 
+highlight where the interruption occurred at the beginning of the accident flight, and the steps not 
+completed as identified in the passenger video. The POH was located at the accident site at the 
+rear of the pilot seatback, and passenger video showed that it was not accessed during the before 
+take-off checks or during the flight. 
+ 
+10  While Rockwell uses the term pilot’s operating handbook, other manufacturers, and generic terms may include aircraft 
+flight manual, flight manual, owner’s handbook, operating manual, or owner’s manual. 
+
+
+
+===== PDF PAGE 12 =====
+ATSB – AO-2021-053 
+› 8 ‹ 
+Figure 4: Before take-off checklist 
+ 
+Source: Rockwell 114 pilot’s operating handbook, annotated by the ATSB 
+Third-party checklists 
+CCTV footage showed the pilot passing a folder to the adult passenger who placed it into the rear 
+of the pilot seatback prior to engine start. This folder was found on-site in the rear of the pilot 
+seatback pocket and contained the third-party checklists inside. Both of these checklists had 
+interpretations of the Rockwell 114 POH checklists and had differences to the approved 
+manufacturer’s documentation. This included changes in the checklist sequence, and omissions of 
+some elements including the absence of one of the fuel selector checks.  
+CASA issued AC 91-22v2.0 Aircraft checklists, in November 2021 to provide guidance on 
+establishing and using aircraft checklists and is derived from Civil Aviation Safety Regulation 
+91.095 Compliance with flight manual. This stated that any third-party checklists ‘must concisely 
+convey each procedural step in correct sequence’ to ‘ensure aircraft are operated in a way that 
+meets flight manual requirements and limitations.’  
+
+
+
+===== PDF PAGE 13 =====
+ATSB – AO-2021-053 
+› 9 ‹ 
+The US Federal Aviation Administration released a safety alert for operators (SAFO) 17006, in 
+April 2017, warning pilots and operators of the risks of using commercially available and 
+personally derived, third-party checklists.  
+An acquaintance who had regularly flown with the pilot reported that the pilot would also use 
+generic mnemonic checklists that had been committed to memory, instead of the POH or the 
+third-party checklists. The commonly used mnemonic covered some, but not all of the checks 
+required by the POH checklist.   
+Engine failure management 
+The Rockwell 114 POH emergency procedures checklist for an in-flight engine failure stated that 
+the glide speed of 82 kt should be adopted, the auxiliary fuel pump selected on, mixture full rich, 
+and the fuel selector be placed on the fuller tank to rectify possible fuel starvation.  
+Maintaining the published glide speed in flight gives the optimal amount of lift for the least amount 
+of drag, thereby giving the greatest glide distance for the amount of height lost during the descent. 
+Rockwell 114 ditching procedure  
+A ditching is a controlled emergency landing on water. The Rockwell 114 POH ditching procedure 
+identified that on approach to a ditching, the airspeed should be maintained at 82 kt.  
+The procedure followed on to list: transponder (if installed) set to 7700, and a mayday call should 
+be made. The emergency locator transmitter should be activated if installed, seats, seatbelts, 
+shoulder straps and loose objects should be secured, flaps should be up, cowl flaps closed, and 
+the undercarriage retracted.  
+On final approach, flaps should be set to 20°, airspeed reduced to 74 kt, the undercarriage should 
+remain retracted, and propeller set to high RPM. On touchdown, the elevator should be full aft, 
+and the fuel selected to OFF. 
+Ditching guidance 
+In 2004 the ATSB made recommendation R20010258 which stated: 
+The Australian Transport Safety Bureau recommends that the Civil Aviation Safety Authority educate 
+industry on procedures and techniques that may maximise the chances of survival of a ditching event. 
+Part of that education program should include the development of formal guidance material of the type 
+contained in the UK CAA General Aviation Safety Senses leaflet 21A Ditching. 
+In response to the recommendation CASA published CAAP 253-1(1) Ditching. This guidance was 
+reissued in the form of AC 91-09 v1.0 and included but was not limited to the following safety 
+advice about conducting a ditching: 
+For an aeroplane, it is likely to end up in a nose down vertical position after impact. Opening a forward 
+door in these circumstances to escape may cause rapid water entry. Planning for this circumstance 
+should include consideration of which exit might be opened prior to and after impact and briefing 
+passengers on precautions when releasing seat belts. Any briefing should consider the prospect that 
+the pilot may not be able to assist due to their prominent position where impact forces may be 
+concentrated. An able-bodied passenger near an accessible exit would be the best resource for 
+survivability in this situation. 
+The guidance also recommended unlatching a door prior to impact and providing passengers with 
+a briefing, which included the brace position.11 
+ 
+11  Brace position – adopted for ditching or crash-landing; shoes removed, bent forward with arms protecting head. 
+
+
+
+===== PDF PAGE 14 =====
+ATSB – AO-2021-053 
+› 10 ‹ 
+Survival aspects 
+Passenger seating, exit location, and operation 
+The pilot (P) was seated in the front left seat location. The 3 passengers consisted of an adult and 
+2 children.12 One child (C) was seated in the forward right seat next to the pilot and another child 
+(C) was seated in the left-rear behind the pilot. The adult (A) passenger was seated in the 
+rear-right (Figure 5). Both aircraft doors were at the front row. 
+Figure 5: Seating positions 
+ 
+Source: Rockwell annotated by the ATSB 
+Figure 6 shows the aircraft doors, which were designed as both normal and emergency exits. Both 
+doors had the same operation, which required 2 opening mechanisms to be manipulated, both 
+when operating from inside or outside. One handle was located above the passenger/pilot head 
+that needed to be rotated downwards to unlatch. The second handle was fitted to the forward 
+lower part of the door and was a lever type arrangement, which was required to be pulled inwards 
+to unlatch the 2 lower latches. Each door needed to be pushed outwards to open. There was no 
+emergency jettison mechanism.  
+ 
+12   A child as defined by CASA is a person who has turned 2 but has not turned 13. 
+
+
+
+===== PDF PAGE 15 =====
+ATSB – AO-2021-053 
+› 11 ‹ 
+Figure 6: Location of door interior operating handles 
+ 
+Source: ATSB 
+CASA produced guidance for the allocation of passengers to exit row seats in multi-part advisory 
+circular (AC) Passengers seated in emergency exit row seats for parts 121, 133 and 135 
+operators, however this AC was not applicable to private flights.  
+In addition to passenger suitability, the AC identified risks associated with seating inappropriate 
+persons at exits and recommended that operational procedures should be used to address this 
+risk.  
+Applicable risks included: 
+• 
+exits being opened when they should not be e.g., a passenger opens the exit without 
+assessing the outside conditions  
+• 
+operation of exits by passengers who are not aware of the instructions specific to that exit 
+e.g. how to open, remove and discard the exit  
+• 
+passengers seated in an emergency exit row having an adverse reaction to the emergency 
+due to inadequate briefings  
+• 
+passengers that are not suitably able-bodied, lacking the strength and ability to remove the 
+exit, attempting to open the exit, and delaying or impeding an evacuation process.  
+In addition, CASA guidance13 identified that pilots should consider the possibility of incapacitation, 
+and seat and brief an able-bodied person accordingly. However, passenger composition and 
+operational considerations such as weight and balance must always be considered to determine 
+passenger seat allocation.  
+Pre-flight, exit and emergency briefings   
+Civil Aviation Safety Regulations (CASR) 1998 Part 91 (General Operating and Flight Rules) 
+manual of standards, Division 20.3 Passenger safety briefings and instructions which came into 
+ 
+13   Civil Aviation Advisory Publication (CAAP) 253-1(1) Ditching (2004) now AC Ditching (2021). 
+
+
+
+===== PDF PAGE 16 =====
+ATSB – AO-2021-053 
+› 12 ‹ 
+effect just prior to the accident on 2 December 2021,14 required, among other things, that 
+passengers be briefed on: 
+(f)    how and when to adopt the brace position; 
+(g)   where the emergency exits are, and how to use them; 
+(p)   the requirement that: 
+             (i)  passengers seated in emergency exit rows must be willing and able to operate the exit in 
+the event of an emergency; and 
+            (ii)  such passengers must not have a condition that will cause them to obstruct the exit or 
+hinder an emergency evacuation 
+While they had to be briefed, there was no legislative requirement to assess the suitability of a 
+person15 in an exit row for a private flight. 
+Guidance16 on passenger safety briefings relevant for small aircraft operators included:  
+• 
+to include the brace position in the pre-flight safety briefing  
+• 
+to advise passengers to adopt the brace position in an emergency 
+• 
+if the flight involves overwater operations, passengers are briefed on ditching procedures. 
+Briefings in practice 
+A witness who the accident pilot regularly flew with reported that the pilot would normally provide a 
+briefing about the seatbelts and the operation of the aircraft exits. The instructor who assessed the 
+pilot in their most recent flight review provided confirmation of consistent elements normally 
+included in the pilot’s briefing. 
+The ATSB was unable to determine what information was provided to the passengers prior to 
+flight on the day of the accident. Video footage captured during the emergency showed that the 
+pilot did not provide an in-flight emergency briefing to passengers about the nature of the 
+emergency or what actions to take. 
+Occupant injuries 
+A post-mortem examination of the pilot and passengers was conducted on behalf of the 
+Queensland Coroner. The examination found all occupants had sustained injuries which may 
+have caused some incapacitation but were insufficient to have been fatal. The reports found that 
+the deaths were consistent with drowning. The report also detailed evidence of injuries consistent 
+with being caused by wearing a harness or seatbelt.  
+Other information 
+Pilot medical requirements 
+As outlined above, of the last 3 CASA aviation medical examinations, the pilot had not declared 
+their diabetic status or diabetes medication to their CASA designated aviation medical examiner 
+(DAME). 
+ 
+14  The previous CAO 20.16.3 Air service operations - carriage of persons required that passengers be briefed to 
+determine if they were willing and able if seated in emergency exits and CAO 20.11 Emergency and life-saving 
+equipment and passenger control in emergencies required briefing on the location of the emergency exits, but not how 
+to use them and did not include the brace position. 
+15  A suitable person has been defined in the CASA dictionary as someone that is reasonably fit, strong, and able to assist 
+with the rapid evacuation of the aircraft in an emergency; and would not, because of a condition or disability, including 
+an inability to understand oral instructions, hinder other passengers during an evacuation of the aircraft in an 
+emergency or the aircraft’s crew in carrying out their duties in an emergency. 
+16  CASA guidance publications Cabin safety bulletin 12 - General aviation passenger briefings (2018), Civil Aviation 
+Advisory Publication (CAAP) 253-1(1) Ditching (2004) now AC Ditching (2021), and Multi-part AC Passenger Safety 
+Information (2021). 
+
+
+
+===== PDF PAGE 17 =====
+ATSB – AO-2021-053 
+› 13 ‹ 
+The disclosure to DAMEs was required due to the nature of type 2 non-insulin dependent diabetes 
+and its effect on aviation participants. The CASA Clinical practice guidelines for type 2 diabetes 
+website stated their concerns: 
+Effect of aviation on [diabetes] condition: 
+• 
+Difficulty with regular blood-sugar monitoring 
+• 
+Irregular meal and sleep times 
+• 
+Sedentary occupation 
+• 
+Access to emergency sugar 
+Effect of [diabetes] condition on aviation: 
+• 
+Overt incapacitation 
+­ Cardiovascular event 
+­ Cerebrovascular event 
+• 
+Subtle incapacitation - end-organ damage 
+­ Visual impairment (fields, low contrast sensitivity, colour) 
+­ Impaired motor and sensory nerve function 
+­ Impaired autonomic function (hypoglycaemia awareness).  
+Pilots are permitted to hold a licence after a diabetes diagnosis. The CASA website further stated: 
+Type 2 diabetes is an aeromedically significant medical condition. Pilots and [air traffic] controllers 
+who have been diagnosed with Type 2 Diabetes are required to ground themselves and notify this 
+condition to their DAME. 
+In cases where the condition can be managed appropriately, and once cleared by the DAME, in 
+accordance with the CASA guidelines, ongoing monitoring of the diabetes must be provided to 
+CASA to prove that it is able to be managed and does not affect the pilot’s ability to fly.  
+Safety analysis 
+Introduction  
+Shortly after take-off, VH-WMM likely experienced fuel starvation leading to a complete loss of 
+engine power. During the attempted return to the airfield without power, the pilot did not maintain 
+an adequate glide speed, and the undercarriage was extended, thereby reducing glide range, 
+which resulted in the aircraft colliding with water before it reached the airfield and becoming 
+inverted about 170 m from shore.  
+This analysis will explore the power loss on take-off, flight planning and decision making of the 
+pilot in command, and post impact survivability factors. 
+Checklist use 
+The passenger video identified that the pilot became distracted with a perceived engine problem 
+during the before take-off checks and taxied back towards the groundcrew member. However, 
+after realising that they had mis-identified the wrong engine control, the pilot then proceeded to the 
+runway and conducted the take-off, without further completion of the required checks. 
+One essential aspect of the POH checklist stated that the fuel selector was to be set to BOTH. 
+This ensures a positive supply of fuel can be delivered to the engine from both fuel tanks during 
+take-off. There were two versions of the checklists on board the aircraft: the official aircraft POH 
+included this item in 3 separate checklists, while the third-party checklists included it twice. While it 
+is likely that the distraction affected the pilot’s completion of the ‘before take-off’ checklist items, 
+the fuel selector was also not set to BOTH on the ‘interior’ or ‘before starting engine’ checks.  
+Should a third-party checklist be used, it must be checked to ensure that it contains the correct 
+information that is applicable for the aircraft being operated and that the checklist is verified 
+
+
+
+===== PDF PAGE 18 =====
+ATSB – AO-2021-053 
+› 14 ‹ 
+against the approved POH checklists. The ATSB was advised that the pilot sometimes referred to 
+the third-party checklists, however it is unlikely that the third-party checklists were referred to on 
+the day of the accident as the folder containing the checklists were located in the pilot seat back 
+pocket and not readily at hand. 
+The POH was carried on board the aircraft on the day of the accident, and the passenger video 
+showed it was not referred to during the flight.  
+On this basis, it is likely the pilot performed the before take-off checks from memory or used a 
+mnemonic checklist to perform the before take-off checks which were ultimately interrupted. 
+Before take-off, there is no time pressure (as there was inflight after the engine power loss), so 
+there was opportunity to consult the written checklists to ensure all steps were completed. 
+Conducting aircraft checks from items committed to memory can lead to checks being skipped or 
+an assumption that a check has been completed when it has not. Also, when a checklist is 
+interrupted, the habit of restarting from the beginning is a means of ensuring that all steps to be 
+performed are done so in order and the checklist is complete. 
+Fuel imbalance 
+Analysis of CCTV imagery indicated it was likely that VH-WMM had a substantial quantity of fuel 
+in the right wing, and that the pilot would have been aware of the imbalance after physically using 
+a dipstick to check the aircraft fuel tanks during the pre-flight checks on the ground outside the 
+hangar. 
+The fuel selector was found to be on the left tank after the accident and there was no video 
+evidence of the pilot changing it during the flight. Therefore, the fuel selector was likely on the left 
+tank during take-off. Due to the fuel imbalance, the left tank likely had minimal fuel to sustain 
+engine operation during the climb out, which would result in the engine being starved of fuel, lose 
+power, and begin to surge, and eventually stop. This is consistent with no fuel being found in the 
+left tank after the accident.  
+If the fuel selector was placed on BOTH tanks, then it is likely, even with one fuel tank having most 
+of the fuel and the other almost empty, that fuel supply to the engine would remain unaffected. 
+Excess fuel in the right tank may have led to the observed fuel coming from the right wing during 
+the flight. 
+Therefore, with the aircraft’s remaining fuel supply most likely in the right tank, and with the fuel 
+selector likely set to LEFT prior to take-off, the engine became starved of the available fuel supply 
+in the aircraft’s right fuel tank, leading to the engine stopping.  
+Engine power loss management 
+ATSB found that few, if any, initial emergency actions took place in response to the loss of engine 
+power to rectify a possible fuel starvation as per the Rockwell 114 procedures. The aircraft had 
+sufficient fuel for flight in the right wing, but the fuel selector was found to be selected to the now 
+empty left tank, and the auxiliary fuel pump was off during the emergency.  
+In addition, the pilot did not maintain the published glide speed of 82 kt as demonstrated by the 
+numerous stall warnings that sounded repeatedly, indicating a speed within 3-4 kt of the straight 
+and level flapless stall speed (63 kt). Airspeed management was made more difficult by the 
+extension of the landing gear, which may have been an automatic reaction by the pilot in response 
+to hearing the undercarriage warning bell sound while the pilot was managing the emergency. 
+Not maintaining the glide speed and the landing gear extension increased the vertical rate of 
+descent and reduced the glide range of the aircraft. However, video evidence suggests the pilot 
+continued with their initial plan to glide to the runway. In addition, the extended landing gear was 
+an unfavourable configuration for the subsequent collision with water. 
+There was no available evidence to indicate that the pilot’s response (actions and inactions) to the 
+emergency was affected by a medical issue, or similar factors. However, the pilot was making 
+
+
+
+===== PDF PAGE 19 =====
+ATSB – AO-2021-053 
+› 15 ‹ 
+decisions during the emergency under a high level of stress and time pressure. A substantial 
+amount of research has shown that people often do not make optimal decisions in such situations. 
+Some commonly reported effects of stress and/or time pressure include attentional narrowing, 
+with people searching fewer information sources (Staal 2004) and focusing on cues that are 
+perceived to be the most salient or threatening (Burian and others 2005, Wickens and Hollands 
+2000). Working memory and the ability to perform complex calculations is impaired (Burian and 
+others 2005), and the ability to retrieve declarative knowledge (or facts) from long term memory is 
+affected (Dismukes and others 2015). In addition, a person under stress and time pressure will 
+generally consider fewer alternatives, and not be as systematic when evaluating alternatives 
+(Dismukes and others 2015, Staal 2004). 
+Collision with water 
+It is likely that the pilot never intended to ditch the aircraft. Rather, the reduced speed of the 
+aircraft below the glide speed, exacerbated by the undercarriage extension, led to a reduced glide 
+range and inability to reach the runway at Redcliffe. The sounding of the ‘stall’ alert just before the 
+collision indicates the aircraft could no longer maintain lift and the aircraft collided with water 3 
+seconds later.  
+It is likely that under the stress of the situation, the pilot’s attention narrowed and their focus on 
+landing back on the departure runway likely hampered their ability to consider a forced landing on 
+water (ditching). Had the pilot recognised that the aircraft would not be able to glide to the runway, 
+there was a brief opportunity (about 30 seconds) to attempt a controlled landing on water before 
+the aircraft’s speed reduced to the stall speed. 
+If this had been the case, there were several actions the pilot would have had to remember (due 
+to the limited time remaining) and complete to ensure a safe ditching. From the Rockwell 114 
+POH procedure, key actions were to ensure the undercarriage was retracted and the flaps were 
+selected to 20° on the final approach to land on the water.  
+Use of flap in the final stages of the ditching would have provided a reduced stall speed, therefore 
+allowing the aircraft to touch down at a lower, controlled speed. Touching down on the water while 
+not at the appropriate speed, and with the undercarriage extended, contributed to the aircraft 
+inverting after colliding the water. 
+Further, although there was no reference in the POH to the pre-impact position of emergency exits 
+(cabin doors) prior to a ditching, unlatching of cabin doors can allow quick egress from the aircraft 
+after ditching. In this accident, given the brief opportunity available for such considerations, it was 
+not considered feasible that all actions were possible.  
+Due to the inverted orientation of the aircraft during the crash sequence and its submersion in 
+murky water, the aircraft occupants were probably panicked, confused, and disorientated following 
+the collision. Once the cabin filled with water, visibility would have been extremely low, which 
+would have further reduced the likelihood of occupants being able to visually locate and operate 
+the aircraft door handles. With the aircraft inverted, it is likely the occupants would have also been 
+disoriented to the extent that it made opening the closed doors more difficult, reducing their ability 
+to escape. 
+Pre-flight and emergency briefings  
+Research has shown that more knowledgeable passengers perform better in an emergency 
+(Meng-Yuan, 2014). It could not be determined what information was provided to the passengers 
+prior to flight, however based on accounts from persons who had flown with the pilot previously, 
+including their flight instructor, it is likely that any briefing given did not include any information 
+about the brace position or what to do in the event of a ditching. This meant that the passengers 
+were likely unaware of actions that may assist survival such as opening the aircraft door or 
+adopting a brace position.    
+
+
+
+===== PDF PAGE 20 =====
+ATSB – AO-2021-053 
+› 16 ‹ 
+Video footage recorded during the accident sequence showed that the pilot also did not provide 
+passengers an in-flight emergency brief or instruct them on any actions they should take. This 
+accident highlights the importance of providing instructions to passengers before a flight 
+commences as often emergency situations are time limited and there may not be an opportunity to 
+do so once something occurs.   
+Providing information on the adoption of the brace position or how to, and when to open an 
+emergency exit in a ditching situation will increase the likelihood of passengers taking appropriate 
+action in an emergency.   
+Passenger seating and emergency exit operation 
+Post-mortem examinations identified that the occupants of the aircraft were not fatally injured 
+during the accident sequence. There was no readily available assistance nearby the accident site, 
+and therefore the occupants would have had to extricate themselves from the aircraft. 
+The 2 emergency exits available to the occupants were more accessible to persons seated in the 
+front of the aircraft. The exits required manipulation of both a handle on the door and a latch at the 
+top. For the rear passengers, it is likely that they would have had difficulty (particularly with their 
+seatbelt on) to reach the latch at the top of the door if required to operate the exit. The rear seat 
+occupants would have also been restricted in accessing the doors and exiting the aircraft due to 
+the presence of the front seat occupants.  
+After the accident, police divers were unable to open the pilot’s left door, and only opened the 
+other (right) door with difficulty. For the injured pilot and right front seat occupant of VH-WMM, 
+who was a child, it is highly unlikely they would have had the post-accident capability to open the 
+doors. The right door was observed unlocked and ajar by police divers following the collision, 
+suggesting the possibility that an attempt had been made to open the door. 
+Guidance suggests that pilots should determine the most appropriate person to assist in an 
+emergency and to brief that person accordingly, therefore, in this case, seating a child who has 
+less physical and mental capability rather than an adult next to an exit, meant that the most 
+suitable person (the adult) was not in the best position to assist themselves and others in the 
+event of an emergency.  
+Diabetes 
+The pilot had been diagnosed with type 2 non-insulin dependent diabetes which was managed 
+with prescription medication by the pilot’s GP. A review of the pilot’s CASA aviation medical 
+information indicated that this significant medical condition was disclosed in the pilot medical 
+history as ‘unsure’ to the CASA DAME in the previous 3 aviation medical renewals, all of which 
+were changed to ‘no' at the DAME examination prior to submission to CASA. 
+It was important to note that having type 2 non-insulin dependent diabetes did not mean that this 
+condition would be an immediate disqualification of the pilot’s licence. However due to the 
+aeromedically significant nature of diabetes, it was important for this to be fully disclosed with the 
+pilot’s DAME and to CASA. Without this interaction, it was a missed opportunity for the pilot’s 
+condition to be monitored at a safe level required to exercise the privileges of a pilot’s licence.  
+
+
+
+===== PDF PAGE 21 =====
+ATSB – AO-2021-053 
+› 17 ‹ 
+Findings 
+From the evidence available, the following findings are made with respect to the fuel starvation 
+and collision with terrain involving a Rockwell International 114, VH-WMM, 1 km north of Redcliffe 
+aircraft landing area, Queensland, on 19 December 2021.  
+Contributing factors 
+• An unsafe condition was created by not referring to the approved checklists in the pilot 
+operating handbook. Checklists located in the pilot operating handbook would have prompted 
+the pilot on 3 occasions to set the fuel selector to BOTH prior to take-off.  
+• A perceived engine problem distracted the pilot during the conduct of pre-take-off checks. After 
+rectifying the issue, they did not complete the remaining pre-take-off checks (including fuel tank 
+selection) before departure. 
+• A fuel imbalance and likely an incorrect fuel tank selection prior to take-off, led to fuel 
+starvation and engine stoppage soon after take-off. 
+• The pilot, likely experiencing the effects of stress and time pressure following the engine power 
+reduction and then stoppage, did not conduct initial emergency actions and attempted to return 
+to the runway for landing but did not maintain glide speed, and the aircraft impacted shallow 
+water prior to reaching the airfield. 
+• During the return to the airfield, the pilot extended the undercarriage, contributing to the aircraft 
+inverting when it collided with water. This likely resulted in occupant disorientation, difficulty in 
+operating the exits, and reduced their ability to escape. 
+Other factors that increased risk 
+• It is very likely that the passengers did not receive pre-flight information about the brace 
+position or what to do in the event of a ditching. In the limited time available inflight after the 
+power loss, the pilot also did not provide an emergency briefing or any instructions to 
+passengers prior to impact with the water. 
+• While the pilot was primarily responsible for the operation of the aircraft exits in an emergency, 
+seating a child, who may require assistance, adjacent to an exit instead of an adult meant that 
+a less suitable passenger was available to operate the exit if required.  
+• The pilot had a diagnosed type 2 diabetic condition and did not directly declare this to the 
+DAME during multiple medical renewals.  
+Sources and submissions 
+Sources of information 
+The sources of information during the investigation included: 
+• Civil Aviation Safety Authority 
+• Queensland Police Service 
+• Australian Volunteer Coast Guard 
+• accident witnesses 
+• CCTV footage 
+ATSB investigation report findings focus on safety factors (that is, events and conditions that increase risk). 
+Safety factors include ‘contributing factors’ and ‘other factors that increased risk’ (that is, factors that did not 
+meet the definition of a contributing factor for this occurrence but were still considered important to include 
+in the report for the purpose of increasing awareness and enhancing safety). In addition ‘other findings’ 
+may be included to provide important information about topics other than safety factors.   
+These findings should not be read as apportioning blame or liability to any particular organisation or 
+individual.
+
+
+==================== SOURCE: cloudflare_2025_06_12.txt ====================
+
+SOURCE: https://blog.cloudflare.com/cloudflare-service-outage-june-12-2025/
+ORIGINAL REPORT PROSE (HTML text extracted; tables omitted from this text view)
+
+
+## Cloudflare service outage June 12, 2025
+
+Jeremy Hartman and CJ Desai
+
+On June 12, 2025, Cloudflare suffered a significant service outage that affected a large set of our critical services, including Workers KV, WARP, Access, Gateway, Images, Stream, Workers AI, Turnstile and Challenges, AutoRAG, Zaraz, and parts of the Cloudflare Dashboard.
+
+This outage lasted 2 hours and 28 minutes, and globally impacted all Cloudflare customers using the affected services. The cause of this outage was due to a failure in the underlying storage infrastructure used by our Workers KV service, which is a critical dependency for many Cloudflare products and relied upon for configuration, authentication and asset delivery across the affected services. Part of this infrastructure is backed by a third-party cloud provider, which experienced an outage today and directly impacted availability of our KV service.
+
+We’re deeply sorry for this outage: this was a failure on our part, and while the proximate cause (or trigger) for this outage was a third-party vendor failure, we are ultimately responsible for our chosen dependencies and how we choose to architect around them.
+
+This was not the result of an attack or other security event. No data was lost as a result of this incident. Cloudflare Magic Transit and Magic WAN, DNS, Cache, proxy, WAF and related services were not directly impacted by this incident.
+
+
+## What was impacted?
+
+As a rule, Cloudflare designs and builds our services on our own platform building blocks, and as such many of Cloudflare’s products are built to rely on the Workers KV service.
+
+The following table details the impacted services, including the user-facing impact, operation failures, and increases in error rates observed:
+
+
+## Background
+
+Workers KV is built as what we call a “coreless” service which means there should be no single point of failure as the service runs independently in each of our locations worldwide. However, Workers KV today relies on a central data store to provide a source of truth for data. A failure of that store caused a complete outage for cold reads and writes to the KV namespaces used by services across Cloudflare.
+
+Workers KV is in the process of being transitioned to significantly more resilient infrastructure for its central store: regrettably, we had a gap in coverage which was exposed during this incident. Workers KV removed a storage provider as we worked to re-architect KV’s backend, including migrating it to Cloudflare R2, to prevent data consistency issues (caused by the original data syncing architecture), and to improve support for data residency requirements.
+
+One of our principles is to build Cloudflare services on our own platform as much as possible, and Workers KV is no exception. Many of our internal and external services rely heavily on Workers KV, which under normal circumstances helps us deliver the most robust services possible, instead of service teams attempting to build their own storage services. In this case, the cascading impact from the failure from Workers KV exacerbated the issue and significantly broadened the blast radius.
+
+
+## Incident timeline and impact
+
+The incident timeline, including the initial impact, investigation, root cause, and remediation, are detailed below.
+
+Workers KV error rates to storage infrastructure. 91% of requests to KV failed during the incident window.
+
+Cloudflare Access percentage of successful requests. Cloudflare Access relies directly on Workers KV and serves as a good proxy to measure Workers KV availability over time.
+
+All timestamps referenced are in Coordinated Universal Time (UTC).
+
+
+## Remediation and follow-up steps
+
+We’re taking immediate steps to improve the resiliency of services that depend on Workers KV and our storage infrastructure. This includes existing planned work that we are accelerating as a result of this incident.
+
+This encompasses several workstreams, including efforts to avoid singular dependencies on storage infrastructure we do not own, improving the ability for us to recover critical services (including Access, Gateway and WARP)
+
+Specifically:
+
+This list is not exhaustive: our teams continue to revisit design decisions and assess the infrastructure changes we need to make in both the near (immediate) term and long term to mitigate the incidents like this going forward.
+
+This was a serious outage, and we understand that organizations and institutions that are large and small depend on us to protect and/or run their websites, applications, zero trust and network infrastructure.  Again we are deeply sorry for the impact and are working diligently to improve our service resiliency.
+
+
+==================== SOURCE: cloudflare_2025_09_12.txt ====================
+
+SOURCE: https://blog.cloudflare.com/deep-dive-into-cloudflares-sept-12-dashboard-and-api-outage/
+ORIGINAL REPORT PROSE (HTML text extracted; tables omitted from this text view)
+
+
+## A deep dive into Cloudflare’s September 12, 2025 dashboard and API outage
+
+Tom Lianza and Joaquin Madruga
+
+
+## What Happened
+
+We had an outage in our Tenant Service API which led to a broad outage of many of our APIs and the Cloudflare Dashboard.
+
+The incident’s impact stemmed from several issues, but the immediate trigger was a bug in the dashboard. This bug caused repeated, unnecessary calls to the Tenant Service API. The API calls were managed by a React useEffect hook, but we mistakenly included a problematic object in its dependency array. Because this object was recreated on every state or prop change, React treated it as “always new,” causing the useEffect to re-run each time. As a result, the API call executed many times during a single dashboard render instead of just once. This behavior coincided with a service update to the Tenant Service API, compounding instability and ultimately overwhelming the service, which then failed to recover.
+
+When the Tenant Service became overloaded, it had an impact on other APIs and the dashboard because Tenant Service is part of our API request authorization logic.  Without Tenant Service, API request authorization can not be evaluated.  When authorization evaluation fails, API requests return 5xx status codes.
+
+We’re very sorry about the disruption.  The rest of this blog goes into depth on what happened, and what steps we are taking to prevent it from happening again.
+
+
+## Timeline
+
+
+## Dashboard availability
+
+The Cloudflare dashboard was severely impacted throughout the full duration of the incident.
+
+
+## API availability
+
+The Cloudflare API was severely impacted for two periods during the incident when the Tenant API Service was down.
+
+
+## How we responded
+
+Our first goal in an incident is to restore service.  Often that involves fixing the underlying issue directly, but not always.  In this case we noticed increased usage across our Tenant Service, so we focused on reducing the load and increasing the available resources.  We installed a global rate limit on the Tenant Service to help regulate the load.  The Tenant Service is a GoLang process that runs on Kubernetes in a subset of our datacenters.  We increased the number of pods available as well to help improve throughput.  While we did this, we had others on the team continue to investigate why we were seeing the unusually high usage.  Ultimately, increasing the resources available to the tenant service helped with availability but was insufficient to restore normal service.
+
+After the Tenant Service began reporting healthy again and the API largely recovered, we still observed a considerable number of errors being reported from the service. We theorized that these were responsible for the ongoing Dashboard availability issues and made a patch to the service with the expectation that it would improve the API health and restore the dashboard to a healthy state. Ultimately this change degraded service further and was quickly reverted. The second outage can be seen in the graph above.
+
+It’s painful to have an outage like this.  That said, there were a few things that helped lessen the impact.  Our automatic alerting service quickly identified the correct people to join the call and start working on remediation.  Additionally, this was a failure in the control plane which has strict separation of concerns from the data plane.  Thus, the outage did not affect services on Cloudflare’s network.  The majority of users at Cloudflare were unaffected unless they were making configuration changes or using our dashboard.
+
+
+## Going forward
+
+We believe it’s important to learn from our mistakes and this incident is an opportunity to make some improvements.  Those improvements can be categorized as either ways to reduce / eliminate the impact of a similar change or as improvements to our observability tooling to better inform the team during future events.
+
+
+## Reducing impact
+
+We use Argo Rollouts for releasing, which monitors deployments for errors and automatically rolls back that service on a detected error.  We’ve been migrating our services over to Argo Rollouts but have not yet updated the Tenant Service to use it.  Had it been in place, we would have automatically rolled back the second Tenant Service update limiting the second outage.  This work had already been scheduled by the team and we’ve increased the priority of the migration.
+
+When we restarted the Tenant Service, everyone’s dashboard began to re-authenticate with the API.  This caused the API to become unstable again causing issues with everyone’s dashboard.  This pattern is a common one often referred to as a Thundering Herd.  Once a resource or service is made available, everyone tries to use it all at once. This is common, but was amplified by the bug in our dashboard logic. The fix for this behavior has already been released via a hotfix shortly after the impact was over.  We’ll be introducing changes to the dashboard that include random delays to spread out retries and reduce contention as well.
+
+Finally, the Tenant Service was not allocated sufficient capacity to handle spikes in load like this. We’ve allocated substantially more resources to this service, and are improving the monitoring so that we will be proactively alerted before this service hits capacity limits.
+
+
+## Improving visibility
+
+We immediately saw an increase in our API usage but found it difficult to identify which requests were retries vs new requests.  Had we known that we were seeing a sustained large volume of new requests, it would have made it easier to identify the issue as a loop in the dashboard.  We are adding changes to how we call our APIs from our dashboard to include additional information, including if the request is a retry or new request.
+
+We’re very sorry about the disruption.  We will continue to investigate this issue and make improvements to our systems and processes.

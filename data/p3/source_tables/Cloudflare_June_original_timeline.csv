@@ -1,0 +1,13 @@
+﻿time_utc,event
+2025-06-12 17:52,INCIDENT START Cloudflare WARP team begins to see registrations of new devices fail and begin to investigate these failures and declares an incident.
+2025-06-12 18:05,Cloudflare Access team received an alert due to a rapid increase in error rates.Service Level Objectives for multiple services drop below targets and trigger alerts across those teams.
+2025-06-12 18:06,Multiple service-specific incidents are combined into a single incident as we identify a shared cause (Workers KV unavailability). Incident priority upgraded to P1.
+2025-06-12 18:21,Incident priority upgraded to P0 from P1 as severity of impact becomes clear.
+2025-06-12 18:43,Cloudflare Access begins exploring options to remove Workers KV dependency by migrating to a different backing datastore with the Workers KV engineering team. This was proactive in the event the storage infrastructure continued to be down.
+2025-06-12 19:09,Zero Trust Gateway began working to remove dependencies on Workers KV by gracefully degrading rules that referenced Identity or Device Posture state.
+2025-06-12 19:32,Access and Device Posture force drop identity and device posture requests to shed load on Workers KV until third-party service comes back online.
+2025-06-12 19:45,Cloudflare teams continue to work on a path to deploying a Workers KV release against an alternative backing datastore and having critical services write configuration data to that store.
+2025-06-12 20:23,Services begin to recover as storage infrastructure begins to recover. We continue to see a non-negligible error rate and infrastructure rate limits due to the influx of services repopulating caches.
+2025-06-12 20:25,Access and Device Posture restore calling Workers KV as third-party service is restored.
+2025-06-12 20:28,IMPACT END Service Level Objectives return to pre-incident level. Cloudflare teams continue to monitor systems to ensure services do not degrade as dependent systems recover.
+,INCIDENT END Cloudflare team see all affected services return to normal function. Service level objective alerts are recovered.

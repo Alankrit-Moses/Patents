@@ -11,3 +11,8 @@ These are the five configurations needed to reproduce the reported study:
 Credentials are read from the environment variables listed in
 `../keys.env.example`. Newly generated files are written under `../runs/` and
 are not part of the released paper results.
+
+For the preliminary extension, `judge-gpt-6.1-terra.json` uses Terra with
+reasoning disabled. `gpt-oss-high-vertex.json` records the Vertex-only routing
+and shorter timeout used for the P3 high run; its model, reasoning level,
+context limit and chunks otherwise match `gpt-oss-high.json`.

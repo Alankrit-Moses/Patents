@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import difflib
 import re
+import threading
 from dataclasses import dataclass, asdict
 from pathlib import Path
 
@@ -96,16 +97,19 @@ def recover_span_canonical(candidate: str, source: str) -> str | None:
     return source[match.start():match.end()] if match else None
 
 
-_SNAP_SM: dict = {}
+_SNAP_SM = threading.local()
 
 
 def _sm_for(source_norm: str) -> difflib.SequenceMatcher:
     key = (len(source_norm), source_norm[:60], source_norm[-60:])
-    sm = _SNAP_SM.get(key)
+    cache = getattr(_SNAP_SM, "cache", None)
+    if cache is None:
+        cache = _SNAP_SM.cache = {}
+    sm = cache.get(key)
     if sm is None:
         sm = difflib.SequenceMatcher(autojunk=False)
         sm.set_seq2(source_norm)
-        _SNAP_SM[key] = sm
+        cache[key] = sm
     return sm
 
 

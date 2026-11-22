@@ -1,0 +1,23 @@
+﻿record_id,record_type,source_section,time_utc,time_from_video_start,time_after_takeoff,activity_or_observation,source_comment
+ATSB-T1-04,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,3:30,0:09,Undercarriage retracts,Motor heard during gear retraction
+ATSB-T1-10,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:35,1:14,Large drop in engine RPM,
+ATSB-T1-14,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:52,1:31,Engine stops,"Distinct ‘whomp’ sound from engine, usually heard when a piston engine stops"
+ATSB-T1-15,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,4:56,1:35,Undercarriage warning bell followed by stall warning,"‘Click’ sound, followed by a wind noise. Gear extension most likely set here."
+ATSB-T1-17,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,"5:18, 5:20 & 5:24","1:57, 1:59, & 2:03",Stall warning sounds,
+ATSB-T1-19,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:26 to 5:40,2:05 to 2:19,Stall warning multiple sounds,
+ATSB-T1-20,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:40,2:19,Right wing drops,
+ATSB-T1-21,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:42,2:21,Right wing drops Electronic voice calls “stall” Aircraft stall warning remains on,Electronic voice is an alert from the Voice Alert System – heard only once
+ATSB-T1-22,published_video_timeline,"ATSB Appendix Table 1, PDF p.25",,5:45,2:24,Aircraft impacts water,
+ATSB-OVERTURN,published_investigative_observation,ATSB PDF p.10,,,,"Ground scars observed on the tidal flat indicated that after entering the water, the aircraft nose 
+wheel and propeller contacted the seabed leading to the aircraft overturning, resulting in sudden 
+deacceleration and the aircraft coming to rest inverted.",
+ATSB-DOOR-RECOVERY,published_investigative_observation,ATSB PDF p.10,,,,"Witnesses described the water directly 
+around the aircraft to be murky due to the mud and silt seabed having been disturbed by the 
+aircraft impact. The left door (pilot door) was in a closed and latched condition when the ATSB 
+arrived onsite. The right door was found by police divers to be slightly ajar, and difficult to open 
+during the recovery operation.",
+ATSB-DOOR-ACCESS,published_investigative_observation,ATSB PDF p.6,,,,"Following the impact with water, the 
+inverted orientation of the aircraft meant that the door handles were submerged. First responders 
+reported that it was difficult to locate the handles to open the doors from the outside. When 
+inverted on the seabed in mud and silt, the upper door latches were also unable to be located. 
+The disturbance of the mud/silt further reduced visibility of the exits and their operating handles.",

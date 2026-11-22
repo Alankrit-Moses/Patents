@@ -79,12 +79,19 @@ def run_sampling(args: argparse.Namespace, config: HarnessConfig) -> int:
     if args.max_attempts < 1:
         raise ValueError("--max-attempts must be at least 1")
 
-    manifest = build_manifest(config)
-    tasks = _filter_tasks(build_tasks(manifest, config), args)
+    if args.tasks:
+        tasks_path = Path(args.tasks).resolve()
+        if not tasks_path.is_file():
+            raise FileNotFoundError(f"Task file not found: {tasks_path}")
+        tasks = _filter_tasks(load_jsonl(tasks_path), args)
+    else:
+        manifest = build_manifest(config)
+        all_tasks = build_tasks(manifest, config)
+        tasks = _filter_tasks(all_tasks, args)
+        save_manifest_and_tasks(manifest, all_tasks, config.task_dir)
     if not tasks:
         print("No matching tasks.")
         return 1
-    save_manifest_and_tasks(manifest, build_tasks(manifest, config), config.task_dir)
 
     sampled_generator = replace(config.generator, temperature=args.temperature)
     sampled_config = replace(
@@ -202,8 +209,13 @@ def _metric_values(metrics: dict[str, Any]) -> dict[str, list[float]]:
     return values
 
 
-def summarize_samples(path: Path, success_threshold: float = 4.0) -> dict[str, Any]:
+def summarize_samples(path: Path, success_threshold: float | None = None) -> dict[str, Any]:
     records = [record for record in load_jsonl(path) if not record.get("errors")]
+    rubrics = {record.get("evaluation_rubric", "legacy_0_5") for record in records}
+    if len(rubrics) > 1:
+        raise ValueError("Cannot summarize mixed evaluation rubrics")
+    if success_threshold is None:
+        success_threshold = 3.0 if rubrics == {"example_alignment_0_3_v1"} else 4.0
     groups: dict[tuple[str, str, str, str], list[float]] = defaultdict(list)
     units: dict[tuple[str, str, str, str, str, int], list[float]] = defaultdict(list)
 
@@ -280,6 +292,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum total attempts for each logical sample (default: 3)",
     )
     run_parser.add_argument("--experiment", choices=["1", "2", "3", "all"], default="all")
+    run_parser.add_argument("--tasks", help="Use a specific task JSONL instead of rebuilding the manifest")
     run_parser.add_argument("--pattern", help="Filter by pattern ID, e.g. P1")
     run_parser.add_argument("--task-id", help="Run one task ID")
     run_parser.add_argument("--limit", type=int, help="Limit selected task count")
@@ -300,7 +313,7 @@ def build_parser() -> argparse.ArgumentParser:
         "summarize", help="Summarize judged repeated-sample outputs"
     )
     summary_parser.add_argument("--evaluations", required=True)
-    summary_parser.add_argument("--success-threshold", type=float, default=4.0)
+    summary_parser.add_argument("--success-threshold", type=float, help="Success cutoff (default 3 for the revised rubric, 4 for legacy scores)")
     summary_parser.add_argument("--output", help="Optional summary JSON path")
     return parser
 

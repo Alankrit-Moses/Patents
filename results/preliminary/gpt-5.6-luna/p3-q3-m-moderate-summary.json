@@ -1,0 +1,12 @@
+{
+  "success_threshold": 4.0,
+  "groups": {
+    "experiment_3/setup_C/pattern_P3/M_alignment_score": {
+      "observations": 9,
+      "mean": 4.333333333333333,
+      "population_stddev": 0.816496580927726,
+      "best_of_k_mean": 5.0,
+      "success_at_k": 1.0
+    }
+  }
+}

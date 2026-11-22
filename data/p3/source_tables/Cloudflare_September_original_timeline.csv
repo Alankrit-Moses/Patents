@@ -1,0 +1,8 @@
+﻿time_utc,event
+2025-09-12 16:32,"A new version of the Cloudflare Dashboard is released which contains a bug that will trigger many more calls to the /organizations endpoint, including retries in the event of failure."
+2025-09-12 17:50,A new version of the Tenant API Service is deployed.
+2025-09-12 17:57,The Tenant API Service becomes overwhelmed as new versions are deploying. Dashboard Availability begins to drop IMPACT START
+2025-09-12 18:17,"After providing more resources to the Tenant API Service, the Cloudflare API climbs to 98% availability, but the dashboard does not recover. IMPACT DECREASE"
+2025-09-12 18:58,"In an attempt to restore dashboard availability, some erroring codepaths were removed and a new version of the Tenant Service is released. This was ultimately a bad change and causes API Impact again. IMPACT INCREASE"
+2025-09-12 19:01,"In an effort to relieve traffic against the Tenant API Service, a temporary ratelimiting rule is published."
+2025-09-12 19:12,"The problematic changes to the Tenant API Service are reverted, and Dashboard Availability returns to 100%. IMPACT END"

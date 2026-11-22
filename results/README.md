@@ -36,3 +36,11 @@ with 2,000-character overlap, and OpenRouter's unrestricted provider routing.
 The released [`gpt-oss-medium.json`](../experiments/configs/gpt-oss-medium.json)
 records those settings. The other three configurations use 50,000-character
 chunks with 3,000-character overlap.
+
+## Preliminary extension
+
+The separate [`preliminary/`](preliminary/README.md) directory contains revised
+Terra evaluations and P3 pilot outputs. Its scores use different criteria and
+are not interchangeable with the published 0–5 results above. The current
+default evaluator implements the revised criteria, not the original paper's
+canonical-reference Q3 judge.
