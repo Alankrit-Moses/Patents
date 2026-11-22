@@ -31,8 +31,7 @@ Original authors' wording and tables are credited in the `manifest.json` and ind
 
 ## Submission layout
 
-`M.txt` and `T.txt` are the revised causal-chain definition used in the pilot;
-`M_and_T.md` preserves the archive's earlier wording for provenance.
+`M.txt` and `T.txt` are the causal-chain definition used in the experiment.
 `experiments/tasks/p3.jsonl` is the authoritative task mapping. Its example
 text files contain a short ID header for the existing input loader. Other files
 retain the source archive's layout. The local copies of third-party source

@@ -10,7 +10,7 @@ These are **task mappings**, not model responses. The six gold `e.text` passages
 
 ## Q2 — Example alignment (six inputs)
 
-For each Ei use the paired `examples/Ei.e_tab.csv`, and the following D.text source corpus. Withhold its `Ei.e_text.txt` from the model and use it only for judging.
+For each Ei use the paired `examples/Ei.e_tab.csv`, and the following D.text source corpus. Withhold its `Ei.e_text.txt` from the generator and judge; judge the proposed passage directly against the table.
 
 - E1, E2, E3 → `D.text/sources/aviation_ao_2021_053.txt`
 - E4 → `D.text/sources/cloudflare_2025_06_12.txt`

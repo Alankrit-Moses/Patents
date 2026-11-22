@@ -5,22 +5,20 @@ Formulation Framework and an Agentic Execution Pipeline for Pattern
 Engineering*. It contains the single blackboard-based agentic executor evaluated
 in the paper, the study tasks and data, and the reported outputs and evaluations.
 
-## Preliminary extension
+## Evaluation artifact
 
-The original paper artifact remains in `results/`. The local preliminary extension
-adds P3 (causal chains), new GPT-6.1 Terra evaluations of P1/P2, and P3 runs for
-four generator settings. Its inputs are in [`data/p3/`](data/p3/), concrete
-queries are in [`experiments/tasks/p3.jsonl`](experiments/tasks/p3.jsonl), and
-results, rubric provenance, and limitations are in
-[`results/preliminary/`](results/preliminary/README.md). These results are
-exploratory and are not the original reported paper table.
+The study covers three patterns and three query types, with four generator
+settings. Task inputs, executor outputs, evaluation records, and the selected
+results table are included in this repository. The evaluation uses GPT-6.1
+Terra as judge and a 0–5 scale. See [`results/final/`](results/final/README.md)
+for results and [`experiments/README.md`](experiments/README.md) for commands.
 
 ## Repository contents
 
 - [`experiments/`](experiments/) contains the executor, prompts, task
   construction, experiment runners, and evaluation code.
-- [`results/`](results/) contains the original GPT-4.1-judged results and a separately labeled preliminary extension.
-- [`data/p3/`](data/p3/) contains the preliminary P3 causal-chain task materials.
+- [`results/final/`](results/final/README.md) contains the selected evaluations and results table.
+- [`data/p3/`](data/p3/) contains the P3 causal-chain task materials.
 - [`Patterns/`](Patterns/) contains the trajectory-shift (`P1`) and
   growth-divergence (`P2`) pattern cards. Each includes `M`, `T`, and six
   curated gold `(e.text,e.tab)` pairs.
@@ -32,17 +30,18 @@ exploratory and are not the original reported paper table.
 
 ## Evaluated tasks
 
-The artifact instantiates three typed queries as 24 tasks over two patterns:
+The artifact includes P1 (trajectory shift), P2 (growth divergence), and P3
+(causal chains). For each pattern it specifies three Q1 tasks, six Q2 tasks,
+and three Q3 tasks. Each task is sampled three times at temperature 0.2.
 
-- **Q1 (example mining):** supply `M` and a report; request three `e.text`
-  passages.
-- **Q2 (evidence alignment):** supply `e.tab` and its source report; request its
-  paired `e.text` passage.
-- **Q3 (pattern induction):** supply four paired examples; request `M` and `T`.
+- **Q1 (example mining):** supply M and source text; request three passages.
+- **Q2 (evidence alignment):** supply `e.tab` and source text; request a passage
+  describing that instance.
+- **Q3 (pattern induction):** supply four example pairs; request M and T.
 
-Each task was sampled three times at temperature 0.2. The released results cover
-GPT-4.1, GPT-OSS-120B with high and medium reasoning effort, and GPT-5.6-Luna
-with reasoning disabled. GPT-4.1 was used as the blinded judge.
+The generator settings are GPT-4.1, GPT-OSS-120B with high and medium
+reasoning, and GPT-5.6 Luna with reasoning disabled. The judge is GPT-6.1
+Terra with reasoning disabled.
 
 ## Quick start
 
@@ -62,18 +61,12 @@ python -m experiments.runner --config experiments/configs/gpt-4.1.json run --tas
 Commands for reproducing the three-sample runs, judging, P3, and summarization are
 in [`experiments/README.md`](experiments/README.md).
 
-## Released results
+## Results
 
-Each model directory under [`results/`](results/) contains:
-
-- `outputs.jsonl`: executor outputs and complete execution traces;
-- `evaluations.jsonl`: grounded GPT-4.1 scores;
-- `summary.json`: aggregate statistics used for the paper table.
-
-[`results/paper_table.csv`](results/paper_table.csv) collects the values shown in
-the paper. Historical `C`, `v2-agentic`, and `robustness_*` labels remain inside
-some released records because they were recorded during the original runs; they
-do not identify additional pipelines in this release.
+[`results/final/results_table.csv`](results/final/results_table.csv) reports
+per-pattern scores and equally weighted pattern means. Per-model files contain
+the evaluation records and summaries; P1/P2 outputs are under `results/<model>/`
+and P3 outputs are in `results/final/<model>/`.
 
 ## Data provenance
 

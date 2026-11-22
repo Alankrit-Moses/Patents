@@ -1,0 +1,35 @@
+{
+  "success_threshold": 4.0,
+  "groups": {
+    "experiment_1/setup_C/pattern_P3/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 4.962962962962963,
+      "population_stddev": 0.18885257457751056,
+      "best_of_k_mean": 5.0,
+      "success_at_k": 1.0,
+      "exact_excerpt_retention_rate": 1.0
+    },
+    "experiment_2/setup_C/pattern_P3/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 3.5555555555555554,
+      "population_stddev": 1.11665284679121,
+      "best_of_k_mean": 4.333333333333333,
+      "success_at_k": 1.0,
+      "exact_excerpt_retention_rate": 0.9444444444444444
+    },
+    "experiment_3/setup_C/pattern_P3/M_alignment_score": {
+      "observations": 9,
+      "mean": 2.6666666666666665,
+      "population_stddev": 0.4714045207910317,
+      "best_of_k_mean": 3.0,
+      "success_at_k": 0.0
+    },
+    "experiment_3/setup_C/pattern_P3/T_alignment_score": {
+      "observations": 9,
+      "mean": 2.4444444444444446,
+      "population_stddev": 0.49690399499995325,
+      "best_of_k_mean": 2.6666666666666665,
+      "success_at_k": 0.0
+    }
+  }
+}
