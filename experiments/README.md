@@ -20,7 +20,7 @@ excluded from the public artifact.
 - `client.py`, `config.py`, and `io_utils.py`: shared API, configuration, and
   file utilities.
 - `cli.py`: commands for constructing tasks and judging outputs.
-- `configs/`: the four reported generator settings and GPT-4.1 judge setting.
+- `configs/`: the four generator settings and evaluation judge settings.
 - `tasks/`: the released material inventory and 24 concrete tasks.
 - `tests/`: tests for task construction, execution, grounding, evaluation, and
   repeated sampling.
