@@ -1,0 +1,188 @@
+{
+  "items_scored": 756,
+  "excluded_zero_by_grounding_rule": 46,
+  "overall": {
+    "items": 710,
+    "exact_agreement": 0.4915492957746479,
+    "within_one": 0.9464788732394366,
+    "cohen_kappa": 0.3336799552857682,
+    "kappa_linear": 0.5786312824419366,
+    "kappa_quadratic": 0.7643234953013733,
+    "krippendorff_alpha_ordinal": 0.7465290461862282,
+    "spearman_rho": 0.7751649024263333,
+    "mean_this_judge": 3.5859154929577466,
+    "mean_gpt_6_1_terra": 3.876056338028169,
+    "this_judge_higher": 90,
+    "this_judge_lower": 271,
+    "kappa_quadratic_ci95": [
+      0.7016094116027882,
+      0.805575148853209
+    ],
+    "krippendorff_alpha_ordinal_ci95": [
+      0.6529278970062322,
+      0.7921082404553142
+    ],
+    "tasks": 36
+  },
+  "by_component": {
+    "Q1": {
+      "items": 300,
+      "exact_agreement": 0.6066666666666667,
+      "within_one": 0.9566666666666667,
+      "cohen_kappa": 0.41226278826517904,
+      "kappa_linear": 0.6659186393777312,
+      "kappa_quadratic": 0.823464028071399,
+      "krippendorff_alpha_ordinal": 0.8063924624992654,
+      "spearman_rho": 0.8397783264891991,
+      "mean_this_judge": 3.79,
+      "mean_gpt_6_1_terra": 4.076666666666667,
+      "this_judge_higher": 21,
+      "this_judge_lower": 97,
+      "kappa_quadratic_ci95": [
+        0.7132511654639504,
+        0.8431219414331468
+      ]
+    },
+    "Q2": {
+      "items": 194,
+      "exact_agreement": 0.39690721649484534,
+      "within_one": 0.9175257731958762,
+      "cohen_kappa": 0.24798727760659978,
+      "kappa_linear": 0.5620108368452739,
+      "kappa_quadratic": 0.7738506015107712,
+      "krippendorff_alpha_ordinal": 0.7241049432710156,
+      "spearman_rho": 0.8381729123014076,
+      "mean_this_judge": 3.154639175257732,
+      "mean_gpt_6_1_terra": 3.8195876288659796,
+      "this_judge_higher": 3,
+      "this_judge_lower": 114,
+      "kappa_quadratic_ci95": [
+        0.679539423447671,
+        0.838975377196906
+      ]
+    },
+    "Q3 M": {
+      "items": 108,
+      "exact_agreement": 0.4722222222222222,
+      "within_one": 0.9537037037037037,
+      "cohen_kappa": 0.2679272208348198,
+      "kappa_linear": 0.4065934065934066,
+      "kappa_quadratic": 0.555504744483823,
+      "krippendorff_alpha_ordinal": 0.5558810710065349,
+      "spearman_rho": 0.5966358875623267,
+      "mean_this_judge": 3.7314814814814814,
+      "mean_gpt_6_1_terra": 3.6203703703703702,
+      "this_judge_higher": 34,
+      "this_judge_lower": 23,
+      "kappa_quadratic_ci95": [
+        0.329155672823219,
+        0.698744769874477
+      ]
+    },
+    "Q3 T": {
+      "items": 108,
+      "exact_agreement": 0.3611111111111111,
+      "within_one": 0.9629629629629629,
+      "cohen_kappa": 0.16997104032078414,
+      "kappa_linear": 0.3859813084112149,
+      "kappa_quadratic": 0.5997437774524158,
+      "krippendorff_alpha_ordinal": 0.5833387554066342,
+      "spearman_rho": 0.6549820776345117,
+      "mean_this_judge": 3.6481481481481484,
+      "mean_gpt_6_1_terra": 3.675925925925926,
+      "this_judge_higher": 32,
+      "this_judge_lower": 37,
+      "kappa_quadratic_ci95": [
+        0.4020385050962627,
+        0.697029702970297
+      ]
+    }
+  },
+  "by_pattern": {
+    "P1": {
+      "items": 234,
+      "exact_agreement": 0.4829059829059829,
+      "within_one": 0.9444444444444444,
+      "cohen_kappa": 0.31839191141068846,
+      "kappa_linear": 0.5331705574082896,
+      "kappa_quadratic": 0.7186104889744014,
+      "krippendorff_alpha_ordinal": 0.6772250001024731,
+      "spearman_rho": 0.7237596006168494,
+      "mean_this_judge": 3.7393162393162394,
+      "mean_gpt_6_1_terra": 4.021367521367521,
+      "this_judge_higher": 31,
+      "this_judge_lower": 90
+    },
+    "P2": {
+      "items": 230,
+      "exact_agreement": 0.4043478260869565,
+      "within_one": 0.9565217391304348,
+      "cohen_kappa": 0.26443811569167563,
+      "kappa_linear": 0.5373170599989199,
+      "kappa_quadratic": 0.7458515938120388,
+      "krippendorff_alpha_ordinal": 0.7549145895252444,
+      "spearman_rho": 0.8052025461344725,
+      "mean_this_judge": 2.991304347826087,
+      "mean_gpt_6_1_terra": 3.360869565217391,
+      "this_judge_higher": 29,
+      "this_judge_lower": 108
+    },
+    "P3": {
+      "items": 246,
+      "exact_agreement": 0.5813008130081301,
+      "within_one": 0.9390243902439024,
+      "cohen_kappa": 0.3691836582269027,
+      "kappa_linear": 0.5791062801932367,
+      "kappa_quadratic": 0.7421807570588961,
+      "krippendorff_alpha_ordinal": 0.7168663287638767,
+      "spearman_rho": 0.7544630511322473,
+      "mean_this_judge": 3.9959349593495936,
+      "mean_gpt_6_1_terra": 4.219512195121951,
+      "this_judge_higher": 30,
+      "this_judge_lower": 73
+    }
+  },
+  "confusion_rows_this_judge_columns_gpt": [
+    [
+      1,
+      37,
+      2,
+      0,
+      0
+    ],
+    [
+      2,
+      49,
+      67,
+      1,
+      3
+    ],
+    [
+      0,
+      19,
+      66,
+      16,
+      24
+    ],
+    [
+      0,
+      5,
+      50,
+      52,
+      121
+    ],
+    [
+      0,
+      0,
+      3,
+      11,
+      181
+    ]
+  ],
+  "table_cells": {
+    "cells": 48,
+    "pearson_r": 0.8551569063266096,
+    "spearman_rho": 0.819955970218012,
+    "mean_absolute_difference": 0.42168209876543217
+  }
+}

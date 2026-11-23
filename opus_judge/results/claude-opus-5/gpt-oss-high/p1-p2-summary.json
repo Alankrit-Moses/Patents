@@ -1,0 +1,65 @@
+{
+  "success_threshold": 4.0,
+  "groups": {
+    "experiment_1/setup_C/pattern_P1/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 3.4074074074074074,
+      "population_stddev": 1.5930231976004865,
+      "best_of_k_mean": 4.111111111111111,
+      "success_at_k": 0.7777777777777778,
+      "exact_excerpt_retention_rate": 0.8888888888888888
+    },
+    "experiment_1/setup_C/pattern_P2/E_text_alignment_scores": {
+      "observations": 27,
+      "mean": 2.3703703703703702,
+      "population_stddev": 1.3374422285383547,
+      "best_of_k_mean": 3.2222222222222223,
+      "success_at_k": 0.4444444444444444,
+      "exact_excerpt_retention_rate": 0.8888888888888888
+    },
+    "experiment_2/setup_C/pattern_P1/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 3.2777777777777777,
+      "population_stddev": 1.789026909789402,
+      "best_of_k_mean": 4.0,
+      "success_at_k": 0.6666666666666666,
+      "exact_excerpt_retention_rate": 0.8888888888888888
+    },
+    "experiment_2/setup_C/pattern_P2/E_text_alignment_score": {
+      "observations": 18,
+      "mean": 1.0555555555555556,
+      "population_stddev": 1.1290223018278653,
+      "best_of_k_mean": 1.8333333333333333,
+      "success_at_k": 0.16666666666666666,
+      "exact_excerpt_retention_rate": 0.6111111111111112
+    },
+    "experiment_3/setup_C/pattern_P1/M_alignment_score": {
+      "observations": 9,
+      "mean": 3.4444444444444446,
+      "population_stddev": 0.49690399499995325,
+      "best_of_k_mean": 4.0,
+      "success_at_k": 1.0
+    },
+    "experiment_3/setup_C/pattern_P1/T_alignment_score": {
+      "observations": 9,
+      "mean": 3.7777777777777777,
+      "population_stddev": 0.41573970964154905,
+      "best_of_k_mean": 4.0,
+      "success_at_k": 1.0
+    },
+    "experiment_3/setup_C/pattern_P2/M_alignment_score": {
+      "observations": 9,
+      "mean": 4.222222222222222,
+      "population_stddev": 0.41573970964154905,
+      "best_of_k_mean": 4.666666666666667,
+      "success_at_k": 1.0
+    },
+    "experiment_3/setup_C/pattern_P2/T_alignment_score": {
+      "observations": 9,
+      "mean": 4.222222222222222,
+      "population_stddev": 0.41573970964154905,
+      "best_of_k_mean": 4.666666666666667,
+      "success_at_k": 1.0
+    }
+  }
+}

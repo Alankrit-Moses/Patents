@@ -2,7 +2,9 @@
 
 `results_table.csv` reports mean scores for each model, query, and pattern.
 Average columns give equal weight to P1, P2 and P3. Scores use a 0–5 scale
-and include zero scores. GPT-6.1 Terra with reasoning disabled is the judge.
+and include zero scores. These files contain the GPT-6.1 Terra evaluations.
+Claude Opus 5 independently evaluated the same outputs. Its records, the
+two-judge means and agreement are in [`opus_judge/`](../../opus_judge/README.md).
 
 Each model directory contains `p1-p2-evaluations.jsonl`, `p3-evaluations.jsonl`,
 and corresponding summaries. P1/P2 generator outputs are in

@@ -1,0 +1,55 @@
+sample_id,file,pattern,stage,plan,pool_size,pool_positions_of_held_out_passage,chunks,chunk_holding_held_out_passage,failed_chunk_calls,failed_chunk_call_in_any_attempt,selector_call_failed,returned_chars,chars_shared_with_held_out_passage,held_out_chars,score_gpt_6_1_terra,score_claude_opus_5
+exp2-P1-E1:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P1,C,E.text-Finder > return_final,5,,6,chunk-0001 chunk-0002,,False,False,253,17,163,4,4
+exp2-P1-E1:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P1,C,E.text-Finder > return_final,5,,6,chunk-0001 chunk-0002,,False,False,253,17,163,4,4
+exp2-P1-E1:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P1,C,E.text-Finder > return_final,7,,6,chunk-0001 chunk-0002,,False,False,253,17,163,4,4
+exp2-P1-E2:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,11,2,6,chunk-0002,,False,False,411,411,411,5,4
+exp2-P1-E2:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,11,2,6,chunk-0002,,False,False,411,411,411,5,4
+exp2-P1-E2:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P1,C,E.text-Finder > return_final,12,,6,chunk-0002,,False,False,917,14,411,2,1
+exp2-P1-E3:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,12,3,6,chunk-0002,,False,False,456,456,456,5,3
+exp2-P1-E3:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,6,2,6,chunk-0002,,False,False,456,456,456,5,3
+exp2-P1-E4:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,7,1,6,chunk-0001,,False,False,270,270,435,5,5
+exp2-P1-E6:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P1,B,E.text-Finder > return_final,6,2,3,chunk-0001,,False,False,352,21,295,0,0
+exp2-P1-E4:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P1,B,E.text-Finder > return_final,7,1,6,chunk-0001,,False,False,440,38,435,5,5
+exp2-P1-E4:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P1,B,E.text-Finder > return_final,9,2,6,chunk-0001,,False,False,223,37,435,5,5
+exp2-P1-E6:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,3,2,3,chunk-0001,,False,False,295,295,295,5,4
+exp2-P1-E3:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,10,2,6,chunk-0002,,False,False,456,456,456,5,3
+exp2-P1-E5:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,7,1 3,6,chunk-0000,,False,False,249,249,413,5,4
+exp2-P1-E5:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,6,1,6,chunk-0000,,False,False,249,249,413,5,4
+exp2-P1-E5:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P1,A,E.text-Finder > return_final,8,1 2,6,chunk-0000,,False,False,249,249,413,5,4
+exp2-P1-E6:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P1,C,M-Inducer > E.text-Finder > return_final,4,,3,chunk-0001,,False,False,345,21,295,5,4
+exp2-P2-E2:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,6,,6,chunk-0001,,False,False,962,28,760,3,2
+exp2-P2-E1:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,8,,6,chunk-0001,,False,False,994,25,760,2,2
+exp2-P2-E1:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,9,6,6,chunk-0001,,False,False,760,760,760,5,2
+exp2-P2-E1:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,9,,6,chunk-0001,,False,False,259,24,760,2,2
+exp2-P2-E2:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,6,,6,chunk-0001,,False,False,887,24,760,2,2
+exp2-P2-E3:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P2,B,M-Inducer > E.text-Finder > return_final,7,2,6,chunk-0001,,False,False,411,27,760,3,3
+exp2-P2-E2:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,6,,6,chunk-0001,,False,False,994,25,760,3,2
+exp2-P2-E4:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,7,3,6,chunk-0002,,False,False,411,411,411,4,4
+exp2-P2-E3:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,6,,6,chunk-0001,,False,False,411,27,760,3,3
+exp2-P2-E6:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,4,1,3,chunk-0002,,False,False,1234,347,696,4,5
+exp2-P2-E3:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,6,,6,chunk-0001,,False,False,411,27,760,3,3
+exp2-P2-E6:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,5,1,3,chunk-0002,,False,False,1406,351,696,4,4
+exp2-P2-E4:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,5,3,6,chunk-0002,,False,False,411,411,411,4,4
+exp2-P2-E4:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,8,3,6,chunk-0002,,False,False,411,411,411,4,4
+exp2-P2-E5:v2-agentic:sample-1,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,8,,6,chunk-0001,,False,False,664,28,760,2,1
+exp2-P2-E5:v2-agentic:sample-3,results/gpt-5.6-luna/outputs.jsonl,P2,C,E.text-Finder > return_final,6,,6,chunk-0001,,False,False,1118,25,760,2,2
+exp2-P2-E5:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P2,B,E.text-Finder > return_final,8,3,6,chunk-0001,,False,False,553,24,760,2,1
+exp2-P2-E6:v2-agentic:sample-2,results/gpt-5.6-luna/outputs.jsonl,P2,A,E.text-Finder > return_final,9,1 2 3,3,chunk-0002,,False,False,1406,351,696,5,4
+exp2-P3-E1:v2-agentic:sample-1,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,E.text-Finder > return_final,9,7,2,chunk-0000 chunk-0001,,False,False,234,13,827,5,4
+exp2-P3-E1:v2-agentic:sample-3,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,E.text-Finder > return_final,8,2 7,2,chunk-0000 chunk-0001,,False,False,234,13,827,5,4
+exp2-P3-E1:v2-agentic:sample-2,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,6,2 4,2,chunk-0000 chunk-0001,,False,False,800,17,827,5,5
+exp2-P3-E2:v2-agentic:sample-1,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,E.text-Finder > return_final,4,2,2,chunk-0001,,False,False,234,19,418,4,5
+exp2-P3-E2:v2-agentic:sample-3,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,C,M-Inducer > E.text-Finder > return_final,2,,2,chunk-0001,,False,False,1140,19,418,5,5
+exp2-P3-E2:v2-agentic:sample-2,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,6,6,2,chunk-0001,,False,False,1979,19,418,5,5
+exp2-P3-E3:v2-agentic:sample-1,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,6,6,2,chunk-0001,,False,False,1140,21,263,5,4
+exp2-P3-E3:v2-agentic:sample-2,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,C,E.text-Finder > return_final,4,,2,chunk-0001,,False,False,994,21,263,5,5
+exp2-P3-E4:v2-agentic:sample-1,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,C,E.text-Finder > return_final,1,,1,chunk-0000,,False,False,116,12,828,2,1
+exp2-P3-E3:v2-agentic:sample-3,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,5,5,2,chunk-0001,,False,False,901,21,263,5,5
+exp2-P3-E4:v2-agentic:sample-2,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,2,1 2,1,chunk-0000,,False,False,396,396,828,5,5
+exp2-P3-E4:v2-agentic:sample-3,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,1,1,1,chunk-0000,,False,False,272,272,828,5,4
+exp2-P3-E5:v2-agentic:sample-2,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,1,1,1,chunk-0000,,False,False,73,73,465,3,2
+exp2-P3-E5:v2-agentic:sample-1,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,2,2,1,chunk-0000,,False,False,1295,465,465,5,4
+exp2-P3-E5:v2-agentic:sample-3,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,2,2,1,chunk-0000,,False,False,1295,465,465,5,4
+exp2-P3-E6:v2-agentic:sample-1,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,2,1 2,1,chunk-0000,,False,False,175,175,1144,4,4
+exp2-P3-E6:v2-agentic:sample-2,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,1,1,1,chunk-0000,,False,False,175,175,1144,4,4
+exp2-P3-E6:v2-agentic:sample-3,results/final/gpt-5.6-luna/p3-outputs.jsonl,P3,A,E.text-Finder > return_final,1,1,1,chunk-0000,,False,False,713,606,1144,5,4

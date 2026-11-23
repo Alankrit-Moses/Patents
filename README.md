@@ -1,23 +1,25 @@
 # Pattern engineering framework and agentic executor
 
-This repository is the public artifact for *A Vision for a Logic-Based Workflow
-Formulation Framework and an Agentic Execution Pipeline for Pattern
-Engineering*. It contains the single blackboard-based agentic executor evaluated
+This repository is the artifact for *A Logic-Based Declarative Framework For
+Pattern Engineering [Vision]*. It contains the blackboard-based agentic executor evaluated
 in the paper, the study tasks and data, and the reported outputs and evaluations.
 
 ## Evaluation artifact
 
 The study covers three patterns and three query types, with four generator
 settings. Task inputs, executor outputs, evaluation records, and the selected
-results table are included in this repository. The evaluation uses GPT-6.1
-Terra as judge and a 0–5 scale. See [`results/final/`](results/final/README.md)
-for results and [`experiments/README.md`](experiments/README.md) for commands.
+results table are included in this repository. GPT-6.1 Terra and Claude Opus 5
+independently scored outputs on a 0–5 scale. See [`results/final/`](results/final/README.md)
+and [`opus_judge/`](opus_judge/README.md) for results, and [`trace_audit/`](trace_audit/README.md)
+for the paper's trace audit.
 
 ## Repository contents
 
 - [`experiments/`](experiments/) contains the executor, prompts, task
   construction, experiment runners, and evaluation code.
 - [`results/final/`](results/final/README.md) contains the selected evaluations and results table.
+- [`opus_judge/`](opus_judge/README.md) contains the Claude evaluations and judge agreement.
+- [`trace_audit/`](trace_audit/README.md) contains the execution trace audit.
 - [`data/p3/`](data/p3/) contains the P3 causal-chain task materials.
 - [`Patterns/`](Patterns/) contains the trajectory-shift (`P1`) and
   growth-divergence (`P2`) pattern cards. Each includes `M`, `T`, and six
@@ -40,8 +42,8 @@ and three Q3 tasks. Each task is sampled three times at temperature 0.2.
 - **Q3 (pattern induction):** supply four example pairs; request M and T.
 
 The generator settings are GPT-4.1, GPT-OSS-120B with high and medium
-reasoning, and GPT-5.6 Luna with reasoning disabled. The judge is GPT-6.1
-Terra with reasoning disabled.
+reasoning, and GPT-5.6 Luna with reasoning disabled. The judges are GPT-6.1
+Terra and Claude Opus 5, both with reasoning disabled.
 
 ## Quick start
 
@@ -64,7 +66,9 @@ in [`experiments/README.md`](experiments/README.md).
 ## Results
 
 [`results/final/results_table.csv`](results/final/results_table.csv) reports
-per-pattern scores and equally weighted pattern means. Per-model files contain
+GPT-6.1 Terra scores. The Claude scores, two-judge means and paper table are in
+[`opus_judge/results/claude-opus-5/`](opus_judge/results/claude-opus-5/).
+Per-model files contain
 the evaluation records and summaries; P1/P2 outputs are under `results/<model>/`
 and P3 outputs are in `results/final/<model>/`.
 

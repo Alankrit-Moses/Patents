@@ -1,0 +1,55 @@
+sample_id,file,pattern,stage,plan,pool_size,pool_positions_of_held_out_passage,chunks,chunk_holding_held_out_passage,failed_chunk_calls,failed_chunk_call_in_any_attempt,selector_call_failed,returned_chars,chars_shared_with_held_out_passage,held_out_chars,score_gpt_6_1_terra,score_claude_opus_5
+exp2-P1-E5:C:sample-3,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,10,1 2 3 4,6,chunk-0000,,False,False,484,250,413,5,5
+exp2-P1-E5:C:sample-1,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,13,1 2 3 5 6,6,chunk-0000,,False,False,484,250,413,5,5
+exp2-P1-E3:C:sample-2,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,14,3,6,chunk-0002,,False,False,456,456,456,5,3
+exp2-P1-E1:C:sample-3,results/gpt-4.1/outputs.jsonl,P1,B,M-Inducer > E.text-Finder > return_final,13,2 7,6,chunk-0001 chunk-0002,,False,False,103,6,163,0,0
+exp2-P1-E4:C:sample-1,results/gpt-4.1/outputs.jsonl,P1,B,M-Inducer > E.text-Finder > return_final,17,2 4 5 7,6,chunk-0001,,False,False,440,38,435,5,5
+exp2-P1-E2:C:sample-3,results/gpt-4.1/outputs.jsonl,P1,C,M-Inducer > E.text-Finder > return_final,14,,6,chunk-0002,,False,False,79,14,411,2,2
+exp2-P1-E4:C:sample-3,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,13,2,6,chunk-0001,,False,False,777,435,435,5,5
+exp2-P1-E4:C:sample-2,results/gpt-4.1/outputs.jsonl,P1,B,M-Inducer > E.text-Finder > return_final,14,2 3 4 6,6,chunk-0001,,False,False,679,38,435,5,5
+exp2-P1-E5:C:sample-2,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,10,1 2 3,6,chunk-0000,,False,False,484,250,413,5,5
+exp2-P1-E2:C:sample-1,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,14,1 2 5,6,chunk-0002,,False,False,411,411,411,5,4
+exp2-P1-E3:C:sample-1,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,13,1,6,chunk-0002,,False,False,456,456,456,5,3
+exp2-P1-E3:C:sample-3,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,12,7,6,chunk-0002,,False,False,456,456,456,5,3
+exp2-P1-E1:C:sample-2,results/gpt-4.1/outputs.jsonl,P1,B,M-Inducer > E.text-Finder > return_final,13,7,6,chunk-0001 chunk-0002,,False,False,826,18,163,5,4
+exp2-P1-E2:C:sample-2,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,13,1 2,6,chunk-0002,,False,False,411,411,411,5,4
+exp2-P1-E1:C:sample-1,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,15,2 6,6,chunk-0001 chunk-0002,,False,False,1662,163,163,4,4
+exp2-P1-E6:C:sample-2,results/gpt-4.1/outputs.jsonl,P1,B,M-Inducer > E.text-Finder > return_final,7,1 3,3,chunk-0001,,False,False,114,21,295,5,4
+exp2-P1-E6:C:sample-3,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,7,1 4,3,chunk-0001,,False,False,490,295,295,0,0
+exp2-P1-E6:C:sample-1,results/gpt-4.1/outputs.jsonl,P1,A,M-Inducer > E.text-Finder > return_final,8,1 3,3,chunk-0001,,False,False,490,295,295,0,0
+exp2-P2-E4:C:sample-1,results/gpt-4.1/outputs.jsonl,P2,A,M-Inducer > E.text-Finder > return_final,11,1 3,6,chunk-0002,,False,False,411,411,411,4,4
+exp2-P2-E3:C:sample-1,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,16,,6,chunk-0001,,False,False,411,27,760,3,3
+exp2-P2-E3:C:sample-2,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,14,,6,chunk-0001,,False,False,411,27,760,3,3
+exp2-P2-E4:C:sample-2,results/gpt-4.1/outputs.jsonl,P2,A,M-Inducer > E.text-Finder > return_final,11,1 4,6,chunk-0002,,False,False,411,411,411,4,4
+exp2-P2-E3:C:sample-3,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,11,,6,chunk-0001,,False,False,1707,27,760,2,1
+exp2-P2-E2:C:sample-3,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,16,,6,chunk-0001,,False,False,1186,28,760,3,1
+exp2-P2-E4:C:sample-3,results/gpt-4.1/outputs.jsonl,P2,A,M-Inducer > E.text-Finder > return_final,12,2 7,6,chunk-0002,,False,False,411,411,411,4,4
+exp2-P2-E1:C:sample-2,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,14,,6,chunk-0001,,False,False,664,28,760,3,2
+exp2-P2-E2:C:sample-2,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,15,,6,chunk-0001,,False,False,1186,28,760,3,1
+exp2-P2-E5:C:sample-1,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,14,,6,chunk-0001,,False,False,528,25,760,2,1
+exp2-P2-E5:C:sample-3,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,15,,6,chunk-0001,,False,False,528,25,760,2,1
+exp2-P2-E6:C:sample-1,results/gpt-4.1/outputs.jsonl,P2,A,M-Inducer > E.text-Finder > return_final,4,1 2,3,chunk-0002,,False,False,1693,351,696,5,4
+exp2-P2-E1:C:sample-1,results/gpt-4.1/outputs.jsonl,P2,B,M-Inducer > E.text-Finder > return_final,15,7,6,chunk-0001,,False,False,1707,27,760,2,1
+exp2-P2-E6:C:sample-3,results/gpt-4.1/outputs.jsonl,P2,A,M-Inducer > E.text-Finder > return_final,7,1 3 4,3,chunk-0002,,False,False,1693,351,696,5,4
+exp2-P2-E5:C:sample-2,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,12,,6,chunk-0001,,False,False,1707,27,760,2,1
+exp2-P2-E1:C:sample-3,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,16,,6,chunk-0001,,False,False,664,28,760,3,2
+exp2-P2-E6:C:sample-2,results/gpt-4.1/outputs.jsonl,P2,A,M-Inducer > E.text-Finder > return_final,6,1 3 5,3,chunk-0002,,False,False,2660,183,696,5,3
+exp2-P2-E2:C:sample-1,results/gpt-4.1/outputs.jsonl,P2,C,M-Inducer > E.text-Finder > return_final,15,,6,chunk-0001,,False,False,660,25,760,2,1
+exp2-P3-E1:v2-agentic:sample-3,results/final/gpt-4.1/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,7,2,2,chunk-0000 chunk-0001,,False,False,994,17,827,5,4
+exp2-P3-E1:v2-agentic:sample-1,results/final/gpt-4.1/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,7,1,2,chunk-0000 chunk-0001,,False,False,3109,31,827,5,4
+exp2-P3-E1:v2-agentic:sample-2,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,8,2,2,chunk-0000 chunk-0001,,False,False,1406,827,827,5,5
+exp2-P3-E2:v2-agentic:sample-1,results/final/gpt-4.1/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,5,4,2,chunk-0001,,False,False,1140,19,418,5,5
+exp2-P3-E2:v2-agentic:sample-2,results/final/gpt-4.1/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,6,4,2,chunk-0001,,False,False,1140,19,418,5,5
+exp2-P3-E2:v2-agentic:sample-3,results/final/gpt-4.1/p3-outputs.jsonl,P3,B,M-Inducer > E.text-Finder > return_final,6,3,2,chunk-0001,,False,False,525,14,418,5,5
+exp2-P3-E3:v2-agentic:sample-2,results/final/gpt-4.1/p3-outputs.jsonl,P3,C,M-Inducer > E.text-Finder > return_final,6,,2,chunk-0001,,False,False,994,21,263,5,5
+exp2-P3-E3:v2-agentic:sample-1,results/final/gpt-4.1/p3-outputs.jsonl,P3,C,M-Inducer > E.text-Finder > return_final,7,,2,chunk-0001,,False,False,1140,21,263,5,4
+exp2-P3-E3:v2-agentic:sample-3,results/final/gpt-4.1/p3-outputs.jsonl,P3,C,M-Inducer > E.text-Finder > return_final,9,,2,chunk-0001,,False,False,994,21,263,5,5
+exp2-P3-E4:v2-agentic:sample-1,results/final/gpt-4.1/p3-outputs.jsonl,P3,C,M-Inducer > E.text-Finder > return_final,2,,1,chunk-0000,,False,False,116,12,828,2,1
+exp2-P3-E4:v2-agentic:sample-2,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,3,2,1,chunk-0000,,False,False,828,828,828,5,5
+exp2-P3-E4:v2-agentic:sample-3,results/final/gpt-4.1/p3-outputs.jsonl,P3,C,M-Inducer > E.text-Finder > return_final,3,,1,chunk-0000,,False,False,116,12,828,2,1
+exp2-P3-E5:v2-agentic:sample-1,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,5,3,1,chunk-0000,,False,False,515,465,465,5,4
+exp2-P3-E5:v2-agentic:sample-2,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,4,2,1,chunk-0000,,False,False,515,465,465,5,4
+exp2-P3-E5:v2-agentic:sample-3,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,3,2,1,chunk-0000,,False,False,515,465,465,5,4
+exp2-P3-E6:v2-agentic:sample-1,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,3,1,1,chunk-0000,,False,False,713,713,1144,5,4
+exp2-P3-E6:v2-agentic:sample-2,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,5,1 4,1,chunk-0000,,False,False,713,713,1144,5,4
+exp2-P3-E6:v2-agentic:sample-3,results/final/gpt-4.1/p3-outputs.jsonl,P3,A,M-Inducer > E.text-Finder > return_final,4,1,1,chunk-0000,,False,False,713,713,1144,5,4
